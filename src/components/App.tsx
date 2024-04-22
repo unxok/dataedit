@@ -1,5 +1,5 @@
 import { loadDependencies } from "@/main";
-import { CircleAlertIcon, CrossIcon } from "lucide-react";
+import { CircleAlertIcon } from "lucide-react";
 import { Notice, debounce } from "obsidian";
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
 const RequiedDepsError = () => (
@@ -42,18 +42,18 @@ const App = (props: any) => {
 
 	const [, updateEmpty] = useState({});
 	const forceUpdate = useCallback(() => updateEmpty({}), []);
-	plugin.registerEvent(
-		plugin.app.metadataCache.on("dataview:index-ready", () => {
-			console.log("index ready");
-			forceUpdate();
-		}),
-	);
-	plugin.registerEvent(
-		plugin.app.metadataCache.on("dataview:metadata-change", () => {
-			console.log("metadata changed");
-			forceUpdate();
-		}),
-	);
+	// plugin.registerEvent(
+	// 	plugin.app.metadataCache.on("dataview:index-ready", () => {
+	// 		console.log("index ready");
+	// 		forceUpdate();
+	// 	}),
+	// );
+	// plugin.registerEvent(
+	// 	plugin.app.metadataCache.on("dataview:metadata-change", () => {
+	// 		console.log("metadata changed");
+	// 		forceUpdate();
+	// 	}),
+	// );
 
 	useEffect(() => {
 		new Notice("App rendered");
@@ -81,7 +81,7 @@ const App = (props: any) => {
 		<div id="twcss">
 			<div className="w-full overflow-x-scroll">
 				<EditableTable
-					key={new Date().toLocaleTimeString("en-US")}
+					// key={new Date().toLocaleTimeString("en-US")}
 					data={data}
 				/>
 			</div>
@@ -93,6 +93,12 @@ export default App;
 
 const EditableTable = ({ data }: { data: string }) => {
 	const [queryResults, setQueryResults] = useState<any>();
+
+	useEffect(
+		() => console.log("query results: ", queryResults),
+		[queryResults],
+	);
+
 	// @ts-ignore
 	const meApi = app.plugins.plugins.metaedit.api;
 
@@ -115,10 +121,12 @@ const EditableTable = ({ data }: { data: string }) => {
 
 	// @ts-ignore
 	app.metadataCache.on("dataview:index-ready", async () => {
+		console.log("index ready");
 		await doQuery();
 	});
 	// @ts-ignore
 	app.metadataCache.on("dataview:metadata-change", async () => {
+		console.log("metadata changed");
 		await doQuery();
 	});
 
@@ -202,9 +210,16 @@ const EditableTable = ({ data }: { data: string }) => {
 												? "You must have a file.link in one of the columns!"
 												: undefined
 										}
-										defaultValue={d}
+										// defaultValue={d}
+										value={d}
 										onChange={(e) => {
 											console.log("changed");
+											setQueryResults((prev) => {
+												const copyPrev = { ...prev };
+												copyPrev.values[i][k] =
+													e.target.value;
+												return copyPrev;
+											});
 											updateMetaData(k, e, v);
 										}}
 										className="m-0 w-fit border-transparent bg-transparent p-0 text-start"

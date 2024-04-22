@@ -23637,18 +23637,6 @@ var App2 = (props) => {
   const [ErrMsg, setErrMsg] = (0, import_react2.useState)(void 0);
   const [, updateEmpty] = (0, import_react2.useState)({});
   const forceUpdate = (0, import_react2.useCallback)(() => updateEmpty({}), []);
-  plugin.registerEvent(
-    plugin.app.metadataCache.on("dataview:index-ready", () => {
-      console.log("index ready");
-      forceUpdate();
-    })
-  );
-  plugin.registerEvent(
-    plugin.app.metadataCache.on("dataview:metadata-change", () => {
-      console.log("metadata changed");
-      forceUpdate();
-    })
-  );
   (0, import_react2.useEffect)(() => {
     new import_obsidian2.Notice("App rendered");
     (async () => {
@@ -23668,7 +23656,6 @@ var App2 = (props) => {
   return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react2.default.createElement(
     EditableTable,
     {
-      key: (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US"),
       data: data2
     }
   )));
@@ -23676,6 +23663,10 @@ var App2 = (props) => {
 var App_default = App2;
 var EditableTable = ({ data }) => {
   const [queryResults, setQueryResults] = (0, import_react2.useState)();
+  (0, import_react2.useEffect)(
+    () => console.log("query results: ", queryResults),
+    [queryResults]
+  );
   const meApi = app.plugins.plugins.metaedit.api;
   const doQuery = async () => {
     const dv = app.plugins.plugins.dataview.api;
@@ -23694,9 +23685,11 @@ var EditableTable = ({ data }) => {
     setQueryResults(qr.value);
   };
   app.metadataCache.on("dataview:index-ready", async () => {
+    console.log("index ready");
     await doQuery();
   });
   app.metadataCache.on("dataview:metadata-change", async () => {
+    console.log("metadata changed");
     await doQuery();
   });
   const updateMetaData = (0, import_obsidian2.debounce)(
@@ -23747,9 +23740,14 @@ var EditableTable = ({ data }) => {
       {
         disabled: !v.some((data2) => data2 && data2.path),
         "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
-        defaultValue: d,
+        value: d,
         onChange: (e) => {
           console.log("changed");
+          setQueryResults((prev) => {
+            const copyPrev = { ...prev };
+            copyPrev.values[i][k] = e.target.value;
+            return copyPrev;
+          });
           updateMetaData(k, e, v);
         },
         className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
