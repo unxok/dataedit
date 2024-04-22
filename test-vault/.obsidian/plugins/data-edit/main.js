@@ -518,7 +518,7 @@ var require_react_development = __commonJS({
           }
           return element;
         };
-        function createElement(type, config, children) {
+        function createElement2(type, config, children) {
           var propName;
           var props = {};
           var key = null;
@@ -762,12 +762,12 @@ var require_react_development = __commonJS({
           if (children == null) {
             return children;
           }
-          var result = [];
+          var result2 = [];
           var count = 0;
-          mapIntoArray(children, result, "", "", function(child) {
+          mapIntoArray(children, result2, "", "", function(child) {
             return func.call(context, child, count++);
           });
-          return result;
+          return result2;
         }
         function countChildren(children) {
           var n = 0;
@@ -979,7 +979,7 @@ var require_react_development = __commonJS({
           }
           return lazyType;
         }
-        function forwardRef(render) {
+        function forwardRef2(render) {
           {
             if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
               error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState(initialState) {
+        function useState2(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -1104,7 +1104,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect(create, deps) {
+        function useEffect2(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -1116,7 +1116,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useLayoutEffect(create, deps);
         }
-        function useCallback(callback, deps) {
+        function useCallback2(callback, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useCallback(callback, deps);
         }
@@ -1617,7 +1617,7 @@ var require_react_development = __commonJS({
               error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
             }
           }
-          var element = createElement.apply(this, arguments);
+          var element = createElement2.apply(this, arguments);
           if (element == null) {
             return element;
           }
@@ -1721,10 +1721,10 @@ var require_react_development = __commonJS({
               ReactCurrentActQueue.current = [];
             }
             var prevIsBatchingLegacy = ReactCurrentActQueue.isBatchingLegacy;
-            var result;
+            var result2;
             try {
               ReactCurrentActQueue.isBatchingLegacy = true;
-              result = callback();
+              result2 = callback();
               if (!prevIsBatchingLegacy && ReactCurrentActQueue.didScheduleLegacyUpdate) {
                 var queue = ReactCurrentActQueue.current;
                 if (queue !== null) {
@@ -1738,8 +1738,8 @@ var require_react_development = __commonJS({
             } finally {
               ReactCurrentActQueue.isBatchingLegacy = prevIsBatchingLegacy;
             }
-            if (result !== null && typeof result === "object" && typeof result.then === "function") {
-              var thenableResult = result;
+            if (result2 !== null && typeof result2 === "object" && typeof result2.then === "function") {
+              var thenableResult = result2;
               var wasAwaited = false;
               var thenable = {
                 then: function(resolve, reject) {
@@ -1770,7 +1770,7 @@ var require_react_development = __commonJS({
               }
               return thenable;
             } else {
-              var returnValue = result;
+              var returnValue = result2;
               popActScope(prevActScopeDepth);
               if (actScopeDepth === 0) {
                 var _queue = ReactCurrentActQueue.current;
@@ -1876,17 +1876,17 @@ var require_react_development = __commonJS({
         exports.createElement = createElement$1;
         exports.createFactory = createFactory;
         exports.createRef = createRef;
-        exports.forwardRef = forwardRef;
+        exports.forwardRef = forwardRef2;
         exports.isValidElement = isValidElement;
         exports.lazy = lazy;
         exports.memo = memo;
         exports.startTransition = startTransition;
         exports.unstable_act = act;
-        exports.useCallback = useCallback;
+        exports.useCallback = useCallback2;
         exports.useContext = useContext;
         exports.useDebugValue = useDebugValue;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect;
+        exports.useEffect = useEffect2;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
@@ -1894,7 +1894,7 @@ var require_react_development = __commonJS({
         exports.useMemo = useMemo;
         exports.useReducer = useReducer;
         exports.useRef = useRef;
-        exports.useState = useState;
+        exports.useState = useState2;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -9396,7 +9396,7 @@ var require_react_dom_development = __commonJS({
             }
           }
         }
-        function createElement(type, props, rootContainerElement, parentNamespace) {
+        function createElement2(type, props, rootContainerElement, parentNamespace) {
           var isCustomComponentTag;
           var ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement);
           var domElement;
@@ -10257,7 +10257,7 @@ var require_react_dom_development = __commonJS({
             }
             parentNamespace = hostContextDev.namespace;
           }
-          var domElement = createElement(type, props, rootContainerInstance, parentNamespace);
+          var domElement = createElement2(type, props, rootContainerInstance, parentNamespace);
           precacheFiberNode(internalInstanceHandle, domElement);
           updateFiberProps(domElement, props);
           return domElement;
@@ -10393,8 +10393,8 @@ var require_react_dom_development = __commonJS({
             var nextNode = node.nextSibling;
             parentInstance.removeChild(node);
             if (nextNode && nextNode.nodeType === COMMENT_NODE) {
-              var data = nextNode.data;
-              if (data === SUSPENSE_END_DATA) {
+              var data2 = nextNode.data;
+              if (data2 === SUSPENSE_END_DATA) {
                 if (depth === 0) {
                   parentInstance.removeChild(nextNode);
                   retryIfBlockedOn(suspenseInstance);
@@ -10402,7 +10402,7 @@ var require_react_dom_development = __commonJS({
                 } else {
                   depth--;
                 }
-              } else if (data === SUSPENSE_START_DATA || data === SUSPENSE_PENDING_START_DATA || data === SUSPENSE_FALLBACK_START_DATA) {
+              } else if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_PENDING_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA) {
                 depth++;
               }
             }
@@ -10547,14 +10547,14 @@ var require_react_dom_development = __commonJS({
           var depth = 0;
           while (node) {
             if (node.nodeType === COMMENT_NODE) {
-              var data = node.data;
-              if (data === SUSPENSE_END_DATA) {
+              var data2 = node.data;
+              if (data2 === SUSPENSE_END_DATA) {
                 if (depth === 0) {
                   return getNextHydratableSibling(node);
                 } else {
                   depth--;
                 }
-              } else if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
+              } else if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
                 depth++;
               }
             }
@@ -10567,14 +10567,14 @@ var require_react_dom_development = __commonJS({
           var depth = 0;
           while (node) {
             if (node.nodeType === COMMENT_NODE) {
-              var data = node.data;
-              if (data === SUSPENSE_START_DATA || data === SUSPENSE_FALLBACK_START_DATA || data === SUSPENSE_PENDING_START_DATA) {
+              var data2 = node.data;
+              if (data2 === SUSPENSE_START_DATA || data2 === SUSPENSE_FALLBACK_START_DATA || data2 === SUSPENSE_PENDING_START_DATA) {
                 if (depth === 0) {
                   return node;
                 } else {
                   depth--;
                 }
-              } else if (data === SUSPENSE_END_DATA) {
+              } else if (data2 === SUSPENSE_END_DATA) {
                 depth++;
               }
             }
@@ -23518,11 +23518,12 @@ var require_client = __commonJS({
 // src/main.tsx
 var main_exports = {};
 __export(main_exports, {
-  default: () => MyObsidianPlugin
+  default: () => DataEdit,
+  loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian2 = require("obsidian");
-var import_react2 = __toESM(require_react());
+var import_obsidian3 = require("obsidian");
+var import_react3 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // src/settings.ts
@@ -23532,7 +23533,7 @@ var defaultSettings = {
 
 // src/settings-tab.ts
 var import_obsidian = require("obsidian");
-var MyObsidianPluginSettingsTab = class extends import_obsidian.PluginSettingTab {
+var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
   constructor(app2, plugin) {
     super(app2, plugin);
     this.plugin = plugin;
@@ -23563,57 +23564,244 @@ var MyObsidianPluginSettingsTab = class extends import_obsidian.PluginSettingTab
   }
 };
 
-// src/components/App.tsx
+// node_modules/lucide-react/dist/esm/createLucideIcon.js
 var import_react = __toESM(require_react());
+
+// node_modules/lucide-react/dist/esm/defaultAttributes.js
+var defaultAttributes = {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round"
+};
+
+// node_modules/lucide-react/dist/esm/shared/src/utils.js
+var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+
+// node_modules/lucide-react/dist/esm/createLucideIcon.js
+var createLucideIcon = (iconName, iconNode) => {
+  const Component = (0, import_react.forwardRef)(
+    ({
+      color = "currentColor",
+      size = 24,
+      strokeWidth = 2,
+      absoluteStrokeWidth,
+      className = "",
+      children,
+      ...rest
+    }, ref) => {
+      return (0, import_react.createElement)(
+        "svg",
+        {
+          ref,
+          ...defaultAttributes,
+          width: size,
+          height: size,
+          stroke: color,
+          strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+          className: ["lucide", `lucide-${toKebabCase(iconName)}`, className].join(" "),
+          ...rest
+        },
+        [
+          ...iconNode.map(([tag, attrs]) => (0, import_react.createElement)(tag, attrs)),
+          ...Array.isArray(children) ? children : [children]
+        ]
+      );
+    }
+  );
+  Component.displayName = `${iconName}`;
+  return Component;
+};
+
+// node_modules/lucide-react/dist/esm/icons/circle-alert.js
+var CircleAlert = createLucideIcon("CircleAlert", [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+]);
+
+// src/components/App.tsx
+var import_obsidian2 = require("obsidian");
+var import_react2 = __toESM(require_react());
+var RequiedDepsError = () => /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react2.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react2.default.createElement("ul", null, /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://github.com/chhoumann/MetaEdit" }, "MetaEdit")))));
+var Error2 = ({ children }) => {
+  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react2.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
+};
 var App2 = (props) => {
-  const { data, getSectionInfo, settings, app: app2, dependenciesLoaded } = props;
-  console.log(props);
-  console.log(dependenciesLoaded);
-  if (!dependenciesLoaded) {
-    return /* @__PURE__ */ import_react.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-md border-solid border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react.default.createElement("h3", { className: "mt-0" }, "Error"), /* @__PURE__ */ import_react.default.createElement("div", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react.default.createElement("div", null, "Plugins required: ", /* @__PURE__ */ import_react.default.createElement("a", { href: "/" }, "Dataview"))));
+  const { data: data2, getSectionInfo, settings, plugin } = props;
+  const [ErrMsg, setErrMsg] = (0, import_react2.useState)(void 0);
+  const [, updateEmpty] = (0, import_react2.useState)({});
+  const forceUpdate = (0, import_react2.useCallback)(() => updateEmpty({}), []);
+  plugin.registerEvent(
+    plugin.app.metadataCache.on("dataview:index-ready", () => {
+      console.log("index ready");
+      forceUpdate();
+    })
+  );
+  plugin.registerEvent(
+    plugin.app.metadataCache.on("dataview:metadata-change", () => {
+      console.log("metadata changed");
+      forceUpdate();
+    })
+  );
+  (0, import_react2.useEffect)(() => {
+    new import_obsidian2.Notice("App rendered");
+    (async () => {
+      const b = await loadDependencies();
+      if (!b)
+        return setErrMsg(() => RequiedDepsError);
+    })();
+    plugin.addCommand({
+      id: `reload-data-edit`,
+      name: `Reload Data Edit`,
+      callback: () => forceUpdate()
+    });
+  }, []);
+  if (ErrMsg) {
+    return /* @__PURE__ */ import_react2.default.createElement(Error2, null, /* @__PURE__ */ import_react2.default.createElement(ErrMsg, null));
   }
-  return /* @__PURE__ */ import_react.default.createElement("div", { className: "", id: "my-obsidian-plugin" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex flex-col gap-5" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "rounded-sm border bg-black p-10" }, data), /* @__PURE__ */ import_react.default.createElement("button", { className: "w-fit rounded-md bg-red-500 hover:bg-red-200" }, "click meee"), /* @__PURE__ */ import_react.default.createElement("button", { className: "w-fit" }, "default style button")));
+  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react2.default.createElement(
+    EditableTable,
+    {
+      key: (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US"),
+      data: data2
+    }
+  )));
 };
 var App_default = App2;
-
-// src/main.tsx
-var MyObsidianPlugin = class extends import_obsidian2.Plugin {
-  constructor() {
-    super(...arguments);
-    this.dependenciesLoaded = false;
-  }
-  async onload() {
-    await this.loadSettings();
-    this.addSettingTab(new MyObsidianPluginSettingsTab(this.app, this));
-    app.workspace.onLayoutReady(async () => {
-      this.dependenciesLoaded = await this.loadDependencies();
-    });
-    this.registerMarkdownCodeBlockProcessor(
-      "my-obsidian-plugin",
-      (s, e, i) => {
-        console.log(s);
-        e.empty();
-        const root = (0, import_client.createRoot)(e);
-        root.render(
-          /* @__PURE__ */ import_react2.default.createElement(import_react2.default.StrictMode, null, /* @__PURE__ */ import_react2.default.createElement(
-            App_default,
-            {
-              data: s,
-              getSectionInfo: () => i.getSectionInfo(e),
-              settings: this.settings,
-              app: this.app,
-              dependenciesLoaded: this.dependenciesLoaded
-            }
-          ))
+var EditableTable = ({ data }) => {
+  const [queryResults, setQueryResults] = (0, import_react2.useState)();
+  const meApi = app.plugins.plugins.metaedit.api;
+  const doQuery = async () => {
+    const dv = app.plugins.plugins.dataview.api;
+    if (data.split(" ")[0] !== "TABLE") {
+      const result = eval(`(() => {${data}})()`);
+      console.log("result: ", result);
+      if (!result)
+        return;
+      return setQueryResults(result);
+    }
+    const qr = await dv.query(data);
+    if (!qr.successful) {
+      return;
+    }
+    console.log(qr.value);
+    setQueryResults(qr.value);
+  };
+  app.metadataCache.on("dataview:index-ready", async () => {
+    await doQuery();
+  });
+  app.metadataCache.on("dataview:metadata-change", async () => {
+    await doQuery();
+  });
+  const updateMetaData = (0, import_obsidian2.debounce)(
+    (k, e, v) => {
+      console.log("updated?", v, queryResults.headers[k]);
+      const link = v.find((d) => d && d.path);
+      if (!link) {
+        return;
+      }
+      const { path } = link;
+      if (v[k]) {
+        return meApi.update(
+          queryResults.headers[k],
+          e.target.value,
+          path
         );
       }
-    );
+      meApi.createYamlProperty(
+        queryResults.headers[k],
+        e.target.value,
+        path
+      );
+    },
+    1500,
+    true
+  );
+  (0, import_react2.useEffect)(() => {
+    doQuery();
+  }, []);
+  if (!queryResults)
+    return /* @__PURE__ */ import_react2.default.createElement(Error2, null, "Invalid query");
+  return /* @__PURE__ */ import_react2.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react2.default.createElement("tr", { className: "w-fit" }, queryResults.headers.map((h) => /* @__PURE__ */ import_react2.default.createElement("th", { key: h, className: "w-fit" }, h === "File" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "w-fit text-nowrap" }, h, /* @__PURE__ */ import_react2.default.createElement("span", { className: "dataview small-text" }, queryResults.values.length)) : h)))), /* @__PURE__ */ import_react2.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react2.default.createElement("td", { key: i + k, className: "w-fit" }, d?.path ? /* @__PURE__ */ import_react2.default.createElement(
+    "a",
+    {
+      href: d.path,
+      "data-tooltip-position": "top",
+      "aria-label": d.path,
+      "data-href": d.path,
+      className: "internal-link",
+      target: "_blank",
+      rel: "noopener"
+    },
+    d.path.slice(0, -3)
+  ) : (
+    // <div>
+    /* @__PURE__ */ import_react2.default.createElement(
+      "input",
+      {
+        disabled: !v.some((data2) => data2 && data2.path),
+        "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
+        defaultValue: d,
+        onChange: (e) => {
+          console.log("changed");
+          updateMetaData(k, e, v);
+        },
+        className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
+      }
+    )
+  )))))));
+};
+
+// src/main.tsx
+var loadDependencies = async () => {
+  const DATAVIEW = "dataview";
+  const METAEDIT = "metaedit";
+  const plugins = app.plugins;
+  if (!plugins.enabledPlugins.has(DATAVIEW) || !plugins.enabledPlugins.has(METAEDIT)) {
+    return false;
+  }
+  await plugins.loadPlugin(DATAVIEW);
+  await plugins.loadPlugin(METAEDIT);
+  return true;
+};
+var DataEdit = class extends import_obsidian3.Plugin {
+  async onload() {
+    await this.loadSettings();
+    this.addSettingTab(new DataEditSettingsTab(this.app, this));
+    app.workspace.onLayoutReady(async () => {
+      this.registerCodeBlock();
+    });
     this.addCommand({
       id: `insert`,
       name: `Insert My Plugin`,
       editorCallback: (e, _) => {
-        e.replaceSelection("```my-obsidian-plugin\n```\n");
-      }
+      },
+      callback: () => this.registerCodeBlock()
+    });
+  }
+  registerCodeBlock() {
+    this.registerMarkdownCodeBlockProcessor("data-edit", (s, e, i) => {
+      console.log(s);
+      e.empty();
+      const root = (0, import_client.createRoot)(e);
+      root.render(
+        /* @__PURE__ */ import_react3.default.createElement(import_react3.default.StrictMode, null, /* @__PURE__ */ import_react3.default.createElement(
+          App_default,
+          {
+            data: s,
+            getSectionInfo: () => i.getSectionInfo(e),
+            settings: this.settings,
+            app: this.app,
+            plugin: this
+          }
+        ))
+      );
     });
   }
   async loadSettings() {
@@ -23622,24 +23810,6 @@ var MyObsidianPlugin = class extends import_obsidian2.Plugin {
       defaultSettings,
       await this.loadData()
     );
-  }
-  /**
-   * Loads the dependencies (plugins) that your plugin requires
-   * @returns true if successful, false if fail
-   */
-  async loadDependencies() {
-    const noticeSpan = document.createElement("span");
-    noticeSpan.innerHTML = 'You must have <a href="/">Dataview</a> installed and enabled!';
-    const docFrag = new DocumentFragment();
-    docFrag.append(noticeSpan);
-    const DATAVIEW = "dataview";
-    const plugins = app.plugins;
-    if (!plugins.enabledPlugins.has(DATAVIEW)) {
-      new import_obsidian2.Notice(docFrag);
-      return false;
-    }
-    await plugins.loadPlugin("dataview");
-    return true;
   }
   async saveSettings() {
     await this.saveData(this.settings);
@@ -23691,5 +23861,45 @@ react-dom/cjs/react-dom.development.js:
    * @return {boolean} True if the event is supported.
    * @internal
    * @license Modernizr 3.0.0pre (Custom Build) | MIT
+   *)
+
+lucide-react/dist/esm/defaultAttributes.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/shared/src/utils.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/createLucideIcon.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/circle-alert.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/lucide-react.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
    *)
 */

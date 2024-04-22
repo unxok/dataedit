@@ -5,7 +5,7 @@ const prefixer = require("postcss-prefix-selector");
 
 // css to be processed
 const css = fs.readFileSync(
-	"test-vault/.obsidian/plugins/my-obsidian-plugin/styles.css",
+	"test-vault/.obsidian/plugins/data-edit/styles.css",
 	"utf8",
 );
 
@@ -27,6 +27,6 @@ const out = postcss()
 	.process(css).css;
 
 fs.writeFileSync(
-	"test-vault/.obsidian/plugins/my-obsidian-plugin/styles.css",
+	"test-vault/.obsidian/plugins/data-edit/styles.css",
 	out,
 );

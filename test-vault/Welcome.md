@@ -1,22 +1,26 @@
 ---
-test: value
+test: testing testing 123456789
+
 ---
+ #test
 
 
+```data-edit
+TABLE test
+FROM #test
+SORT file.name
+```
 
-This is your new *vault*.
-
-Make a note of something, [[create a link]], or try [the Importer](https://help.obsidian.md/Plugins/Importer)!
-
-When you're ready, delete this note and make the vault your own.
-
-
-```my-obsidian-plugin
-well hello there
+```data-edit
+const data = dv.pages().map(p => [p.file.link, p.test]);
+return {headers: ['file', 'test'], values: data};
 ```
 
 
-
-
+```dataview
+TABLE test
+FROM #test
+SORT file.ctime ASC
+```
 
 

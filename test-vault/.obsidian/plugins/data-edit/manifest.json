@@ -1,6 +1,6 @@
 {
-	"id": "my-obsidian-plugin",
-	"name": "My Obsidian Plugin",
+	"id": "data-edit",
+	"name": "Data Edit",
 	"version": "0.0.1",
 	"minAppVersion": "0.0.1",
 	"description": "",

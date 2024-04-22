@@ -1,12 +1,12 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 
-import MyObsidianPlugin from "@/main";
+import DataEdit from "@/main";
 import { defaultSettings } from "@/settings";
 
-export class MyObsidianPluginSettingsTab extends PluginSettingTab {
-	plugin: MyObsidianPlugin;
+export class DataEditSettingsTab extends PluginSettingTab {
+	plugin: DataEdit;
 
-	constructor(app: App, plugin: MyObsidianPlugin) {
+	constructor(app: App, plugin: DataEdit) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -29,7 +29,7 @@ export class MyObsidianPluginSettingsTab extends PluginSettingTab {
 						href: "#",
 					});
 					f.createSpan({ text: " syntax." });
-				})
+				}),
 			)
 			.addText((t) => {
 				t.setValue(String(this.plugin.settings.demoSetting));
