@@ -1,0 +1,39 @@
+{
+	"name": "my-obsidian-plugin",
+	"version": "0.0.1",
+	"description": "",
+	"main": "main.js",
+	"scripts": {
+		"css": "tailwindcss -i src/main.css -o test-vault/.obsidian/plugins/my-obsidian-plugin/styles.css --watch",
+		"css:build": "tailwindcss -i src/main.css -o test-vault/.obsidian/plugins/my-obsidian-plugin/styles.css --minify",
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production && npm run css:build && node scope.js",
+		"version": "node version-bump.mjs && git add manifest.json versions.json"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^20.5.8",
+		"@types/react": "^18.2.21",
+		"@types/react-dom": "^18.2.7",
+		"autoprefixer": "^10.4.15",
+		"builtin-modules": "^3.3.0",
+		"electron": "^29.1.6",
+		"esbuild": "0.19.2",
+		"esbuild-plugin-copy": "^2.1.1",
+		"obsidian": "latest",
+		"postcss": "^8.4.29",
+		"postcss-prefix-selector": "^1.16.0",
+		"prettier": "^3.2.5",
+		"prettier-plugin-tailwindcss": "^0.5.14",
+		"tailwindcss": "^3.3.3",
+		"tslib": "2.6.2",
+		"typescript": "5.2.2"
+	},
+	"dependencies": {
+		"@heroicons/react": "^2.0.18",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	}
+}
