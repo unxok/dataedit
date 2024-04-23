@@ -39,12 +39,12 @@ SORT file.name
 ````
 
 ````js
-// ```data-edit
+```data-edit
 const data = dv
 	.pages("#tasks")
 	.map((p) => [p.file.link, p.progress, p.category]);
 return { headers: ["Name", "Progress", "Category"], values: data };
-// ```
+```;
 ````
 
 # Demo

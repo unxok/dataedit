@@ -91,6 +91,19 @@ const App = (props: any) => {
 
 export default App;
 
+/**
+ * Use this to convert Data Arrays from Dataview to regular arrays
+ * @param arr A Dataview Data Array
+ * @returns A plain js array
+ */
+const toPlainArray = (arr: any) => {
+	try {
+		return arr.array();
+	} catch (e) {
+		return arr;
+	}
+};
+
 const EditableTable = ({ data }: { data: string }) => {
 	const [queryResults, setQueryResults] = useState<any>();
 
@@ -131,7 +144,7 @@ const EditableTable = ({ data }: { data: string }) => {
 	});
 
 	const updateMetaData = debounce(
-		(k: number, e: React.ChangeEvent<HTMLInputElement>, v: any[]) => {
+		(k: number, value: string, v: any[]) => {
 			console.log("updated?", v, queryResults.headers[k]);
 			const link = v.find((d) => d && d.path);
 			if (!link) {
@@ -140,17 +153,9 @@ const EditableTable = ({ data }: { data: string }) => {
 			}
 			const { path } = link;
 			if (v[k]) {
-				return meApi.update(
-					queryResults.headers[k],
-					e.target.value,
-					path,
-				);
+				return meApi.update(queryResults.headers[k], value, path);
 			}
-			meApi.createYamlProperty(
-				queryResults.headers[k],
-				e.target.value,
-				path,
-			);
+			meApi.createYamlProperty(queryResults.headers[k], value, path);
 		},
 		1500,
 		true,
@@ -187,7 +192,7 @@ const EditableTable = ({ data }: { data: string }) => {
 					<tr key={i + "table-row"} className="w-fit">
 						{v.map((d, k) => (
 							<td key={i + k} className="w-fit">
-								{d?.path ? (
+								{d?.__proto__?.constructor?.name === "Link" ? (
 									<a
 										href={d.path}
 										data-tooltip-position="top"
@@ -196,9 +201,82 @@ const EditableTable = ({ data }: { data: string }) => {
 										className={"internal-link"}
 										target="_blank"
 										rel="noopener"
+										data-test={d}
 									>
 										{d.path.slice(0, -3)}
 									</a>
+								) : Array.isArray(d) ? (
+									<ul className="m-0">
+										{d.map((dd, n) => (
+											<li key={i + k + n + dd}>
+												<input
+													disabled={
+														!v.some(
+															(data) =>
+																data &&
+																data.path,
+														)
+													}
+													aria-label={
+														!v.some(
+															(data) =>
+																data &&
+																data.path,
+														)
+															? "You must have a file.link in one of the columns!"
+															: undefined
+													}
+													// defaultValue={dd}
+													value={dd}
+													onChange={(e) => {
+														setQueryResults(
+															(prev) => {
+																const copyValues =
+																	toPlainArray(
+																		prev.values,
+																	);
+																const copyList =
+																	toPlainArray(
+																		copyValues[
+																			i
+																		][k],
+																	);
+																copyList[n] =
+																	e.target.value;
+																copyValues[i][
+																	k
+																] = copyList;
+																updateMetaData(
+																	k,
+																	copyList,
+																	v,
+																);
+																return {
+																	...prev,
+																	values: copyValues,
+																};
+															},
+														);
+														//
+													}}
+													className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
+												/>
+												{/* 
+												TODO Can't get this to look quite pretty and usable enough
+												{queryResults.headers[k] ===
+													"tags" && (
+													<a
+														href={"#" + dd}
+														className="tag"
+														target="_blank"
+														rel="noopener"
+													>
+														#{dd}
+													</a>
+												)} */}
+											</li>
+										))}
+									</ul>
 								) : (
 									// <div>
 									<input
@@ -220,7 +298,11 @@ const EditableTable = ({ data }: { data: string }) => {
 													e.target.value;
 												return copyPrev;
 											});
-											updateMetaData(k, e, v);
+											updateMetaData(
+												k,
+												e.target.value,
+												v,
+											);
 										}}
 										className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
 									/>

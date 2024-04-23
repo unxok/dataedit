@@ -23661,6 +23661,13 @@ var App2 = (props) => {
   )));
 };
 var App_default = App2;
+var toPlainArray = (arr) => {
+  try {
+    return arr.array();
+  } catch (e) {
+    return arr;
+  }
+};
 var EditableTable = ({ data }) => {
   const [queryResults, setQueryResults] = (0, import_react2.useState)();
   (0, import_react2.useEffect)(
@@ -23693,7 +23700,7 @@ var EditableTable = ({ data }) => {
     await doQuery();
   });
   const updateMetaData = (0, import_obsidian2.debounce)(
-    (k, e, v) => {
+    (k, value, v) => {
       console.log("updated?", v, queryResults.headers[k]);
       const link = v.find((d) => d && d.path);
       if (!link) {
@@ -23701,17 +23708,9 @@ var EditableTable = ({ data }) => {
       }
       const { path } = link;
       if (v[k]) {
-        return meApi.update(
-          queryResults.headers[k],
-          e.target.value,
-          path
-        );
+        return meApi.update(queryResults.headers[k], value, path);
       }
-      meApi.createYamlProperty(
-        queryResults.headers[k],
-        e.target.value,
-        path
-      );
+      meApi.createYamlProperty(queryResults.headers[k], value, path);
     },
     1500,
     true
@@ -23721,7 +23720,7 @@ var EditableTable = ({ data }) => {
   }, []);
   if (!queryResults)
     return /* @__PURE__ */ import_react2.default.createElement(Error2, null, "Invalid query");
-  return /* @__PURE__ */ import_react2.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react2.default.createElement("tr", { className: "w-fit" }, queryResults.headers.map((h) => /* @__PURE__ */ import_react2.default.createElement("th", { key: h, className: "w-fit" }, h === "File" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "w-fit text-nowrap" }, h, /* @__PURE__ */ import_react2.default.createElement("span", { className: "dataview small-text" }, queryResults.values.length)) : h)))), /* @__PURE__ */ import_react2.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react2.default.createElement("td", { key: i + k, className: "w-fit" }, d?.path ? /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react2.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react2.default.createElement("tr", { className: "w-fit" }, queryResults.headers.map((h) => /* @__PURE__ */ import_react2.default.createElement("th", { key: h, className: "w-fit" }, h === "File" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "w-fit text-nowrap" }, h, /* @__PURE__ */ import_react2.default.createElement("span", { className: "dataview small-text" }, queryResults.values.length)) : h)))), /* @__PURE__ */ import_react2.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react2.default.createElement("td", { key: i + k, className: "w-fit" }, d?.__proto__?.constructor?.name === "Link" ? /* @__PURE__ */ import_react2.default.createElement(
     "a",
     {
       href: d.path,
@@ -23730,10 +23729,46 @@ var EditableTable = ({ data }) => {
       "data-href": d.path,
       className: "internal-link",
       target: "_blank",
-      rel: "noopener"
+      rel: "noopener",
+      "data-test": d
     },
     d.path.slice(0, -3)
-  ) : (
+  ) : Array.isArray(d) ? /* @__PURE__ */ import_react2.default.createElement("ul", { className: "m-0" }, d.map((dd, n) => /* @__PURE__ */ import_react2.default.createElement("li", { key: i + k + n + dd }, /* @__PURE__ */ import_react2.default.createElement(
+    "input",
+    {
+      disabled: !v.some(
+        (data2) => data2 && data2.path
+      ),
+      "aria-label": !v.some(
+        (data2) => data2 && data2.path
+      ) ? "You must have a file.link in one of the columns!" : void 0,
+      value: dd,
+      onChange: (e) => {
+        setQueryResults(
+          (prev) => {
+            const copyValues = toPlainArray(
+              prev.values
+            );
+            const copyList = toPlainArray(
+              copyValues[i][k]
+            );
+            copyList[n] = e.target.value;
+            copyValues[i][k] = copyList;
+            updateMetaData(
+              k,
+              copyList,
+              v
+            );
+            return {
+              ...prev,
+              values: copyValues
+            };
+          }
+        );
+      },
+      className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
+    }
+  )))) : (
     // <div>
     /* @__PURE__ */ import_react2.default.createElement(
       "input",
@@ -23748,7 +23783,11 @@ var EditableTable = ({ data }) => {
             copyPrev.values[i][k] = e.target.value;
             return copyPrev;
           });
-          updateMetaData(k, e, v);
+          updateMetaData(
+            k,
+            e.target.value,
+            v
+          );
         },
         className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
       }
