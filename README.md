@@ -57,7 +57,7 @@ Some things you might notice:
 -   it uses debounce so as to not update the metadata after every single keystroke
 -   They are unstyled tables
 
-**Note:** This is very much a WIP and I have spent one day on it so far
+**Note:** This is very much a WIP and I have spent 2 days on it so far
 ![demo](./demo-data-edit.gif)
 
 # Planned features
@@ -65,6 +65,13 @@ Some things you might notice:
 -   [ ] allow extra config for className and `autoprop` from MetaEdit
     -   [ ] Add `---` to the end of the query where you can use yaml to specify config
     -   [ ] Add an extra key `config` to the returned object to specify in js expressions
+-   [ ] Support different property types
+    -   [x] string
+    -   [x] array (and tags)
+        -   Note that this only works if you use tags as a frontmatter property
+    -   [ ] number
+    -   [ ] Checkbox
+    -   [ ] Date, Date & time (are these just strings that are validated? Haven't checked yet)
 
 # Contributing
 
@@ -74,6 +81,8 @@ If you would like to contribute to the project, please fork the repo and make a 
 
 # Issues I need to open but am too tired and it's 2am
 
--   [ ] flickering on file changes outside of the editable table
+-   [x] flickering on file changes outside of the editable table
+    -   Fixed, I was doing weirdness with trying to force rerenders prior and that is no longer needed
 -   [ ] can't seem to get table width sized right
--   [ ] dataviewjs blocks (literally from dataview) seem broken now and I don't know why
+-   [x] dataviewjs blocks (literally from dataview) seem broken now and I don't know why
+    -   Looks good now
