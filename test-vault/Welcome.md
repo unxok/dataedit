@@ -15,7 +15,7 @@ num: "2"
 
 
 ```data-edit
-TABLE test, tags, some-list, num
+TABLE test AS SomethingElse, tags, some-list, num
 FROM #test
 SORT file.name
 ```
