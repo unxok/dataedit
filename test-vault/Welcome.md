@@ -32,6 +32,7 @@ FROM #test
 SORT file.ctime ASC
 ```
 
-
-sdfsdf
-sldkf
+```dataviewjs
+const data = dv.pages().map(p => [p.file.link, p.test]);
+dv.table(['file', 'test'], data)
+```
