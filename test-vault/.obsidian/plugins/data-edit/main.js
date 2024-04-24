@@ -1100,7 +1100,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef(initialValue) {
+        function useRef2(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
@@ -1893,7 +1893,7 @@ var require_react_development = __commonJS({
         exports.useLayoutEffect = useLayoutEffect;
         exports.useMemo = useMemo;
         exports.useReducer = useReducer;
-        exports.useRef = useRef;
+        exports.useRef = useRef2;
         exports.useState = useState2;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
@@ -23625,12 +23625,36 @@ var CircleAlert = createLucideIcon("CircleAlert", [
   ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/file.js
+var File = createLucideIcon("File", [
+  ["path", { d: "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z", key: "1rqfz7" }],
+  ["path", { d: "M14 2v4a2 2 0 0 0 2 2h4", key: "tnqrlb" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/plus.js
+var Plus = createLucideIcon("Plus", [
+  ["path", { d: "M5 12h14", key: "1ays0h" }],
+  ["path", { d: "M12 5v14", key: "s699le" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/x.js
+var X = createLucideIcon("X", [
+  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+]);
+
 // src/components/App.tsx
 var import_obsidian2 = require("obsidian");
 var import_react2 = __toESM(require_react());
 var RequiedDepsError = () => /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react2.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react2.default.createElement("ul", null, /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://github.com/chhoumann/MetaEdit" }, "MetaEdit")))));
 var Error2 = ({ children }) => {
   return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react2.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
+};
+var useDebounce = (callback, state, delay) => {
+  (0, import_react2.useEffect)(() => {
+    const timeout = setTimeout(() => callback(), delay);
+    return () => clearTimeout(timeout);
+  }, [state, delay]);
 };
 var App2 = (props) => {
   const { data: data2, getSectionInfo, settings, plugin } = props;
@@ -23653,7 +23677,15 @@ var App2 = (props) => {
   if (ErrMsg) {
     return /* @__PURE__ */ import_react2.default.createElement(Error2, null, /* @__PURE__ */ import_react2.default.createElement(ErrMsg, null));
   }
-  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement(
+    "input",
+    {
+      className: "metadata-input metadata-input-text mod-datetime",
+      max: "9999-12-31T23:59",
+      type: "datetime-local",
+      placeholder: "Empty"
+    }
+  ), /* @__PURE__ */ import_react2.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react2.default.createElement(
     EditableTable,
     {
       data: data2
@@ -23668,18 +23700,45 @@ var toPlainArray = (arr) => {
     return arr;
   }
 };
+var getPropertyType = (propertyName) => {
+  const { metadataTypeManager } = app;
+  return metadataTypeManager.properties[propertyName]?.type;
+};
+var PropertyIcon = ({ propertyName }) => {
+  const ref = (0, import_react2.useRef)(null);
+  const propertyType = getPropertyType(propertyName);
+  const propertyIcon = (
+    // @ts-ignore
+    app.metadataTypeManager.registeredTypeWidgets[propertyType]?.icon
+  );
+  (0, import_react2.useEffect)(() => {
+    if (!ref.current || !propertyIcon)
+      return;
+    console.log("icon: ", propertyIcon);
+    try {
+      (0, import_obsidian2.setIcon)(ref.current, propertyIcon);
+      console.log("icon should be set");
+    } catch (e) {
+      console.error("Failed to setIcon: ", e);
+    }
+  }, [propertyIcon]);
+  return /* @__PURE__ */ import_react2.default.createElement(
+    "span",
+    {
+      ref,
+      className: "metadata-property-icon",
+      "aria-label": propertyType,
+      "data-tooltip-position": "right"
+    }
+  );
+};
 var EditableTable = ({ data }) => {
   const [queryResults, setQueryResults] = (0, import_react2.useState)();
-  (0, import_react2.useEffect)(
-    () => console.log("query results: ", queryResults),
-    [queryResults]
-  );
   const meApi = app.plugins.plugins.metaedit.api;
   const doQuery = async () => {
     const dv = app.plugins.plugins.dataview.api;
     if (data.split(" ")[0] !== "TABLE") {
       const result = eval(`(() => {${data}})()`);
-      console.log("result: ", result);
       if (!result)
         return;
       return setQueryResults(result);
@@ -23688,18 +23747,17 @@ var EditableTable = ({ data }) => {
     if (!qr.successful) {
       return;
     }
-    console.log(qr.value);
     setQueryResults(qr.value);
   };
   app.metadataCache.on("dataview:index-ready", async () => {
-    console.log("index ready");
     await doQuery();
   });
   app.metadataCache.on("dataview:metadata-change", async () => {
-    console.log("metadata changed");
     await doQuery();
   });
-  const updateMetaData = (0, import_obsidian2.debounce)(
+  const updateMetaData = (
+    // I would prefer to use debounce here but it doesn't work nicely across different components
+    // debounce(
     (k, value, v) => {
       console.log("updated?", v, queryResults.headers[k]);
       const link = v.find((d) => d && d.path);
@@ -23707,92 +23765,300 @@ var EditableTable = ({ data }) => {
         return;
       }
       const { path } = link;
-      if (v[k]) {
-        return meApi.update(queryResults.headers[k], value, path);
+      if (v[k] !== void 0 || v[k] !== null) {
+        meApi.update(queryResults.headers[k], value, path);
+        doQuery();
+        return;
       }
       meApi.createYamlProperty(queryResults.headers[k], value, path);
-    },
-    1500,
-    true
+      doQuery();
+    }
   );
   (0, import_react2.useEffect)(() => {
     doQuery();
   }, []);
   if (!queryResults)
     return /* @__PURE__ */ import_react2.default.createElement(Error2, null, "Invalid query");
-  return /* @__PURE__ */ import_react2.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react2.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react2.default.createElement("tr", { className: "w-fit" }, queryResults.headers.map((h) => /* @__PURE__ */ import_react2.default.createElement("th", { key: h, className: "w-fit" }, h === "File" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "w-fit text-nowrap" }, h, /* @__PURE__ */ import_react2.default.createElement("span", { className: "dataview small-text" }, queryResults.values.length)) : h)))), /* @__PURE__ */ import_react2.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react2.default.createElement("td", { key: i + k, className: "w-fit" }, d?.__proto__?.constructor?.name === "Link" ? /* @__PURE__ */ import_react2.default.createElement(
-    "a",
+  return /* @__PURE__ */ import_react2.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react2.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react2.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react2.default.createElement("td", { key: i + k, className: "relative w-fit" }, /* @__PURE__ */ import_react2.default.createElement(
+    EditableTableData,
     {
-      href: d.path,
-      "data-tooltip-position": "top",
-      "aria-label": d.path,
-      "data-href": d.path,
-      className: "internal-link",
-      target: "_blank",
-      rel: "noopener",
-      "data-test": d
+      d,
+      i,
+      k,
+      v,
+      queryResults,
+      setQueryResults,
+      updateMetaData
+    }
+  )))))));
+};
+var EditableTableData = ({
+  d,
+  i,
+  k,
+  v,
+  queryResults: queryResults2,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const propertyType = getPropertyType(queryResults2.headers[k]);
+  if (d?.__proto__?.constructor?.name === "Link") {
+    return /* @__PURE__ */ import_react2.default.createElement(LinkTableData, { d });
+  }
+  if (propertyType === "multitext" || propertyType === "tags") {
+    return /* @__PURE__ */ import_react2.default.createElement(
+      ArrayInput,
+      {
+        d,
+        v,
+        i,
+        k,
+        setQueryResults: setQueryResults2,
+        updateMetaData: updateMetaData2
+      }
+    );
+  }
+  if (propertyType === "date") {
+    return /* @__PURE__ */ import_react2.default.createElement("div", null, "date");
+  }
+  if (propertyType === "datetime") {
+    return /* @__PURE__ */ import_react2.default.createElement("div", null, "datetime");
+  }
+  if (propertyType === "checkbox") {
+    return /* @__PURE__ */ import_react2.default.createElement(
+      CheckboxInput,
+      {
+        v,
+        d,
+        i,
+        k,
+        setQueryResults: setQueryResults2,
+        updateMetaData: updateMetaData2
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react2.default.createElement(
+    StringOrNumberInput,
+    {
+      v,
+      d,
+      i,
+      k,
+      isNumber: propertyType === "number",
+      setQueryResults: setQueryResults2,
+      updateMetaData: updateMetaData2
+    }
+  );
+};
+var TableHead = ({ queryResults: queryResults2 }) => {
+  return /* @__PURE__ */ import_react2.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react2.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h) => /* @__PURE__ */ import_react2.default.createElement("th", { key: h, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react2.default.createElement(
+    "span",
+    {
+      className: "metadata-property-icon",
+      "aria-label": "file",
+      "data-tooltip-position": "right"
     },
-    d.path.slice(0, -3)
-  ) : Array.isArray(d) ? /* @__PURE__ */ import_react2.default.createElement("ul", { className: "m-0" }, d.map((dd, n) => /* @__PURE__ */ import_react2.default.createElement("li", { key: i + k + n + dd }, /* @__PURE__ */ import_react2.default.createElement(
+    /* @__PURE__ */ import_react2.default.createElement(
+      File,
+      {
+        style: {
+          width: "var(--icon-size)",
+          height: "var(--icon-size)"
+        }
+      }
+    )
+  )) : /* @__PURE__ */ import_react2.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react2.default.createElement(PropertyIcon, { propertyName: h }))))));
+};
+var LinkTableData = ({ d }) => /* @__PURE__ */ import_react2.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react2.default.createElement(
+  "a",
+  {
+    href: d.path,
+    "data-tooltip-position": "top",
+    "aria-label": d.path,
+    "data-href": d.path,
+    className: "internal-link",
+    target: "_blank",
+    rel: "noopener",
+    "data-test": d
+  },
+  d.path.slice(0, -3)
+));
+var StringOrNumberInput = ({
+  v,
+  d,
+  i,
+  k,
+  isNumber,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const [value, setValue] = (0, import_react2.useState)();
+  useDebounce(
+    () => {
+      if (value === void 0 || value === null)
+        return;
+      const newVal = isNumber ? Number(value) : value;
+      updateMetaData2(k, newVal, v);
+    },
+    value,
+    1500
+  );
+  return /* @__PURE__ */ import_react2.default.createElement(
     "input",
     {
-      disabled: !v.some(
-        (data2) => data2 && data2.path
-      ),
-      "aria-label": !v.some(
-        (data2) => data2 && data2.path
-      ) ? "You must have a file.link in one of the columns!" : void 0,
-      value: dd,
+      disabled: !v.some((data2) => data2 && data2.path),
+      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
+      type: isNumber ? "number" : "text",
+      value: d,
       onChange: (e) => {
-        setQueryResults(
-          (prev) => {
-            const copyValues = toPlainArray(
-              prev.values
-            );
-            const copyList = toPlainArray(
-              copyValues[i][k]
-            );
-            copyList[n] = e.target.value;
-            copyValues[i][k] = copyList;
-            updateMetaData(
-              k,
-              copyList,
-              v
-            );
-            return {
-              ...prev,
-              values: copyValues
-            };
-          }
-        );
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[i][k] = e.target.value;
+          return copyPrev;
+        });
+        setValue(e.target.value);
       },
       className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
     }
-  )))) : (
-    // <div>
+  );
+};
+var ArrayInput = ({
+  d,
+  v,
+  i,
+  k,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const [value, setValue] = (0, import_react2.useState)();
+  useDebounce(
+    () => {
+      if (value === void 0 || value === null)
+        return;
+      updateMetaData2(k, value, v);
+    },
+    value,
+    1500
+  );
+  return /* @__PURE__ */ import_react2.default.createElement("ul", { className: "m-0 p-0" }, d?.map((dd, n) => /* @__PURE__ */ import_react2.default.createElement("li", { key: i + k + n.toString(), className: "flex" }, /* @__PURE__ */ import_react2.default.createElement(
+    "span",
+    {
+      className: "multi-select-pill-remove-button",
+      onClick: () => {
+        const copyValues = toPlainArray(v);
+        const copyList = toPlainArray(copyValues[k]).filter(
+          (_, index) => index !== n
+        );
+        copyValues[k] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[i] = copyValues;
+          return copyPrev;
+        });
+        setValue(copyList);
+      }
+    },
     /* @__PURE__ */ import_react2.default.createElement(
-      "input",
+      X,
       {
-        disabled: !v.some((data2) => data2 && data2.path),
-        "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
-        value: d,
-        onChange: (e) => {
-          console.log("changed");
-          setQueryResults((prev) => {
-            const copyPrev = { ...prev };
-            copyPrev.values[i][k] = e.target.value;
-            return copyPrev;
-          });
-          updateMetaData(
-            k,
-            e.target.value,
-            v
-          );
-        },
-        className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
+        style: {
+          width: "var(--icon-size)",
+          height: "var(--icon-size)"
+        }
       }
     )
-  )))))));
+  ), /* @__PURE__ */ import_react2.default.createElement(
+    "input",
+    {
+      disabled: !v.some((data2) => data2 && data2.path),
+      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
+      type: "text",
+      value: dd,
+      onChange: (e) => {
+        const copyValues = toPlainArray(v);
+        console.log("e.value: ", e.target.value);
+        const copyList = toPlainArray(copyValues[k]);
+        copyList[n] = e.target.value;
+        copyValues[k] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[i] = copyValues;
+          return copyPrev;
+        });
+        setValue(copyList);
+      },
+      className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
+    }
+  ))), /* @__PURE__ */ import_react2.default.createElement(
+    "span",
+    {
+      className: "multi-select-pill-remove-button",
+      onClick: () => {
+        const copyValues = toPlainArray(v);
+        const copyList = toPlainArray(copyValues[k]);
+        copyList.push("");
+        copyValues[k] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[i] = copyValues;
+          return copyPrev;
+        });
+        setValue(copyList);
+      }
+    },
+    /* @__PURE__ */ import_react2.default.createElement(
+      Plus,
+      {
+        style: {
+          width: "var(--icon-size)",
+          height: "var(--icon-size)"
+        }
+      }
+    )
+  ));
+};
+var CheckboxInput = ({
+  v,
+  d,
+  i,
+  k,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const [value, setValue] = (0, import_react2.useState)();
+  const debouncedValue = useDebounce(
+    () => {
+      if (value !== false && !value)
+        return;
+      updateMetaData2(k, value, v);
+    },
+    value,
+    1500
+  );
+  (0, import_react2.useEffect)(() => {
+    console.log("i am checked? ", d);
+  }, [d]);
+  return /* @__PURE__ */ import_react2.default.createElement("span", { className: "absolute inset-0 flex items-center justify-center" }, /* @__PURE__ */ import_react2.default.createElement(
+    "input",
+    {
+      disabled: !v.some((data2) => data2 && data2.path),
+      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
+      type: "checkbox",
+      "data-indeterminate": "false",
+      checked: !!d,
+      onChange: (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[i][k] = e.target.checked;
+          return copyPrev;
+        });
+        setValue(e.target.checked);
+      },
+      className: "metadata-input-checkbox"
+    }
+  ));
+};
+var DateTimeInput = ({}) => {
 };
 
 // src/main.tsx
@@ -23925,6 +24191,30 @@ lucide-react/dist/esm/createLucideIcon.js:
    *)
 
 lucide-react/dist/esm/icons/circle-alert.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/file.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/plus.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/x.js:
   (**
    * @license lucide-react v0.372.0 - ISC
    *

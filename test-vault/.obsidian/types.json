@@ -4,6 +4,13 @@
     "cssclasses": "multitext",
     "tags": "tags",
     "some list": "multitext",
-    "num": "number"
+    "num": "number",
+    "date": "date",
+    "checkbox": "checkbox",
+    "datetime": "datetime",
+    "test": "text",
+    "some-list": "multitext",
+    "number": "number",
+    "checkboxtest": "checkbox"
   }
 }

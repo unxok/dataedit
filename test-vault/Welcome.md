@@ -1,21 +1,28 @@
 ---
-test: testing testing 1234567899
+test: hello asdjj
 some-list:
   - itemAa
   - itemBb
-  - itemCc
+  - itemCcd
+  - s
+  - s
+  - sdddfdd
+  - sdff
 tags:
   - another
   - onemoretagg
   - test
-num: "2"
+date: 2024-02-01
+checkboxtest: false
+datetime: 2024-02-01T13:24:00
+number: 0
 
 ---
  #test #another #onemoretag
 
 
 ```data-edit
-TABLE test AS SomethingElse, tags, some-list, num
+TABLE test, some-list, number, tags, date, checkboxtest, datetime
 FROM #test
 SORT file.name
 ```
