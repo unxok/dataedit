@@ -6,6 +6,7 @@ import { createRoot } from "react-dom/client";
 import { defaultSettings, TSettings } from "@/settings";
 import { DataEditSettingsTab } from "@/settings-tab";
 import { loadData } from "@/saveload";
+import { PropertySuggester } from "@/components/Popover";
 
 import App from "@/components/App";
 
@@ -15,17 +16,12 @@ import App from "@/components/App";
  */
 export const loadDependencies = async () => {
 	const DATAVIEW = "dataview";
-	const METAEDIT = "metaedit";
 	// @ts-ignore
 	const plugins = app.plugins;
-	if (
-		!plugins.enabledPlugins.has(DATAVIEW) ||
-		!plugins.enabledPlugins.has(METAEDIT)
-	) {
+	if (!plugins.enabledPlugins.has(DATAVIEW)) {
 		return false;
 	}
 	await plugins.loadPlugin(DATAVIEW);
-	await plugins.loadPlugin(METAEDIT);
 	return true;
 };
 
@@ -36,9 +32,13 @@ export default class DataEdit extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new DataEditSettingsTab(this.app, this));
 
-		app.workspace.onLayoutReady(async () => {
-			this.registerCodeBlock();
-		});
+		this.registerCodeBlock();
+		// this doesn't work inside my react rendered table
+		// this.registerEditorSuggest(new PropertySuggester(this.app, this));
+
+		// app.workspace.onLayoutReady(async () => {
+		// 	this.registerCodeBlock();
+		// });
 
 		this.addCommand({
 			id: `insert`,
@@ -52,19 +52,20 @@ export default class DataEdit extends Plugin {
 
 	registerCodeBlock() {
 		this.registerMarkdownCodeBlockProcessor("data-edit", (s, e, i) => {
-			console.log(s);
+			console.log("registered mcbp: ", s);
+			console.log("ctx: ", i);
 			e.empty();
 			const root = createRoot(e);
 			root.render(
-				<React.StrictMode>
-					<App
-						data={s}
-						getSectionInfo={() => i.getSectionInfo(e)}
-						settings={this.settings}
-						app={this.app}
-						plugin={this}
-					/>
-				</React.StrictMode>,
+				// <React.StrictMode>
+				<App
+					data={s}
+					getSectionInfo={() => i.getSectionInfo(e)}
+					settings={this.settings}
+					app={this.app}
+					plugin={this}
+				/>,
+				// </React.StrictMode>,
 			);
 		});
 	}

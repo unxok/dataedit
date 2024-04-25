@@ -23523,7 +23523,7 @@ __export(main_exports, {
 });
 module.exports = __toCommonJS(main_exports);
 var import_obsidian3 = require("obsidian");
-var import_react3 = __toESM(require_react());
+var import_react7 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // src/settings.ts
@@ -23534,9 +23534,9 @@ var defaultSettings = {
 // src/settings-tab.ts
 var import_obsidian = require("obsidian");
 var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app2, plugin) {
-    super(app2, plugin);
-    this.plugin = plugin;
+  constructor(app2, plugin2) {
+    super(app2, plugin2);
+    this.plugin = plugin2;
   }
   display() {
     this.containerEl.empty();
@@ -23645,39 +23645,215 @@ var X = createLucideIcon("X", [
 
 // src/components/App.tsx
 var import_obsidian2 = require("obsidian");
-var import_react2 = __toESM(require_react());
-var RequiedDepsError = () => /* @__PURE__ */ import_react2.default.createElement(import_react2.default.Fragment, null, /* @__PURE__ */ import_react2.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react2.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react2.default.createElement("ul", null, /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")), /* @__PURE__ */ import_react2.default.createElement("li", null, /* @__PURE__ */ import_react2.default.createElement("a", { href: "https://github.com/chhoumann/MetaEdit" }, "MetaEdit")))));
+var import_react6 = __toESM(require_react());
+
+// node_modules/@babel/runtime/helpers/esm/extends.js
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+// node_modules/@radix-ui/react-portal/dist/index.mjs
+var import_react5 = __toESM(require_react(), 1);
+var import_react_dom2 = __toESM(require_react_dom(), 1);
+
+// node_modules/@radix-ui/react-primitive/dist/index.mjs
+var import_react4 = __toESM(require_react(), 1);
+var import_react_dom = __toESM(require_react_dom(), 1);
+
+// node_modules/@radix-ui/react-slot/dist/index.mjs
+var import_react3 = __toESM(require_react(), 1);
+
+// node_modules/@radix-ui/react-compose-refs/dist/index.mjs
+var import_react2 = __toESM(require_react(), 1);
+function $6ed0406888f73fc4$var$setRef(ref, value) {
+  if (typeof ref === "function")
+    ref(value);
+  else if (ref !== null && ref !== void 0)
+    ref.current = value;
+}
+function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
+  return (node) => refs.forEach(
+    (ref) => $6ed0406888f73fc4$var$setRef(ref, node)
+  );
+}
+
+// node_modules/@radix-ui/react-slot/dist/index.mjs
+var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react3.forwardRef)((props, forwardedRef) => {
+  const { children, ...slotProps } = props;
+  const childrenArray = import_react3.Children.toArray(children);
+  const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
+  if (slottable) {
+    const newElement = slottable.props.children;
+    const newChildren = childrenArray.map((child) => {
+      if (child === slottable) {
+        if (import_react3.Children.count(newElement) > 1)
+          return import_react3.Children.only(null);
+        return /* @__PURE__ */ (0, import_react3.isValidElement)(newElement) ? newElement.props.children : null;
+      } else
+        return child;
+    });
+    return /* @__PURE__ */ (0, import_react3.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+      ref: forwardedRef
+    }), /* @__PURE__ */ (0, import_react3.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react3.cloneElement)(newElement, void 0, newChildren) : null);
+  }
+  return /* @__PURE__ */ (0, import_react3.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+    ref: forwardedRef
+  }), children);
+});
+$5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
+var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react3.forwardRef)((props, forwardedRef) => {
+  const { children, ...slotProps } = props;
+  if (/* @__PURE__ */ (0, import_react3.isValidElement)(children))
+    return /* @__PURE__ */ (0, import_react3.cloneElement)(children, {
+      ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
+      ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
+    });
+  return import_react3.Children.count(children) > 1 ? import_react3.Children.only(null) : null;
+});
+$5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
+var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
+  return /* @__PURE__ */ (0, import_react3.createElement)(import_react3.Fragment, null, children);
+};
+function $5e63c961fc1ce211$var$isSlottable(child) {
+  return /* @__PURE__ */ (0, import_react3.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
+}
+function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
+  const overrideProps = {
+    ...childProps
+  };
+  for (const propName in childProps) {
+    const slotPropValue = slotProps[propName];
+    const childPropValue = childProps[propName];
+    const isHandler = /^on[A-Z]/.test(propName);
+    if (isHandler) {
+      if (slotPropValue && childPropValue)
+        overrideProps[propName] = (...args) => {
+          childPropValue(...args);
+          slotPropValue(...args);
+        };
+      else if (slotPropValue)
+        overrideProps[propName] = slotPropValue;
+    } else if (propName === "style")
+      overrideProps[propName] = {
+        ...slotPropValue,
+        ...childPropValue
+      };
+    else if (propName === "className")
+      overrideProps[propName] = [
+        slotPropValue,
+        childPropValue
+      ].filter(Boolean).join(" ");
+  }
+  return {
+    ...slotProps,
+    ...overrideProps
+  };
+}
+
+// node_modules/@radix-ui/react-primitive/dist/index.mjs
+var $8927f6f2acc4f386$var$NODES = [
+  "a",
+  "button",
+  "div",
+  "form",
+  "h2",
+  "h3",
+  "img",
+  "input",
+  "label",
+  "li",
+  "nav",
+  "ol",
+  "p",
+  "span",
+  "svg",
+  "ul"
+];
+var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
+  const Node = /* @__PURE__ */ (0, import_react4.forwardRef)((props, forwardedRef) => {
+    const { asChild, ...primitiveProps } = props;
+    const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
+    (0, import_react4.useEffect)(() => {
+      window[Symbol.for("radix-ui")] = true;
+    }, []);
+    return /* @__PURE__ */ (0, import_react4.createElement)(Comp, _extends({}, primitiveProps, {
+      ref: forwardedRef
+    }));
+  });
+  Node.displayName = `Primitive.${node}`;
+  return {
+    ...primitive,
+    [node]: Node
+  };
+}, {});
+
+// node_modules/@radix-ui/react-portal/dist/index.mjs
+var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react5.forwardRef)((props, forwardedRef) => {
+  var _globalThis$document;
+  const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props;
+  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react5.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
+    ref: forwardedRef
+  })), container) : null;
+});
+var $f1701beae083dbae$export$be92b6f5f03c0fe9 = $f1701beae083dbae$export$602eac185826482c;
+
+// src/components/App.tsx
+var RequiedDepsError = () => /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, /* @__PURE__ */ import_react6.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react6.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react6.default.createElement("ul", null, /* @__PURE__ */ import_react6.default.createElement("li", null, /* @__PURE__ */ import_react6.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")), /* @__PURE__ */ import_react6.default.createElement("li", null, /* @__PURE__ */ import_react6.default.createElement("a", { href: "https://github.com/chhoumann/MetaEdit" }, "MetaEdit")))));
 var Error2 = ({ children }) => {
-  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react2.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
+  return /* @__PURE__ */ import_react6.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react6.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react6.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
 };
 var useDebounce = (callback, state, delay) => {
-  (0, import_react2.useEffect)(() => {
+  (0, import_react6.useEffect)(() => {
     const timeout = setTimeout(() => callback(), delay);
     return () => clearTimeout(timeout);
   }, [state, delay]);
 };
+var useEnter = (ref, callback) => {
+  const eventCallback = (e) => {
+    if (e.key !== "Enter")
+      return;
+    callback();
+  };
+  (0, import_react6.useEffect)(() => {
+    if (!ref.current)
+      return;
+    ref.current.addEventListener("keydown", eventCallback);
+    return () => ref.current && ref.current.removeEventListener("keydown", eventCallback);
+  }, [ref, callback]);
+};
 var App2 = (props) => {
-  const { data: data2, getSectionInfo, settings, plugin } = props;
-  const [ErrMsg, setErrMsg] = (0, import_react2.useState)(void 0);
-  const [, updateEmpty] = (0, import_react2.useState)({});
-  const forceUpdate = (0, import_react2.useCallback)(() => updateEmpty({}), []);
-  (0, import_react2.useEffect)(() => {
+  const { data: data2, getSectionInfo, settings, plugin: plugin2 } = props;
+  const [ErrMsg, setErrMsg] = (0, import_react6.useState)(void 0);
+  const [, updateEmpty] = (0, import_react6.useState)({});
+  const forceUpdate = (0, import_react6.useCallback)(() => updateEmpty({}), []);
+  (0, import_react6.useEffect)(() => {
     new import_obsidian2.Notice("App rendered");
     (async () => {
       const b = await loadDependencies();
       if (!b)
         return setErrMsg(() => RequiedDepsError);
     })();
-    plugin.addCommand({
+    plugin2.addCommand({
       id: `reload-data-edit`,
       name: `Reload Data Edit`,
       callback: () => forceUpdate()
     });
   }, []);
   if (ErrMsg) {
-    return /* @__PURE__ */ import_react2.default.createElement(Error2, null, /* @__PURE__ */ import_react2.default.createElement(ErrMsg, null));
+    return /* @__PURE__ */ import_react6.default.createElement(Error2, null, /* @__PURE__ */ import_react6.default.createElement(ErrMsg, null));
   }
-  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react6.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react6.default.createElement(
     "input",
     {
       className: "metadata-input metadata-input-text mod-datetime",
@@ -23685,12 +23861,48 @@ var App2 = (props) => {
       type: "datetime-local",
       placeholder: "Empty"
     }
-  ), /* @__PURE__ */ import_react2.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react2.default.createElement(
+  ), /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react6.default.createElement(
     EditableTable,
     {
-      data: data2
+      data: data2,
+      plugin: plugin2
     }
   )));
+};
+var PropertySuggester = ({
+  property,
+  top,
+  left,
+  callback
+}) => {
+  console.log("got property: ", property);
+  const suggestions = (
+    // @ts-ignore
+    app.metadataCache.getFrontmatterPropertyValuesForKey(property)
+  );
+  console.log("suggestions: ", suggestions);
+  (0, import_react6.useEffect)(() => {
+    console.log("suggester rendered");
+  });
+  return /* @__PURE__ */ import_react6.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react6.default.createElement(
+    "div",
+    {
+      className: "border-secondary-alt absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid bg-primary-alt p-1 text-normal",
+      style: {
+        top: top + 40,
+        left
+      }
+    },
+    suggestions?.map((s, i) => /* @__PURE__ */ import_react6.default.createElement(
+      "div",
+      {
+        key: i + s + "suggestion",
+        className: "rounded-md p-2 hover:bg-secondary-alt",
+        onClick: async (e) => callback(e)
+      },
+      s
+    )) ?? "No suggestions"
+  ));
 };
 var App_default = App2;
 var toPlainArray = (arr) => {
@@ -23704,14 +23916,18 @@ var getPropertyType = (propertyName) => {
   const { metadataTypeManager } = app;
   return metadataTypeManager.properties[propertyName]?.type;
 };
+var iconStyle = {
+  width: "var(--icon-size)",
+  height: "var(--icon-size)"
+};
 var PropertyIcon = ({ propertyName }) => {
-  const ref = (0, import_react2.useRef)(null);
+  const ref = (0, import_react6.useRef)(null);
   const propertyType = getPropertyType(propertyName);
   const propertyIcon = (
     // @ts-ignore
     app.metadataTypeManager.registeredTypeWidgets[propertyType]?.icon
   );
-  (0, import_react2.useEffect)(() => {
+  (0, import_react6.useEffect)(() => {
     if (!ref.current || !propertyIcon)
       return;
     console.log("icon: ", propertyIcon);
@@ -23722,7 +23938,7 @@ var PropertyIcon = ({ propertyName }) => {
       console.error("Failed to setIcon: ", e);
     }
   }, [propertyIcon]);
-  return /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react6.default.createElement(
     "span",
     {
       ref,
@@ -23732,8 +23948,33 @@ var PropertyIcon = ({ propertyName }) => {
     }
   );
 };
-var EditableTable = ({ data }) => {
-  const [queryResults, setQueryResults] = (0, import_react2.useState)();
+var EditableTable = ({ data, plugin }) => {
+  const [queryResults, setQueryResults] = (0, import_react6.useState)();
+  (0, import_react6.useEffect)(() => {
+    console.log("query results: ", queryResults);
+    const asyncDoQuery = async () => {
+      await doQuery();
+      console.log("asyncquery");
+    };
+    plugin.app.metadataCache.on(
+      "dataview:index-ready",
+      asyncDoQuery
+    );
+    plugin.app.metadataCache.on(
+      "dataview:metadata-change",
+      asyncDoQuery
+    );
+    return () => {
+      plugin.app.metadataCache.off(
+        "dataview:index-ready",
+        asyncDoQuery
+      );
+      plugin.app.metadataCache.off(
+        "dataview:metadata-change",
+        asyncDoQuery
+      );
+    };
+  }, [queryResults]);
   const meApi = app.plugins.plugins.metaedit.api;
   const doQuery = async () => {
     const dv = app.plugins.plugins.dataview.api;
@@ -23749,37 +23990,26 @@ var EditableTable = ({ data }) => {
     }
     setQueryResults(qr.value);
   };
-  app.metadataCache.on("dataview:index-ready", async () => {
-    await doQuery();
-  });
-  app.metadataCache.on("dataview:metadata-change", async () => {
-    await doQuery();
-  });
-  const updateMetaData = (
-    // I would prefer to use debounce here but it doesn't work nicely across different components
-    // debounce(
-    (k, value, v) => {
-      console.log("updated?", v, queryResults.headers[k]);
-      const link = v.find((d) => d && d.path);
-      if (!link) {
-        return;
-      }
-      const { path } = link;
-      if (v[k] !== void 0 || v[k] !== null) {
-        meApi.update(queryResults.headers[k], value, path);
-        doQuery();
-        return;
-      }
-      meApi.createYamlProperty(queryResults.headers[k], value, path);
-      doQuery();
+  const updateMetaData = async (k, value, v) => {
+    const link = v.find((d) => d && d.path);
+    if (!link) {
+      return console.error("no file link found");
     }
-  );
-  (0, import_react2.useEffect)(() => {
+    const { path } = link;
+    const file = plugin.app.vault.getFileByPath(path);
+    const propName = queryResults.headers[k];
+    await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
+      console.log("fm: ", frontmatter);
+      frontmatter[propName] = value;
+    });
+    console.log("did it process?");
+  };
+  (0, import_react6.useEffect)(() => {
     doQuery();
   }, []);
   if (!queryResults)
-    return /* @__PURE__ */ import_react2.default.createElement(Error2, null, "Invalid query");
-  return /* @__PURE__ */ import_react2.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react2.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react2.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react2.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react2.default.createElement("td", { key: i + k, className: "relative w-fit" }, /* @__PURE__ */ import_react2.default.createElement(
+    return /* @__PURE__ */ import_react6.default.createElement(Error2, null, "Invalid query");
+  return /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, /* @__PURE__ */ import_react6.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react6.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react6.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react6.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react6.default.createElement("td", { key: i + k, className: "relative w-fit" }, /* @__PURE__ */ import_react6.default.createElement(
     EditableTableData,
     {
       d,
@@ -23788,9 +24018,10 @@ var EditableTable = ({ data }) => {
       v,
       queryResults,
       setQueryResults,
-      updateMetaData
+      updateMetaData,
+      doQuery
     }
-  )))))));
+  ))))))));
 };
 var EditableTableData = ({
   d,
@@ -23799,15 +24030,16 @@ var EditableTableData = ({
   v,
   queryResults: queryResults2,
   setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2
+  updateMetaData: updateMetaData2,
+  doQuery: doQuery2
 }) => {
   const propertyType = getPropertyType(queryResults2.headers[k]);
   if (d?.__proto__?.constructor?.name === "Link") {
-    return /* @__PURE__ */ import_react2.default.createElement(LinkTableData, { d });
+    return /* @__PURE__ */ import_react6.default.createElement(LinkTableData, { d });
   }
   if (propertyType === "multitext" || propertyType === "tags") {
-    return /* @__PURE__ */ import_react2.default.createElement(
-      ArrayInput,
+    return /* @__PURE__ */ import_react6.default.createElement(
+      ArrayInputWrapper,
       {
         d,
         v,
@@ -23819,13 +24051,13 @@ var EditableTableData = ({
     );
   }
   if (propertyType === "date") {
-    return /* @__PURE__ */ import_react2.default.createElement("div", null, "date");
+    return /* @__PURE__ */ import_react6.default.createElement("div", null, "date");
   }
   if (propertyType === "datetime") {
-    return /* @__PURE__ */ import_react2.default.createElement("div", null, "datetime");
+    return /* @__PURE__ */ import_react6.default.createElement("div", null, "datetime");
   }
   if (propertyType === "checkbox") {
-    return /* @__PURE__ */ import_react2.default.createElement(
+    return /* @__PURE__ */ import_react6.default.createElement(
       CheckboxInput,
       {
         v,
@@ -23837,39 +24069,45 @@ var EditableTableData = ({
       }
     );
   }
-  return /* @__PURE__ */ import_react2.default.createElement(
-    StringOrNumberInput,
+  if (propertyType === "number") {
+    return /* @__PURE__ */ import_react6.default.createElement(
+      NumberInput,
+      {
+        v,
+        d,
+        i,
+        k,
+        setQueryResults: setQueryResults2,
+        updateMetaData: updateMetaData2,
+        queryResults: queryResults2
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react6.default.createElement(
+    StringInput,
     {
       v,
       d,
       i,
       k,
-      isNumber: propertyType === "number",
       setQueryResults: setQueryResults2,
-      updateMetaData: updateMetaData2
+      updateMetaData: updateMetaData2,
+      queryResults: queryResults2
     }
   );
 };
 var TableHead = ({ queryResults: queryResults2 }) => {
-  return /* @__PURE__ */ import_react2.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react2.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h) => /* @__PURE__ */ import_react2.default.createElement("th", { key: h, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react2.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react6.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react6.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h) => /* @__PURE__ */ import_react6.default.createElement("th", { key: h, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react6.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react6.default.createElement(
     "span",
     {
       className: "metadata-property-icon",
       "aria-label": "file",
       "data-tooltip-position": "right"
     },
-    /* @__PURE__ */ import_react2.default.createElement(
-      File,
-      {
-        style: {
-          width: "var(--icon-size)",
-          height: "var(--icon-size)"
-        }
-      }
-    )
-  )) : /* @__PURE__ */ import_react2.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react2.default.createElement(PropertyIcon, { propertyName: h }))))));
+    /* @__PURE__ */ import_react6.default.createElement(File, { style: iconStyle })
+  )) : /* @__PURE__ */ import_react6.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react6.default.createElement(PropertyIcon, { propertyName: h }))))));
 };
-var LinkTableData = ({ d }) => /* @__PURE__ */ import_react2.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react2.default.createElement(
+var LinkTableData = ({ d }) => /* @__PURE__ */ import_react6.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react6.default.createElement(
   "a",
   {
     href: d.path,
@@ -23883,32 +24121,38 @@ var LinkTableData = ({ d }) => /* @__PURE__ */ import_react2.default.createEleme
   },
   d.path.slice(0, -3)
 ));
-var StringOrNumberInput = ({
+var StringInput = ({
   v,
   d,
   i,
   k,
-  isNumber,
   setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2
+  updateMetaData: updateMetaData2,
+  queryResults: queryResults2
 }) => {
-  const [value, setValue] = (0, import_react2.useState)();
-  useDebounce(
-    () => {
-      if (value === void 0 || value === null)
-        return;
-      const newVal = isNumber ? Number(value) : value;
-      updateMetaData2(k, newVal, v);
-    },
-    value,
-    1500
-  );
-  return /* @__PURE__ */ import_react2.default.createElement(
+  const ref = (0, import_react6.useRef)();
+  const [rect, setRect] = (0, import_react6.useState)();
+  useEnter(ref, async () => {
+    await updateMetaData2(k, d, v);
+  });
+  return /* @__PURE__ */ import_react6.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react6.default.createElement(
+    PropertySuggester,
+    {
+      property: queryResults2.headers[k],
+      top: rect.top,
+      left: rect.left,
+      callback: async (e) => {
+        const newValue = e.currentTarget.textContent;
+        await updateMetaData2(k, newValue, v);
+      }
+    }
+  ), /* @__PURE__ */ import_react6.default.createElement(
     "input",
     {
+      ref,
       disabled: !v.some((data2) => data2 && data2.path),
       "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
-      type: isNumber ? "number" : "text",
+      type: "text",
       value: d,
       onChange: (e) => {
         setQueryResults2((prev) => {
@@ -23916,13 +24160,58 @@ var StringOrNumberInput = ({
           copyPrev.values[i][k] = e.target.value;
           return copyPrev;
         });
-        setValue(e.target.value);
+      },
+      onBlur: async () => {
+        await updateMetaData2(k, d, v);
+        setRect(void 0);
+      },
+      onFocus: (e) => {
+        const rect2 = e.target.getBoundingClientRect();
+        setRect({
+          top: rect2.top,
+          left: rect2.left
+        });
+      },
+      className: "relative m-0 w-fit border-transparent bg-transparent p-0 text-start"
+    }
+  ));
+};
+var NumberInput = ({
+  v,
+  d,
+  i,
+  k,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2,
+  queryResults: queryResults2
+}) => {
+  const ref = (0, import_react6.useRef)();
+  useEnter(ref, async () => {
+    await updateMetaData2(k, d, v);
+  });
+  return /* @__PURE__ */ import_react6.default.createElement("span", { className: "relative" }, /* @__PURE__ */ import_react6.default.createElement(
+    "input",
+    {
+      ref,
+      disabled: !v.some((data2) => data2 && data2.path),
+      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
+      type: "number",
+      value: d,
+      onChange: (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[i][k] = Number(e.target.value);
+          return copyPrev;
+        });
+      },
+      onBlur: async () => {
+        await updateMetaData2(k, Number(d), v);
       },
       className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
     }
-  );
+  ));
 };
-var ArrayInput = ({
+var ArrayInputWrapper = ({
   d,
   v,
   i,
@@ -23930,21 +24219,125 @@ var ArrayInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const [value, setValue] = (0, import_react2.useState)();
-  useDebounce(
-    () => {
-      if (value === void 0 || value === null)
-        return;
-      updateMetaData2(k, value, v);
-    },
-    value,
-    1500
-  );
-  return /* @__PURE__ */ import_react2.default.createElement("ul", { className: "m-0 p-0" }, d?.map((dd, n) => /* @__PURE__ */ import_react2.default.createElement("li", { key: i + k + n.toString(), className: "flex" }, /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react6.default.createElement("ul", { className: "m-0 p-0" }, d?.map((dd, n) => (
+    // <li key={i + k + n.toString()} className="flex">
+    // 	<span
+    // 		className="multi-select-pill-remove-button"
+    // 		onClick={() => {
+    // 			const copyValues = toPlainArray(v);
+    // 			const copyList = toPlainArray(copyValues[k]).filter(
+    // 				(_, index) => index !== n,
+    // 			);
+    // 			copyValues[k] = copyList;
+    // 			setQueryResults((prev) => {
+    // 				const copyPrev = { ...prev };
+    // 				copyPrev.values[i] = copyValues;
+    // 				return copyPrev;
+    // 			});
+    // 			setValue(copyList);
+    // 		}}
+    // 	>
+    // 		<X style={iconStyle} />
+    // 	</span>
+    // 	<input
+    // 		disabled={!v.some((data) => data && data.path)}
+    // 		aria-label={
+    // 			!v.some((data) => data && data.path)
+    // 				? "You must have a file.link in one of the columns!"
+    // 				: undefined
+    // 		}
+    // 		// defaultValue={dd}
+    // 		type="text"
+    // 		value={dd}
+    // 		onChange={(e) => {
+    // 			const copyValues = toPlainArray(v);
+    // 			console.log("e.value: ", e.target.value);
+    // 			const copyList = toPlainArray(copyValues[k]);
+    // 			copyList[n] = e.target.value;
+    // 			copyValues[k] = copyList;
+    // 			setQueryResults((prev) => {
+    // 				const copyPrev = { ...prev };
+    // 				copyPrev.values[i] = copyValues;
+    // 				return copyPrev;
+    // 			});
+    // 			setValue(copyList);
+    // 		}}
+    // 		className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
+    // 	/>
+    // 	{/*
+    // 	TODO Can't get this to look quite pretty and usable enough
+    // 	{queryResults.headers[k] ===
+    // 		"tags" && (
+    // 		<a
+    // 			href={"#" + dd}
+    // 			className="tag"
+    // 			target="_blank"
+    // 			rel="noopener"
+    // 		>
+    // 			#{dd}
+    // 		</a>
+    // 	)} */}
+    // </li>
+    /* @__PURE__ */ import_react6.default.createElement(
+      ArrayInput,
+      {
+        key: i + k + n.toString(),
+        d,
+        v,
+        i,
+        k,
+        n,
+        dd,
+        setQueryResults: setQueryResults2,
+        updateMetaData: updateMetaData2
+      }
+    )
+  )), /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
     "span",
     {
       className: "multi-select-pill-remove-button",
-      onClick: () => {
+      onClick: async () => {
+        const copyValues = toPlainArray(v);
+        const copyList = toPlainArray(copyValues[k]);
+        copyList.push("");
+        copyValues[k] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[i] = copyValues;
+          return copyPrev;
+        });
+        await updateMetaData2(k, copyList, v);
+      }
+    },
+    /* @__PURE__ */ import_react6.default.createElement(Plus, { style: iconStyle })
+  ), /* @__PURE__ */ import_react6.default.createElement(
+    "input",
+    {
+      disabled: true,
+      type: "text",
+      className: "m-0 w-fit border-transparent bg-transparent p-0"
+    }
+  )));
+};
+var ArrayInput = ({
+  d,
+  v,
+  i,
+  k,
+  n,
+  dd,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const ref = (0, import_react6.useRef)();
+  useEnter(ref, async () => {
+    await updateMetaData2(k, d, v);
+  });
+  return /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
+    "span",
+    {
+      className: "multi-select-pill-remove-button",
+      onClick: async () => {
         const copyValues = toPlainArray(v);
         const copyList = toPlainArray(copyValues[k]).filter(
           (_, index) => index !== n
@@ -23955,21 +24348,14 @@ var ArrayInput = ({
           copyPrev.values[i] = copyValues;
           return copyPrev;
         });
-        setValue(copyList);
+        await updateMetaData2(k, copyList, v);
       }
     },
-    /* @__PURE__ */ import_react2.default.createElement(
-      X,
-      {
-        style: {
-          width: "var(--icon-size)",
-          height: "var(--icon-size)"
-        }
-      }
-    )
-  ), /* @__PURE__ */ import_react2.default.createElement(
+    /* @__PURE__ */ import_react6.default.createElement(X, { style: iconStyle })
+  ), /* @__PURE__ */ import_react6.default.createElement(
     "input",
     {
+      ref,
       disabled: !v.some((data2) => data2 && data2.path),
       "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
       type: "text",
@@ -23985,36 +24371,12 @@ var ArrayInput = ({
           copyPrev.values[i] = copyValues;
           return copyPrev;
         });
-        setValue(copyList);
+      },
+      onBlur: async () => {
+        await updateMetaData2(k, d, v);
       },
       className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
     }
-  ))), /* @__PURE__ */ import_react2.default.createElement(
-    "span",
-    {
-      className: "multi-select-pill-remove-button",
-      onClick: () => {
-        const copyValues = toPlainArray(v);
-        const copyList = toPlainArray(copyValues[k]);
-        copyList.push("");
-        copyValues[k] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[i] = copyValues;
-          return copyPrev;
-        });
-        setValue(copyList);
-      }
-    },
-    /* @__PURE__ */ import_react2.default.createElement(
-      Plus,
-      {
-        style: {
-          width: "var(--icon-size)",
-          height: "var(--icon-size)"
-        }
-      }
-    )
   ));
 };
 var CheckboxInput = ({
@@ -24025,20 +24387,20 @@ var CheckboxInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const [value, setValue] = (0, import_react2.useState)();
+  const [value, setValue] = (0, import_react6.useState)();
   const debouncedValue = useDebounce(
-    () => {
+    async () => {
       if (value !== false && !value)
         return;
-      updateMetaData2(k, value, v);
+      await updateMetaData2(k, value, v);
     },
     value,
     1500
   );
-  (0, import_react2.useEffect)(() => {
+  (0, import_react6.useEffect)(() => {
     console.log("i am checked? ", d);
   }, [d]);
-  return /* @__PURE__ */ import_react2.default.createElement("span", { className: "absolute inset-0 flex items-center justify-center" }, /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react6.default.createElement("span", { className: "absolute inset-0 flex items-center justify-center" }, /* @__PURE__ */ import_react6.default.createElement(
     "input",
     {
       disabled: !v.some((data2) => data2 && data2.path),
@@ -24077,9 +24439,7 @@ var DataEdit = class extends import_obsidian3.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new DataEditSettingsTab(this.app, this));
-    app.workspace.onLayoutReady(async () => {
-      this.registerCodeBlock();
-    });
+    this.registerCodeBlock();
     this.addCommand({
       id: `insert`,
       name: `Insert My Plugin`,
@@ -24090,11 +24450,13 @@ var DataEdit = class extends import_obsidian3.Plugin {
   }
   registerCodeBlock() {
     this.registerMarkdownCodeBlockProcessor("data-edit", (s, e, i) => {
-      console.log(s);
+      console.log("registered mcbp: ", s);
+      console.log("ctx: ", i);
       e.empty();
       const root = (0, import_client.createRoot)(e);
       root.render(
-        /* @__PURE__ */ import_react3.default.createElement(import_react3.default.StrictMode, null, /* @__PURE__ */ import_react3.default.createElement(
+        // <React.StrictMode>
+        /* @__PURE__ */ import_react7.default.createElement(
           App_default,
           {
             data: s,
@@ -24103,7 +24465,8 @@ var DataEdit = class extends import_obsidian3.Plugin {
             app: this.app,
             plugin: this
           }
-        ))
+        )
+        // </React.StrictMode>,
       );
     });
   }

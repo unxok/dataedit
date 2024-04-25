@@ -4,8 +4,8 @@
 	"description": "",
 	"main": "main.js",
 	"scripts": {
-		"css": "tailwindcss -i src/main.css -o test-vault/.obsidian/plugins/data-edit/styles.css --watch",
-		"css:build": "tailwindcss -i src/main.css -o test-vault/.obsidian/plugins/data-edit/styles.css --minify",
+		"css": "tailwind -i src/main.css -o test-vault/.obsidian/plugins/data-edit/styles.css --watch",
+		"css:build": "tailwind -i src/main.css -o test-vault/.obsidian/plugins/data-edit/styles.css --minify",
 		"dev": "node esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production && npm run css:build && node scope.js",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
@@ -33,9 +33,16 @@
 	},
 	"dependencies": {
 		"@heroicons/react": "^2.0.18",
+		"@radix-ui/react-label": "^2.0.2",
+		"@radix-ui/react-popover": "^1.0.7",
+		"@radix-ui/react-slot": "^1.0.2",
+		"class-variance-authority": "^0.7.0",
+		"clsx": "^2.1.1",
 		"lucide-react": "^0.372.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"tailwind-merge": "^2.3.0",
+		"tailwindcss-animate": "^1.0.7",
 		"zod": "^3.23.0"
 	}
 }

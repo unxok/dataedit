@@ -88,3 +88,4 @@ If you would like to contribute to the project, please fork the repo and make a 
     -   Looks good now
 -   Using column aliases in dataview query causes property to not get updated
 -   Using a different header name then the property name in js expression causes property to not get updated
+-   [ ] Metadata will get out of sync with note sometimes, can't narrow down the cause but dataview has the same out of sync behavior so it seems it's an issue on dataview's side.

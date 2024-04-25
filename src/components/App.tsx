@@ -1,14 +1,18 @@
 import { loadDependencies } from "@/main";
 import {
 	CircleAlertIcon,
+	Divide,
 	File,
+	FunctionSquare,
 	Link,
 	LucideFile,
+	Minus,
+	Parentheses,
 	Plus,
 	TagsIcon,
 	X,
 } from "lucide-react";
-import { Debouncer, Notice, debounce, setIcon } from "obsidian";
+import { Debouncer, Notice, Plugin, debounce, setIcon } from "obsidian";
 import React, {
 	ReactNode,
 	useCallback,
@@ -16,6 +20,9 @@ import React, {
 	useRef,
 	useState,
 } from "react";
+import { createPortal } from "react-dom";
+import * as Portal from "@radix-ui/react-portal";
+
 const RequiedDepsError = () => (
 	<>
 		<h3>Failed to load dependencies!</h3>
@@ -26,9 +33,6 @@ const RequiedDepsError = () => (
 					<a href="https://github.com/blacksmithgu/obsidian-dataview">
 						Dataview
 					</a>
-				</li>
-				<li>
-					<a href="https://github.com/chhoumann/MetaEdit">MetaEdit</a>
 				</li>
 			</ul>
 		</div>
@@ -54,6 +58,23 @@ const useDebounce = (callback: () => void, state: any, delay: number) => {
 		const timeout = setTimeout(() => callback(), delay);
 		return () => clearTimeout(timeout);
 	}, [state, delay]);
+};
+
+const useEnter = (
+	ref: React.MutableRefObject<HTMLInputElement>,
+	callback: () => void,
+) => {
+	const eventCallback = (e: KeyboardEvent) => {
+		if (e.key !== "Enter") return;
+		callback();
+	};
+	useEffect(() => {
+		if (!ref.current) return;
+		ref.current.addEventListener("keydown", eventCallback);
+		return () =>
+			ref.current &&
+			ref.current.removeEventListener("keydown", eventCallback);
+	}, [ref, callback]);
 };
 
 const App = (props: any) => {
@@ -110,9 +131,53 @@ const App = (props: any) => {
 				<EditableTable
 					// key={new Date().toLocaleTimeString("en-US")}
 					data={data}
+					plugin={plugin}
 				/>
 			</div>
 		</div>
+	);
+};
+
+const PropertySuggester = ({
+	property,
+	top,
+	left,
+	callback,
+}: {
+	property: string;
+	top: number;
+	left: number;
+	callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+}) => {
+	console.log("got property: ", property);
+	const suggestions =
+		// @ts-ignore
+		app.metadataCache.getFrontmatterPropertyValuesForKey(property);
+
+	console.log("suggestions: ", suggestions);
+	useEffect(() => {
+		console.log("suggester rendered");
+	});
+	return (
+		<Portal.Root id="twcss">
+			<div
+				className="border-secondary-alt absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid bg-primary-alt p-1 text-normal"
+				style={{
+					top: top + 40,
+					left: left,
+				}}
+			>
+				{suggestions?.map((s, i) => (
+					<div
+						key={i + s + "suggestion"}
+						className="rounded-md p-2 hover:bg-secondary-alt"
+						onClick={async (e) => callback(e)}
+					>
+						{s}
+					</div>
+				)) ?? "No suggestions"}
+			</div>
+		</Portal.Root>
 	);
 };
 
@@ -137,6 +202,11 @@ const getPropertyType = (propertyName: string) => {
 	return metadataTypeManager.properties[propertyName]?.type as
 		| string
 		| undefined;
+};
+
+const iconStyle = {
+	width: "var(--icon-size)",
+	height: "var(--icon-size)",
 };
 
 const PropertyIcon = ({ propertyName }: { propertyName: string }) => {
@@ -173,18 +243,37 @@ type QueryResults = {
 	values: any;
 };
 
-type UpdateMetaData = (k: number, value: any, v: any[]) => void;
+type UpdateMetaData = (k: number, value: any, v: any[]) => Promise<void>;
+type DoQuery = () => Promise<void>;
 
-const EditableTable = ({ data }: { data: string }) => {
+const EditableTable = ({ data, plugin }: { data: string; plugin: Plugin }) => {
 	const [queryResults, setQueryResults] = useState<QueryResults>();
 
-	// useEffect(
-	// 	() => console.log("query results: ", queryResults),
-	// 	[queryResults],
-	// );
-
-	// @ts-ignore
-	const meApi = app.plugins.plugins.metaedit.api;
+	useEffect(() => {
+		console.log("query results: ", queryResults);
+		const asyncDoQuery = async () => {
+			await doQuery();
+			console.log("asyncquery");
+		};
+		plugin.app.metadataCache.on(
+			"dataview:index-ready" as "changed",
+			asyncDoQuery,
+		);
+		plugin.app.metadataCache.on(
+			"dataview:metadata-change" as "changed",
+			asyncDoQuery,
+		);
+		return () => {
+			plugin.app.metadataCache.off(
+				"dataview:index-ready" as "changed",
+				asyncDoQuery,
+			);
+			plugin.app.metadataCache.off(
+				"dataview:metadata-change" as "changed",
+				asyncDoQuery,
+			);
+		};
+	}, [queryResults]);
 
 	const doQuery = async () => {
 		// @ts-ignore
@@ -203,40 +292,61 @@ const EditableTable = ({ data }: { data: string }) => {
 		setQueryResults(qr.value);
 	};
 
-	// @ts-ignore
-	app.metadataCache.on("dataview:index-ready", async () => {
-		// console.log("index ready");
-		await doQuery();
-	});
-	// @ts-ignore
-	app.metadataCache.on("dataview:metadata-change", async () => {
-		// console.log("metadata changed");
-		await doQuery();
-	});
+	const updateMetaData: UpdateMetaData = async (k, value, v) => {
+		// console.log("updated?", v, queryResults.headers[k]);
+		const link = v.find((d) => d && d.path);
+		if (!link) {
+			// this shouldn't be possible but whatever
+			return console.error("no file link found");
+		}
+		const { path } = link;
+		const file = plugin.app.vault.getFileByPath(path);
+		const propName = queryResults.headers[k];
+		// if (v[k] !== undefined || v[k] !== null) {
+		// 	await meApi.update(queryResults.headers[k], value, path);
+		// 	// doQuery();
+		// 	return;
+		// }
+		// await meApi.createYamlProperty(
+		// 	queryResults.headers[k],
+		// 	value,
+		// 	path,
+		// );
+		// doQuery();
+		await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
+			console.log("fm: ", frontmatter);
+			frontmatter[propName] = value;
+		});
+		console.log("did it process?");
+	};
 
-	const updateMetaData: UpdateMetaData =
-		// I would prefer to use debounce here but it doesn't work nicely across different components
-		// debounce(
-		(k, value, v) => {
-			console.log("updated?", v, queryResults.headers[k]);
-			const link = v.find((d) => d && d.path);
-			if (!link) {
-				// this shouldn't be possible but whatever
-				return;
-			}
-			const { path } = link;
-			if (v[k] !== undefined || v[k] !== null) {
-				meApi.update(queryResults.headers[k], value, path);
-				doQuery();
-				return;
-			}
-			meApi.createYamlProperty(queryResults.headers[k], value, path);
-			doQuery();
-		};
-	// 	,
-	// 	1500,
-	// 	true,
-	// );
+	// const updateMetaData: UpdateMetaData =
+	// 	// I would prefer to use debounce here but it doesn't work nicely across different components
+	// 	// debounce(
+	// 	async (k, value, v) => {
+	// 		console.log("updated?", v, queryResults.headers[k]);
+	// 		const link = v.find((d) => d && d.path);
+	// 		if (!link) {
+	// 			// this shouldn't be possible but whatever
+	// 			return;
+	// 		}
+	// 		const { path } = link;
+	// 		if (v[k] !== undefined || v[k] !== null) {
+	// 			await meApi.update(queryResults.headers[k], value, path);
+	// 			// doQuery();
+	// 			return;
+	// 		}
+	// 		await meApi.createYamlProperty(
+	// 			queryResults.headers[k],
+	// 			value,
+	// 			path,
+	// 		);
+	// 		// doQuery();
+	// 	};
+	// // 	,
+	// // 	1500,
+	// // 	true,
+	// // );
 
 	useEffect(() => {
 		doQuery();
@@ -244,28 +354,31 @@ const EditableTable = ({ data }: { data: string }) => {
 
 	if (!queryResults) return <Error>{"Invalid query"}</Error>;
 	return (
-		<table className="data-edit w-full">
-			<TableHead queryResults={queryResults} />
-			<tbody className="w-fit">
-				{queryResults.values.map((v, i) => (
-					<tr key={i + "table-row"} className="w-fit">
-						{v.map((d, k) => (
-							<td key={i + k} className="relative w-fit">
-								<EditableTableData
-									d={d}
-									i={i}
-									k={k}
-									v={v}
-									queryResults={queryResults}
-									setQueryResults={setQueryResults}
-									updateMetaData={updateMetaData}
-								/>
-							</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
+		<>
+			<table className="data-edit w-full">
+				<TableHead queryResults={queryResults} />
+				<tbody className="w-fit">
+					{queryResults.values.map((v, i) => (
+						<tr key={i + "table-row"} className="w-fit">
+							{v.map((d, k) => (
+								<td key={i + k} className="relative w-fit">
+									<EditableTableData
+										d={d}
+										i={i}
+										k={k}
+										v={v}
+										queryResults={queryResults}
+										setQueryResults={setQueryResults}
+										updateMetaData={updateMetaData}
+										doQuery={doQuery}
+									/>
+								</td>
+							))}
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</>
 	);
 };
 
@@ -277,6 +390,7 @@ const EditableTableData = ({
 	queryResults,
 	setQueryResults,
 	updateMetaData,
+	doQuery,
 }: {
 	d: any;
 	i: number;
@@ -285,6 +399,7 @@ const EditableTableData = ({
 	queryResults: QueryResults;
 	setQueryResults: (value: React.SetStateAction<QueryResults>) => void;
 	updateMetaData: UpdateMetaData;
+	doQuery: DoQuery;
 }) => {
 	const propertyType = getPropertyType(queryResults.headers[k]);
 
@@ -296,7 +411,7 @@ const EditableTableData = ({
 
 	if (propertyType === "multitext" || propertyType === "tags") {
 		return (
-			<ArrayInput
+			<ArrayInputWrapper
 				d={d}
 				v={v}
 				i={i}
@@ -328,15 +443,29 @@ const EditableTableData = ({
 		);
 	}
 
+	if (propertyType === "number") {
+		return (
+			<NumberInput
+				v={v}
+				d={d}
+				i={i}
+				k={k}
+				setQueryResults={setQueryResults}
+				updateMetaData={updateMetaData}
+				queryResults={queryResults}
+			/>
+		);
+	}
+
 	return (
-		<StringOrNumberInput
+		<StringInput
 			v={v}
 			d={d}
 			i={i}
 			k={k}
-			isNumber={propertyType === "number"}
 			setQueryResults={setQueryResults}
 			updateMetaData={updateMetaData}
+			queryResults={queryResults}
 		/>
 	);
 };
@@ -356,12 +485,7 @@ const TableHead = ({ queryResults }: { queryResults: any }) => {
 									aria-label={"file"}
 									data-tooltip-position="right"
 								>
-									<File
-										style={{
-											width: "var(--icon-size)",
-											height: "var(--icon-size)",
-										}}
-									/>
+									<File style={iconStyle} />
 								</span>
 								{/* <span className="dataview small-text">
 										{queryResults.values.length}
@@ -397,61 +521,168 @@ const LinkTableData = ({ d }: { d: { path: string } }) => (
 	</span>
 );
 
-const StringOrNumberInput = ({
+const StringInput = ({
 	v,
 	d,
 	i,
 	k,
-	isNumber,
 	setQueryResults,
 	updateMetaData,
+	queryResults,
 }: {
 	v: QueryResults["values"];
 	d: string | number;
 	i: number;
 	k: number;
-	isNumber: boolean;
 	setQueryResults: (value: React.SetStateAction<QueryResults>) => void;
 	updateMetaData: UpdateMetaData;
+	queryResults: any;
 }) => {
-	const [value, setValue] = useState<typeof d>();
-	useDebounce(
-		() => {
-			if (value === undefined || value === null) return;
-			const newVal = isNumber ? Number(value) : value;
-			updateMetaData(k, newVal, v);
-		},
-		value,
-		1500,
-	);
+	const ref = useRef<HTMLInputElement>();
+	const [rect, setRect] = useState<{ top: number; left: number }>();
+	useEnter(ref, async () => {
+		await updateMetaData(k, d, v);
+		// await doQuery();
+	});
 
 	return (
-		<input
-			disabled={!v.some((data) => data && data.path)}
-			aria-label={
-				!v.some((data) => data && data.path)
-					? "You must have a file.link in one of the columns!"
-					: undefined
-			}
-			// defaultValue={d}
-			type={isNumber ? "number" : "text"}
-			value={d}
-			onChange={(e) => {
-				// console.log("changed");
-				setQueryResults((prev) => {
-					const copyPrev = { ...prev };
-					copyPrev.values[i][k] = e.target.value;
-					return copyPrev;
-				});
-				setValue(e.target.value);
-				// updateMetaData(k, e.target.value, v);
-			}}
-			className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
-		/>
+		<div className="relative">
+			{rect && (
+				<PropertySuggester
+					property={queryResults.headers[k]}
+					top={rect.top}
+					left={rect.left}
+					callback={async (e) => {
+						const newValue = e.currentTarget.textContent;
+						await updateMetaData(k, newValue, v);
+					}}
+				/>
+			)}
+			<input
+				ref={ref}
+				disabled={!v.some((data) => data && data.path)}
+				aria-label={
+					!v.some((data) => data && data.path)
+						? "You must have a file.link in one of the columns!"
+						: undefined
+				}
+				// defaultValue={d}
+				type={"text"}
+				value={d}
+				onChange={(e) => {
+					// console.log("changed");
+					setQueryResults((prev) => {
+						const copyPrev = { ...prev };
+						copyPrev.values[i][k] = e.target.value;
+						return copyPrev;
+					});
+					// updateMetaData(k, e.target.value, v);
+				}}
+				onBlur={async () => {
+					await updateMetaData(k, d, v);
+					setRect(undefined);
+				}}
+				onFocus={(e) => {
+					const rect = e.target.getBoundingClientRect();
+					setRect({
+						top: rect.top,
+						left: rect.left,
+					});
+				}}
+				className="relative m-0 w-fit border-transparent bg-transparent p-0 text-start"
+			/>
+		</div>
 	);
 };
 
-const ArrayInput = ({
+const NumberInput = ({
+	v,
+	d,
+	i,
+	k,
+	setQueryResults,
+	updateMetaData,
+	queryResults,
+}: {
+	v: QueryResults["values"];
+	d: string | number;
+	i: number;
+	k: number;
+	setQueryResults: (value: React.SetStateAction<QueryResults>) => void;
+	updateMetaData: UpdateMetaData;
+	queryResults: any;
+}) => {
+	const ref = useRef<HTMLInputElement>();
+	useEnter(ref, async () => {
+		await updateMetaData(k, d, v);
+		// await doQuery();
+	});
+
+	return (
+		<span className="relative">
+			<input
+				ref={ref}
+				disabled={!v.some((data) => data && data.path)}
+				aria-label={
+					!v.some((data) => data && data.path)
+						? "You must have a file.link in one of the columns!"
+						: undefined
+				}
+				// defaultValue={d}
+				type={"number"}
+				value={d}
+				onChange={(e) => {
+					// console.log("changed");
+					setQueryResults((prev) => {
+						const copyPrev = { ...prev };
+						copyPrev.values[i][k] = Number(e.target.value);
+						return copyPrev;
+					});
+					// updateMetaData(k, e.target.value, v);
+				}}
+				onBlur={async () => {
+					await updateMetaData(k, Number(d), v);
+				}}
+				className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
+			/>
+			{/* <span className="flex w-full items-center justify-center gap-1 p-2">
+				<button>
+					<Minus
+						style={iconStyle}
+						onClick={() => {
+							const newValue = (Number(d) ?? 0) - 1;
+							setQueryResults((prev) => {
+								const copyPrev = { ...prev };
+								copyPrev.values[i][k] = newValue;
+								return copyPrev;
+							});
+							setValue(newValue);
+						}}
+					/>
+				</button>
+				<button>
+					<Parentheses style={iconStyle} />
+				</button>
+				<button>
+					<Plus
+						style={iconStyle}
+						onClick={() => {
+							const newValue = (Number(d) ?? 0) + 1;
+							setQueryResults((prev) => {
+								const copyPrev = { ...prev };
+								copyPrev.values[i][k] = newValue;
+								return copyPrev;
+							});
+							setValue(newValue);
+						}}
+					/>
+				</button>
+			</span> */}
+		</span>
+	);
+};
+
+const ArrayInputWrapper = ({
 	d,
 	v,
 	i,
@@ -466,82 +697,88 @@ const ArrayInput = ({
 	setQueryResults: (value: React.SetStateAction<QueryResults>) => void;
 	updateMetaData: UpdateMetaData;
 }) => {
-	const [value, setValue] = useState<any>();
-	useDebounce(
-		() => {
-			if (value === undefined || value === null) return;
-			updateMetaData(k, value, v);
-		},
-		value,
-		1500,
-	);
+	// const [value, setValue] = useState<any>();
+	// useDebounce(
+	// 	() => {
+	// 		if (value === undefined || value === null) return;
+	// 		updateMetaData(k, value, v);
+	// 	},
+	// 	value,
+	// 	1500,
+	// );
 
 	return (
 		<ul className="m-0 p-0">
 			{d?.map((dd, n) => (
-				<li key={i + k + n.toString()} className="flex">
-					<span
-						className="multi-select-pill-remove-button"
-						onClick={() => {
-							const copyValues = toPlainArray(v);
-							const copyList = toPlainArray(copyValues[k]).filter(
-								(_, index) => index !== n,
-							);
-							copyValues[k] = copyList;
-							setQueryResults((prev) => {
-								const copyPrev = { ...prev };
-								copyPrev.values[i] = copyValues;
-								return copyPrev;
-							});
-							setValue(copyList);
-						}}
-					>
-						<X
-							style={{
-								width: "var(--icon-size)",
-								height: "var(--icon-size)",
-							}}
-						/>
-					</span>
-					<input
-						disabled={!v.some((data) => data && data.path)}
-						aria-label={
-							!v.some((data) => data && data.path)
-								? "You must have a file.link in one of the columns!"
-								: undefined
-						}
-						// defaultValue={dd}
-						type="text"
-						value={dd}
-						onChange={(e) => {
-							const copyValues = toPlainArray(v);
-							console.log("e.value: ", e.target.value);
-							const copyList = toPlainArray(copyValues[k]);
-							copyList[n] = e.target.value;
-							copyValues[k] = copyList;
-							setQueryResults((prev) => {
-								const copyPrev = { ...prev };
-								copyPrev.values[i] = copyValues;
-								return copyPrev;
-							});
-							setValue(copyList);
-						}}
-						className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
-					/>
-					{/* 
-					TODO Can't get this to look quite pretty and usable enough
-					{queryResults.headers[k] ===
-						"tags" && (
-						<a
-							href={"#" + dd}
-							className="tag"
-							target="_blank"
-							rel="noopener"
-						>
-							#{dd}
-						</a>
-					)} */}
-				</li>
+				// <li key={i + k + n.toString()} className="flex">
+				// 	<span
+				// 		className="multi-select-pill-remove-button"
+				// 		onClick={() => {
+				// 			const copyValues = toPlainArray(v);
+				// 			const copyList = toPlainArray(copyValues[k]).filter(
+				// 				(_, index) => index !== n,
+				// 			);
+				// 			copyValues[k] = copyList;
+				// 			setQueryResults((prev) => {
+				// 				const copyPrev = { ...prev };
+				// 				copyPrev.values[i] = copyValues;
+				// 				return copyPrev;
+				// 			});
+				// 			setValue(copyList);
+				// 		}}
+				// 	>
+				// 		<X style={iconStyle} />
+				// 	</span>
+				// 	<input
+				// 		disabled={!v.some((data) => data && data.path)}
+				// 		aria-label={
+				// 			!v.some((data) => data && data.path)
+				// 				? "You must have a file.link in one of the columns!"
+				// 				: undefined
+				// 		}
+				// 		// defaultValue={dd}
+				// 		type="text"
+				// 		value={dd}
+				// 		onChange={(e) => {
+				// 			const copyValues = toPlainArray(v);
+				// 			console.log("e.value: ", e.target.value);
+				// 			const copyList = toPlainArray(copyValues[k]);
+				// 			copyList[n] = e.target.value;
+				// 			copyValues[k] = copyList;
+				// 			setQueryResults((prev) => {
+				// 				const copyPrev = { ...prev };
+				// 				copyPrev.values[i] = copyValues;
+				// 				return copyPrev;
+				// 			});
+				// 			setValue(copyList);
+				// 		}}
+				// 		className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
+				// 	/>
+				// 	{/*
+				// 	TODO Can't get this to look quite pretty and usable enough
+				// 	{queryResults.headers[k] ===
+				// 		"tags" && (
+				// 		<a
+				// 			href={"#" + dd}
+				// 			className="tag"
+				// 			target="_blank"
+				// 			rel="noopener"
+				// 		>
+				// 			#{dd}
+				// 		</a>
+				// 	)} */}
+				// </li>
+				<ArrayInput
+					key={i + k + n.toString()}
+					d={d}
+					v={v}
+					i={i}
+					k={k}
+					n={n}
+					dd={dd}
+					setQueryResults={setQueryResults}
+					updateMetaData={updateMetaData}
+				/>
 			))}
 			{/* <li>
 				<input
@@ -572,29 +809,120 @@ const ArrayInput = ({
 					className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
 				/>
 			</li> */}
+			<li className="flex">
+				<span
+					className="multi-select-pill-remove-button"
+					onClick={async () => {
+						const copyValues = toPlainArray(v);
+						const copyList = toPlainArray(copyValues[k]);
+						copyList.push("");
+						copyValues[k] = copyList;
+						setQueryResults((prev) => {
+							const copyPrev = { ...prev };
+							copyPrev.values[i] = copyValues;
+							return copyPrev;
+						});
+						await updateMetaData(k, copyList, v);
+					}}
+				>
+					<Plus style={iconStyle} />
+				</span>
+				<input
+					disabled
+					type="text"
+					className="m-0 w-fit border-transparent bg-transparent p-0"
+				/>
+			</li>
+		</ul>
+	);
+};
+
+const ArrayInput = ({
+	d,
+	v,
+	i,
+	k,
+	n,
+	dd,
+	setQueryResults,
+	updateMetaData,
+}: {
+	d: (string | number)[];
+	v: QueryResults["values"];
+	i: number;
+	k: number;
+	n: number;
+	dd: string | number;
+	setQueryResults: (value: React.SetStateAction<QueryResults>) => void;
+	updateMetaData: UpdateMetaData;
+}) => {
+	const ref = useRef<HTMLInputElement>();
+	useEnter(ref, async () => {
+		await updateMetaData(k, d, v);
+		// await doQuery();
+	});
+	return (
+		<li className="flex">
 			<span
 				className="multi-select-pill-remove-button"
-				onClick={() => {
+				onClick={async () => {
 					const copyValues = toPlainArray(v);
-					const copyList = toPlainArray(copyValues[k]);
-					copyList.push("");
+					const copyList = toPlainArray(copyValues[k]).filter(
+						(_, index) => index !== n,
+					);
 					copyValues[k] = copyList;
 					setQueryResults((prev) => {
 						const copyPrev = { ...prev };
 						copyPrev.values[i] = copyValues;
 						return copyPrev;
 					});
-					setValue(copyList);
+					await updateMetaData(k, copyList, v);
 				}}
 			>
-				<Plus
-					style={{
-						width: "var(--icon-size)",
-						height: "var(--icon-size)",
-					}}
-				/>
+				<X style={iconStyle} />
 			</span>
-		</ul>
+			<input
+				ref={ref}
+				disabled={!v.some((data) => data && data.path)}
+				aria-label={
+					!v.some((data) => data && data.path)
+						? "You must have a file.link in one of the columns!"
+						: undefined
+				}
+				// defaultValue={dd}
+				type="text"
+				value={dd}
+				onChange={(e) => {
+					const copyValues = toPlainArray(v);
+					console.log("e.value: ", e.target.value);
+					const copyList = toPlainArray(copyValues[k]);
+					copyList[n] = e.target.value;
+					copyValues[k] = copyList;
+					setQueryResults((prev) => {
+						const copyPrev = { ...prev };
+						copyPrev.values[i] = copyValues;
+						return copyPrev;
+					});
+				}}
+				onBlur={async () => {
+					await updateMetaData(k, d, v);
+				}}
+				className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
+			/>
+			{/* 
+					TODO Can't get this to look quite pretty and usable enough
+					{queryResults.headers[k] ===
+						"tags" && (
+						<a
+							href={"#" + dd}
+							className="tag"
+							target="_blank"
+							rel="noopener"
+						>
+							#{dd}
+						</a>
+					)} */}
+		</li>
 	);
 };
 
@@ -615,9 +943,9 @@ const CheckboxInput = ({
 }) => {
 	const [value, setValue] = useState<boolean>();
 	const debouncedValue = useDebounce(
-		() => {
+		async () => {
 			if (value !== false && !value) return;
-			updateMetaData(k, value, v);
+			await updateMetaData(k, value, v);
 		},
 		value,
 		1500,

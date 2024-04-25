@@ -1,25 +1,22 @@
 ---
-test: hello asdjj
+test: alksdf djjdjd
 some-list:
   - itemAa
   - itemBb
   - itemCcd
-  - s
-  - s
-  - sdddfdd
-  - sdff
+  - sddd
 tags:
   - another
   - onemoretagg
   - test
 date: 2024-02-01
-checkboxtest: false
+checkboxtest: true
 datetime: 2024-02-01T13:24:00
-number: 0
-
+number: 99
 ---
  #test #another #onemoretag
 
+dfsdfsf   ffff fsdfdd
 
 ```data-edit
 TABLE test, some-list, number, tags, date, checkboxtest, datetime
@@ -27,7 +24,7 @@ FROM #test
 SORT file.name
 ```
 
-```data-edit
+```data-edittt
 const data = dv.pages().map(p => [p.file.link, p.test, p.tags, p['some-list']]);
 return {headers: ['file', 'test', 'tags', 'some-list'], values: data};
 ```
@@ -40,6 +37,6 @@ SORT file.ctime ASC
 ```
 
 ```dataviewjs
-const data = dv.pages().map(p => [p.file.link, p.test]);
-dv.table(['file', 'test'], data)
+const data = dv.pages().map(p => [p.file.link, p.test, p.number]);
+dv.table(['file', 'test', 'number'], data)
 ```
