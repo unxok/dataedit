@@ -50,7 +50,7 @@ SORT file.name
 > [!WARNING]
 > The exceptions to the statement above are:
 >
-> -   You <u>must</u> include `file.link` whether naturally (without doing anything extra) or by adding it as a column
+> -   You <u>cannot</u> use `WITHOUT ID`
 > -   You <u>cannot</u> specify column aliases in the query (on roadmap)
 > -   I haven't tried it yet, but I am pretty sure `GROUP BY` will <u>not</u> work
 
