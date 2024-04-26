@@ -1,10 +1,8 @@
 ---
-test: alksdf djjdjd
+test: sdfsdf
 some-list:
   - itemAa
   - itemBb
-  - itemCcd
-  - sddd
 tags:
   - another
   - onemoretagg
@@ -12,7 +10,7 @@ tags:
 date: 2024-02-01
 checkboxtest: true
 datetime: 2024-02-01T13:24:00
-number: 99
+number: 9
 ---
  #test #another #onemoretag
 

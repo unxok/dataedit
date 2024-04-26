@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState2(initialState) {
+        function useState5(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -1100,11 +1100,11 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef2(initialValue) {
+        function useRef6(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect2(create, deps) {
+        function useEffect6(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -1886,15 +1886,15 @@ var require_react_development = __commonJS({
         exports.useContext = useContext;
         exports.useDebugValue = useDebugValue;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect2;
+        exports.useEffect = useEffect6;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
         exports.useLayoutEffect = useLayoutEffect;
         exports.useMemo = useMemo;
         exports.useReducer = useReducer;
-        exports.useRef = useRef2;
-        exports.useState = useState2;
+        exports.useRef = useRef6;
+        exports.useState = useState5;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -2390,9 +2390,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React3 = require_react();
+        var React14 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React3.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -3997,7 +3997,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props.value == null) {
               if (typeof props.children === "object" && props.children !== null) {
-                React3.Children.forEach(props.children, function(child) {
+                React14.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -12444,7 +12444,7 @@ var require_react_dom_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React3.Component().refs;
+        var emptyRefsObject = new React14.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23522,8 +23522,8 @@ __export(main_exports, {
   loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian3 = require("obsidian");
-var import_react7 = __toESM(require_react());
+var import_obsidian4 = require("obsidian");
+var import_react18 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // src/settings.ts
@@ -23563,6 +23563,13 @@ var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
     });
   }
 };
+
+// src/components/App.tsx
+var import_obsidian3 = require("obsidian");
+var import_react17 = __toESM(require_react());
+
+// src/components/Error/index.tsx
+var import_react2 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
 var import_react = __toESM(require_react());
@@ -23643,9 +23650,312 @@ var X = createLucideIcon("X", [
   ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
 ]);
 
-// src/components/App.tsx
+// src/components/Error/index.tsx
+var Error2 = ({ children }) => {
+  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react2.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
+};
+
+// src/components/EditableTable/index.tsx
+var import_react16 = __toESM(require_react());
+
+// src/lib/utils.ts
+var toPlainArray = (arr) => {
+  try {
+    return arr.array();
+  } catch (e) {
+    return arr;
+  }
+};
+var getPropertyType = (propertyName) => {
+  const { metadataTypeManager } = app;
+  return metadataTypeManager.properties[propertyName]?.type;
+};
+var iconStyle = {
+  width: "var(--icon-size)",
+  height: "var(--icon-size)"
+};
+
+// src/components/PropertyIcon/index.tsx
+var import_react3 = __toESM(require_react());
 var import_obsidian2 = require("obsidian");
+var PropertyIcon = ({ propertyName }) => {
+  const ref = (0, import_react3.useRef)(null);
+  const propertyType = getPropertyType(propertyName);
+  const propertyIcon = (
+    // @ts-ignore
+    app.metadataTypeManager.registeredTypeWidgets[propertyType]?.icon
+  );
+  (0, import_react3.useEffect)(() => {
+    if (!ref.current || !propertyIcon)
+      return;
+    try {
+      (0, import_obsidian2.setIcon)(ref.current, propertyIcon);
+    } catch (e) {
+    }
+  }, [propertyIcon]);
+  return /* @__PURE__ */ import_react3.default.createElement(
+    "span",
+    {
+      ref,
+      className: "metadata-property-icon",
+      "aria-label": propertyType,
+      "data-tooltip-position": "right"
+    }
+  );
+};
+
+// src/components/Inputs/ArrayInput/index.tsx
 var import_react6 = __toESM(require_react());
+
+// src/hooks/useEnter.tsx
+var import_react4 = __toESM(require_react());
+var useEnter = (ref, callback) => {
+  const eventCallback = (e) => {
+    if (e.key !== "Enter")
+      return;
+    callback();
+  };
+  (0, import_react4.useEffect)(() => {
+    if (!ref?.current)
+      return;
+    ref.current.addEventListener("keydown", eventCallback);
+    return () => {
+      ref?.current && ref.current.removeEventListener("keydown", eventCallback);
+    };
+  }, [ref, callback]);
+};
+
+// src/hooks/useKeyboardClick.tsx
+var import_react5 = __toESM(require_react());
+var useKeyboardClick = (ref) => {
+  const keyboardFocusClick = (e) => {
+    if (!(e.key === "Enter" || e.key === " "))
+      return;
+    e.preventDefault();
+    ref?.current?.click();
+  };
+  (0, import_react5.useEffect)(() => {
+    if (!ref?.current)
+      return;
+    ref.current.addEventListener("keydown", keyboardFocusClick);
+    return () => ref?.current && // @ts-ignore TODO ???
+    ref.current.removeEventListener("keydown", keyboardFocusClick);
+  }, [ref]);
+};
+
+// src/components/Inputs/ArrayInput/index.tsx
+var ArrayInputWrapper = (props) => {
+  const {
+    propertyValue,
+    propertyValueArrIndex,
+    propertyValueIndex,
+    propertyValueArr,
+    propertyName,
+    file,
+    setQueryResults: setQueryResults2,
+    updateMetaData: updateMetaData2
+  } = props;
+  const plusRef = (0, import_react6.useRef)(null);
+  useKeyboardClick(plusRef);
+  return /* @__PURE__ */ import_react6.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react6.default.createElement(
+    ArrayInput,
+    {
+      key: propertyValueArrIndex + propertyValueIndex + n.toString(),
+      itemValue: val,
+      itemIndex: n,
+      ...props
+    }
+  )), /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
+    "span",
+    {
+      ref: plusRef,
+      tabIndex: 0,
+      className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      onClick: async () => {
+        const copyValues = toPlainArray(propertyValueArr);
+        const copyList = toPlainArray(copyValues[propertyValueIndex]) ?? [];
+        copyList.push("");
+        copyValues[propertyValueIndex] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex] = copyValues;
+          return copyPrev;
+        });
+        await updateMetaData2(propertyName, copyList, file.path);
+      }
+    },
+    /* @__PURE__ */ import_react6.default.createElement(Plus, { style: iconStyle })
+  ), /* @__PURE__ */ import_react6.default.createElement(
+    "input",
+    {
+      disabled: true,
+      type: "text",
+      className: "m-0 border-transparent bg-transparent p-0"
+    }
+  )));
+};
+var ArrayInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyValueArr,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2,
+  itemValue,
+  itemIndex
+}) => {
+  const ref = (0, import_react6.useRef)(null);
+  const xRef = (0, import_react6.useRef)(null);
+  useKeyboardClick(xRef);
+  useEnter(ref, async () => {
+    await updateMetaData2(propertyName, propertyValue, file.path);
+  });
+  return /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
+    "span",
+    {
+      className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      tabIndex: 0,
+      ref: xRef,
+      onClick: async () => {
+        const copyValues = toPlainArray(propertyValueArr);
+        const copyList = toPlainArray(
+          copyValues[propertyValueIndex]
+        ).filter((_, index) => index !== itemIndex);
+        copyValues[propertyValueIndex] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex] = copyValues;
+          return copyPrev;
+        });
+        await updateMetaData2(propertyName, copyList, file.path);
+      }
+    },
+    /* @__PURE__ */ import_react6.default.createElement(X, { style: iconStyle })
+  ), /* @__PURE__ */ import_react6.default.createElement(
+    "input",
+    {
+      ref,
+      type: "text",
+      value: itemValue,
+      onChange: (e) => {
+        const copyValues = toPlainArray(propertyValueArr);
+        console.log("e.value: ", e.target.value);
+        const copyList = toPlainArray(
+          copyValues[propertyValueIndex]
+        );
+        copyList[itemIndex] = e.target.value;
+        copyValues[propertyValueIndex] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex] = copyValues;
+          return copyPrev;
+        });
+      },
+      onBlur: async () => {
+        await updateMetaData2(
+          propertyName,
+          propertyValue,
+          file.path
+        );
+      },
+      className: "m-0 border-transparent bg-transparent p-0 text-start"
+    }
+  ));
+};
+
+// src/components/Inputs/CheckboxInput/index.tsx
+var import_react7 = __toESM(require_react());
+var CheckboxInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  return /* @__PURE__ */ import_react7.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react7.default.createElement(
+    "input",
+    {
+      type: "checkbox",
+      "data-indeterminate": "false",
+      checked: !!propertyValue,
+      onChange: async (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = e.target.checked;
+          return copyPrev;
+        });
+        await updateMetaData2(
+          propertyName,
+          e.target.checked,
+          file.path
+        );
+      },
+      className: "metadata-input-checkbox"
+    }
+  ));
+};
+
+// src/components/Inputs/NumberInput/index.tsx
+var import_react8 = __toESM(require_react());
+var NumberInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const ref = (0, import_react8.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react8.useState)(false);
+  useEnter(ref, async () => {
+    await updateMetaData2(propertyName, Number(propertyValue), file.path);
+  });
+  return /* @__PURE__ */ import_react8.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react8.default.createElement(
+    "span",
+    {
+      className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      tabIndex: 0,
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    propertyValue
+  ), isEditing && /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      ref,
+      autoFocus: true,
+      type: "number",
+      value: propertyValue,
+      onChange: (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = Number(e.target.value);
+          return copyPrev;
+        });
+      },
+      onBlur: async () => {
+        await updateMetaData2(
+          propertyName,
+          Number(propertyValue),
+          file.path
+        );
+        setIsEditing(false);
+      },
+      className: "m-0 border-transparent bg-transparent p-0 text-start"
+    }
+  ));
+};
+
+// src/components/Inputs/StringInput/index.tsx
+var import_react14 = __toESM(require_react());
+
+// src/components/PropertySuggester/index.tsx
+var import_react13 = __toESM(require_react());
 
 // node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
@@ -23664,18 +23974,18 @@ function _extends() {
 }
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var import_react5 = __toESM(require_react(), 1);
+var import_react12 = __toESM(require_react(), 1);
 var import_react_dom2 = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-primitive/dist/index.mjs
-var import_react4 = __toESM(require_react(), 1);
+var import_react11 = __toESM(require_react(), 1);
 var import_react_dom = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var import_react3 = __toESM(require_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-var import_react2 = __toESM(require_react(), 1);
+var import_react9 = __toESM(require_react(), 1);
 function $6ed0406888f73fc4$var$setRef(ref, value) {
   if (typeof ref === "function")
     ref(value);
@@ -23689,44 +23999,44 @@ function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
 }
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react3.forwardRef)((props, forwardedRef) => {
+var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react10.forwardRef)((props, forwardedRef) => {
   const { children, ...slotProps } = props;
-  const childrenArray = import_react3.Children.toArray(children);
+  const childrenArray = import_react10.Children.toArray(children);
   const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
   if (slottable) {
     const newElement = slottable.props.children;
     const newChildren = childrenArray.map((child) => {
       if (child === slottable) {
-        if (import_react3.Children.count(newElement) > 1)
-          return import_react3.Children.only(null);
-        return /* @__PURE__ */ (0, import_react3.isValidElement)(newElement) ? newElement.props.children : null;
+        if (import_react10.Children.count(newElement) > 1)
+          return import_react10.Children.only(null);
+        return /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? newElement.props.children : null;
       } else
         return child;
     });
-    return /* @__PURE__ */ (0, import_react3.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+    return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
       ref: forwardedRef
-    }), /* @__PURE__ */ (0, import_react3.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react3.cloneElement)(newElement, void 0, newChildren) : null);
+    }), /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react10.cloneElement)(newElement, void 0, newChildren) : null);
   }
-  return /* @__PURE__ */ (0, import_react3.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+  return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
     ref: forwardedRef
   }), children);
 });
 $5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
-var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react3.forwardRef)((props, forwardedRef) => {
+var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react10.forwardRef)((props, forwardedRef) => {
   const { children, ...slotProps } = props;
-  if (/* @__PURE__ */ (0, import_react3.isValidElement)(children))
-    return /* @__PURE__ */ (0, import_react3.cloneElement)(children, {
+  if (/* @__PURE__ */ (0, import_react10.isValidElement)(children))
+    return /* @__PURE__ */ (0, import_react10.cloneElement)(children, {
       ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
       ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
     });
-  return import_react3.Children.count(children) > 1 ? import_react3.Children.only(null) : null;
+  return import_react10.Children.count(children) > 1 ? import_react10.Children.only(null) : null;
 });
 $5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
 var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
-  return /* @__PURE__ */ (0, import_react3.createElement)(import_react3.Fragment, null, children);
+  return /* @__PURE__ */ (0, import_react10.createElement)(import_react10.Fragment, null, children);
 };
 function $5e63c961fc1ce211$var$isSlottable(child) {
-  return /* @__PURE__ */ (0, import_react3.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
+  return /* @__PURE__ */ (0, import_react10.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
 }
 function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
   const overrideProps = {
@@ -23781,13 +24091,13 @@ var $8927f6f2acc4f386$var$NODES = [
   "ul"
 ];
 var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
-  const Node = /* @__PURE__ */ (0, import_react4.forwardRef)((props, forwardedRef) => {
+  const Node = /* @__PURE__ */ (0, import_react11.forwardRef)((props, forwardedRef) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
-    (0, import_react4.useEffect)(() => {
+    (0, import_react11.useEffect)(() => {
       window[Symbol.for("radix-ui")] = true;
     }, []);
-    return /* @__PURE__ */ (0, import_react4.createElement)(Comp, _extends({}, primitiveProps, {
+    return /* @__PURE__ */ (0, import_react11.createElement)(Comp, _extends({}, primitiveProps, {
       ref: forwardedRef
     }));
   });
@@ -23799,158 +24109,150 @@ var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.redu
 }, {});
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react5.forwardRef)((props, forwardedRef) => {
+var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react12.forwardRef)((props, forwardedRef) => {
   var _globalThis$document;
   const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props;
-  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react5.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
+  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react12.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
     ref: forwardedRef
   })), container) : null;
 });
 var $f1701beae083dbae$export$be92b6f5f03c0fe9 = $f1701beae083dbae$export$602eac185826482c;
 
-// src/components/App.tsx
-var RequiedDepsError = () => /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, /* @__PURE__ */ import_react6.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react6.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react6.default.createElement("ul", null, /* @__PURE__ */ import_react6.default.createElement("li", null, /* @__PURE__ */ import_react6.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")), /* @__PURE__ */ import_react6.default.createElement("li", null, /* @__PURE__ */ import_react6.default.createElement("a", { href: "https://github.com/chhoumann/MetaEdit" }, "MetaEdit")))));
-var Error2 = ({ children }) => {
-  return /* @__PURE__ */ import_react6.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react6.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react6.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
-};
-var useDebounce = (callback, state, delay) => {
-  (0, import_react6.useEffect)(() => {
-    const timeout = setTimeout(() => callback(), delay);
-    return () => clearTimeout(timeout);
-  }, [state, delay]);
-};
-var useEnter = (ref, callback) => {
-  const eventCallback = (e) => {
-    if (e.key !== "Enter")
-      return;
-    callback();
-  };
-  (0, import_react6.useEffect)(() => {
-    if (!ref.current)
-      return;
-    ref.current.addEventListener("keydown", eventCallback);
-    return () => ref.current && ref.current.removeEventListener("keydown", eventCallback);
-  }, [ref, callback]);
-};
-var App2 = (props) => {
-  const { data: data2, getSectionInfo, settings, plugin: plugin2 } = props;
-  const [ErrMsg, setErrMsg] = (0, import_react6.useState)(void 0);
-  const [, updateEmpty] = (0, import_react6.useState)({});
-  const forceUpdate = (0, import_react6.useCallback)(() => updateEmpty({}), []);
-  (0, import_react6.useEffect)(() => {
-    new import_obsidian2.Notice("App rendered");
-    (async () => {
-      const b = await loadDependencies();
-      if (!b)
-        return setErrMsg(() => RequiedDepsError);
-    })();
-    plugin2.addCommand({
-      id: `reload-data-edit`,
-      name: `Reload Data Edit`,
-      callback: () => forceUpdate()
-    });
-  }, []);
-  if (ErrMsg) {
-    return /* @__PURE__ */ import_react6.default.createElement(Error2, null, /* @__PURE__ */ import_react6.default.createElement(ErrMsg, null));
-  }
-  return /* @__PURE__ */ import_react6.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react6.default.createElement(
-    "input",
-    {
-      className: "metadata-input metadata-input-text mod-datetime",
-      max: "9999-12-31T23:59",
-      type: "datetime-local",
-      placeholder: "Empty"
-    }
-  ), /* @__PURE__ */ import_react6.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react6.default.createElement(
-    EditableTable,
-    {
-      data: data2,
-      plugin: plugin2
-    }
-  )));
-};
+// src/components/PropertySuggester/index.tsx
 var PropertySuggester = ({
-  property,
-  top,
-  left,
+  propertyName,
+  position,
   callback
 }) => {
-  console.log("got property: ", property);
   const suggestions = (
     // @ts-ignore
-    app.metadataCache.getFrontmatterPropertyValuesForKey(property)
+    app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
   );
-  console.log("suggestions: ", suggestions);
-  (0, import_react6.useEffect)(() => {
-    console.log("suggester rendered");
-  });
-  return /* @__PURE__ */ import_react6.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react13.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react13.default.createElement(
     "div",
     {
-      className: "border-secondary-alt absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid bg-primary-alt p-1 text-normal",
+      className: "absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid border-secondary-alt bg-primary-alt p-1 text-normal",
       style: {
-        top: top + 40,
-        left
+        top: position?.top ? position.top + 60 : 0,
+        left: position?.left ? position.left : 0,
+        opacity: position ? 1 : 0
       }
     },
-    suggestions?.map((s, i) => /* @__PURE__ */ import_react6.default.createElement(
+    suggestions?.map((s, i) => /* @__PURE__ */ import_react13.default.createElement(
       "div",
       {
         key: i + s + "suggestion",
         className: "rounded-md p-2 hover:bg-secondary-alt",
-        onClick: async (e) => callback(e)
+        onMouseEnter: async (e) => {
+          console.log("callback called");
+          callback(e);
+        }
       },
       s
     )) ?? "No suggestions"
   ));
 };
-var App_default = App2;
-var toPlainArray = (arr) => {
-  try {
-    return arr.array();
-  } catch (e) {
-    return arr;
-  }
-};
-var getPropertyType = (propertyName) => {
-  const { metadataTypeManager } = app;
-  return metadataTypeManager.properties[propertyName]?.type;
-};
-var iconStyle = {
-  width: "var(--icon-size)",
-  height: "var(--icon-size)"
-};
-var PropertyIcon = ({ propertyName }) => {
-  const ref = (0, import_react6.useRef)(null);
-  const propertyType = getPropertyType(propertyName);
-  const propertyIcon = (
-    // @ts-ignore
-    app.metadataTypeManager.registeredTypeWidgets[propertyType]?.icon
-  );
-  (0, import_react6.useEffect)(() => {
-    if (!ref.current || !propertyIcon)
-      return;
-    console.log("icon: ", propertyIcon);
-    try {
-      (0, import_obsidian2.setIcon)(ref.current, propertyIcon);
-      console.log("icon should be set");
-    } catch (e) {
-      console.error("Failed to setIcon: ", e);
+
+// src/components/Inputs/StringInput/index.tsx
+var StringInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const ref = (0, import_react14.useRef)(null);
+  const [rect, setRect] = (0, import_react14.useState)();
+  const [isEditing, setIsEditing] = (0, import_react14.useState)(false);
+  useEnter(ref, async () => {
+    await updateMetaData2(propertyName, propertyValue, file.path);
+  });
+  return /* @__PURE__ */ import_react14.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react14.default.createElement(
+    PropertySuggester,
+    {
+      propertyName,
+      position: rect,
+      callback: async (e) => {
+        const newValue = e?.currentTarget?.textContent;
+        if (!newValue)
+          return;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = newValue;
+          return copyPrev;
+        });
+      }
     }
-  }, [propertyIcon]);
-  return /* @__PURE__ */ import_react6.default.createElement(
+  ), !isEditing && /* @__PURE__ */ import_react14.default.createElement(
     "span",
     {
+      className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      tabIndex: 0,
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    propertyValue
+  ), isEditing && /* @__PURE__ */ import_react14.default.createElement(
+    "input",
+    {
       ref,
-      className: "metadata-property-icon",
-      "aria-label": propertyType,
-      "data-tooltip-position": "right"
+      autoFocus: true,
+      type: "text",
+      value: propertyValue,
+      onChange: (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = e.target.value;
+          return copyPrev;
+        });
+      },
+      onBlur: async () => {
+        await updateMetaData2(
+          propertyName,
+          propertyValue,
+          file.path
+        );
+        setRect(void 0);
+        setIsEditing(false);
+      },
+      onFocus: (e) => {
+        const rect2 = e.target.getBoundingClientRect();
+        setRect({
+          top: rect2.top,
+          left: rect2.left
+        });
+      },
+      className: "relative m-0 border-transparent bg-transparent p-0 text-start"
     }
-  );
+  ));
 };
-var EditableTable = ({ data, plugin }) => {
-  const [queryResults, setQueryResults] = (0, import_react6.useState)();
-  (0, import_react6.useEffect)(() => {
+
+// src/components/LinkTableData/index.tsx
+var import_react15 = __toESM(require_react());
+var LinkTableData = ({ file }) => /* @__PURE__ */ import_react15.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react15.default.createElement(
+  "a",
+  {
+    href: file.path,
+    "data-tooltip-position": "top",
+    "aria-label": file.path,
+    "data-href": file.path,
+    className: "internal-link",
+    target: "_blank",
+    rel: "noopener",
+    "data-test": file
+  },
+  file.path.slice(0, -3)
+));
+
+// src/components/EditableTable/index.tsx
+var EditableTable = ({
+  data,
+  plugin
+}) => {
+  const [queryResults, setQueryResults] = (0, import_react16.useState)();
+  (0, import_react16.useEffect)(() => {
     console.log("query results: ", queryResults);
     const asyncDoQuery = async () => {
       await doQuery();
@@ -23975,7 +24277,6 @@ var EditableTable = ({ data, plugin }) => {
       );
     };
   }, [queryResults]);
-  const meApi = app.plugins.plugins.metaedit.api;
   const doQuery = async () => {
     const dv = app.plugins.plugins.dataview.api;
     if (data.split(" ")[0] !== "TABLE") {
@@ -23990,452 +24291,125 @@ var EditableTable = ({ data, plugin }) => {
     }
     setQueryResults(qr.value);
   };
-  const updateMetaData = async (k, value, v) => {
-    const link = v.find((d) => d && d.path);
-    if (!link) {
-      return console.error("no file link found");
-    }
-    const { path } = link;
-    const file = plugin.app.vault.getFileByPath(path);
-    const propName = queryResults.headers[k];
+  const updateMetaData = async (propertyName, propertyValue, filePath) => {
+    const file = plugin.app.vault.getFileByPath(filePath);
+    if (!file)
+      return;
     await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
-      console.log("fm: ", frontmatter);
-      frontmatter[propName] = value;
+      frontmatter[propertyName] = propertyValue;
     });
-    console.log("did it process?");
   };
-  (0, import_react6.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     doQuery();
   }, []);
   if (!queryResults)
-    return /* @__PURE__ */ import_react6.default.createElement(Error2, null, "Invalid query");
-  return /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, /* @__PURE__ */ import_react6.default.createElement("table", { className: "data-edit w-full" }, /* @__PURE__ */ import_react6.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react6.default.createElement("tbody", { className: "w-fit" }, queryResults.values.map((v, i) => /* @__PURE__ */ import_react6.default.createElement("tr", { key: i + "table-row", className: "w-fit" }, v.map((d, k) => /* @__PURE__ */ import_react6.default.createElement("td", { key: i + k, className: "relative w-fit" }, /* @__PURE__ */ import_react6.default.createElement(
-    EditableTableData,
-    {
-      d,
-      i,
-      k,
-      v,
-      queryResults,
-      setQueryResults,
-      updateMetaData,
-      doQuery
-    }
-  ))))))));
+    return /* @__PURE__ */ import_react16.default.createElement(Error2, null, "Invalid query");
+  return /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement("table", { className: "data-edit max-w-full whitespace-nowrap" }, /* @__PURE__ */ import_react16.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react16.default.createElement("tbody", { className: "" }, queryResults.values.map(
+    (propertyValueArr, propertyValueArrIndex) => /* @__PURE__ */ import_react16.default.createElement(
+      "tr",
+      {
+        key: propertyValueArrIndex + "table-row",
+        className: ""
+      },
+      propertyValueArr.map(
+        (propertyValue, propertyValueIndex) => /* @__PURE__ */ import_react16.default.createElement(
+          "td",
+          {
+            key: propertyValueArrIndex + propertyValueIndex,
+            className: "relative"
+          },
+          /* @__PURE__ */ import_react16.default.createElement(
+            EditableTableData,
+            {
+              propertyValue,
+              propertyValueArrIndex,
+              propertyValueIndex,
+              propertyValueArr,
+              propertyName: queryResults.headers[propertyValueIndex],
+              file: propertyValueArr[0],
+              setQueryResults,
+              updateMetaData
+            }
+          )
+        )
+      )
+    )
+  ))));
 };
-var EditableTableData = ({
-  d,
-  i,
-  k,
-  v,
-  queryResults: queryResults2,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2,
-  doQuery: doQuery2
-}) => {
-  const propertyType = getPropertyType(queryResults2.headers[k]);
-  if (d?.__proto__?.constructor?.name === "Link") {
-    return /* @__PURE__ */ import_react6.default.createElement(LinkTableData, { d });
+var EditableTableData = (props) => {
+  const { propertyValue, propertyName, file } = props;
+  const propertyType = getPropertyType(propertyName);
+  if (propertyValue?.__proto__?.constructor?.name === "Link") {
+    return /* @__PURE__ */ import_react16.default.createElement(LinkTableData, { file });
   }
   if (propertyType === "multitext" || propertyType === "tags") {
-    return /* @__PURE__ */ import_react6.default.createElement(
-      ArrayInputWrapper,
-      {
-        d,
-        v,
-        i,
-        k,
-        setQueryResults: setQueryResults2,
-        updateMetaData: updateMetaData2
-      }
-    );
+    return /* @__PURE__ */ import_react16.default.createElement(ArrayInputWrapper, { ...props });
   }
   if (propertyType === "date") {
-    return /* @__PURE__ */ import_react6.default.createElement("div", null, "date");
+    return /* @__PURE__ */ import_react16.default.createElement("div", null, "date");
   }
   if (propertyType === "datetime") {
-    return /* @__PURE__ */ import_react6.default.createElement("div", null, "datetime");
+    return /* @__PURE__ */ import_react16.default.createElement("div", null, "datetime");
   }
   if (propertyType === "checkbox") {
-    return /* @__PURE__ */ import_react6.default.createElement(
-      CheckboxInput,
-      {
-        v,
-        d,
-        i,
-        k,
-        setQueryResults: setQueryResults2,
-        updateMetaData: updateMetaData2
-      }
-    );
+    return /* @__PURE__ */ import_react16.default.createElement(CheckboxInput, { ...props });
   }
   if (propertyType === "number") {
-    return /* @__PURE__ */ import_react6.default.createElement(
-      NumberInput,
-      {
-        v,
-        d,
-        i,
-        k,
-        setQueryResults: setQueryResults2,
-        updateMetaData: updateMetaData2,
-        queryResults: queryResults2
-      }
-    );
+    return /* @__PURE__ */ import_react16.default.createElement(NumberInput, { ...props });
   }
-  return /* @__PURE__ */ import_react6.default.createElement(
-    StringInput,
-    {
-      v,
-      d,
-      i,
-      k,
-      setQueryResults: setQueryResults2,
-      updateMetaData: updateMetaData2,
-      queryResults: queryResults2
-    }
-  );
+  return /* @__PURE__ */ import_react16.default.createElement(StringInput, { ...props });
 };
 var TableHead = ({ queryResults: queryResults2 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react6.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h) => /* @__PURE__ */ import_react6.default.createElement("th", { key: h, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react6.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react16.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react16.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h) => /* @__PURE__ */ import_react16.default.createElement("th", { key: h, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
       className: "metadata-property-icon",
       "aria-label": "file",
       "data-tooltip-position": "right"
     },
-    /* @__PURE__ */ import_react6.default.createElement(File, { style: iconStyle })
-  )) : /* @__PURE__ */ import_react6.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react6.default.createElement(PropertyIcon, { propertyName: h }))))));
+    /* @__PURE__ */ import_react16.default.createElement(File, { style: iconStyle })
+  )) : /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react16.default.createElement(PropertyIcon, { propertyName: h }))))));
 };
-var LinkTableData = ({ d }) => /* @__PURE__ */ import_react6.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react6.default.createElement(
-  "a",
-  {
-    href: d.path,
-    "data-tooltip-position": "top",
-    "aria-label": d.path,
-    "data-href": d.path,
-    className: "internal-link",
-    target: "_blank",
-    rel: "noopener",
-    "data-test": d
-  },
-  d.path.slice(0, -3)
-));
-var StringInput = ({
-  v,
-  d,
-  i,
-  k,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2,
-  queryResults: queryResults2
-}) => {
-  const ref = (0, import_react6.useRef)();
-  const [rect, setRect] = (0, import_react6.useState)();
-  useEnter(ref, async () => {
-    await updateMetaData2(k, d, v);
-  });
-  return /* @__PURE__ */ import_react6.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react6.default.createElement(
-    PropertySuggester,
-    {
-      property: queryResults2.headers[k],
-      top: rect.top,
-      left: rect.left,
-      callback: async (e) => {
-        const newValue = e.currentTarget.textContent;
-        await updateMetaData2(k, newValue, v);
-      }
-    }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+
+// src/components/App.tsx
+var RequiedDepsError = () => /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react17.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react17.default.createElement("ul", null, /* @__PURE__ */ import_react17.default.createElement("li", null, /* @__PURE__ */ import_react17.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")))));
+var App2 = (props) => {
+  const { data: data2, getSectionInfo, settings, plugin: plugin2 } = props;
+  const [ErrMsg, setErrMsg] = (0, import_react17.useState)(void 0);
+  (0, import_react17.useEffect)(() => {
+    new import_obsidian3.Notice("App rendered");
+    (async () => {
+      const b = await loadDependencies();
+      if (!b)
+        return setErrMsg(() => RequiedDepsError);
+    })();
+  }, []);
+  if (ErrMsg) {
+    return /* @__PURE__ */ import_react17.default.createElement(Error2, null, /* @__PURE__ */ import_react17.default.createElement(ErrMsg, null));
+  }
+  return /* @__PURE__ */ import_react17.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react17.default.createElement(
     "input",
     {
-      ref,
-      disabled: !v.some((data2) => data2 && data2.path),
-      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
-      type: "text",
-      value: d,
-      onChange: (e) => {
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[i][k] = e.target.value;
-          return copyPrev;
-        });
-      },
-      onBlur: async () => {
-        await updateMetaData2(k, d, v);
-        setRect(void 0);
-      },
-      onFocus: (e) => {
-        const rect2 = e.target.getBoundingClientRect();
-        setRect({
-          top: rect2.top,
-          left: rect2.left
-        });
-      },
-      className: "relative m-0 w-fit border-transparent bg-transparent p-0 text-start"
+      className: "metadata-input metadata-input-text mod-datetime",
+      max: "9999-12-31T23:59",
+      type: "datetime-local",
+      placeholder: "Empty"
     }
-  ));
+  ), /* @__PURE__ */ import_react17.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react17.default.createElement(EditableTable, { data: data2, plugin: plugin2 })));
 };
-var NumberInput = ({
-  v,
-  d,
-  i,
-  k,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2,
-  queryResults: queryResults2
-}) => {
-  const ref = (0, import_react6.useRef)();
-  useEnter(ref, async () => {
-    await updateMetaData2(k, d, v);
-  });
-  return /* @__PURE__ */ import_react6.default.createElement("span", { className: "relative" }, /* @__PURE__ */ import_react6.default.createElement(
-    "input",
-    {
-      ref,
-      disabled: !v.some((data2) => data2 && data2.path),
-      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
-      type: "number",
-      value: d,
-      onChange: (e) => {
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[i][k] = Number(e.target.value);
-          return copyPrev;
-        });
-      },
-      onBlur: async () => {
-        await updateMetaData2(k, Number(d), v);
-      },
-      className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
-    }
-  ));
-};
-var ArrayInputWrapper = ({
-  d,
-  v,
-  i,
-  k,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2
-}) => {
-  return /* @__PURE__ */ import_react6.default.createElement("ul", { className: "m-0 p-0" }, d?.map((dd, n) => (
-    // <li key={i + k + n.toString()} className="flex">
-    // 	<span
-    // 		className="multi-select-pill-remove-button"
-    // 		onClick={() => {
-    // 			const copyValues = toPlainArray(v);
-    // 			const copyList = toPlainArray(copyValues[k]).filter(
-    // 				(_, index) => index !== n,
-    // 			);
-    // 			copyValues[k] = copyList;
-    // 			setQueryResults((prev) => {
-    // 				const copyPrev = { ...prev };
-    // 				copyPrev.values[i] = copyValues;
-    // 				return copyPrev;
-    // 			});
-    // 			setValue(copyList);
-    // 		}}
-    // 	>
-    // 		<X style={iconStyle} />
-    // 	</span>
-    // 	<input
-    // 		disabled={!v.some((data) => data && data.path)}
-    // 		aria-label={
-    // 			!v.some((data) => data && data.path)
-    // 				? "You must have a file.link in one of the columns!"
-    // 				: undefined
-    // 		}
-    // 		// defaultValue={dd}
-    // 		type="text"
-    // 		value={dd}
-    // 		onChange={(e) => {
-    // 			const copyValues = toPlainArray(v);
-    // 			console.log("e.value: ", e.target.value);
-    // 			const copyList = toPlainArray(copyValues[k]);
-    // 			copyList[n] = e.target.value;
-    // 			copyValues[k] = copyList;
-    // 			setQueryResults((prev) => {
-    // 				const copyPrev = { ...prev };
-    // 				copyPrev.values[i] = copyValues;
-    // 				return copyPrev;
-    // 			});
-    // 			setValue(copyList);
-    // 		}}
-    // 		className="m-0 w-fit border-transparent bg-transparent p-0 text-start"
-    // 	/>
-    // 	{/*
-    // 	TODO Can't get this to look quite pretty and usable enough
-    // 	{queryResults.headers[k] ===
-    // 		"tags" && (
-    // 		<a
-    // 			href={"#" + dd}
-    // 			className="tag"
-    // 			target="_blank"
-    // 			rel="noopener"
-    // 		>
-    // 			#{dd}
-    // 		</a>
-    // 	)} */}
-    // </li>
-    /* @__PURE__ */ import_react6.default.createElement(
-      ArrayInput,
-      {
-        key: i + k + n.toString(),
-        d,
-        v,
-        i,
-        k,
-        n,
-        dd,
-        setQueryResults: setQueryResults2,
-        updateMetaData: updateMetaData2
-      }
-    )
-  )), /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
-    "span",
-    {
-      className: "multi-select-pill-remove-button",
-      onClick: async () => {
-        const copyValues = toPlainArray(v);
-        const copyList = toPlainArray(copyValues[k]);
-        copyList.push("");
-        copyValues[k] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[i] = copyValues;
-          return copyPrev;
-        });
-        await updateMetaData2(k, copyList, v);
-      }
-    },
-    /* @__PURE__ */ import_react6.default.createElement(Plus, { style: iconStyle })
-  ), /* @__PURE__ */ import_react6.default.createElement(
-    "input",
-    {
-      disabled: true,
-      type: "text",
-      className: "m-0 w-fit border-transparent bg-transparent p-0"
-    }
-  )));
-};
-var ArrayInput = ({
-  d,
-  v,
-  i,
-  k,
-  n,
-  dd,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2
-}) => {
-  const ref = (0, import_react6.useRef)();
-  useEnter(ref, async () => {
-    await updateMetaData2(k, d, v);
-  });
-  return /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
-    "span",
-    {
-      className: "multi-select-pill-remove-button",
-      onClick: async () => {
-        const copyValues = toPlainArray(v);
-        const copyList = toPlainArray(copyValues[k]).filter(
-          (_, index) => index !== n
-        );
-        copyValues[k] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[i] = copyValues;
-          return copyPrev;
-        });
-        await updateMetaData2(k, copyList, v);
-      }
-    },
-    /* @__PURE__ */ import_react6.default.createElement(X, { style: iconStyle })
-  ), /* @__PURE__ */ import_react6.default.createElement(
-    "input",
-    {
-      ref,
-      disabled: !v.some((data2) => data2 && data2.path),
-      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
-      type: "text",
-      value: dd,
-      onChange: (e) => {
-        const copyValues = toPlainArray(v);
-        console.log("e.value: ", e.target.value);
-        const copyList = toPlainArray(copyValues[k]);
-        copyList[n] = e.target.value;
-        copyValues[k] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[i] = copyValues;
-          return copyPrev;
-        });
-      },
-      onBlur: async () => {
-        await updateMetaData2(k, d, v);
-      },
-      className: "m-0 w-fit border-transparent bg-transparent p-0 text-start"
-    }
-  ));
-};
-var CheckboxInput = ({
-  v,
-  d,
-  i,
-  k,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2
-}) => {
-  const [value, setValue] = (0, import_react6.useState)();
-  const debouncedValue = useDebounce(
-    async () => {
-      if (value !== false && !value)
-        return;
-      await updateMetaData2(k, value, v);
-    },
-    value,
-    1500
-  );
-  (0, import_react6.useEffect)(() => {
-    console.log("i am checked? ", d);
-  }, [d]);
-  return /* @__PURE__ */ import_react6.default.createElement("span", { className: "absolute inset-0 flex items-center justify-center" }, /* @__PURE__ */ import_react6.default.createElement(
-    "input",
-    {
-      disabled: !v.some((data2) => data2 && data2.path),
-      "aria-label": !v.some((data2) => data2 && data2.path) ? "You must have a file.link in one of the columns!" : void 0,
-      type: "checkbox",
-      "data-indeterminate": "false",
-      checked: !!d,
-      onChange: (e) => {
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[i][k] = e.target.checked;
-          return copyPrev;
-        });
-        setValue(e.target.checked);
-      },
-      className: "metadata-input-checkbox"
-    }
-  ));
-};
-var DateTimeInput = ({}) => {
-};
+var App_default = App2;
 
 // src/main.tsx
 var loadDependencies = async () => {
   const DATAVIEW = "dataview";
-  const METAEDIT = "metaedit";
   const plugins = app.plugins;
-  if (!plugins.enabledPlugins.has(DATAVIEW) || !plugins.enabledPlugins.has(METAEDIT)) {
+  if (!plugins.enabledPlugins.has(DATAVIEW)) {
     return false;
   }
   await plugins.loadPlugin(DATAVIEW);
-  await plugins.loadPlugin(METAEDIT);
   return true;
 };
-var DataEdit = class extends import_obsidian3.Plugin {
+var DataEdit = class extends import_obsidian4.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new DataEditSettingsTab(this.app, this));
@@ -24456,7 +24430,7 @@ var DataEdit = class extends import_obsidian3.Plugin {
       const root = (0, import_client.createRoot)(e);
       root.render(
         // <React.StrictMode>
-        /* @__PURE__ */ import_react7.default.createElement(
+        /* @__PURE__ */ import_react18.default.createElement(
           App_default,
           {
             data: s,
