@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState5(initialState) {
+        function useState6(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -1894,7 +1894,7 @@ var require_react_development = __commonJS({
         exports.useMemo = useMemo;
         exports.useReducer = useReducer;
         exports.useRef = useRef6;
-        exports.useState = useState5;
+        exports.useState = useState6;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -23674,6 +23674,10 @@ var iconStyle = {
   width: "var(--icon-size)",
   height: "var(--icon-size)"
 };
+var checkIsTag = (str) => {
+  const reg = new RegExp(/^#[^\s].*/);
+  return reg.test(str);
+};
 
 // src/components/PropertyIcon/index.tsx
 var import_react3 = __toESM(require_react());
@@ -23705,7 +23709,7 @@ var PropertyIcon = ({ propertyName }) => {
 };
 
 // src/components/Inputs/ArrayInput/index.tsx
-var import_react6 = __toESM(require_react());
+var import_react11 = __toESM(require_react());
 
 // src/hooks/useEnter.tsx
 var import_react4 = __toESM(require_react());
@@ -23743,219 +23747,8 @@ var useKeyboardClick = (ref) => {
   }, [ref]);
 };
 
-// src/components/Inputs/ArrayInput/index.tsx
-var ArrayInputWrapper = (props) => {
-  const {
-    propertyValue,
-    propertyValueArrIndex,
-    propertyValueIndex,
-    propertyValueArr,
-    propertyName,
-    file,
-    setQueryResults: setQueryResults2,
-    updateMetaData: updateMetaData2
-  } = props;
-  const plusRef = (0, import_react6.useRef)(null);
-  useKeyboardClick(plusRef);
-  return /* @__PURE__ */ import_react6.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react6.default.createElement(
-    ArrayInput,
-    {
-      key: propertyValueArrIndex + propertyValueIndex + n.toString(),
-      itemValue: val,
-      itemIndex: n,
-      ...props
-    }
-  )), /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
-    "span",
-    {
-      ref: plusRef,
-      tabIndex: 0,
-      className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
-      onClick: async () => {
-        const copyValues = toPlainArray(propertyValueArr);
-        const copyList = toPlainArray(copyValues[propertyValueIndex]) ?? [];
-        copyList.push("");
-        copyValues[propertyValueIndex] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex] = copyValues;
-          return copyPrev;
-        });
-        await updateMetaData2(propertyName, copyList, file.path);
-      }
-    },
-    /* @__PURE__ */ import_react6.default.createElement(Plus, { style: iconStyle })
-  ), /* @__PURE__ */ import_react6.default.createElement(
-    "input",
-    {
-      disabled: true,
-      type: "text",
-      className: "m-0 border-transparent bg-transparent p-0"
-    }
-  )));
-};
-var ArrayInput = ({
-  propertyValue,
-  propertyValueArrIndex,
-  propertyValueIndex,
-  propertyValueArr,
-  propertyName,
-  file,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2,
-  itemValue,
-  itemIndex
-}) => {
-  const ref = (0, import_react6.useRef)(null);
-  const xRef = (0, import_react6.useRef)(null);
-  useKeyboardClick(xRef);
-  useEnter(ref, async () => {
-    await updateMetaData2(propertyName, propertyValue, file.path);
-  });
-  return /* @__PURE__ */ import_react6.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react6.default.createElement(
-    "span",
-    {
-      className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
-      tabIndex: 0,
-      ref: xRef,
-      onClick: async () => {
-        const copyValues = toPlainArray(propertyValueArr);
-        const copyList = toPlainArray(
-          copyValues[propertyValueIndex]
-        ).filter((_, index) => index !== itemIndex);
-        copyValues[propertyValueIndex] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex] = copyValues;
-          return copyPrev;
-        });
-        await updateMetaData2(propertyName, copyList, file.path);
-      }
-    },
-    /* @__PURE__ */ import_react6.default.createElement(X, { style: iconStyle })
-  ), /* @__PURE__ */ import_react6.default.createElement(
-    "input",
-    {
-      ref,
-      type: "text",
-      value: itemValue,
-      onChange: (e) => {
-        const copyValues = toPlainArray(propertyValueArr);
-        console.log("e.value: ", e.target.value);
-        const copyList = toPlainArray(
-          copyValues[propertyValueIndex]
-        );
-        copyList[itemIndex] = e.target.value;
-        copyValues[propertyValueIndex] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex] = copyValues;
-          return copyPrev;
-        });
-      },
-      onBlur: async () => {
-        await updateMetaData2(
-          propertyName,
-          propertyValue,
-          file.path
-        );
-      },
-      className: "m-0 border-transparent bg-transparent p-0 text-start"
-    }
-  ));
-};
-
-// src/components/Inputs/CheckboxInput/index.tsx
-var import_react7 = __toESM(require_react());
-var CheckboxInput = ({
-  propertyValue,
-  propertyValueArrIndex,
-  propertyValueIndex,
-  propertyName,
-  file,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2
-}) => {
-  return /* @__PURE__ */ import_react7.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react7.default.createElement(
-    "input",
-    {
-      type: "checkbox",
-      "data-indeterminate": "false",
-      checked: !!propertyValue,
-      onChange: async (e) => {
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = e.target.checked;
-          return copyPrev;
-        });
-        await updateMetaData2(
-          propertyName,
-          e.target.checked,
-          file.path
-        );
-      },
-      className: "metadata-input-checkbox"
-    }
-  ));
-};
-
-// src/components/Inputs/NumberInput/index.tsx
-var import_react8 = __toESM(require_react());
-var NumberInput = ({
-  propertyValue,
-  propertyValueArrIndex,
-  propertyValueIndex,
-  propertyName,
-  file,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2
-}) => {
-  const ref = (0, import_react8.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react8.useState)(false);
-  useEnter(ref, async () => {
-    await updateMetaData2(propertyName, Number(propertyValue), file.path);
-  });
-  return /* @__PURE__ */ import_react8.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react8.default.createElement(
-    "span",
-    {
-      className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
-      tabIndex: 0,
-      onClick: () => setIsEditing(true),
-      onFocus: () => setIsEditing(true)
-    },
-    propertyValue
-  ), isEditing && /* @__PURE__ */ import_react8.default.createElement(
-    "input",
-    {
-      ref,
-      autoFocus: true,
-      type: "number",
-      value: propertyValue,
-      onChange: (e) => {
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = Number(e.target.value);
-          return copyPrev;
-        });
-      },
-      onBlur: async () => {
-        await updateMetaData2(
-          propertyName,
-          Number(propertyValue),
-          file.path
-        );
-        setIsEditing(false);
-      },
-      className: "m-0 border-transparent bg-transparent p-0 text-start"
-    }
-  ));
-};
-
-// src/components/Inputs/StringInput/index.tsx
-var import_react14 = __toESM(require_react());
-
 // src/components/PropertySuggester/index.tsx
-var import_react13 = __toESM(require_react());
+var import_react10 = __toESM(require_react());
 
 // node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
@@ -23974,18 +23767,18 @@ function _extends() {
 }
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var import_react12 = __toESM(require_react(), 1);
+var import_react9 = __toESM(require_react(), 1);
 var import_react_dom2 = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-primitive/dist/index.mjs
-var import_react11 = __toESM(require_react(), 1);
+var import_react8 = __toESM(require_react(), 1);
 var import_react_dom = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var import_react10 = __toESM(require_react(), 1);
+var import_react7 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-var import_react9 = __toESM(require_react(), 1);
+var import_react6 = __toESM(require_react(), 1);
 function $6ed0406888f73fc4$var$setRef(ref, value) {
   if (typeof ref === "function")
     ref(value);
@@ -23999,44 +23792,44 @@ function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
 }
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react10.forwardRef)((props, forwardedRef) => {
+var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react7.forwardRef)((props, forwardedRef) => {
   const { children, ...slotProps } = props;
-  const childrenArray = import_react10.Children.toArray(children);
+  const childrenArray = import_react7.Children.toArray(children);
   const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
   if (slottable) {
     const newElement = slottable.props.children;
     const newChildren = childrenArray.map((child) => {
       if (child === slottable) {
-        if (import_react10.Children.count(newElement) > 1)
-          return import_react10.Children.only(null);
-        return /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? newElement.props.children : null;
+        if (import_react7.Children.count(newElement) > 1)
+          return import_react7.Children.only(null);
+        return /* @__PURE__ */ (0, import_react7.isValidElement)(newElement) ? newElement.props.children : null;
       } else
         return child;
     });
-    return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+    return /* @__PURE__ */ (0, import_react7.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
       ref: forwardedRef
-    }), /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react10.cloneElement)(newElement, void 0, newChildren) : null);
+    }), /* @__PURE__ */ (0, import_react7.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react7.cloneElement)(newElement, void 0, newChildren) : null);
   }
-  return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+  return /* @__PURE__ */ (0, import_react7.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
     ref: forwardedRef
   }), children);
 });
 $5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
-var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react10.forwardRef)((props, forwardedRef) => {
+var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react7.forwardRef)((props, forwardedRef) => {
   const { children, ...slotProps } = props;
-  if (/* @__PURE__ */ (0, import_react10.isValidElement)(children))
-    return /* @__PURE__ */ (0, import_react10.cloneElement)(children, {
+  if (/* @__PURE__ */ (0, import_react7.isValidElement)(children))
+    return /* @__PURE__ */ (0, import_react7.cloneElement)(children, {
       ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
       ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
     });
-  return import_react10.Children.count(children) > 1 ? import_react10.Children.only(null) : null;
+  return import_react7.Children.count(children) > 1 ? import_react7.Children.only(null) : null;
 });
 $5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
 var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
-  return /* @__PURE__ */ (0, import_react10.createElement)(import_react10.Fragment, null, children);
+  return /* @__PURE__ */ (0, import_react7.createElement)(import_react7.Fragment, null, children);
 };
 function $5e63c961fc1ce211$var$isSlottable(child) {
-  return /* @__PURE__ */ (0, import_react10.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
+  return /* @__PURE__ */ (0, import_react7.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
 }
 function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
   const overrideProps = {
@@ -24091,13 +23884,13 @@ var $8927f6f2acc4f386$var$NODES = [
   "ul"
 ];
 var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
-  const Node = /* @__PURE__ */ (0, import_react11.forwardRef)((props, forwardedRef) => {
+  const Node = /* @__PURE__ */ (0, import_react8.forwardRef)((props, forwardedRef) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
-    (0, import_react11.useEffect)(() => {
+    (0, import_react8.useEffect)(() => {
       window[Symbol.for("radix-ui")] = true;
     }, []);
-    return /* @__PURE__ */ (0, import_react11.createElement)(Comp, _extends({}, primitiveProps, {
+    return /* @__PURE__ */ (0, import_react8.createElement)(Comp, _extends({}, primitiveProps, {
       ref: forwardedRef
     }));
   });
@@ -24109,10 +23902,10 @@ var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.redu
 }, {});
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react12.forwardRef)((props, forwardedRef) => {
+var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react9.forwardRef)((props, forwardedRef) => {
   var _globalThis$document;
   const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props;
-  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react12.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
+  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react9.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
     ref: forwardedRef
   })), container) : null;
 });
@@ -24128,7 +23921,7 @@ var PropertySuggester = ({
     // @ts-ignore
     app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
   );
-  return /* @__PURE__ */ import_react13.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react13.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react10.default.createElement(
     "div",
     {
       className: "absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid border-secondary-alt bg-primary-alt p-1 text-normal",
@@ -24138,7 +23931,7 @@ var PropertySuggester = ({
         opacity: position ? 1 : 0
       }
     },
-    suggestions?.map((s, i) => /* @__PURE__ */ import_react13.default.createElement(
+    suggestions?.map((s, i) => /* @__PURE__ */ import_react10.default.createElement(
       "div",
       {
         key: i + s + "suggestion",
@@ -24153,7 +23946,278 @@ var PropertySuggester = ({
   ));
 };
 
+// src/components/Inputs/ArrayInput/index.tsx
+var ArrayInputWrapper = (props) => {
+  const {
+    propertyValue,
+    propertyValueArrIndex,
+    propertyValueIndex,
+    propertyValueArr,
+    propertyName,
+    file,
+    setQueryResults: setQueryResults2,
+    updateMetaData: updateMetaData2
+  } = props;
+  const plusRef = (0, import_react11.useRef)(null);
+  useKeyboardClick(plusRef);
+  return /* @__PURE__ */ import_react11.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react11.default.createElement(
+    ArrayInput,
+    {
+      key: propertyValueArrIndex + propertyValueIndex + n.toString(),
+      itemValue: val,
+      itemIndex: n,
+      ...props
+    }
+  )), /* @__PURE__ */ import_react11.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react11.default.createElement(
+    "span",
+    {
+      ref: plusRef,
+      tabIndex: 0,
+      className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      onClick: async () => {
+        const copyValues = toPlainArray(propertyValueArr);
+        const copyList = toPlainArray(copyValues[propertyValueIndex]) ?? [];
+        copyList.push("");
+        copyValues[propertyValueIndex] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex] = copyValues;
+          return copyPrev;
+        });
+        await updateMetaData2(propertyName, copyList, file.path);
+      }
+    },
+    /* @__PURE__ */ import_react11.default.createElement(Plus, { style: iconStyle })
+  ), /* @__PURE__ */ import_react11.default.createElement(
+    "input",
+    {
+      disabled: true,
+      type: "text",
+      className: "m-0 border-transparent bg-transparent p-0"
+    }
+  )));
+};
+var ArrayInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyValueArr,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2,
+  itemValue,
+  itemIndex
+}) => {
+  const [rect, setRect] = (0, import_react11.useState)();
+  const [isEditing, setIsEditing] = (0, import_react11.useState)(false);
+  const ref = (0, import_react11.useRef)(null);
+  const xRef = (0, import_react11.useRef)(null);
+  const isTag = propertyName.toLowerCase() === "tags" || checkIsTag(itemValue);
+  useKeyboardClick(xRef);
+  useEnter(ref, async () => {
+    await updateMetaData2(propertyName, propertyValue, file.path);
+  });
+  return /* @__PURE__ */ import_react11.default.createElement("li", { className: "flex items-center" }, /* @__PURE__ */ import_react11.default.createElement(
+    "span",
+    {
+      className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      tabIndex: 0,
+      ref: xRef,
+      onClick: async () => {
+        const copyValues = toPlainArray(propertyValueArr);
+        const copyList = toPlainArray(
+          copyValues[propertyValueIndex]
+        ).filter((_, index) => index !== itemIndex);
+        copyValues[propertyValueIndex] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex] = copyValues;
+          return copyPrev;
+        });
+        await updateMetaData2(propertyName, copyList, file.path);
+      }
+    },
+    /* @__PURE__ */ import_react11.default.createElement(X, { style: iconStyle })
+  ), rect && /* @__PURE__ */ import_react11.default.createElement(
+    PropertySuggester,
+    {
+      propertyName,
+      position: rect,
+      callback: (e) => {
+        const copyValues = toPlainArray(propertyValueArr);
+        const copyList = toPlainArray(
+          copyValues[propertyValueIndex]
+        );
+        copyList[itemIndex] = e?.currentTarget?.textContent;
+        copyValues[propertyValueIndex] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex] = copyValues;
+          return copyPrev;
+        });
+      }
+    }
+  ), !isEditing && /* @__PURE__ */ import_react11.default.createElement("span", { className: "flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isTag ? /* @__PURE__ */ import_react11.default.createElement(import_react11.default.Fragment, null, /* @__PURE__ */ import_react11.default.createElement(
+    "a",
+    {
+      href: "#" + itemValue,
+      "aria-label": "#" + itemValue,
+      className: "tag whitespace-nowrap",
+      target: "_blank",
+      rel: "noopener",
+      tabIndex: 0
+    },
+    "#",
+    itemValue
+  ), /* @__PURE__ */ import_react11.default.createElement(
+    "span",
+    {
+      className: "h-full w-full",
+      tabIndex: 0,
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    "\xA0"
+  )) : /* @__PURE__ */ import_react11.default.createElement(
+    "span",
+    {
+      className: "w-full",
+      tabIndex: 0,
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    itemValue
+  )), isEditing && /* @__PURE__ */ import_react11.default.createElement(
+    "input",
+    {
+      ref,
+      autoFocus: true,
+      type: "text",
+      value: itemValue,
+      onChange: (e) => {
+        const copyValues = toPlainArray(propertyValueArr);
+        console.log("e.value: ", e.target.value);
+        const copyList = toPlainArray(
+          copyValues[propertyValueIndex]
+        );
+        copyList[itemIndex] = e.target.value;
+        copyValues[propertyValueIndex] = copyList;
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex] = copyValues;
+          return copyPrev;
+        });
+      },
+      onBlur: async () => {
+        await updateMetaData2(
+          propertyName,
+          propertyValue,
+          file.path
+        );
+        setRect(void 0);
+        setIsEditing(false);
+      },
+      onFocus: (e) => {
+        const rect2 = e.target.getBoundingClientRect();
+        setRect({
+          top: rect2.top,
+          left: rect2.left
+        });
+      },
+      className: "m-0 border-transparent bg-transparent p-0 text-start"
+    }
+  ));
+};
+
+// src/components/Inputs/CheckboxInput/index.tsx
+var import_react12 = __toESM(require_react());
+var CheckboxInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  return /* @__PURE__ */ import_react12.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react12.default.createElement(
+    "input",
+    {
+      type: "checkbox",
+      "data-indeterminate": "false",
+      checked: !!propertyValue,
+      onChange: async (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = e.target.checked;
+          return copyPrev;
+        });
+        await updateMetaData2(
+          propertyName,
+          e.target.checked,
+          file.path
+        );
+      },
+      className: "metadata-input-checkbox"
+    }
+  ));
+};
+
+// src/components/Inputs/NumberInput/index.tsx
+var import_react13 = __toESM(require_react());
+var NumberInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2
+}) => {
+  const ref = (0, import_react13.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react13.useState)(false);
+  useEnter(ref, async () => {
+    await updateMetaData2(propertyName, Number(propertyValue), file.path);
+  });
+  return /* @__PURE__ */ import_react13.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react13.default.createElement(
+    "span",
+    {
+      className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      tabIndex: 0,
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    propertyValue
+  ), isEditing && /* @__PURE__ */ import_react13.default.createElement(
+    "input",
+    {
+      ref,
+      autoFocus: true,
+      type: "number",
+      value: propertyValue,
+      onChange: (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = Number(e.target.value);
+          return copyPrev;
+        });
+      },
+      onBlur: async () => {
+        await updateMetaData2(
+          propertyName,
+          Number(propertyValue),
+          file.path
+        );
+        setIsEditing(false);
+      },
+      className: "m-0 border-transparent bg-transparent p-0 text-start"
+    }
+  ));
+};
+
 // src/components/Inputs/StringInput/index.tsx
+var import_react14 = __toESM(require_react());
 var StringInput = ({
   propertyValue,
   propertyValueArrIndex,

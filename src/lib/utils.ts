@@ -18,6 +18,11 @@ const toPlainArray = (arr: any) => {
 	}
 };
 
+/**
+ * Gets the obsidian property type for a frontmatter property
+ * @param propertyName The frontmatter property name
+ * @returns The corresponding Obsidian property type
+ */
 export const getPropertyType = (propertyName: string) => {
 	// @ts-ignore
 	const { metadataTypeManager } = app;
@@ -29,4 +34,21 @@ export const getPropertyType = (propertyName: string) => {
 export const iconStyle = {
 	width: "var(--icon-size)",
 	height: "var(--icon-size)",
+};
+
+/**
+ * Checks if a string is a tag
+ * @param str The string to test
+ * @returns `true` if a #tag or `false` if not
+ * ---
+ * ```js
+ *
+ * CheckIsTag('#hello') // true
+ *
+ * CheckIsTag('world') && CheckIsTag('# wrong') // false
+ * ```
+ */
+export const checkIsTag = (str: string) => {
+	const reg = new RegExp(/^#[^\s].*/);
+	return reg.test(str);
 };

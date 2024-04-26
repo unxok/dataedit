@@ -5,10 +5,12 @@ export const PropertySuggester = ({
 	propertyName,
 	position,
 	callback,
+	initial,
 }: {
 	propertyName: string;
 	position: { top: number; left: number } | undefined;
 	callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+	initial?: string;
 }) => {
 	// console.log("got property: ", propertyName);
 	const suggestions =

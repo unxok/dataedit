@@ -2,11 +2,12 @@
 test: sdfsdf
 some-list:
   - itemAa
-  - itemBb
+  - itemBbddddd
+  - a new item
 tags:
   - another
   - onemoretagg
-  - test
+  - testtt
 date: 2024-02-01
 checkboxtest: true
 datetime: 2024-02-01T13:24:00
