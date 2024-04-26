@@ -1,15 +1,24 @@
 import React from "react";
 import * as Portal from "@radix-ui/react-portal";
 
+/*****************
+# TO DO    
+- Add keyboard nav
+  - make into select/options?
+  
+*****************/
+
 export const PropertySuggester = ({
 	propertyName,
 	position,
-	callback,
+	onMouseEnter,
+	onMouseLeave,
 	initial,
 }: {
 	propertyName: string;
 	position: { top: number; left: number } | undefined;
-	callback: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+	onMouseEnter: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+	onMouseLeave: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 	initial?: string;
 }) => {
 	// console.log("got property: ", propertyName);
@@ -35,10 +44,8 @@ export const PropertySuggester = ({
 					<div
 						key={i + s + "suggestion"}
 						className="rounded-md p-2 hover:bg-secondary-alt"
-						onMouseEnter={async (e) => {
-							console.log("callback called");
-							callback(e);
-						}}
+						onMouseEnter={async (e) => onMouseEnter(e)}
+						onMouseLeave={async (e) => onMouseLeave(e)}
 					>
 						{s}
 					</div>

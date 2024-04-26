@@ -1,9 +1,9 @@
 ---
-test: sdfsdf
+test: "[[test note.md|test note]]"
 some-list:
   - itemAa
   - itemBbddddd
-  - a new item
+  - "[[Welcome.md|Welcome]]"
 tags:
   - another
   - onemoretagg

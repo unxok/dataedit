@@ -1104,7 +1104,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect6(create, deps) {
+        function useEffect7(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -1886,7 +1886,7 @@ var require_react_development = __commonJS({
         exports.useContext = useContext;
         exports.useDebugValue = useDebugValue;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect6;
+        exports.useEffect = useEffect7;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
@@ -23661,7 +23661,10 @@ var import_react16 = __toESM(require_react());
 // src/lib/utils.ts
 var toPlainArray = (arr) => {
   try {
-    return arr.array();
+    console.log("preArray: ", arr);
+    const postArr = arr.array();
+    console.log("postArr: ", postArr);
+    return postArr;
   } catch (e) {
     return arr;
   }
@@ -23674,9 +23677,11 @@ var iconStyle = {
   width: "var(--icon-size)",
   height: "var(--icon-size)"
 };
-var checkIsTag = (str) => {
-  const reg = new RegExp(/^#[^\s].*/);
-  return reg.test(str);
+var checkIsLink = (val) => {
+  if (val.hasOwnProperty("type")) {
+    return val.type === "file";
+  }
+  return false;
 };
 
 // src/components/PropertyIcon/index.tsx
@@ -23709,7 +23714,7 @@ var PropertyIcon = ({ propertyName }) => {
 };
 
 // src/components/Inputs/ArrayInput/index.tsx
-var import_react11 = __toESM(require_react());
+var import_react12 = __toESM(require_react());
 
 // src/hooks/useEnter.tsx
 var import_react4 = __toESM(require_react());
@@ -23915,7 +23920,9 @@ var $f1701beae083dbae$export$be92b6f5f03c0fe9 = $f1701beae083dbae$export$602eac1
 var PropertySuggester = ({
   propertyName,
   position,
-  callback
+  onMouseEnter,
+  onMouseLeave,
+  initial
 }) => {
   const suggestions = (
     // @ts-ignore
@@ -23936,13 +23943,32 @@ var PropertySuggester = ({
       {
         key: i + s + "suggestion",
         className: "rounded-md p-2 hover:bg-secondary-alt",
-        onMouseEnter: async (e) => {
-          console.log("callback called");
-          callback(e);
-        }
+        onMouseEnter: async (e) => onMouseEnter(e),
+        onMouseLeave: async (e) => onMouseLeave(e)
       },
       s
     )) ?? "No suggestions"
+  ));
+};
+
+// src/components/LinkTableData/index.tsx
+var import_react11 = __toESM(require_react());
+var LinkTableData = ({ file }) => {
+  if (typeof file === "string")
+    return;
+  return /* @__PURE__ */ import_react11.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react11.default.createElement(
+    "a",
+    {
+      href: file.path,
+      "data-tooltip-position": "top",
+      "aria-label": file.path,
+      "data-href": file.path,
+      className: "internal-link",
+      target: "_blank",
+      rel: "noopener",
+      "data-test": file
+    },
+    file.fileName()
   ));
 };
 
@@ -23958,9 +23984,9 @@ var ArrayInputWrapper = (props) => {
     setQueryResults: setQueryResults2,
     updateMetaData: updateMetaData2
   } = props;
-  const plusRef = (0, import_react11.useRef)(null);
+  const plusRef = (0, import_react12.useRef)(null);
   useKeyboardClick(plusRef);
-  return /* @__PURE__ */ import_react11.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react11.default.createElement(
+  return /* @__PURE__ */ import_react12.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react12.default.createElement(
     ArrayInput,
     {
       key: propertyValueArrIndex + propertyValueIndex + n.toString(),
@@ -23968,7 +23994,7 @@ var ArrayInputWrapper = (props) => {
       itemIndex: n,
       ...props
     }
-  )), /* @__PURE__ */ import_react11.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react11.default.createElement(
+  )), /* @__PURE__ */ import_react12.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react12.default.createElement(
     "span",
     {
       ref: plusRef,
@@ -23987,8 +24013,8 @@ var ArrayInputWrapper = (props) => {
         await updateMetaData2(propertyName, copyList, file.path);
       }
     },
-    /* @__PURE__ */ import_react11.default.createElement(Plus, { style: iconStyle })
-  ), /* @__PURE__ */ import_react11.default.createElement(
+    /* @__PURE__ */ import_react12.default.createElement(Plus, { style: iconStyle })
+  ), /* @__PURE__ */ import_react12.default.createElement(
     "input",
     {
       disabled: true,
@@ -24009,16 +24035,26 @@ var ArrayInput = ({
   itemValue,
   itemIndex
 }) => {
-  const [rect, setRect] = (0, import_react11.useState)();
-  const [isEditing, setIsEditing] = (0, import_react11.useState)(false);
-  const ref = (0, import_react11.useRef)(null);
-  const xRef = (0, import_react11.useRef)(null);
-  const isTag = propertyName.toLowerCase() === "tags" || checkIsTag(itemValue);
+  const [rect, setRect] = (0, import_react12.useState)();
+  const [isEditing, setIsEditing] = (0, import_react12.useState)(false);
+  const [value, setValue] = (0, import_react12.useState)("");
+  const ref = (0, import_react12.useRef)(null);
+  const xRef = (0, import_react12.useRef)(null);
+  const isLink = checkIsLink(itemValue);
   useKeyboardClick(xRef);
-  useEnter(ref, async () => {
-    await updateMetaData2(propertyName, propertyValue, file.path);
-  });
-  return /* @__PURE__ */ import_react11.default.createElement("li", { className: "flex items-center" }, /* @__PURE__ */ import_react11.default.createElement(
+  const updateProperty = async () => {
+    const preNewItemValue = value || itemValue;
+    const preIsLink = checkIsLink(preNewItemValue);
+    const newItemValue = preIsLink ? (
+      // @ts-ignore
+      preNewItemValue.markdown()
+    ) : preNewItemValue;
+    const newValue = [...propertyValue];
+    newValue[propertyValueIndex] = newItemValue;
+    await updateMetaData2(propertyName, newValue, file.path);
+  };
+  useEnter(ref, updateProperty);
+  return /* @__PURE__ */ import_react12.default.createElement("li", { className: "flex items-center" }, /* @__PURE__ */ import_react12.default.createElement(
     "span",
     {
       className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
@@ -24038,27 +24074,27 @@ var ArrayInput = ({
         await updateMetaData2(propertyName, copyList, file.path);
       }
     },
-    /* @__PURE__ */ import_react11.default.createElement(X, { style: iconStyle })
-  ), rect && /* @__PURE__ */ import_react11.default.createElement(
+    /* @__PURE__ */ import_react12.default.createElement(X, { style: iconStyle })
+  ), rect && /* @__PURE__ */ import_react12.default.createElement(
     PropertySuggester,
     {
       propertyName,
       position: rect,
-      callback: (e) => {
-        const copyValues = toPlainArray(propertyValueArr);
-        const copyList = toPlainArray(
-          copyValues[propertyValueIndex]
-        );
-        copyList[itemIndex] = e?.currentTarget?.textContent;
-        copyValues[propertyValueIndex] = copyList;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex] = copyValues;
-          return copyPrev;
-        });
-      }
+      onMouseEnter: (e) => {
+        const newValue = e?.currentTarget?.textContent;
+        setValue(newValue);
+      },
+      onMouseLeave: (e) => setValue("")
     }
-  ), !isEditing && /* @__PURE__ */ import_react11.default.createElement("span", { className: "flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isTag ? /* @__PURE__ */ import_react11.default.createElement(import_react11.default.Fragment, null, /* @__PURE__ */ import_react11.default.createElement(
+  ), !isEditing && /* @__PURE__ */ import_react12.default.createElement("span", { className: "flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, /* @__PURE__ */ import_react12.default.createElement(LinkTableData, { file: itemValue }), /* @__PURE__ */ import_react12.default.createElement(
+    "span",
+    {
+      className: "w-full",
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    "\xA0"
+  )) : propertyName.toLowerCase() === "tags" ? /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, /* @__PURE__ */ import_react12.default.createElement(
     "a",
     {
       href: "#" + itemValue,
@@ -24070,7 +24106,7 @@ var ArrayInput = ({
     },
     "#",
     itemValue
-  ), /* @__PURE__ */ import_react11.default.createElement(
+  ), /* @__PURE__ */ import_react12.default.createElement(
     "span",
     {
       className: "h-full w-full",
@@ -24079,7 +24115,7 @@ var ArrayInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )) : /* @__PURE__ */ import_react11.default.createElement(
+  )) : /* @__PURE__ */ import_react12.default.createElement(
     "span",
     {
       className: "w-full",
@@ -24088,7 +24124,7 @@ var ArrayInput = ({
       onFocus: () => setIsEditing(true)
     },
     itemValue
-  )), isEditing && /* @__PURE__ */ import_react11.default.createElement(
+  )), isEditing && /* @__PURE__ */ import_react12.default.createElement(
     "input",
     {
       ref,
@@ -24110,11 +24146,7 @@ var ArrayInput = ({
         });
       },
       onBlur: async () => {
-        await updateMetaData2(
-          propertyName,
-          propertyValue,
-          file.path
-        );
+        await updateProperty();
         setRect(void 0);
         setIsEditing(false);
       },
@@ -24131,7 +24163,7 @@ var ArrayInput = ({
 };
 
 // src/components/Inputs/CheckboxInput/index.tsx
-var import_react12 = __toESM(require_react());
+var import_react13 = __toESM(require_react());
 var CheckboxInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24141,7 +24173,7 @@ var CheckboxInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  return /* @__PURE__ */ import_react12.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react12.default.createElement(
+  return /* @__PURE__ */ import_react13.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react13.default.createElement(
     "input",
     {
       type: "checkbox",
@@ -24165,7 +24197,7 @@ var CheckboxInput = ({
 };
 
 // src/components/Inputs/NumberInput/index.tsx
-var import_react13 = __toESM(require_react());
+var import_react14 = __toESM(require_react());
 var NumberInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24175,12 +24207,12 @@ var NumberInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const ref = (0, import_react13.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react13.useState)(false);
+  const ref = (0, import_react14.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react14.useState)(false);
   useEnter(ref, async () => {
     await updateMetaData2(propertyName, Number(propertyValue), file.path);
   });
-  return /* @__PURE__ */ import_react13.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react13.default.createElement(
+  return /* @__PURE__ */ import_react14.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react14.default.createElement(
     "span",
     {
       className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
@@ -24189,7 +24221,7 @@ var NumberInput = ({
       onFocus: () => setIsEditing(true)
     },
     propertyValue
-  ), isEditing && /* @__PURE__ */ import_react13.default.createElement(
+  ), isEditing && /* @__PURE__ */ import_react14.default.createElement(
     "input",
     {
       ref,
@@ -24217,7 +24249,7 @@ var NumberInput = ({
 };
 
 // src/components/Inputs/StringInput/index.tsx
-var import_react14 = __toESM(require_react());
+var import_react15 = __toESM(require_react());
 var StringInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24227,44 +24259,51 @@ var StringInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const ref = (0, import_react14.useRef)(null);
-  const [rect, setRect] = (0, import_react14.useState)();
-  const [isEditing, setIsEditing] = (0, import_react14.useState)(false);
-  useEnter(ref, async () => {
-    await updateMetaData2(propertyName, propertyValue, file.path);
-  });
-  return /* @__PURE__ */ import_react14.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react14.default.createElement(
+  const ref = (0, import_react15.useRef)(null);
+  const [rect, setRect] = (0, import_react15.useState)();
+  const [isEditing, setIsEditing] = (0, import_react15.useState)(false);
+  const [value, setValue] = (0, import_react15.useState)("");
+  const isLink = checkIsLink(propertyValue);
+  (0, import_react15.useEffect)(() => console.log("value: ", value), [value]);
+  const updateProperty = async () => {
+    const preNewValue = value || propertyValue;
+    const newValue = isLink ? preNewValue.markdown() : preNewValue;
+    await updateMetaData2(propertyName, newValue, file.path);
+  };
+  useEnter(ref, updateProperty);
+  return /* @__PURE__ */ import_react15.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react15.default.createElement(
     PropertySuggester,
     {
       propertyName,
       position: rect,
-      callback: async (e) => {
+      onMouseEnter: (e) => {
         const newValue = e?.currentTarget?.textContent;
-        if (!newValue)
-          return;
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = newValue;
-          return copyPrev;
-        });
-      }
+        setValue(newValue);
+      },
+      onMouseLeave: (e) => setValue("")
     }
-  ), !isEditing && /* @__PURE__ */ import_react14.default.createElement(
+  ), !isEditing && /* @__PURE__ */ import_react15.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement(LinkTableData, { file: propertyValue }), /* @__PURE__ */ import_react15.default.createElement(
     "span",
     {
-      className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
-      tabIndex: 0,
+      className: "w-full",
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    "\xA0"
+  )) : /* @__PURE__ */ import_react15.default.createElement(
+    "span",
+    {
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
     propertyValue
-  ), isEditing && /* @__PURE__ */ import_react14.default.createElement(
+  )), isEditing && /* @__PURE__ */ import_react15.default.createElement(
     "input",
     {
       ref,
       autoFocus: true,
       type: "text",
-      value: propertyValue,
+      value: isLink ? propertyValue.markdown() : propertyValue,
       onChange: (e) => {
         setQueryResults2((prev) => {
           const copyPrev = { ...prev };
@@ -24273,11 +24312,7 @@ var StringInput = ({
         });
       },
       onBlur: async () => {
-        await updateMetaData2(
-          propertyName,
-          propertyValue,
-          file.path
-        );
+        await updateProperty();
         setRect(void 0);
         setIsEditing(false);
       },
@@ -24292,23 +24327,6 @@ var StringInput = ({
     }
   ));
 };
-
-// src/components/LinkTableData/index.tsx
-var import_react15 = __toESM(require_react());
-var LinkTableData = ({ file }) => /* @__PURE__ */ import_react15.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react15.default.createElement(
-  "a",
-  {
-    href: file.path,
-    "data-tooltip-position": "top",
-    "aria-label": file.path,
-    "data-href": file.path,
-    className: "internal-link",
-    target: "_blank",
-    rel: "noopener",
-    "data-test": file
-  },
-  file.path.slice(0, -3)
-));
 
 // src/components/EditableTable/index.tsx
 var EditableTable = ({
@@ -24403,7 +24421,7 @@ var EditableTable = ({
 var EditableTableData = (props) => {
   const { propertyValue, propertyName, file } = props;
   const propertyType = getPropertyType(propertyName);
-  if (propertyValue?.__proto__?.constructor?.name === "Link") {
+  if (propertyName.toLowerCase() === "file") {
     return /* @__PURE__ */ import_react16.default.createElement(LinkTableData, { file });
   }
   if (propertyType === "multitext" || propertyType === "tags") {

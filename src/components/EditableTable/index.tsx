@@ -149,7 +149,7 @@ const EditableTableData = (props: CommonEditableProps) => {
 	const { propertyValue, propertyName, file } = props;
 	const propertyType = getPropertyType(propertyName);
 
-	if (propertyValue?.__proto__?.constructor?.name === "Link") {
+	if (propertyName.toLowerCase() === "file") {
 		return <LinkTableData file={file} />;
 	}
 

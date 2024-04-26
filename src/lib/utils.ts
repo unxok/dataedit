@@ -12,7 +12,10 @@ export /**
  */
 const toPlainArray = (arr: any) => {
 	try {
-		return arr.array();
+		console.log("preArray: ", arr);
+		const postArr = arr.array();
+		console.log("postArr: ", postArr);
+		return postArr;
 	} catch (e) {
 		return arr;
 	}
@@ -51,4 +54,11 @@ export const iconStyle = {
 export const checkIsTag = (str: string) => {
 	const reg = new RegExp(/^#[^\s].*/);
 	return reg.test(str);
+};
+
+export const checkIsLink = (val: any) => {
+	if (val.hasOwnProperty("type")) {
+		return val.type === "file";
+	}
+	return false;
 };

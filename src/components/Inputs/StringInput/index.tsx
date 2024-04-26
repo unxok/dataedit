@@ -1,7 +1,13 @@
-import React, { useRef, useState } from "react";
-import { CommonEditableProps, QueryResults } from "../../../lib/types";
+import React, { useEffect, useRef, useState } from "react";
+import {
+	CommonEditableProps,
+	DataviewFile,
+	QueryResults,
+} from "../../../lib/types";
 import { PropertySuggester } from "../../PropertySuggester";
 import { useEnter } from "../../../hooks/useEnter";
+import { LinkTableData } from "@/components/LinkTableData";
+import { checkIsLink } from "@/lib/utils";
 
 export const StringInput = ({
 	propertyValue,
@@ -15,11 +21,17 @@ export const StringInput = ({
 	const ref = useRef<HTMLInputElement>(null);
 	const [rect, setRect] = useState<{ top: number; left: number }>();
 	const [isEditing, setIsEditing] = useState(false);
+	const [value, setValue] = useState("");
 
-	useEnter(ref, async () => {
-		await updateMetaData(propertyName, propertyValue, file.path);
-		// await doQuery();
-	});
+	const isLink = checkIsLink(propertyValue);
+
+	useEffect(() => console.log("value: ", value), [value]);
+	const updateProperty = async () => {
+		const preNewValue = value || propertyValue;
+		const newValue = isLink ? preNewValue.markdown() : preNewValue;
+		await updateMetaData(propertyName, newValue, file.path);
+	};
+	useEnter(ref, updateProperty);
 
 	return (
 		<div className="relative">
@@ -27,27 +39,34 @@ export const StringInput = ({
 				<PropertySuggester
 					propertyName={propertyName}
 					position={rect}
-					callback={async (e) => {
+					onMouseEnter={(e) => {
 						const newValue = e?.currentTarget?.textContent;
-						if (!newValue) return;
-						setQueryResults((prev) => {
-							const copyPrev = { ...prev };
-							copyPrev.values[propertyValueArrIndex][
-								propertyValueIndex
-							] = newValue;
-							return copyPrev as QueryResults;
-						});
+						setValue(newValue);
 					}}
+					onMouseLeave={(e) => setValue("")}
 				/>
 			)}
 			{!isEditing && (
-				<span
-					className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt"
-					tabIndex={0}
-					onClick={() => setIsEditing(true)}
-					onFocus={() => setIsEditing(true)}
-				>
-					{propertyValue}
+				<span className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
+					{isLink ? (
+						<>
+							<LinkTableData file={propertyValue} />
+							<span
+								className="w-full"
+								onClick={() => setIsEditing(true)}
+								onFocus={() => setIsEditing(true)}
+							>
+								&nbsp;
+							</span>
+						</>
+					) : (
+						<span
+							onClick={() => setIsEditing(true)}
+							onFocus={() => setIsEditing(true)}
+						>
+							{propertyValue}
+						</span>
+					)}
 				</span>
 			)}
 			{isEditing && (
@@ -56,7 +75,7 @@ export const StringInput = ({
 					autoFocus
 					// defaultValue={d}
 					type={"text"}
-					value={propertyValue}
+					value={isLink ? propertyValue.markdown() : propertyValue}
 					onChange={(e) => {
 						// console.log("changed");
 						setQueryResults((prev) => {
@@ -68,11 +87,7 @@ export const StringInput = ({
 						});
 					}}
 					onBlur={async () => {
-						await updateMetaData(
-							propertyName,
-							propertyValue,
-							file.path,
-						);
+						await updateProperty();
 						setRect(undefined);
 						setIsEditing(false);
 					}}

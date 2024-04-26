@@ -1,10 +1,20 @@
 import { Hash, Plus, X } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useEnter } from "../../../hooks/useEnter";
-import { CommonEditableProps, QueryResults } from "../../../lib/types";
-import { toPlainArray, iconStyle, checkIsTag } from "../../../lib/utils";
+import {
+	CommonEditableProps,
+	DataviewFile,
+	QueryResults,
+} from "../../../lib/types";
+import {
+	toPlainArray,
+	iconStyle,
+	checkIsTag,
+	checkIsLink,
+} from "../../../lib/utils";
 import { useKeyboardClick } from "../../../hooks/useKeyboardClick";
 import { PropertySuggester } from "@/components/PropertySuggester";
+import { LinkTableData } from "@/components/LinkTableData";
 
 export const ArrayInputWrapper = (props: CommonEditableProps) => {
 	const {
@@ -80,9 +90,13 @@ const ArrayInput = ({
 }: CommonEditableProps & { itemValue: string; itemIndex: number }) => {
 	const [rect, setRect] = useState<{ top: number; left: number }>();
 	const [isEditing, setIsEditing] = useState(false);
+	const [value, setValue] = useState("");
 	const ref = useRef<HTMLInputElement>(null);
 	const xRef = useRef<HTMLSpanElement>(null);
-	// const tagRef = useRef<HTMLAnchorElement>(null);
+	// @ts-ignore
+	const isLink = checkIsLink(itemValue);
+
+	// console.log("isLink? ", isLink, itemValue);
 
 	// const setEditingTrue = () => {
 	// 	// this is so the potential tag anchor can be clicked
@@ -90,10 +104,19 @@ const ArrayInput = ({
 	// 	tagRef.current.click();
 	// };
 	useKeyboardClick(xRef);
-	useEnter(ref, async () => {
-		await updateMetaData(propertyName, propertyValue, file.path);
-		// await doQuery();
-	});
+	const updateProperty = async () => {
+		const preNewItemValue = value || itemValue;
+		const preIsLink = checkIsLink(preNewItemValue);
+		const newItemValue = preIsLink
+			? // @ts-ignore
+				preNewItemValue.markdown()
+			: preNewItemValue;
+		const newValue = [...propertyValue];
+		newValue[propertyValueIndex] = newItemValue;
+		await updateMetaData(propertyName, newValue, file.path);
+	};
+
+	useEnter(ref, updateProperty);
 
 	return (
 		<li className="flex items-center">
@@ -121,24 +144,27 @@ const ArrayInput = ({
 				<PropertySuggester
 					propertyName={propertyName}
 					position={rect}
-					callback={(e) => {
-						const copyValues = toPlainArray(propertyValueArr);
-						const copyList = toPlainArray(
-							copyValues[propertyValueIndex],
-						);
-						copyList[itemIndex] = e?.currentTarget?.textContent;
-						copyValues[propertyValueIndex] = copyList;
-						setQueryResults((prev) => {
-							const copyPrev = { ...prev };
-							copyPrev.values[propertyValueArrIndex] = copyValues;
-							return copyPrev as QueryResults;
-						});
+					onMouseEnter={(e) => {
+						const newValue = e?.currentTarget?.textContent;
+						setValue(newValue);
 					}}
+					onMouseLeave={(e) => setValue("")}
 				/>
 			)}
 			{!isEditing && (
 				<span className="flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
-					{propertyName.toLowerCase() === "tags" ? (
+					{isLink ? (
+						<>
+							<LinkTableData file={itemValue} />
+							<span
+								className="w-full"
+								onClick={() => setIsEditing(true)}
+								onFocus={() => setIsEditing(true)}
+							>
+								&nbsp;
+							</span>
+						</>
+					) : propertyName.toLowerCase() === "tags" ? (
 						<>
 							<a
 								// ref={tagRef}
@@ -196,11 +222,7 @@ const ArrayInput = ({
 						});
 					}}
 					onBlur={async () => {
-						await updateMetaData(
-							propertyName,
-							propertyValue,
-							file.path,
-						);
+						await updateProperty();
 						setRect(undefined);
 						setIsEditing(false);
 					}}
