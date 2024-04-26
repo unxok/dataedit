@@ -7,7 +7,7 @@ This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
 This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin query metadata. Please show the creators some love for all their hardwork!
 
 > [!IMPORTANT]
-> You need to ensure dataview is installed and enabled separately!
+> The [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin <u>must</u> installed and enabled separately!
 
 ## Demo
 
