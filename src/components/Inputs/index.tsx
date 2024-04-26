@@ -3,6 +3,7 @@ import { CheckboxInput } from "./CheckboxInput";
 import { DateTimeInput } from "./DateTimeInput";
 import { NumberInput } from "./NumberInput";
 import { StringInput } from "./StringInput";
+import { FileInput } from "./FileInput";
 
 export {
 	ArrayInputWrapper,
@@ -10,4 +11,5 @@ export {
 	DateTimeInput,
 	NumberInput,
 	StringInput,
+	FileInput,
 };

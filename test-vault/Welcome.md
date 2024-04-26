@@ -1,39 +1,50 @@
 ---
-test: "[[test note.md|test note]]"
+test: ddddd
 some-list:
-  - itemAa
-  - itemBbddddd
-  - "[[Welcome.md|Welcome]]"
+  - asdf
+  - sdfsdfdddd
+  - sdfsd
+  - aasss
+  - ddfdffffdf
 tags:
-  - another
+  - anotherrrr
   - onemoretagg
   - testtt
-date: 2024-02-01
-checkboxtest: true
-datetime: 2024-02-01T13:24:00
+  - test
+date: 2024-02-01T00:00:00.000-08:00
+checkboxtest: false
+datetime: 2024-02-01T13:24:00.000-08:00
 number: 9
+dataedit-links:
+  - "[[test noteee.md|test noteee]]"
+  - "[[testt.md|testt]]"
+  - "[[Welcome.md|Welcome]]"
 ---
- #test #another #onemoretag
+## Dataedit
 
-dfsdfsf   ffff fsdfdd
+```dataedit
+TABLE test, some-list, number, tags, date, checkboxtest, datetime, date
+FROM #test
+SORT file.name
+```
+## Dataview
 
-```data-edit
-TABLE test, some-list, number, tags, date, checkboxtest, datetime
+```dataview
+TABLE test, some-list, number, tags, date, checkboxtest, datetime, date
 FROM #test
 SORT file.name
 ```
 
-```data-edittt
-const data = dv.pages().map(p => [p.file.link, p.test, p.tags, p['some-list']]);
-return {headers: ['file', 'test', 'tags', 'some-list'], values: data};
-```
 
 
-```dataview
-TABLE test, file.etags as Tags
-FROM #test
-SORT file.ctime ASC
-```
+
+
+
+
+
+
+
+
 
 ```dataviewjs
 const data = dv.pages().map(p => [p.file.link, p.test, p.number]);

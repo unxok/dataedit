@@ -1,3 +1,5 @@
+import { Plugin } from "obsidian";
+
 export type UpdateMetaData = (
 	propertyName: string,
 	propertyValue: any,
@@ -24,6 +26,7 @@ export type CommonEditableProps = {
 	propertyValueArr: QueryResults["values"];
 	propertyName: string;
 	file: DataviewFile;
+	plugin: Plugin;
 	setQueryResults: React.Dispatch<
 		React.SetStateAction<QueryResults | undefined>
 	>;

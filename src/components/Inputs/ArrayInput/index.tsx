@@ -11,6 +11,7 @@ import {
 	iconStyle,
 	checkIsTag,
 	checkIsLink,
+	tryToMarkdownLink,
 } from "../../../lib/utils";
 import { useKeyboardClick } from "../../../hooks/useKeyboardClick";
 import { PropertySuggester } from "@/components/PropertySuggester";
@@ -106,13 +107,10 @@ const ArrayInput = ({
 	useKeyboardClick(xRef);
 	const updateProperty = async () => {
 		const preNewItemValue = value || itemValue;
-		const preIsLink = checkIsLink(preNewItemValue);
-		const newItemValue = preIsLink
-			? // @ts-ignore
-				preNewItemValue.markdown()
-			: preNewItemValue;
-		const newValue = [...propertyValue];
-		newValue[propertyValueIndex] = newItemValue;
+		const preNewValue = [...propertyValue];
+		preNewValue[itemIndex] = preNewItemValue;
+		const newValue = preNewValue.map((v) => tryToMarkdownLink(v));
+		console.log("newValue: ", newValue);
 		await updateMetaData(propertyName, newValue, file.path);
 	};
 
@@ -195,7 +193,7 @@ const ArrayInput = ({
 							onClick={() => setIsEditing(true)}
 							onFocus={() => setIsEditing(true)}
 						>
-							{itemValue}
+							{itemValue || <>&nbsp;</>}
 						</span>
 					)}
 				</span>

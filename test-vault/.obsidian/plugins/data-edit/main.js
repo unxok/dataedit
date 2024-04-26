@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState6(initialState) {
+        function useState8(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -1100,11 +1100,11 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef6(initialValue) {
+        function useRef8(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect7(create, deps) {
+        function useEffect9(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -1886,15 +1886,15 @@ var require_react_development = __commonJS({
         exports.useContext = useContext;
         exports.useDebugValue = useDebugValue;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect7;
+        exports.useEffect = useEffect9;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
         exports.useLayoutEffect = useLayoutEffect;
         exports.useMemo = useMemo;
         exports.useReducer = useReducer;
-        exports.useRef = useRef6;
-        exports.useState = useState6;
+        exports.useRef = useRef8;
+        exports.useState = useState8;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -2390,9 +2390,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React14 = require_react();
+        var React16 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React16.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -3997,7 +3997,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props.value == null) {
               if (typeof props.children === "object" && props.children !== null) {
-                React14.Children.forEach(props.children, function(child) {
+                React16.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -12444,7 +12444,7 @@ var require_react_dom_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React14.Component().refs;
+        var emptyRefsObject = new React16.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23523,7 +23523,7 @@ __export(main_exports, {
 });
 module.exports = __toCommonJS(main_exports);
 var import_obsidian4 = require("obsidian");
-var import_react18 = __toESM(require_react());
+var import_react20 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // src/settings.ts
@@ -23566,7 +23566,7 @@ var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
 
 // src/components/App.tsx
 var import_obsidian3 = require("obsidian");
-var import_react17 = __toESM(require_react());
+var import_react19 = __toESM(require_react());
 
 // src/components/Error/index.tsx
 var import_react2 = __toESM(require_react());
@@ -23656,7 +23656,7 @@ var Error2 = ({ children }) => {
 };
 
 // src/components/EditableTable/index.tsx
-var import_react16 = __toESM(require_react());
+var import_react18 = __toESM(require_react());
 
 // src/lib/utils.ts
 var toPlainArray = (arr) => {
@@ -23678,10 +23678,18 @@ var iconStyle = {
   height: "var(--icon-size)"
 };
 var checkIsLink = (val) => {
+  if (!val)
+    return false;
   if (val.hasOwnProperty("type")) {
     return val.type === "file";
   }
   return false;
+};
+var tryToMarkdownLink = (val) => {
+  if (checkIsLink(val)) {
+    return val.markdown();
+  }
+  return val;
 };
 
 // src/components/PropertyIcon/index.tsx
@@ -23956,6 +23964,12 @@ var import_react11 = __toESM(require_react());
 var LinkTableData = ({ file }) => {
   if (typeof file === "string")
     return;
+  let fileName = void 0;
+  try {
+    fileName = file.fileName();
+  } catch (e) {
+    console.error("failed to get file name: ", e);
+  }
   return /* @__PURE__ */ import_react11.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react11.default.createElement(
     "a",
     {
@@ -23968,7 +23982,7 @@ var LinkTableData = ({ file }) => {
       rel: "noopener",
       "data-test": file
     },
-    file.fileName()
+    fileName ?? "failed to load file name"
   ));
 };
 
@@ -24044,13 +24058,10 @@ var ArrayInput = ({
   useKeyboardClick(xRef);
   const updateProperty = async () => {
     const preNewItemValue = value || itemValue;
-    const preIsLink = checkIsLink(preNewItemValue);
-    const newItemValue = preIsLink ? (
-      // @ts-ignore
-      preNewItemValue.markdown()
-    ) : preNewItemValue;
-    const newValue = [...propertyValue];
-    newValue[propertyValueIndex] = newItemValue;
+    const preNewValue = [...propertyValue];
+    preNewValue[itemIndex] = preNewItemValue;
+    const newValue = preNewValue.map((v) => tryToMarkdownLink(v));
+    console.log("newValue: ", newValue);
     await updateMetaData2(propertyName, newValue, file.path);
   };
   useEnter(ref, updateProperty);
@@ -24123,7 +24134,7 @@ var ArrayInput = ({
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    itemValue
+    itemValue || /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, "\xA0")
   )), isEditing && /* @__PURE__ */ import_react12.default.createElement(
     "input",
     {
@@ -24196,8 +24207,63 @@ var CheckboxInput = ({
   ));
 };
 
-// src/components/Inputs/NumberInput/index.tsx
+// src/components/Inputs/DateTimeInput/index.tsx
 var import_react14 = __toESM(require_react());
+var DateTimeInput = ({
+  propertyValue,
+  propertyValueArrIndex,
+  propertyValueIndex,
+  propertyName,
+  file,
+  setQueryResults: setQueryResults2,
+  updateMetaData: updateMetaData2,
+  isTime
+}) => {
+  const ref = (0, import_react14.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react14.useState)(false);
+  const thisDate = new Date(propertyValue);
+  const dateString = !propertyValue ? "" : isTime ? thisDate.toLocaleString() : thisDate.toLocaleDateString();
+  const updateProperty = async () => {
+    await updateMetaData2(propertyName, propertyValue, file.path);
+  };
+  useEnter(ref, updateProperty);
+  return /* @__PURE__ */ import_react14.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react14.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react14.default.createElement(
+    "span",
+    {
+      className: "w-full",
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    dateString || /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, "\xA0")
+  )), isEditing && /* @__PURE__ */ import_react14.default.createElement(
+    "input",
+    {
+      ref,
+      className: "metadata-input metadata-input-text mod-datetime m-0 border-transparent bg-transparent",
+      autoFocus: true,
+      max: "9999-12-31T23:59",
+      type: "datetime-local",
+      value: dateString,
+      placeholder: "Empty",
+      onChange: (e) => {
+        setQueryResults2((prev) => {
+          const copyPrev = { ...prev };
+          const preNewValue = new Date(e.target.value);
+          const newValue = isTime ? preNewValue.toLocaleString() : preNewValue.toLocaleString();
+          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = newValue;
+          return copyPrev;
+        });
+      },
+      onBlur: async () => {
+        await updateProperty();
+        setIsEditing(false);
+      }
+    }
+  ));
+};
+
+// src/components/Inputs/NumberInput/index.tsx
+var import_react15 = __toESM(require_react());
 var NumberInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24207,12 +24273,12 @@ var NumberInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const ref = (0, import_react14.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react14.useState)(false);
+  const ref = (0, import_react15.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react15.useState)(false);
   useEnter(ref, async () => {
     await updateMetaData2(propertyName, Number(propertyValue), file.path);
   });
-  return /* @__PURE__ */ import_react14.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react14.default.createElement(
+  return /* @__PURE__ */ import_react15.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react15.default.createElement(
     "span",
     {
       className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
@@ -24221,7 +24287,7 @@ var NumberInput = ({
       onFocus: () => setIsEditing(true)
     },
     propertyValue
-  ), isEditing && /* @__PURE__ */ import_react14.default.createElement(
+  ), isEditing && /* @__PURE__ */ import_react15.default.createElement(
     "input",
     {
       ref,
@@ -24249,7 +24315,7 @@ var NumberInput = ({
 };
 
 // src/components/Inputs/StringInput/index.tsx
-var import_react15 = __toESM(require_react());
+var import_react16 = __toESM(require_react());
 var StringInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24259,30 +24325,30 @@ var StringInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const ref = (0, import_react15.useRef)(null);
-  const [rect, setRect] = (0, import_react15.useState)();
-  const [isEditing, setIsEditing] = (0, import_react15.useState)(false);
-  const [value, setValue] = (0, import_react15.useState)("");
+  const ref = (0, import_react16.useRef)(null);
+  const [rect, setRect] = (0, import_react16.useState)();
+  const [isEditing, setIsEditing] = (0, import_react16.useState)(false);
+  const [value, setValue] = (0, import_react16.useState)("");
   const isLink = checkIsLink(propertyValue);
-  (0, import_react15.useEffect)(() => console.log("value: ", value), [value]);
+  (0, import_react16.useEffect)(() => console.log("value: ", value), [value]);
   const updateProperty = async () => {
     const preNewValue = value || propertyValue;
     const newValue = isLink ? preNewValue.markdown() : preNewValue;
     await updateMetaData2(propertyName, newValue, file.path);
   };
   useEnter(ref, updateProperty);
-  return /* @__PURE__ */ import_react15.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react15.default.createElement(
+  return /* @__PURE__ */ import_react16.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react16.default.createElement(
     PropertySuggester,
     {
       propertyName,
       position: rect,
       onMouseEnter: (e) => {
         const newValue = e?.currentTarget?.textContent;
-        setValue(newValue);
+        setValue(newValue ?? "");
       },
       onMouseLeave: (e) => setValue("")
     }
-  ), !isEditing && /* @__PURE__ */ import_react15.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement(LinkTableData, { file: propertyValue }), /* @__PURE__ */ import_react15.default.createElement(
+  ), !isEditing && /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement(LinkTableData, { file: propertyValue }), /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
       className: "w-full",
@@ -24290,14 +24356,15 @@ var StringInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )) : /* @__PURE__ */ import_react15.default.createElement(
+  )) : /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
+      className: "w-full",
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    propertyValue
-  )), isEditing && /* @__PURE__ */ import_react15.default.createElement(
+    propertyValue || /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, "\xA0")
+  )), isEditing && /* @__PURE__ */ import_react16.default.createElement(
     "input",
     {
       ref,
@@ -24328,17 +24395,70 @@ var StringInput = ({
   ));
 };
 
+// src/components/Inputs/FileInput/index.tsx
+var import_react17 = __toESM(require_react());
+var FileInput = ({
+  file,
+  plugin: plugin2
+}) => {
+  const ref = (0, import_react17.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react17.useState)(false);
+  const [value, setValue] = (0, import_react17.useState)(file.fileName());
+  (0, import_react17.useEffect)(() => console.log("value: ", value), [value]);
+  const updateFileName = async () => {
+    const thisFile = plugin2.app.vault.getFileByPath(file.path);
+    if (!thisFile) {
+      return console.error("Tried renaming file when it doesn't exist?");
+    }
+    const pathNoFileReg = new RegExp(/^(.*)\//);
+    const fileNoExtReg = new RegExp(/.+?(?=\.)/);
+    console.log("value: ", value);
+    console.log("filepath: ", file.path);
+    const newFileNoExt = fileNoExtReg.exec(value)?.[1] ?? value;
+    const oldPathNoFile = pathNoFileReg.exec(file.path)?.[1] ?? "";
+    const newPath = oldPathNoFile + newFileNoExt + ".md";
+    plugin2.app.fileManager.renameFile(thisFile, newPath);
+  };
+  useEnter(ref, updateFileName);
+  return /* @__PURE__ */ import_react17.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react17.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react17.default.createElement(LinkTableData, { file }), /* @__PURE__ */ import_react17.default.createElement(
+    "span",
+    {
+      className: "w-full",
+      onClick: () => setIsEditing(true),
+      onFocus: () => setIsEditing(true)
+    },
+    "\xA0"
+  )), isEditing && /* @__PURE__ */ import_react17.default.createElement(
+    "input",
+    {
+      ref,
+      autoFocus: true,
+      type: "text",
+      value,
+      onChange: (e) => {
+        setValue(e.target.value);
+      },
+      onBlur: async () => {
+        await updateFileName();
+        setIsEditing(false);
+      },
+      className: "relative m-0 border-transparent bg-transparent p-0 text-start"
+    }
+  ));
+};
+
 // src/components/EditableTable/index.tsx
 var EditableTable = ({
   data,
-  plugin
+  plugin,
+  ctx
 }) => {
-  const [queryResults, setQueryResults] = (0, import_react16.useState)();
-  (0, import_react16.useEffect)(() => {
+  const [queryResults, setQueryResults] = (0, import_react18.useState)();
+  (0, import_react18.useEffect)(() => {
     console.log("query results: ", queryResults);
     const asyncDoQuery = async () => {
       await doQuery();
-      console.log("asyncquery");
+      await updateDataeditLinks();
     };
     plugin.app.metadataCache.on(
       "dataview:index-ready",
@@ -24373,6 +24493,24 @@ var EditableTable = ({
     }
     setQueryResults(qr.value);
   };
+  const updateDataeditLinks = async () => {
+    const propName = "dataedit-links";
+    const values = queryResults?.values;
+    if (!values)
+      return;
+    if (!ctx)
+      return;
+    const links = values.flat(2).filter((v) => checkIsLink(v)).map((v) => tryToMarkdownLink(v));
+    const setLinks = /* @__PURE__ */ new Set([...links]);
+    const readyLinks = Array.from(setLinks);
+    const file = plugin.app.vault.getFileByPath(ctx.sourcePath);
+    if (!file)
+      return;
+    await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
+      frontmatter[propName] = readyLinks;
+      console.log("fm: ", frontmatter);
+    });
+  };
   const updateMetaData = async (propertyName, propertyValue, filePath) => {
     const file = plugin.app.vault.getFileByPath(filePath);
     if (!file)
@@ -24380,27 +24518,28 @@ var EditableTable = ({
     await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
       frontmatter[propertyName] = propertyValue;
     });
+    await updateDataeditLinks();
   };
-  (0, import_react16.useEffect)(() => {
+  (0, import_react18.useEffect)(() => {
     doQuery();
   }, []);
   if (!queryResults)
-    return /* @__PURE__ */ import_react16.default.createElement(Error2, null, "Invalid query");
-  return /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement("table", { className: "data-edit max-w-full whitespace-nowrap" }, /* @__PURE__ */ import_react16.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react16.default.createElement("tbody", { className: "" }, queryResults.values.map(
-    (propertyValueArr, propertyValueArrIndex) => /* @__PURE__ */ import_react16.default.createElement(
+    return /* @__PURE__ */ import_react18.default.createElement(Error2, null, "Invalid query");
+  return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("table", { className: "data-edit max-w-full whitespace-nowrap" }, /* @__PURE__ */ import_react18.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react18.default.createElement("tbody", { className: "" }, queryResults.values.map(
+    (propertyValueArr, propertyValueArrIndex) => /* @__PURE__ */ import_react18.default.createElement(
       "tr",
       {
         key: propertyValueArrIndex + "table-row",
         className: ""
       },
       propertyValueArr.map(
-        (propertyValue, propertyValueIndex) => /* @__PURE__ */ import_react16.default.createElement(
+        (propertyValue, propertyValueIndex) => /* @__PURE__ */ import_react18.default.createElement(
           "td",
           {
             key: propertyValueArrIndex + propertyValueIndex,
             className: "relative"
           },
-          /* @__PURE__ */ import_react16.default.createElement(
+          /* @__PURE__ */ import_react18.default.createElement(
             EditableTableData,
             {
               propertyValue,
@@ -24409,6 +24548,7 @@ var EditableTable = ({
               propertyValueArr,
               propertyName: queryResults.headers[propertyValueIndex],
               file: propertyValueArr[0],
+              plugin,
               setQueryResults,
               updateMetaData
             }
@@ -24419,46 +24559,46 @@ var EditableTable = ({
   ))));
 };
 var EditableTableData = (props) => {
-  const { propertyValue, propertyName, file } = props;
+  const { propertyName, file, plugin: plugin2 } = props;
   const propertyType = getPropertyType(propertyName);
   if (propertyName.toLowerCase() === "file") {
-    return /* @__PURE__ */ import_react16.default.createElement(LinkTableData, { file });
+    return /* @__PURE__ */ import_react18.default.createElement(FileInput, { file, plugin: plugin2 });
   }
   if (propertyType === "multitext" || propertyType === "tags") {
-    return /* @__PURE__ */ import_react16.default.createElement(ArrayInputWrapper, { ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(ArrayInputWrapper, { ...props });
   }
   if (propertyType === "date") {
-    return /* @__PURE__ */ import_react16.default.createElement("div", null, "date");
+    return /* @__PURE__ */ import_react18.default.createElement(DateTimeInput, { isTime: false, ...props });
   }
   if (propertyType === "datetime") {
-    return /* @__PURE__ */ import_react16.default.createElement("div", null, "datetime");
+    return /* @__PURE__ */ import_react18.default.createElement(DateTimeInput, { isTime: true, ...props });
   }
   if (propertyType === "checkbox") {
-    return /* @__PURE__ */ import_react16.default.createElement(CheckboxInput, { ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(CheckboxInput, { ...props });
   }
   if (propertyType === "number") {
-    return /* @__PURE__ */ import_react16.default.createElement(NumberInput, { ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(NumberInput, { ...props });
   }
-  return /* @__PURE__ */ import_react16.default.createElement(StringInput, { ...props });
+  return /* @__PURE__ */ import_react18.default.createElement(StringInput, { ...props });
 };
 var TableHead = ({ queryResults: queryResults2 }) => {
-  return /* @__PURE__ */ import_react16.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react16.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h) => /* @__PURE__ */ import_react16.default.createElement("th", { key: h, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react16.default.createElement(
+  return /* @__PURE__ */ import_react18.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react18.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h, i) => /* @__PURE__ */ import_react18.default.createElement("th", { key: i, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react18.default.createElement(
     "span",
     {
       className: "metadata-property-icon",
       "aria-label": "file",
       "data-tooltip-position": "right"
     },
-    /* @__PURE__ */ import_react16.default.createElement(File, { style: iconStyle })
-  )) : /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react16.default.createElement(PropertyIcon, { propertyName: h }))))));
+    /* @__PURE__ */ import_react18.default.createElement(File, { style: iconStyle })
+  )) : /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react18.default.createElement(PropertyIcon, { propertyName: h }))))));
 };
 
 // src/components/App.tsx
-var RequiedDepsError = () => /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react17.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react17.default.createElement("ul", null, /* @__PURE__ */ import_react17.default.createElement("li", null, /* @__PURE__ */ import_react17.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")))));
+var RequiedDepsError = () => /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react19.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react19.default.createElement("ul", null, /* @__PURE__ */ import_react19.default.createElement("li", null, /* @__PURE__ */ import_react19.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")))));
 var App2 = (props) => {
-  const { data: data2, getSectionInfo, settings, plugin: plugin2 } = props;
-  const [ErrMsg, setErrMsg] = (0, import_react17.useState)(void 0);
-  (0, import_react17.useEffect)(() => {
+  const { data: data2, getSectionInfo, settings, plugin: plugin2, ctx: ctx2 } = props;
+  const [ErrMsg, setErrMsg] = (0, import_react19.useState)(void 0);
+  (0, import_react19.useEffect)(() => {
     new import_obsidian3.Notice("App rendered");
     (async () => {
       const b = await loadDependencies();
@@ -24467,17 +24607,9 @@ var App2 = (props) => {
     })();
   }, []);
   if (ErrMsg) {
-    return /* @__PURE__ */ import_react17.default.createElement(Error2, null, /* @__PURE__ */ import_react17.default.createElement(ErrMsg, null));
+    return /* @__PURE__ */ import_react19.default.createElement(Error2, null, /* @__PURE__ */ import_react19.default.createElement(ErrMsg, null));
   }
-  return /* @__PURE__ */ import_react17.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react17.default.createElement(
-    "input",
-    {
-      className: "metadata-input metadata-input-text mod-datetime",
-      max: "9999-12-31T23:59",
-      type: "datetime-local",
-      placeholder: "Empty"
-    }
-  ), /* @__PURE__ */ import_react17.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react17.default.createElement(EditableTable, { data: data2, plugin: plugin2 })));
+  return /* @__PURE__ */ import_react19.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react19.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react19.default.createElement(EditableTable, { data: data2, plugin: plugin2, ctx: ctx2 })));
 };
 var App_default = App2;
 
@@ -24505,21 +24637,21 @@ var DataEdit = class extends import_obsidian4.Plugin {
     });
   }
   registerCodeBlock() {
-    this.registerMarkdownCodeBlockProcessor("data-edit", (s, e, i) => {
+    this.registerMarkdownCodeBlockProcessor("dataedit", (s, e, ctx2) => {
       console.log("registered mcbp: ", s);
-      console.log("ctx: ", i);
+      console.log("ctx: ", ctx2);
       e.empty();
       const root = (0, import_client.createRoot)(e);
       root.render(
         // <React.StrictMode>
-        /* @__PURE__ */ import_react18.default.createElement(
+        /* @__PURE__ */ import_react20.default.createElement(
           App_default,
           {
             data: s,
-            getSectionInfo: () => i.getSectionInfo(e),
+            getSectionInfo: () => ctx2.getSectionInfo(e),
             settings: this.settings,
-            app: this.app,
-            plugin: this
+            plugin: this,
+            ctx: ctx2
           }
         )
         // </React.StrictMode>,

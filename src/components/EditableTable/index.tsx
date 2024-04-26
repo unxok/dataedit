@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Plugin } from "obsidian";
-import { getPropertyType, iconStyle } from "../../lib/utils";
+import { MarkdownPostProcessorContext, Plugin } from "obsidian";
+import {
+	checkIsLink,
+	getPropertyType,
+	iconStyle,
+	tryToMarkdownLink,
+} from "../../lib/utils";
 import {
 	CommonEditableProps,
 	QueryResults,
@@ -15,15 +20,18 @@ import {
 	DateTimeInput,
 	NumberInput,
 	StringInput,
+	FileInput,
 } from "../Inputs";
 import { LinkTableData } from "../LinkTableData";
 
 export const EditableTable = ({
 	data,
 	plugin,
+	ctx,
 }: {
 	data: string;
 	plugin: Plugin;
+	ctx: MarkdownPostProcessorContext;
 }) => {
 	const [queryResults, setQueryResults] = useState<QueryResults>();
 
@@ -31,7 +39,7 @@ export const EditableTable = ({
 		console.log("query results: ", queryResults);
 		const asyncDoQuery = async () => {
 			await doQuery();
-			console.log("asyncquery");
+			await updateDataeditLinks();
 		};
 		plugin.app.metadataCache.on(
 			"dataview:index-ready" as "changed",
@@ -70,6 +78,25 @@ export const EditableTable = ({
 		setQueryResults(qr.value);
 	};
 
+	const updateDataeditLinks = async () => {
+		const propName = "dataedit-links";
+		const values = queryResults?.values;
+		if (!values) return;
+		if (!ctx) return;
+		const links = values
+			.flat(2)
+			.filter((v) => checkIsLink(v))
+			.map((v) => tryToMarkdownLink(v));
+		const setLinks = new Set([...links]);
+		const readyLinks = Array.from(setLinks);
+		const file = plugin.app.vault.getFileByPath(ctx.sourcePath);
+		if (!file) return;
+		await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
+			frontmatter[propName] = readyLinks;
+			console.log("fm: ", frontmatter);
+		});
+	};
+
 	const updateMetaData: UpdateMetaData = async (
 		propertyName,
 		propertyValue,
@@ -82,7 +109,7 @@ export const EditableTable = ({
 			// console.log("fm: ", frontmatter);
 			frontmatter[propertyName] = propertyValue;
 		});
-		// console.log("did it process?");
+		await updateDataeditLinks();
 	};
 
 	useEffect(() => {
@@ -128,6 +155,7 @@ export const EditableTable = ({
 												}
 												// TODO index determined by config
 												file={propertyValueArr[0]}
+												plugin={plugin}
 												setQueryResults={
 													setQueryResults
 												}
@@ -146,11 +174,11 @@ export const EditableTable = ({
 };
 
 const EditableTableData = (props: CommonEditableProps) => {
-	const { propertyValue, propertyName, file } = props;
+	const { propertyName, file, plugin } = props;
 	const propertyType = getPropertyType(propertyName);
 
 	if (propertyName.toLowerCase() === "file") {
-		return <LinkTableData file={file} />;
+		return <FileInput file={file} plugin={plugin} />;
 	}
 
 	if (propertyType === "multitext" || propertyType === "tags") {
@@ -158,11 +186,11 @@ const EditableTableData = (props: CommonEditableProps) => {
 	}
 
 	if (propertyType === "date") {
-		return <div>date</div>;
+		return <DateTimeInput isTime={false} {...props} />;
 	}
 
 	if (propertyType === "datetime") {
-		return <div>datetime</div>;
+		return <DateTimeInput isTime={true} {...props} />;
 	}
 
 	if (propertyType === "checkbox") {
@@ -181,8 +209,8 @@ const TableHead = ({ queryResults }: { queryResults: any }) => {
 	return (
 		<thead className="w-fit">
 			<tr className="w-fit">
-				{queryResults.headers.map((h) => (
-					<th key={h} className="w-fit">
+				{queryResults.headers.map((h, i) => (
+					<th key={i} className="w-fit">
 						{h.toUpperCase() === "FILE" ? (
 							<span className="flex w-fit items-center text-nowrap">
 								{h}

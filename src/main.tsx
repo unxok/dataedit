@@ -51,19 +51,20 @@ export default class DataEdit extends Plugin {
 	}
 
 	registerCodeBlock() {
-		this.registerMarkdownCodeBlockProcessor("data-edit", (s, e, i) => {
+		this.registerMarkdownCodeBlockProcessor("dataedit", (s, e, ctx) => {
 			console.log("registered mcbp: ", s);
-			console.log("ctx: ", i);
+			console.log("ctx: ", ctx);
 			e.empty();
 			const root = createRoot(e);
 			root.render(
 				// <React.StrictMode>
 				<App
 					data={s}
-					getSectionInfo={() => i.getSectionInfo(e)}
+					getSectionInfo={() => ctx.getSectionInfo(e)}
 					settings={this.settings}
-					app={this.app}
+					// app={this.app}
 					plugin={this}
+					ctx={ctx}
 				/>,
 				// </React.StrictMode>,
 			);

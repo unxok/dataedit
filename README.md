@@ -1,26 +1,46 @@
 # Obsidian Data Edit
 
-This is a plugin for the note-taking app [Obsidian](https://obsidian.md/) which creates a custom code block syntax to generate a Kanban board which is interconnected with the properties (metadata/frontmatter) of the notes in your vault.
+_Transform your Dataview queries into <u>editable-in-place</u> tables!_
 
-This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) and [MetaEdit](https://github.com/chhoumann/MetaEdit) plugins to achive the functionality of quickly and efficiently reading and updating metadata. Please show them some love for all their hardwork!
+This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
+
+This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin query metadata. Please show the creators some love for all their hardwork!
+
+> [!IMPORTANT]
+> You need to ensure dataview is installed and enabled separately!
+
+## Demo
+
+Forgive the terrible quality😅
+
+### Key features
+
+-   Edit frontmatter properties and rename files directly in the table
+-   Updates happen and are updated in the table very swiftly
+-   Files from query are linked to the file and will show in graph view
+-   Property type support
+-   Auto suggest on text and multitext properties
+-   Links and tags are clickable and editable
+
+![demo gif](/dataedit-demo.gif)
 
 ## Usage
 
-> [!WARNING]
+> [!CAUTION]
 > This plugin is still being worked on and fleshed out. Therefore, it is not available to download from the obsidian community plugins menu.
 
 Set your codeblock langauge to `data-edit`
 
-The configuration will accept a **_dataview query_** or a Javascript expression that returns an object with `headers` and `values` keys with arrays respectively.
+The codeblock will accept a **_dataview query_** or a **_Javascript expression_** that returns an object with `headers` and `values` keys with arrays respectively.
 
 ### Example
 
 #### Dataview Query
 
-Any valid Dataview query _should_ work (let me know if not!)
+Most _(exceptions below)_ valid Dataview queries _should_ work (let me know if not!)
 
 ````sql
-```data-edit
+```dataedit
 TABLE progress, category
 FROM #tasks
 SORT file.name
@@ -28,64 +48,74 @@ SORT file.name
 ````
 
 > [!WARNING]
-> The exception to the statement above is you <u>must</u> include `file.link` whether naturally (without doing anything extra) or by adding it as a column
+> The exceptions to the statement above are:
+>
+> -   You <u>must</u> include `file.link` whether naturally (without doing anything extra) or by adding it as a column
+> -   You <u>cannot</u> specify column aliases in the query (on roadmap)
+> -   I haven't tried it yet, but I am pretty sure `GROUP BY` will <u>not</u> work
 
 ````sql
-```data-edit
+```dataedit
 TABLE WITHOUT ID progress, category, file.link AS Name
 FROM #tasks
 SORT file.name
 ```
+...this will NOT work
 ````
 
+#### Javascript expression
+
+-   You will have access to the dataview api through `dv` just like in a dataview js expression
+-   Note that you still just use the `dataedit` code block language. The plugin will automatically detect if you have entered a dataview query or js expression
+-   _Technically_ you don't have to use dataview here, but currently I rely on some data types produced by it so it won't work properly
+
 ````js
-```data-edit
+// surround with ```dataedit ... ``` like normal
 const data = dv
 	.pages("#tasks")
 	.map((p) => [p.file.link, p.progress, p.category]);
 return { headers: ["Name", "Progress", "Category"], values: data };
-```;
 ````
 
-# Demo
+# Roadmap
 
-See it in action!
-
-Some things you might notice:
-
--   tables (that you aren't currently editing) update quite a bit faster than dataview, (although that might be a setting in dataview, I forget lol)
--   it uses debounce so as to not update the metadata after every single keystroke
--   They are unstyled tables
-
-**Note:** This is very much a WIP and I have spent 2 days on it so far
-![demo](./demo-data-edit.gif)
-
-# Planned features
-
--   [ ] allow extra config for className and `autoprop` from MetaEdit
+-   [x] Support different property types
+    -   [x] string
+        -   [x] auto suggest
+        -   [x] render and edit links
+    -   [x] array (and tags)
+        -   [ ] (seen in demo) bug with using suggest?
+        -   [x] tags
+        -   [x] render and edit links
+        -   [x] auto suggest
+        -   Note that this only works if you use tags as a frontmatter property
+    -   [x] number
+    -   [x] Checkbox
+    -   [x] Date & Datetime
+        -   [ ] Issue with not filling value from property. It does update though
+    -   [x] Ability to rename file
+-   [x] Links from query to frontmatter (to show in graph view, etc)
+-   [ ] Switch to Vite
+-   [ ] Config options (YAML in a query, JSON in js expression)
+    -   [ ] Auto suggest-- boolean. default true
+    -   [ ] Show type icons-- boolean. default true
+    -   [ ] Links from query to frontmatter
+        -   [ ] property name-- string. Default 'dataedit-links'. Leave blank to turn off this feature
+    -   [ ] CSS classname-- string
+    -   [ ] Column aliases-- an array
+    -   [ ] Vertical alignment
+        -   [ ] Single value-- applies to all cells
+        -   [ ] Array-- applies to specific collumns
+    -   [ ] Horizontal alignment
+        -   [ ] Single value-- applies to all cells
+        -   [ ] Array-- applies to specific collumns
+-   [ ] Specify default config for codeblocks from plugin settings
+-   [ ] Allow for extra config in each codeblock
     -   [ ] Add `---` to the end of the query where you can use yaml to specify config
     -   [ ] Add an extra key `config` to the returned object to specify in js expressions
--   [ ] Support different property types
-    -   [x] string
-    -   [x] array (and tags)
-        -   Note that this only works if you use tags as a frontmatter property
-    -   [ ] number
-    -   [ ] Checkbox
-    -   [ ] Date, Date & time (are these just strings that are validated? Haven't checked yet)
 
 # Contributing
 
 Feel free to open an issue for improvements, bugs, questions, etc.
 
 If you would like to contribute to the project, please fork the repo and make a pull request! Setting it up on your local machine is as simple as cloning the repo and running `npm install`. It comes with a test vault (`/test-vault`) which is where the code gets built to on `npm run build`.
-
-# Issues I need to open but am too tired and it's 2am
-
--   [x] flickering on file changes outside of the editable table
-    -   Fixed, I was doing weirdness with trying to force rerenders prior and that is no longer needed
--   [ ] can't seem to get table width sized right
--   [x] dataviewjs blocks (literally from dataview) seem broken now and I don't know why
-    -   Looks good now
--   Using column aliases in dataview query causes property to not get updated
--   Using a different header name then the property name in js expression causes property to not get updated
--   [ ] Metadata will get out of sync with note sometimes, can't narrow down the cause but dataview has the same out of sync behavior so it seems it's an issue on dataview's side.

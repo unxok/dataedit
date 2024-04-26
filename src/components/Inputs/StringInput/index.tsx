@@ -41,7 +41,7 @@ export const StringInput = ({
 					position={rect}
 					onMouseEnter={(e) => {
 						const newValue = e?.currentTarget?.textContent;
-						setValue(newValue);
+						setValue(newValue ?? "");
 					}}
 					onMouseLeave={(e) => setValue("")}
 				/>
@@ -61,10 +61,11 @@ export const StringInput = ({
 						</>
 					) : (
 						<span
+							className="w-full"
 							onClick={() => setIsEditing(true)}
 							onFocus={() => setIsEditing(true)}
 						>
-							{propertyValue}
+							{propertyValue || <>&nbsp;</>}
 						</span>
 					)}
 				</span>

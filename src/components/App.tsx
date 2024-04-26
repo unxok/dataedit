@@ -1,6 +1,11 @@
 import { loadDependencies } from "@/main";
 import { CircleAlertIcon, File, Plus, X } from "lucide-react";
-import { Notice, Plugin, setIcon } from "obsidian";
+import {
+	MarkdownPostProcessorContext,
+	Notice,
+	Plugin,
+	setIcon,
+} from "obsidian";
 import React, {
 	ReactNode,
 	useCallback,
@@ -27,8 +32,14 @@ const RequiedDepsError = () => (
 	</>
 );
 
-const App = (props: any) => {
-	const { data, getSectionInfo, settings, plugin } = props;
+const App = (props: {
+	data: string;
+	ctx: MarkdownPostProcessorContext;
+	getSectionInfo: () => any;
+	settings: any;
+	plugin: Plugin;
+}) => {
+	const { data, getSectionInfo, settings, plugin, ctx } = props;
 	// console.log(props);
 	const [ErrMsg, setErrMsg] = useState<() => React.JSX.Element>(undefined);
 
@@ -56,14 +67,8 @@ const App = (props: any) => {
 
 	return (
 		<div id="twcss">
-			<input
-				className="metadata-input metadata-input-text mod-datetime"
-				max="9999-12-31T23:59"
-				type="datetime-local"
-				placeholder="Empty"
-			></input>
 			<div className="w-full overflow-x-scroll">
-				<EditableTable data={data} plugin={plugin} />
+				<EditableTable data={data} plugin={plugin} ctx={ctx} />
 			</div>
 		</div>
 	);
