@@ -29,14 +29,13 @@ Forgive the terrible quality😅
 > [!CAUTION]
 > This plugin is still being worked on and fleshed out. Therefore, it is not available to download from the obsidian community plugins menu.
 
-Set your codeblock langauge to `dataedit`. Example:
+Set your codeblock langauge to `dataedit`
 ````
 ```dataedit
 TABLE foo
 FROM #bar
 ```
 ````
-
 The codeblock will accept a **_dataview query_** or a **_Javascript expression_** that returns an object with `headers` and `values` keys with arrays respectively.
 
 ### Example
