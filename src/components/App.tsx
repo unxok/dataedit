@@ -1,4 +1,4 @@
-import { loadDependencies } from "@/main";
+import DataEdit, { loadDependencies } from "@/main";
 import { CircleAlertIcon, File, Plus, X } from "lucide-react";
 import {
 	MarkdownPostProcessorContext,
@@ -15,6 +15,7 @@ import React, {
 } from "react";
 import { Error } from "./Error";
 import { EditableTable } from "./EditableTable";
+import { Settings } from "./PluginSettings";
 
 const RequiedDepsError = () => (
 	<>
@@ -36,8 +37,8 @@ const App = (props: {
 	data: string;
 	ctx: MarkdownPostProcessorContext;
 	getSectionInfo: () => any;
-	settings: any;
-	plugin: Plugin;
+	settings: Settings;
+	plugin: DataEdit;
 }) => {
 	const { data, getSectionInfo, settings, plugin, ctx } = props;
 	// console.log(props);

@@ -20,8 +20,18 @@ export const useSuggest = ({
 
 	useEffect(() => {
 		if (!ref?.current) return;
-		setSuggest(new Suggest(app, ref.current, getSuggestions, onSelect));
-	}, []);
+		if (!suggest) {
+			setSuggest(new Suggest(app, ref.current, getSuggestions, onSelect));
+		}
+		if (suggest) {
+			setSuggest((prev) => {
+				prev.inputEl = ref.current;
+				prev.getSuggestions = getSuggestions;
+				prev.onSelectCb = onSelect;
+				return prev;
+			});
+		}
+	}, [app, getSuggestions, onSelect]);
 	return ref;
 };
 

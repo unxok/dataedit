@@ -1,9 +1,8 @@
 import React from "react";
 import { App, PluginSettingTab, Setting } from "obsidian";
 import DataEdit from "@/main";
-import { defaultSettings } from "@/settings";
 import { Root, createRoot } from "react-dom/client";
-import { PluginSettings } from "@/components/PluginSettings";
+import { PluginSettings, Settings } from "@/components/PluginSettings";
 
 export class DataEditSettingsTab extends PluginSettingTab {
 	plugin: DataEdit;
@@ -17,7 +16,14 @@ export class DataEditSettingsTab extends PluginSettingTab {
 	}
 
 	display(): void {
-		this.root.render(<PluginSettings app={this.app} />);
+		this.root.render(
+			<div id="twcss">
+				<PluginSettings
+					plugin={this.plugin}
+					savedSettings={this.plugin.settings as Settings}
+				/>
+			</div>,
+		);
 	}
 
 	// display(): void {

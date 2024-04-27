@@ -17,6 +17,7 @@ export const StringInput = ({
 	file,
 	setQueryResults,
 	updateMetaData,
+	plugin,
 }: CommonEditableProps) => {
 	const ref = useRef<HTMLInputElement>(null);
 	const [rect, setRect] = useState<{ top: number; left: number }>();
@@ -35,7 +36,7 @@ export const StringInput = ({
 
 	return (
 		<div className="relative">
-			{rect && (
+			{rect && plugin.settings.autoSuggest && (
 				<PropertySuggester
 					propertyName={propertyName}
 					position={rect}

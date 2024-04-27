@@ -2,24 +2,46 @@ import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { App, Setting } from "obsidian";
 import { useSuggest } from "@/hooks/useSuggest";
 
-const SettingRoot = ({ children }: { children: ReactNode }) => (
-	<div className="setting-item">{children}</div>
-);
+const SettingRoot = ({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) => <div className={"setting-item " + className ?? ""}>{children}</div>;
 
-const SettingInfo = ({ children }: { children: ReactNode }) => (
-	<div className="setting-item-info">{children}</div>
-);
+const SettingInfo = ({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) => <div className={"setting-item-info " + className ?? ""}>{children}</div>;
 
 const SettingName = ({ children }: { children: ReactNode }) => (
 	<div className="setting-item-name">{children}</div>
 );
 
-const SettingDescription = ({ children }: { children: ReactNode }) => (
-	<div className="setting-item-description">{children}</div>
+const SettingDescription = ({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) => (
+	<div className={"setting-item-description " + className ?? ""}>
+		{children}
+	</div>
 );
 
-const SettingControl = ({ children }: { children: ReactNode }) => (
-	<div className="setting-item-control">{children}</div>
+const SettingControl = ({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) => (
+	<div className={"setting-item-control " + className ?? ""}>{children}</div>
 );
 
 const SettingToggle = ({
@@ -43,6 +65,7 @@ const SettingToggle = ({
 
 	useEffect(() => {
 		setEnabledClass(value);
+		onCheckedChange(value);
 		if (!ref?.current) return;
 		// setSuggest(new Suggest(app, ref.current));
 	}, [value]);
@@ -52,7 +75,6 @@ const SettingToggle = ({
 			className={"checkbox-container " + toggleClass}
 			onClick={() => {
 				setValue((b) => {
-					onCheckedChange(!b);
 					return !b;
 				});
 			}}
@@ -71,24 +93,38 @@ const SettingToggle = ({
 const SettingInput = ({
 	app,
 	value,
+	placeholder,
 	onChange,
 	onSelect,
+	getSuggestions,
 }: {
 	app: App;
 	value: string;
+	placeholder?: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	onSelect: (value: string, evt: MouseEvent | KeyboardEvent) => void;
+	onSelect?: (value: string, evt: MouseEvent | KeyboardEvent) => void;
+	getSuggestions?: (query: string) => string[] | Promise<string[]>;
 }) => {
-	const ref = useSuggest({
-		app: app,
-		getSuggestions: (q) => ["hello", "how", "are", "you"],
-		onSelect: onSelect,
-	});
+	if ((onSelect && !getSuggestions) || (!onSelect && getSuggestions)) {
+		console.error(
+			"SettingsInput: Expected either both onSelect and getSuggestions or neither but only got one",
+		);
+	}
+
+	const ref =
+		onSelect &&
+		getSuggestions &&
+		useSuggest({
+			app: app,
+			getSuggestions: getSuggestions,
+			onSelect: onSelect,
+		});
 
 	return (
 		<input
 			ref={ref}
 			type="text"
+			placeholder={placeholder}
 			value={value}
 			onChange={onChange}
 			tabIndex={0}
@@ -102,6 +138,7 @@ export {
 	SettingName,
 	SettingDescription,
 	SettingControl,
+	SettingInput,
 	SettingToggle,
 };
 

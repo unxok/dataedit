@@ -3,12 +3,12 @@ import { Notice, Plugin } from "obsidian";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import { defaultSettings, TSettings } from "@/settings";
 import { DataEditSettingsTab } from "@/settings-tab";
 import { loadData } from "@/saveload";
 // import { PropertySuggester } from "@/components/Popover";
 
 import App from "@/components/App";
+import { Settings } from "./components/PluginSettings";
 
 /**
  * Loads the dependencies (plugins) that your plugin requires
@@ -26,10 +26,14 @@ export const loadDependencies = async () => {
 };
 
 export default class DataEdit extends Plugin {
-	settings: TSettings;
+	settings: Settings;
+
+	onExternalSettingsChange() {
+		console.log("settings were changed");
+	}
 
 	async onload(): Promise<void> {
-		await this.loadSettings();
+		this.settings = await this.loadData();
 		this.addSettingTab(new DataEditSettingsTab(this.app, this));
 
 		this.registerCodeBlock();
@@ -71,15 +75,8 @@ export default class DataEdit extends Plugin {
 		});
 	}
 
-	async loadSettings() {
-		this.settings = Object.assign(
-			{},
-			defaultSettings,
-			await this.loadData(),
-		);
-	}
-
-	async saveSettings() {
-		await this.saveData(this.settings);
+	async updateSettings(newSettings: Settings) {
+		await this.saveData(newSettings);
+		this.settings = newSettings;
 	}
 }

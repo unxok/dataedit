@@ -19,6 +19,10 @@ dataedit-links:
   - "[[test noteee.md|test noteee]]"
   - "[[testt.md|testt]]"
   - "[[Welcome.md|Welcome]]"
+cssclasses:
+  - classA
+  - classB
+  - classC
 ---
 ## Dataedit
 

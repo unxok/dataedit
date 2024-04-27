@@ -88,6 +88,7 @@ const ArrayInput = ({
 	updateMetaData,
 	itemValue,
 	itemIndex,
+	plugin,
 }: CommonEditableProps & { itemValue: string; itemIndex: number }) => {
 	const [rect, setRect] = useState<{ top: number; left: number }>();
 	const [isEditing, setIsEditing] = useState(false);

@@ -1,3 +1,4 @@
+import DataEdit from "@/main";
 import { Plugin } from "obsidian";
 
 export type UpdateMetaData = (
@@ -26,7 +27,7 @@ export type CommonEditableProps = {
 	propertyValueArr: QueryResults["values"];
 	propertyName: string;
 	file: DataviewFile;
-	plugin: Plugin;
+	plugin: DataEdit;
 	setQueryResults: React.Dispatch<
 		React.SetStateAction<QueryResults | undefined>
 	>;

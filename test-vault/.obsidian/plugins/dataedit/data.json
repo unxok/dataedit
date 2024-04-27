@@ -1,0 +1,14 @@
+{
+  "autoSuggest": true,
+  "showTypeIcons": true,
+  "queryLinksPropertyName": "dataedit-links",
+  "cssClassName": "",
+  "columnAliases": [
+    [
+      "thisColun",
+      "showThisAliassss"
+    ]
+  ],
+  "verticalAlignment": "start",
+  "horizontalAlignment": "start"
+}

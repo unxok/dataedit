@@ -13,7 +13,7 @@ import {
 } from "../../lib/types";
 import { PropertyIcon } from "../../components/PropertyIcon";
 import { Error } from "../Error";
-import { File } from "lucide-react";
+import { File, Settings as SettingsIcon } from "lucide-react";
 import {
 	ArrayInputWrapper,
 	CheckboxInput,
@@ -23,6 +23,8 @@ import {
 	FileInput,
 } from "../Inputs";
 import { LinkTableData } from "../LinkTableData";
+import DataEdit from "@/main";
+import { Settings } from "../PluginSettings";
 
 export const EditableTable = ({
 	data,
@@ -30,10 +32,12 @@ export const EditableTable = ({
 	ctx,
 }: {
 	data: string;
-	plugin: Plugin;
+	plugin: DataEdit;
 	ctx: MarkdownPostProcessorContext;
 }) => {
 	const [queryResults, setQueryResults] = useState<QueryResults>();
+
+	console.log("got settings: ", plugin.settings);
 
 	useEffect(() => {
 		console.log("query results: ", queryResults);
@@ -79,7 +83,8 @@ export const EditableTable = ({
 	};
 
 	const updateDataeditLinks = async () => {
-		const propName = "dataedit-links";
+		const propName = plugin.settings.queryLinksPropertyName;
+		if (!propName) return;
 		const values = queryResults?.values;
 		if (!values) return;
 		if (!ctx) return;
@@ -119,8 +124,16 @@ export const EditableTable = ({
 	if (!queryResults) return <Error>{"Invalid query"}</Error>;
 	return (
 		<>
-			<table className="dataedit max-w-full whitespace-nowrap">
-				<TableHead queryResults={queryResults} />
+			<table
+				className={
+					"dataedit max-w-full whitespace-nowrap " +
+					plugin.settings.cssClassName
+				}
+			>
+				<TableHead
+					queryResults={queryResults}
+					settings={plugin.settings}
+				/>
 				<tbody className="">
 					{queryResults.values.map(
 						(propertyValueArr, propertyValueArrIndex) => (
@@ -169,6 +182,12 @@ export const EditableTable = ({
 					)}
 				</tbody>
 			</table>
+			<div
+				className="edit-block-button bottom-[4px] top-[unset]"
+				aria-label="Edit table settings"
+			>
+				<SettingsIcon />
+			</div>
 		</>
 	);
 };
@@ -204,7 +223,13 @@ const EditableTableData = (props: CommonEditableProps) => {
 	return <StringInput {...props} />;
 };
 
-const TableHead = ({ queryResults }: { queryResults: any }) => {
+const TableHead = ({
+	queryResults,
+	settings,
+}: {
+	queryResults: any;
+	settings: Settings;
+}) => {
 	//
 	return (
 		<thead className="w-fit">
@@ -214,13 +239,15 @@ const TableHead = ({ queryResults }: { queryResults: any }) => {
 						{h.toUpperCase() === "FILE" ? (
 							<span className="flex w-fit items-center text-nowrap">
 								{h}
-								<span
-									className="metadata-property-icon"
-									aria-label={"file"}
-									data-tooltip-position="right"
-								>
-									<File style={iconStyle} />
-								</span>
+								{settings.showTypeIcons && (
+									<span
+										className="metadata-property-icon"
+										aria-label={"file"}
+										data-tooltip-position="right"
+									>
+										<File style={iconStyle} />
+									</span>
+								)}
 								{/* <span className="dataview small-text">
 										{queryResults.values.length}
 									</span> */}
@@ -228,7 +255,9 @@ const TableHead = ({ queryResults }: { queryResults: any }) => {
 						) : (
 							<span className="flex w-fit items-center">
 								{h}
-								<PropertyIcon propertyName={h} />
+								{settings.showTypeIcons && (
+									<PropertyIcon propertyName={h} />
+								)}
 							</span>
 						)}
 					</th>

@@ -2,12 +2,11 @@
 
 _Transform your Dataview queries into <u>editable-in-place</u> tables!_
 
+<a href="https://www.buymeacoffee.com/unxok" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
 
-This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin query frontmatter metadata. Please show the creators some love for all their hardwork!
-
-> [!IMPORTANT]
-> The [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin <u>must</u> installed and enabled separately!
+This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin to query frontmatter metadata. Please show the creators some love for all their hardwork!
 
 ## Demo
 
@@ -28,6 +27,9 @@ Forgive the terrible quality😅
 
 > [!CAUTION]
 > This plugin is still being worked on and fleshed out. Therefore, it is not available to download from the obsidian community plugins menu.
+
+> [!IMPORTANT]
+> The [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin <u>must</u> installed and enabled separately!
 
 Set your codeblock langauge to `dataedit`
 
@@ -107,12 +109,12 @@ return { headers: ["Name", "Progress", "Category"], values: data };
 -   [x] Links from query to frontmatter (to show in graph view, etc)
 -   [ ] Switch to Vite
 -   [ ] Config options (YAML in a query, JSON in js expression)
-    -   [ ] Auto suggest-- boolean. default true
-    -   [ ] Show type icons-- boolean. default true
-    -   [ ] Links from query to frontmatter
-        -   [ ] property name-- string. Default 'dataedit-links'. Leave blank to turn off this feature
-    -   [ ] CSS classname-- string
-    -   [ ] Column aliases-- an array
+    -   [x] Auto suggest-- boolean. default true
+    -   [x] Show type icons-- boolean. default true
+    -   [x] Links from query to frontmatter
+        -   [x] property name-- string. Default 'dataedit-links'. Leave blank to turn off this feature
+    -   [x] CSS classname-- string
+    -   [] Column aliases-- an array
     -   [ ] Vertical alignment
         -   [ ] Single value-- applies to all cells
         -   [ ] Array-- applies to specific collumns
