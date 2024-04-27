@@ -4,10 +4,10 @@ _Transform your Dataview queries into <u>editable-in-place</u> tables!_
 
 This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
 
-This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin query metadata. Please show the creators some love for all their hardwork!
+This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin query frontmatter metadata. Please show the creators some love for all their hardwork!
 
 > [!IMPORTANT]
-> You need to ensure dataview is installed and enabled separately!
+> The [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin <u>must</u> installed and enabled separately!
 
 ## Demo
 
@@ -31,6 +31,13 @@ Forgive the terrible quality😅
 
 Set your codeblock langauge to `dataedit`
 
+````
+```dataedit
+TABLE foo
+FROM #bar
+```
+````
+
 The codeblock will accept a **_dataview query_** or a **_Javascript expression_** that returns an object with `headers` and `values` keys with arrays respectively.
 
 ### Example
@@ -47,21 +54,24 @@ SORT file.name
 ```
 ````
 
+> [!CAUTION]
+> Inline metadata may show in the table, but editing it will cause it to be added as a frontmatter property.
+> I have no intention of supporting inline property edits, but if someone provides an easy and computationally cheap way to do it, I will look into it
+
 > [!WARNING]
 > The exceptions to the statement above are:
 >
-> -   You <u>must</u> include `file.link` whether naturally (without doing anything extra) or by adding it as a column
+> -   You <u>cannot</u> use `WITHOUT ID`
 > -   You <u>cannot</u> specify column aliases in the query (on roadmap)
 > -   I haven't tried it yet, but I am pretty sure `GROUP BY` will <u>not</u> work
 
-````sql
-```dataedit
+```sql
 TABLE WITHOUT ID progress, category, file.link AS Name
 FROM #tasks
 SORT file.name
-```
+
 ...this will NOT work
-````
+```
 
 #### Javascript expression
 
