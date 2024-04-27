@@ -51,8 +51,8 @@ const App = (props: {
 		})();
 
 		// plugin.addCommand({
-		// 	id: `reload-data-edit`,
-		// 	name: `Reload Data Edit`,
+		// 	id: `reload-dataedit`,
+		// 	name: `Reload Dataedit`,
 		// 	callback: () => forceUpdate(),
 		// });
 	}, []);

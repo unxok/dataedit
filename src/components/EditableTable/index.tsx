@@ -119,7 +119,7 @@ export const EditableTable = ({
 	if (!queryResults) return <Error>{"Invalid query"}</Error>;
 	return (
 		<>
-			<table className="data-edit max-w-full whitespace-nowrap">
+			<table className="dataedit max-w-full whitespace-nowrap">
 				<TableHead queryResults={queryResults} />
 				<tbody className="">
 					{queryResults.values.map(

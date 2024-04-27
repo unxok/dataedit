@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState8(initialState) {
+        function useState11(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -1100,11 +1100,11 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef8(initialValue) {
+        function useRef11(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect9(create, deps) {
+        function useEffect12(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -1886,15 +1886,15 @@ var require_react_development = __commonJS({
         exports.useContext = useContext;
         exports.useDebugValue = useDebugValue;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect9;
+        exports.useEffect = useEffect12;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
         exports.useLayoutEffect = useLayoutEffect;
         exports.useMemo = useMemo;
         exports.useReducer = useReducer;
-        exports.useRef = useRef8;
-        exports.useState = useState8;
+        exports.useRef = useRef11;
+        exports.useState = useState11;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -2390,9 +2390,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React16 = require_react();
+        var React20 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React16.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React20.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -3997,7 +3997,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props.value == null) {
               if (typeof props.children === "object" && props.children !== null) {
-                React16.Children.forEach(props.children, function(child) {
+                React20.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -12444,7 +12444,7 @@ var require_react_dom_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React16.Component().refs;
+        var emptyRefsObject = new React20.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23046,7 +23046,7 @@ var require_react_dom_development = __commonJS({
             unmarkContainerAsRoot(container);
           }
         };
-        function createRoot2(container, options2) {
+        function createRoot3(container, options2) {
           if (!isValidContainer(container)) {
             throw new Error("createRoot(...): Target container is not a DOM element.");
           }
@@ -23417,7 +23417,7 @@ var require_react_dom_development = __commonJS({
               error('You are importing createRoot from "react-dom" which is not supported. You should instead import it from "react-dom/client".');
             }
           }
-          return createRoot2(container, options2);
+          return createRoot3(container, options2);
         }
         function hydrateRoot$1(container, initialChildren, options2) {
           {
@@ -23522,57 +23522,214 @@ __export(main_exports, {
   loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian4 = require("obsidian");
-var import_react20 = __toESM(require_react());
-var import_client = __toESM(require_client());
+var import_obsidian5 = require("obsidian");
+var import_react24 = __toESM(require_react());
+var import_client2 = __toESM(require_client());
 
 // src/settings.ts
 var defaultSettings = {
   demoSetting: "Default value"
 };
 
-// src/settings-tab.ts
+// src/settings-tab.tsx
+var import_react4 = __toESM(require_react());
+var import_obsidian2 = require("obsidian");
+var import_client = __toESM(require_client());
+
+// src/components/PluginSettings/index.tsx
+var import_react3 = __toESM(require_react());
+
+// src/components/Setting/index.tsx
+var import_react2 = __toESM(require_react());
+
+// src/hooks/useSuggest.tsx
 var import_obsidian = require("obsidian");
-var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app2, plugin2) {
-    super(app2, plugin2);
-    this.plugin = plugin2;
+var import_react = __toESM(require_react());
+var useSuggest = ({
+  app: app2,
+  getSuggestions,
+  onSelect
+}) => {
+  const [suggest, setSuggest] = (0, import_react.useState)();
+  const ref = (0, import_react.useRef)(null);
+  (0, import_react.useEffect)(() => {
+    if (!ref?.current)
+      return;
+    setSuggest(new Suggest(app2, ref.current, getSuggestions, onSelect));
+  }, []);
+  return ref;
+};
+var Suggest = class extends import_obsidian.AbstractInputSuggest {
+  constructor(app2, inputEl, getSuggestions, onSelect) {
+    super(app2, inputEl);
+    this.app = app2;
+    this.inputEl = inputEl;
+    this.getSuggestions = getSuggestions;
+    this.onSelectCb = onSelect;
   }
-  display() {
-    this.containerEl.empty();
-    this.containerEl.createEl("h2", {
-      text: "My Plugin Settings"
-    });
-    new import_obsidian.Setting(this.containerEl).setName("Demo of settings").setDesc(
-      createFragment((f) => {
-        f.createSpan({
-          text: "Description for setting goes here "
-        });
-        f.createEl("a", {
-          text: "Link to additional useful materials",
-          href: "#"
-        });
-        f.createSpan({ text: " syntax." });
-      })
-    ).addText((t) => {
-      t.setValue(String(this.plugin.settings.demoSetting));
-      t.onChange(async (v) => {
-        this.plugin.settings.demoSetting = v.length ? v : defaultSettings.demoSetting;
-        await this.plugin.saveSettings();
-      });
-    });
+  // protected getSuggestions(query: string): string[] | Promise<string[]> {
+  // 	return ["test1", "test2", "test3"];
+  // }
+  renderSuggestion(value, el) {
+    console.log("rendered sugg: ", value);
+    el.textContent = value;
+  }
+  selectSuggestion(value, evt) {
+    console.log("selected sugg: ", value);
+    this.onSelectCb(value, evt);
   }
 };
 
+// src/components/Setting/index.tsx
+var SettingRoot = ({ children }) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item" }, children);
+var SettingInfo = ({ children }) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-info" }, children);
+var SettingName = ({ children }) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-name" }, children);
+var SettingDescription = ({ children }) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-description" }, children);
+var SettingControl = ({ children }) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-control" }, children);
+var SettingToggle = ({
+  app: app2,
+  checked,
+  onCheckedChange = () => {
+  }
+}) => {
+  const [toggleClass, setToggleClass] = (0, import_react2.useState)("");
+  const [value, setValue] = (0, import_react2.useState)(checked);
+  const ref = (0, import_react2.useRef)(null);
+  const setEnabledClass = (newValue) => {
+    const newClass = newValue ? "is-enabled" : "";
+    setToggleClass(newClass);
+  };
+  (0, import_react2.useEffect)(() => {
+    setEnabledClass(value);
+    if (!ref?.current)
+      return;
+  }, [value]);
+  return /* @__PURE__ */ import_react2.default.createElement(
+    "div",
+    {
+      className: "checkbox-container " + toggleClass,
+      onClick: () => {
+        setValue((b) => {
+          onCheckedChange(!b);
+          return !b;
+        });
+      }
+    },
+    /* @__PURE__ */ import_react2.default.createElement(
+      "input",
+      {
+        ref,
+        type: "checkbox",
+        checked: value,
+        tabIndex: 0,
+        readOnly: true
+      }
+    )
+  );
+};
+var SettingInput = ({
+  app: app2,
+  value,
+  onChange,
+  onSelect
+}) => {
+  const ref = useSuggest({
+    app: app2,
+    getSuggestions: (q) => ["hello", "how", "are", "you"],
+    onSelect
+  });
+  return /* @__PURE__ */ import_react2.default.createElement(
+    "input",
+    {
+      ref,
+      type: "text",
+      value,
+      onChange,
+      tabIndex: 0
+    }
+  );
+};
+var SampleSetting = ({ app: app2 }) => {
+  const [inp, setInp] = (0, import_react2.useState)("");
+  return /* @__PURE__ */ import_react2.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react2.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react2.default.createElement(SettingName, null, "Test toggle"), /* @__PURE__ */ import_react2.default.createElement(SettingDescription, null, "testing settings")), /* @__PURE__ */ import_react2.default.createElement(SettingControl, null, /* @__PURE__ */ import_react2.default.createElement(
+    SettingToggle,
+    {
+      app: app2,
+      checked: true,
+      onCheckedChange: (b) => console.log("toggle: ", b)
+    }
+  )), /* @__PURE__ */ import_react2.default.createElement(SettingControl, null, /* @__PURE__ */ import_react2.default.createElement(
+    SettingInput,
+    {
+      app: app2,
+      value: inp,
+      onChange: (e) => {
+        setInp(e.target.value);
+      },
+      onSelect: (v) => {
+        setInp(v);
+      }
+    }
+  )));
+};
+
+// src/components/PluginSettings/index.tsx
+var PluginSettings = ({ app: app2 }) => {
+  return /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("h2", null, "Dataedit Settings"), /* @__PURE__ */ import_react3.default.createElement(SampleSetting, { app: app2 }));
+};
+
+// src/settings-tab.tsx
+var DataEditSettingsTab = class extends import_obsidian2.PluginSettingTab {
+  constructor(app2, plugin2) {
+    super(app2, plugin2);
+    this.plugin = plugin2;
+    this.containerEl.empty();
+    this.root = (0, import_client.createRoot)(this.containerEl);
+  }
+  display() {
+    this.root.render(/* @__PURE__ */ import_react4.default.createElement(PluginSettings, { app: this.app }));
+  }
+  // display(): void {
+  // 	this.containerEl.empty();
+  // 	this.containerEl.createEl("h2", {
+  // 		text: "My Plugin Settings",
+  // 	});
+  // 	new Setting(this.containerEl)
+  // 		.setName("Demo of settings")
+  // 		.setDesc(
+  // 			createFragment((f) => {
+  // 				f.createSpan({
+  // 					text: "Description for setting goes here ",
+  // 				});
+  // 				f.createEl("a", {
+  // 					text: "Link to additional useful materials",
+  // 					href: "#",
+  // 				});
+  // 				f.createSpan({ text: " syntax." });
+  // 			}),
+  // 		)
+  // 		.addText((t) => {
+  // 			t.setValue(String(this.plugin.settings.demoSetting));
+  // 			t.onChange(async (v) => {
+  // 				this.plugin.settings.demoSetting = v.length
+  // 					? v
+  // 					: defaultSettings.demoSetting;
+  // 				await this.plugin.saveSettings();
+  // 			});
+  // 		})
+  // 		.addSearch((c) => console.log("comp: ", c));
+  // }
+};
+
 // src/components/App.tsx
-var import_obsidian3 = require("obsidian");
-var import_react19 = __toESM(require_react());
+var import_obsidian4 = require("obsidian");
+var import_react23 = __toESM(require_react());
 
 // src/components/Error/index.tsx
-var import_react2 = __toESM(require_react());
+var import_react6 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
-var import_react = __toESM(require_react());
+var import_react5 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/defaultAttributes.js
 var defaultAttributes = {
@@ -23592,7 +23749,7 @@ var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLo
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
 var createLucideIcon = (iconName, iconNode) => {
-  const Component = (0, import_react.forwardRef)(
+  const Component = (0, import_react5.forwardRef)(
     ({
       color = "currentColor",
       size = 24,
@@ -23602,7 +23759,7 @@ var createLucideIcon = (iconName, iconNode) => {
       children,
       ...rest
     }, ref) => {
-      return (0, import_react.createElement)(
+      return (0, import_react5.createElement)(
         "svg",
         {
           ref,
@@ -23615,7 +23772,7 @@ var createLucideIcon = (iconName, iconNode) => {
           ...rest
         },
         [
-          ...iconNode.map(([tag, attrs]) => (0, import_react.createElement)(tag, attrs)),
+          ...iconNode.map(([tag, attrs]) => (0, import_react5.createElement)(tag, attrs)),
           ...Array.isArray(children) ? children : [children]
         ]
       );
@@ -23652,11 +23809,11 @@ var X = createLucideIcon("X", [
 
 // src/components/Error/index.tsx
 var Error2 = ({ children }) => {
-  return /* @__PURE__ */ import_react2.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react2.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react2.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
+  return /* @__PURE__ */ import_react6.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "rounded-md border-dashed border-[var(--text-error)] p-4" }, /* @__PURE__ */ import_react6.default.createElement("h2", { className: "mt-0 flex items-center justify-start gap-2" }, /* @__PURE__ */ import_react6.default.createElement(CircleAlert, { color: "var(--text-error)", size: 25 }), "Error"), children));
 };
 
 // src/components/EditableTable/index.tsx
-var import_react18 = __toESM(require_react());
+var import_react22 = __toESM(require_react());
 
 // src/lib/utils.ts
 var toPlainArray = (arr) => {
@@ -23693,24 +23850,24 @@ var tryToMarkdownLink = (val) => {
 };
 
 // src/components/PropertyIcon/index.tsx
-var import_react3 = __toESM(require_react());
-var import_obsidian2 = require("obsidian");
+var import_react7 = __toESM(require_react());
+var import_obsidian3 = require("obsidian");
 var PropertyIcon = ({ propertyName }) => {
-  const ref = (0, import_react3.useRef)(null);
+  const ref = (0, import_react7.useRef)(null);
   const propertyType = getPropertyType(propertyName);
   const propertyIcon = (
     // @ts-ignore
     app.metadataTypeManager.registeredTypeWidgets[propertyType]?.icon
   );
-  (0, import_react3.useEffect)(() => {
+  (0, import_react7.useEffect)(() => {
     if (!ref.current || !propertyIcon)
       return;
     try {
-      (0, import_obsidian2.setIcon)(ref.current, propertyIcon);
+      (0, import_obsidian3.setIcon)(ref.current, propertyIcon);
     } catch (e) {
     }
   }, [propertyIcon]);
-  return /* @__PURE__ */ import_react3.default.createElement(
+  return /* @__PURE__ */ import_react7.default.createElement(
     "span",
     {
       ref,
@@ -23722,17 +23879,17 @@ var PropertyIcon = ({ propertyName }) => {
 };
 
 // src/components/Inputs/ArrayInput/index.tsx
-var import_react12 = __toESM(require_react());
+var import_react16 = __toESM(require_react());
 
 // src/hooks/useEnter.tsx
-var import_react4 = __toESM(require_react());
+var import_react8 = __toESM(require_react());
 var useEnter = (ref, callback) => {
   const eventCallback = (e) => {
     if (e.key !== "Enter")
       return;
     callback();
   };
-  (0, import_react4.useEffect)(() => {
+  (0, import_react8.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.addEventListener("keydown", eventCallback);
@@ -23743,7 +23900,7 @@ var useEnter = (ref, callback) => {
 };
 
 // src/hooks/useKeyboardClick.tsx
-var import_react5 = __toESM(require_react());
+var import_react9 = __toESM(require_react());
 var useKeyboardClick = (ref) => {
   const keyboardFocusClick = (e) => {
     if (!(e.key === "Enter" || e.key === " "))
@@ -23751,7 +23908,7 @@ var useKeyboardClick = (ref) => {
     e.preventDefault();
     ref?.current?.click();
   };
-  (0, import_react5.useEffect)(() => {
+  (0, import_react9.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.addEventListener("keydown", keyboardFocusClick);
@@ -23761,7 +23918,7 @@ var useKeyboardClick = (ref) => {
 };
 
 // src/components/PropertySuggester/index.tsx
-var import_react10 = __toESM(require_react());
+var import_react14 = __toESM(require_react());
 
 // node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
@@ -23780,18 +23937,18 @@ function _extends() {
 }
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var import_react9 = __toESM(require_react(), 1);
+var import_react13 = __toESM(require_react(), 1);
 var import_react_dom2 = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-primitive/dist/index.mjs
-var import_react8 = __toESM(require_react(), 1);
+var import_react12 = __toESM(require_react(), 1);
 var import_react_dom = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var import_react7 = __toESM(require_react(), 1);
+var import_react11 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-var import_react6 = __toESM(require_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
 function $6ed0406888f73fc4$var$setRef(ref, value) {
   if (typeof ref === "function")
     ref(value);
@@ -23805,44 +23962,44 @@ function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
 }
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react7.forwardRef)((props, forwardedRef) => {
+var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react11.forwardRef)((props, forwardedRef) => {
   const { children, ...slotProps } = props;
-  const childrenArray = import_react7.Children.toArray(children);
+  const childrenArray = import_react11.Children.toArray(children);
   const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
   if (slottable) {
     const newElement = slottable.props.children;
     const newChildren = childrenArray.map((child) => {
       if (child === slottable) {
-        if (import_react7.Children.count(newElement) > 1)
-          return import_react7.Children.only(null);
-        return /* @__PURE__ */ (0, import_react7.isValidElement)(newElement) ? newElement.props.children : null;
+        if (import_react11.Children.count(newElement) > 1)
+          return import_react11.Children.only(null);
+        return /* @__PURE__ */ (0, import_react11.isValidElement)(newElement) ? newElement.props.children : null;
       } else
         return child;
     });
-    return /* @__PURE__ */ (0, import_react7.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+    return /* @__PURE__ */ (0, import_react11.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
       ref: forwardedRef
-    }), /* @__PURE__ */ (0, import_react7.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react7.cloneElement)(newElement, void 0, newChildren) : null);
+    }), /* @__PURE__ */ (0, import_react11.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react11.cloneElement)(newElement, void 0, newChildren) : null);
   }
-  return /* @__PURE__ */ (0, import_react7.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+  return /* @__PURE__ */ (0, import_react11.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
     ref: forwardedRef
   }), children);
 });
 $5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
-var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react7.forwardRef)((props, forwardedRef) => {
+var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react11.forwardRef)((props, forwardedRef) => {
   const { children, ...slotProps } = props;
-  if (/* @__PURE__ */ (0, import_react7.isValidElement)(children))
-    return /* @__PURE__ */ (0, import_react7.cloneElement)(children, {
+  if (/* @__PURE__ */ (0, import_react11.isValidElement)(children))
+    return /* @__PURE__ */ (0, import_react11.cloneElement)(children, {
       ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
       ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
     });
-  return import_react7.Children.count(children) > 1 ? import_react7.Children.only(null) : null;
+  return import_react11.Children.count(children) > 1 ? import_react11.Children.only(null) : null;
 });
 $5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
 var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
-  return /* @__PURE__ */ (0, import_react7.createElement)(import_react7.Fragment, null, children);
+  return /* @__PURE__ */ (0, import_react11.createElement)(import_react11.Fragment, null, children);
 };
 function $5e63c961fc1ce211$var$isSlottable(child) {
-  return /* @__PURE__ */ (0, import_react7.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
+  return /* @__PURE__ */ (0, import_react11.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
 }
 function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
   const overrideProps = {
@@ -23897,13 +24054,13 @@ var $8927f6f2acc4f386$var$NODES = [
   "ul"
 ];
 var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
-  const Node = /* @__PURE__ */ (0, import_react8.forwardRef)((props, forwardedRef) => {
+  const Node = /* @__PURE__ */ (0, import_react12.forwardRef)((props, forwardedRef) => {
     const { asChild, ...primitiveProps } = props;
     const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
-    (0, import_react8.useEffect)(() => {
+    (0, import_react12.useEffect)(() => {
       window[Symbol.for("radix-ui")] = true;
     }, []);
-    return /* @__PURE__ */ (0, import_react8.createElement)(Comp, _extends({}, primitiveProps, {
+    return /* @__PURE__ */ (0, import_react12.createElement)(Comp, _extends({}, primitiveProps, {
       ref: forwardedRef
     }));
   });
@@ -23915,10 +24072,10 @@ var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.redu
 }, {});
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react9.forwardRef)((props, forwardedRef) => {
+var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react13.forwardRef)((props, forwardedRef) => {
   var _globalThis$document;
   const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props;
-  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react9.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
+  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react13.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
     ref: forwardedRef
   })), container) : null;
 });
@@ -23936,7 +24093,7 @@ var PropertySuggester = ({
     // @ts-ignore
     app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
   );
-  return /* @__PURE__ */ import_react10.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react14.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react14.default.createElement(
     "div",
     {
       className: "absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid border-secondary-alt bg-primary-alt p-1 text-normal",
@@ -23946,7 +24103,7 @@ var PropertySuggester = ({
         opacity: position ? 1 : 0
       }
     },
-    suggestions?.map((s, i) => /* @__PURE__ */ import_react10.default.createElement(
+    suggestions?.map((s, i) => /* @__PURE__ */ import_react14.default.createElement(
       "div",
       {
         key: i + s + "suggestion",
@@ -23960,7 +24117,7 @@ var PropertySuggester = ({
 };
 
 // src/components/LinkTableData/index.tsx
-var import_react11 = __toESM(require_react());
+var import_react15 = __toESM(require_react());
 var LinkTableData = ({ file }) => {
   if (typeof file === "string")
     return;
@@ -23970,7 +24127,7 @@ var LinkTableData = ({ file }) => {
   } catch (e) {
     console.error("failed to get file name: ", e);
   }
-  return /* @__PURE__ */ import_react11.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react11.default.createElement(
+  return /* @__PURE__ */ import_react15.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react15.default.createElement(
     "a",
     {
       href: file.path,
@@ -23998,9 +24155,9 @@ var ArrayInputWrapper = (props) => {
     setQueryResults: setQueryResults2,
     updateMetaData: updateMetaData2
   } = props;
-  const plusRef = (0, import_react12.useRef)(null);
+  const plusRef = (0, import_react16.useRef)(null);
   useKeyboardClick(plusRef);
-  return /* @__PURE__ */ import_react12.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react12.default.createElement(
+  return /* @__PURE__ */ import_react16.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react16.default.createElement(
     ArrayInput,
     {
       key: propertyValueArrIndex + propertyValueIndex + n.toString(),
@@ -24008,7 +24165,7 @@ var ArrayInputWrapper = (props) => {
       itemIndex: n,
       ...props
     }
-  )), /* @__PURE__ */ import_react12.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react12.default.createElement(
+  )), /* @__PURE__ */ import_react16.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
       ref: plusRef,
@@ -24027,8 +24184,8 @@ var ArrayInputWrapper = (props) => {
         await updateMetaData2(propertyName, copyList, file.path);
       }
     },
-    /* @__PURE__ */ import_react12.default.createElement(Plus, { style: iconStyle })
-  ), /* @__PURE__ */ import_react12.default.createElement(
+    /* @__PURE__ */ import_react16.default.createElement(Plus, { style: iconStyle })
+  ), /* @__PURE__ */ import_react16.default.createElement(
     "input",
     {
       disabled: true,
@@ -24049,11 +24206,11 @@ var ArrayInput = ({
   itemValue,
   itemIndex
 }) => {
-  const [rect, setRect] = (0, import_react12.useState)();
-  const [isEditing, setIsEditing] = (0, import_react12.useState)(false);
-  const [value, setValue] = (0, import_react12.useState)("");
-  const ref = (0, import_react12.useRef)(null);
-  const xRef = (0, import_react12.useRef)(null);
+  const [rect, setRect] = (0, import_react16.useState)();
+  const [isEditing, setIsEditing] = (0, import_react16.useState)(false);
+  const [value, setValue] = (0, import_react16.useState)("");
+  const ref = (0, import_react16.useRef)(null);
+  const xRef = (0, import_react16.useRef)(null);
   const isLink = checkIsLink(itemValue);
   useKeyboardClick(xRef);
   const updateProperty = async () => {
@@ -24065,7 +24222,7 @@ var ArrayInput = ({
     await updateMetaData2(propertyName, newValue, file.path);
   };
   useEnter(ref, updateProperty);
-  return /* @__PURE__ */ import_react12.default.createElement("li", { className: "flex items-center" }, /* @__PURE__ */ import_react12.default.createElement(
+  return /* @__PURE__ */ import_react16.default.createElement("li", { className: "flex items-center" }, /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
       className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
@@ -24085,8 +24242,8 @@ var ArrayInput = ({
         await updateMetaData2(propertyName, copyList, file.path);
       }
     },
-    /* @__PURE__ */ import_react12.default.createElement(X, { style: iconStyle })
-  ), rect && /* @__PURE__ */ import_react12.default.createElement(
+    /* @__PURE__ */ import_react16.default.createElement(X, { style: iconStyle })
+  ), rect && /* @__PURE__ */ import_react16.default.createElement(
     PropertySuggester,
     {
       propertyName,
@@ -24097,7 +24254,7 @@ var ArrayInput = ({
       },
       onMouseLeave: (e) => setValue("")
     }
-  ), !isEditing && /* @__PURE__ */ import_react12.default.createElement("span", { className: "flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, /* @__PURE__ */ import_react12.default.createElement(LinkTableData, { file: itemValue }), /* @__PURE__ */ import_react12.default.createElement(
+  ), !isEditing && /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement(LinkTableData, { file: itemValue }), /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
       className: "w-full",
@@ -24105,7 +24262,7 @@ var ArrayInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )) : propertyName.toLowerCase() === "tags" ? /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, /* @__PURE__ */ import_react12.default.createElement(
+  )) : propertyName.toLowerCase() === "tags" ? /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement(
     "a",
     {
       href: "#" + itemValue,
@@ -24117,7 +24274,7 @@ var ArrayInput = ({
     },
     "#",
     itemValue
-  ), /* @__PURE__ */ import_react12.default.createElement(
+  ), /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
       className: "h-full w-full",
@@ -24126,7 +24283,7 @@ var ArrayInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )) : /* @__PURE__ */ import_react12.default.createElement(
+  )) : /* @__PURE__ */ import_react16.default.createElement(
     "span",
     {
       className: "w-full",
@@ -24134,8 +24291,8 @@ var ArrayInput = ({
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    itemValue || /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, "\xA0")
-  )), isEditing && /* @__PURE__ */ import_react12.default.createElement(
+    itemValue || /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, "\xA0")
+  )), isEditing && /* @__PURE__ */ import_react16.default.createElement(
     "input",
     {
       ref,
@@ -24174,7 +24331,7 @@ var ArrayInput = ({
 };
 
 // src/components/Inputs/CheckboxInput/index.tsx
-var import_react13 = __toESM(require_react());
+var import_react17 = __toESM(require_react());
 var CheckboxInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24184,7 +24341,7 @@ var CheckboxInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  return /* @__PURE__ */ import_react13.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react13.default.createElement(
+  return /* @__PURE__ */ import_react17.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react17.default.createElement(
     "input",
     {
       type: "checkbox",
@@ -24208,7 +24365,7 @@ var CheckboxInput = ({
 };
 
 // src/components/Inputs/DateTimeInput/index.tsx
-var import_react14 = __toESM(require_react());
+var import_react18 = __toESM(require_react());
 var DateTimeInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24219,23 +24376,23 @@ var DateTimeInput = ({
   updateMetaData: updateMetaData2,
   isTime
 }) => {
-  const ref = (0, import_react14.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react14.useState)(false);
+  const ref = (0, import_react18.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react18.useState)(false);
   const thisDate = new Date(propertyValue);
   const dateString = !propertyValue ? "" : isTime ? thisDate.toLocaleString() : thisDate.toLocaleDateString();
   const updateProperty = async () => {
     await updateMetaData2(propertyName, propertyValue, file.path);
   };
   useEnter(ref, updateProperty);
-  return /* @__PURE__ */ import_react14.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react14.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react14.default.createElement(
+  return /* @__PURE__ */ import_react18.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react18.default.createElement(
     "span",
     {
       className: "w-full",
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    dateString || /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, "\xA0")
-  )), isEditing && /* @__PURE__ */ import_react14.default.createElement(
+    dateString || /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, "\xA0")
+  )), isEditing && /* @__PURE__ */ import_react18.default.createElement(
     "input",
     {
       ref,
@@ -24263,7 +24420,7 @@ var DateTimeInput = ({
 };
 
 // src/components/Inputs/NumberInput/index.tsx
-var import_react15 = __toESM(require_react());
+var import_react19 = __toESM(require_react());
 var NumberInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24273,12 +24430,12 @@ var NumberInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const ref = (0, import_react15.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react15.useState)(false);
+  const ref = (0, import_react19.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react19.useState)(false);
   useEnter(ref, async () => {
     await updateMetaData2(propertyName, Number(propertyValue), file.path);
   });
-  return /* @__PURE__ */ import_react15.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react15.default.createElement(
+  return /* @__PURE__ */ import_react19.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react19.default.createElement(
     "span",
     {
       className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
@@ -24287,7 +24444,7 @@ var NumberInput = ({
       onFocus: () => setIsEditing(true)
     },
     propertyValue
-  ), isEditing && /* @__PURE__ */ import_react15.default.createElement(
+  ), isEditing && /* @__PURE__ */ import_react19.default.createElement(
     "input",
     {
       ref,
@@ -24315,7 +24472,7 @@ var NumberInput = ({
 };
 
 // src/components/Inputs/StringInput/index.tsx
-var import_react16 = __toESM(require_react());
+var import_react20 = __toESM(require_react());
 var StringInput = ({
   propertyValue,
   propertyValueArrIndex,
@@ -24325,19 +24482,19 @@ var StringInput = ({
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const ref = (0, import_react16.useRef)(null);
-  const [rect, setRect] = (0, import_react16.useState)();
-  const [isEditing, setIsEditing] = (0, import_react16.useState)(false);
-  const [value, setValue] = (0, import_react16.useState)("");
+  const ref = (0, import_react20.useRef)(null);
+  const [rect, setRect] = (0, import_react20.useState)();
+  const [isEditing, setIsEditing] = (0, import_react20.useState)(false);
+  const [value, setValue] = (0, import_react20.useState)("");
   const isLink = checkIsLink(propertyValue);
-  (0, import_react16.useEffect)(() => console.log("value: ", value), [value]);
+  (0, import_react20.useEffect)(() => console.log("value: ", value), [value]);
   const updateProperty = async () => {
     const preNewValue = value || propertyValue;
     const newValue = isLink ? preNewValue.markdown() : preNewValue;
     await updateMetaData2(propertyName, newValue, file.path);
   };
   useEnter(ref, updateProperty);
-  return /* @__PURE__ */ import_react16.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react16.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement("div", { className: "relative" }, rect && /* @__PURE__ */ import_react20.default.createElement(
     PropertySuggester,
     {
       propertyName,
@@ -24348,7 +24505,7 @@ var StringInput = ({
       },
       onMouseLeave: (e) => setValue("")
     }
-  ), !isEditing && /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement(LinkTableData, { file: propertyValue }), /* @__PURE__ */ import_react16.default.createElement(
+  ), !isEditing && /* @__PURE__ */ import_react20.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react20.default.createElement(import_react20.default.Fragment, null, /* @__PURE__ */ import_react20.default.createElement(LinkTableData, { file: propertyValue }), /* @__PURE__ */ import_react20.default.createElement(
     "span",
     {
       className: "w-full",
@@ -24356,15 +24513,15 @@ var StringInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )) : /* @__PURE__ */ import_react16.default.createElement(
+  )) : /* @__PURE__ */ import_react20.default.createElement(
     "span",
     {
       className: "w-full",
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    propertyValue || /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, "\xA0")
-  )), isEditing && /* @__PURE__ */ import_react16.default.createElement(
+    propertyValue || /* @__PURE__ */ import_react20.default.createElement(import_react20.default.Fragment, null, "\xA0")
+  )), isEditing && /* @__PURE__ */ import_react20.default.createElement(
     "input",
     {
       ref,
@@ -24396,15 +24553,15 @@ var StringInput = ({
 };
 
 // src/components/Inputs/FileInput/index.tsx
-var import_react17 = __toESM(require_react());
+var import_react21 = __toESM(require_react());
 var FileInput = ({
   file,
   plugin: plugin2
 }) => {
-  const ref = (0, import_react17.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react17.useState)(false);
-  const [value, setValue] = (0, import_react17.useState)(file.fileName());
-  (0, import_react17.useEffect)(() => console.log("value: ", value), [value]);
+  const ref = (0, import_react21.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react21.useState)(false);
+  const [value, setValue] = (0, import_react21.useState)(file.fileName());
+  (0, import_react21.useEffect)(() => console.log("value: ", value), [value]);
   const updateFileName = async () => {
     const thisFile = plugin2.app.vault.getFileByPath(file.path);
     if (!thisFile) {
@@ -24420,7 +24577,7 @@ var FileInput = ({
     plugin2.app.fileManager.renameFile(thisFile, newPath);
   };
   useEnter(ref, updateFileName);
-  return /* @__PURE__ */ import_react17.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react17.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react17.default.createElement(LinkTableData, { file }), /* @__PURE__ */ import_react17.default.createElement(
+  return /* @__PURE__ */ import_react21.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react21.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react21.default.createElement(LinkTableData, { file }), /* @__PURE__ */ import_react21.default.createElement(
     "span",
     {
       className: "w-full",
@@ -24428,7 +24585,7 @@ var FileInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )), isEditing && /* @__PURE__ */ import_react17.default.createElement(
+  )), isEditing && /* @__PURE__ */ import_react21.default.createElement(
     "input",
     {
       ref,
@@ -24453,8 +24610,8 @@ var EditableTable = ({
   plugin,
   ctx
 }) => {
-  const [queryResults, setQueryResults] = (0, import_react18.useState)();
-  (0, import_react18.useEffect)(() => {
+  const [queryResults, setQueryResults] = (0, import_react22.useState)();
+  (0, import_react22.useEffect)(() => {
     console.log("query results: ", queryResults);
     const asyncDoQuery = async () => {
       await doQuery();
@@ -24520,26 +24677,26 @@ var EditableTable = ({
     });
     await updateDataeditLinks();
   };
-  (0, import_react18.useEffect)(() => {
+  (0, import_react22.useEffect)(() => {
     doQuery();
   }, []);
   if (!queryResults)
-    return /* @__PURE__ */ import_react18.default.createElement(Error2, null, "Invalid query");
-  return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement("table", { className: "data-edit max-w-full whitespace-nowrap" }, /* @__PURE__ */ import_react18.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react18.default.createElement("tbody", { className: "" }, queryResults.values.map(
-    (propertyValueArr, propertyValueArrIndex) => /* @__PURE__ */ import_react18.default.createElement(
+    return /* @__PURE__ */ import_react22.default.createElement(Error2, null, "Invalid query");
+  return /* @__PURE__ */ import_react22.default.createElement(import_react22.default.Fragment, null, /* @__PURE__ */ import_react22.default.createElement("table", { className: "dataedit max-w-full whitespace-nowrap" }, /* @__PURE__ */ import_react22.default.createElement(TableHead, { queryResults }), /* @__PURE__ */ import_react22.default.createElement("tbody", { className: "" }, queryResults.values.map(
+    (propertyValueArr, propertyValueArrIndex) => /* @__PURE__ */ import_react22.default.createElement(
       "tr",
       {
         key: propertyValueArrIndex + "table-row",
         className: ""
       },
       propertyValueArr.map(
-        (propertyValue, propertyValueIndex) => /* @__PURE__ */ import_react18.default.createElement(
+        (propertyValue, propertyValueIndex) => /* @__PURE__ */ import_react22.default.createElement(
           "td",
           {
             key: propertyValueArrIndex + propertyValueIndex,
             className: "relative"
           },
-          /* @__PURE__ */ import_react18.default.createElement(
+          /* @__PURE__ */ import_react22.default.createElement(
             EditableTableData,
             {
               propertyValue,
@@ -24562,44 +24719,44 @@ var EditableTableData = (props) => {
   const { propertyName, file, plugin: plugin2 } = props;
   const propertyType = getPropertyType(propertyName);
   if (propertyName.toLowerCase() === "file") {
-    return /* @__PURE__ */ import_react18.default.createElement(FileInput, { file, plugin: plugin2 });
+    return /* @__PURE__ */ import_react22.default.createElement(FileInput, { file, plugin: plugin2 });
   }
   if (propertyType === "multitext" || propertyType === "tags") {
-    return /* @__PURE__ */ import_react18.default.createElement(ArrayInputWrapper, { ...props });
+    return /* @__PURE__ */ import_react22.default.createElement(ArrayInputWrapper, { ...props });
   }
   if (propertyType === "date") {
-    return /* @__PURE__ */ import_react18.default.createElement(DateTimeInput, { isTime: false, ...props });
+    return /* @__PURE__ */ import_react22.default.createElement(DateTimeInput, { isTime: false, ...props });
   }
   if (propertyType === "datetime") {
-    return /* @__PURE__ */ import_react18.default.createElement(DateTimeInput, { isTime: true, ...props });
+    return /* @__PURE__ */ import_react22.default.createElement(DateTimeInput, { isTime: true, ...props });
   }
   if (propertyType === "checkbox") {
-    return /* @__PURE__ */ import_react18.default.createElement(CheckboxInput, { ...props });
+    return /* @__PURE__ */ import_react22.default.createElement(CheckboxInput, { ...props });
   }
   if (propertyType === "number") {
-    return /* @__PURE__ */ import_react18.default.createElement(NumberInput, { ...props });
+    return /* @__PURE__ */ import_react22.default.createElement(NumberInput, { ...props });
   }
-  return /* @__PURE__ */ import_react18.default.createElement(StringInput, { ...props });
+  return /* @__PURE__ */ import_react22.default.createElement(StringInput, { ...props });
 };
 var TableHead = ({ queryResults: queryResults2 }) => {
-  return /* @__PURE__ */ import_react18.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react18.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h, i) => /* @__PURE__ */ import_react18.default.createElement("th", { key: i, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react18.default.createElement(
+  return /* @__PURE__ */ import_react22.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react22.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h, i) => /* @__PURE__ */ import_react22.default.createElement("th", { key: i, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, /* @__PURE__ */ import_react22.default.createElement(
     "span",
     {
       className: "metadata-property-icon",
       "aria-label": "file",
       "data-tooltip-position": "right"
     },
-    /* @__PURE__ */ import_react18.default.createElement(File, { style: iconStyle })
-  )) : /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react18.default.createElement(PropertyIcon, { propertyName: h }))))));
+    /* @__PURE__ */ import_react22.default.createElement(File, { style: iconStyle })
+  )) : /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex w-fit items-center" }, h, /* @__PURE__ */ import_react22.default.createElement(PropertyIcon, { propertyName: h }))))));
 };
 
 // src/components/App.tsx
-var RequiedDepsError = () => /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react19.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react19.default.createElement("ul", null, /* @__PURE__ */ import_react19.default.createElement("li", null, /* @__PURE__ */ import_react19.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")))));
-var App2 = (props) => {
+var RequiedDepsError = () => /* @__PURE__ */ import_react23.default.createElement(import_react23.default.Fragment, null, /* @__PURE__ */ import_react23.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react23.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react23.default.createElement("ul", null, /* @__PURE__ */ import_react23.default.createElement("li", null, /* @__PURE__ */ import_react23.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")))));
+var App3 = (props) => {
   const { data: data2, getSectionInfo, settings, plugin: plugin2, ctx: ctx2 } = props;
-  const [ErrMsg, setErrMsg] = (0, import_react19.useState)(void 0);
-  (0, import_react19.useEffect)(() => {
-    new import_obsidian3.Notice("App rendered");
+  const [ErrMsg, setErrMsg] = (0, import_react23.useState)(void 0);
+  (0, import_react23.useEffect)(() => {
+    new import_obsidian4.Notice("App rendered");
     (async () => {
       const b = await loadDependencies();
       if (!b)
@@ -24607,11 +24764,11 @@ var App2 = (props) => {
     })();
   }, []);
   if (ErrMsg) {
-    return /* @__PURE__ */ import_react19.default.createElement(Error2, null, /* @__PURE__ */ import_react19.default.createElement(ErrMsg, null));
+    return /* @__PURE__ */ import_react23.default.createElement(Error2, null, /* @__PURE__ */ import_react23.default.createElement(ErrMsg, null));
   }
-  return /* @__PURE__ */ import_react19.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react19.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react19.default.createElement(EditableTable, { data: data2, plugin: plugin2, ctx: ctx2 })));
+  return /* @__PURE__ */ import_react23.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react23.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react23.default.createElement(EditableTable, { data: data2, plugin: plugin2, ctx: ctx2 })));
 };
-var App_default = App2;
+var App_default = App3;
 
 // src/main.tsx
 var loadDependencies = async () => {
@@ -24623,7 +24780,7 @@ var loadDependencies = async () => {
   await plugins.loadPlugin(DATAVIEW);
   return true;
 };
-var DataEdit = class extends import_obsidian4.Plugin {
+var DataEdit = class extends import_obsidian5.Plugin {
   async onload() {
     await this.loadSettings();
     this.addSettingTab(new DataEditSettingsTab(this.app, this));
@@ -24641,10 +24798,10 @@ var DataEdit = class extends import_obsidian4.Plugin {
       console.log("registered mcbp: ", s);
       console.log("ctx: ", ctx2);
       e.empty();
-      const root = (0, import_client.createRoot)(e);
+      const root = (0, import_client2.createRoot)(e);
       root.render(
         // <React.StrictMode>
-        /* @__PURE__ */ import_react20.default.createElement(
+        /* @__PURE__ */ import_react24.default.createElement(
           App_default,
           {
             data: s,

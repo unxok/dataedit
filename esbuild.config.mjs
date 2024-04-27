@@ -49,14 +49,12 @@ esbuild
 					{
 						from: ["./manifest.json"],
 						to: [
-							"./test-vault/.obsidian/plugins/data-edit/manifest.json",
+							"./test-vault/.obsidian/plugins/dataedit/manifest.json",
 						],
 					},
 					{
 						from: ["./main.js"],
-						to: [
-							"./test-vault/.obsidian/plugins/data-edit/main.js",
-						],
+						to: ["./test-vault/.obsidian/plugins/dataedit/main.js"],
 					},
 				],
 			}),

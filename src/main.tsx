@@ -6,7 +6,7 @@ import { createRoot } from "react-dom/client";
 import { defaultSettings, TSettings } from "@/settings";
 import { DataEditSettingsTab } from "@/settings-tab";
 import { loadData } from "@/saveload";
-import { PropertySuggester } from "@/components/Popover";
+// import { PropertySuggester } from "@/components/Popover";
 
 import App from "@/components/App";
 
@@ -44,7 +44,7 @@ export default class DataEdit extends Plugin {
 			id: `insert`,
 			name: `Insert My Plugin`,
 			editorCallback: (e, _) => {
-				// e.replaceSelection("```data-edit\n```\n");
+				// e.replaceSelection("```dataedit\n```\n");
 			},
 			callback: () => this.registerCodeBlock(),
 		});
