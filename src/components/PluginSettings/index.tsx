@@ -119,7 +119,6 @@ export const PluginSettings = ({
 			<h2>Dataedit Settings</h2>
 			{/* <SettingDescription></SettingDescription> */}
 			<div className="pb-3">
-				<BuyMeCoffee />
 				<SettingDescription>
 					Plugin repository:{" "}
 					<a href="https://github.com/unxok/dataedit">
@@ -132,6 +131,8 @@ export const PluginSettings = ({
 						https://blacksmithgu.github.io/obsidian-dataview/
 					</a>
 				</SettingDescription>
+				<br />
+				<BuyMeCoffee />
 			</div>
 
 			<AutoSuggest
