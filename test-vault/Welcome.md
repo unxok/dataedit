@@ -1,5 +1,5 @@
 ---
-test: ddddd
+test: ""
 some-list:
   - asdf
   - sdfsdfdddd
@@ -11,10 +11,10 @@ tags:
   - onemoretagg
   - testtt
   - test
-date: 2024-02-01T00:00:00.000-08:00
+date: 2001-02-01
 checkboxtest: false
-datetime: 2024-02-01T13:24:00.000-08:00
-number: 9
+datetime: 2556-10-25T02:21
+number: 123
 dataedit-links:
   - "[[test noteee.md|test noteee]]"
   - "[[testt.md|testt]]"
@@ -27,7 +27,7 @@ cssclasses:
 ## Dataedit
 
 ```dataedit
-TABLE test, some-list, number, tags, date, checkboxtest, datetime, date
+TABLE WITHOUT ID test, some-list, number, tags, date, checkboxtest, datetime, date, file.link
 FROM #test
 SORT file.name
 ```

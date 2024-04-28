@@ -8,6 +8,7 @@ export const NumberInput = ({
 	propertyValueIndex,
 	propertyName,
 	file,
+	plugin,
 	setQueryResults,
 	updateMetaData,
 }: CommonEditableProps) => {
@@ -24,11 +25,14 @@ export const NumberInput = ({
 			{!isEditing && (
 				<span
 					className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt"
+					style={{
+						justifyContent: plugin.settings.horizontalAlignment,
+					}}
 					tabIndex={0}
 					onClick={() => setIsEditing(true)}
 					onFocus={() => setIsEditing(true)}
 				>
-					{propertyValue}
+					{propertyValue ?? plugin.settings.emptyValueDisplay}
 				</span>
 			)}
 			{isEditing && (

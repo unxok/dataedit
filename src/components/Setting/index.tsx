@@ -1,4 +1,10 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, {
+	ReactNode,
+	forwardRef,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { App, Setting } from "obsidian";
 import { useSuggest } from "@/hooks/useSuggest";
 
@@ -90,47 +96,31 @@ const SettingToggle = ({
 	);
 };
 
-const SettingInput = ({
-	app,
-	value,
-	placeholder,
-	onChange,
-	onSelect,
-	getSuggestions,
-}: {
-	app: App;
-	value: string;
-	placeholder?: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	onSelect?: (value: string, evt: MouseEvent | KeyboardEvent) => void;
-	getSuggestions?: (query: string) => string[] | Promise<string[]>;
-}) => {
-	if ((onSelect && !getSuggestions) || (!onSelect && getSuggestions)) {
-		console.error(
-			"SettingsInput: Expected either both onSelect and getSuggestions or neither but only got one",
-		);
-	}
-
-	const ref =
-		onSelect &&
-		getSuggestions &&
-		useSuggest({
-			app: app,
-			getSuggestions: getSuggestions,
-			onSelect: onSelect,
-		});
-
-	return (
-		<input
-			ref={ref}
-			type="text"
-			placeholder={placeholder}
-			value={value}
-			onChange={onChange}
-			tabIndex={0}
-		/>
-	);
-};
+// const SettingInput = forwardRef<HTMLInputElement>(
+// 	(
+// 		{
+// 			value,
+// 			placeholder,
+// 			onChange,
+// 		}: {
+// 			value: string;
+// 			placeholder?: string;
+// 			onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+// 		},
+// 		ref,
+// 	) => {
+// 		return (
+// 			<input
+// 				ref={ref}
+// 				type="text"
+// 				placeholder={placeholder}
+// 				value={value}
+// 				onChange={onChange}
+// 				tabIndex={0}
+// 			/>
+// 		);
+// 	},
+// );
 
 export {
 	SettingRoot,
@@ -138,7 +128,7 @@ export {
 	SettingName,
 	SettingDescription,
 	SettingControl,
-	SettingInput,
+	// SettingInput,
 	SettingToggle,
 };
 
@@ -159,16 +149,7 @@ export const SampleSetting = ({ app }: { app: App }) => {
 				/>
 			</SettingControl>
 			<SettingControl>
-				<SettingInput
-					app={app}
-					value={inp}
-					onChange={(e) => {
-						setInp(e.target.value);
-					}}
-					onSelect={(v) => {
-						setInp(v);
-					}}
-				/>
+				<input type="text" placeholder="type here..." tabIndex={0} />
 			</SettingControl>
 		</SettingRoot>
 	);

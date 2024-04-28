@@ -18,3 +18,17 @@ export const useEnter = (
 		};
 	}, [ref, callback]);
 };
+
+export const useEnterEl = (el: HTMLInputElement, callback: () => void) => {
+	const eventCallback = (e: KeyboardEvent) => {
+		if (e.key !== "Enter") return;
+		callback();
+	};
+
+	useEffect(() => {
+		el.addEventListener("keydown", eventCallback);
+		return () => {
+			el.removeEventListener("keydown", eventCallback);
+		};
+	}, [el, callback]);
+};

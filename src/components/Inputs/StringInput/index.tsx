@@ -1,42 +1,80 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+	forwardRef,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import {
 	CommonEditableProps,
 	DataviewFile,
 	QueryResults,
 } from "../../../lib/types";
 import { PropertySuggester } from "../../PropertySuggester";
-import { useEnter } from "../../../hooks/useEnter";
+import { useEnter, useEnterEl } from "../../../hooks/useEnter";
 import { LinkTableData } from "@/components/LinkTableData";
 import { checkIsLink } from "@/lib/utils";
+import { Suggest, createSuggest, useSuggest } from "@/hooks/useSuggest";
 
-export const StringInput = ({
-	propertyValue,
-	propertyValueArrIndex,
-	propertyValueIndex,
-	propertyName,
-	file,
-	setQueryResults,
-	updateMetaData,
-	plugin,
-}: CommonEditableProps) => {
-	const ref = useRef<HTMLInputElement>(null);
-	const [rect, setRect] = useState<{ top: number; left: number }>();
+export const StringInput = (props: CommonEditableProps) => {
+	const {
+		propertyValue,
+		propertyValueArrIndex,
+		propertyValueIndex,
+		propertyName,
+		file,
+		setQueryResults,
+		updateMetaData,
+		plugin,
+	} = props;
 	const [isEditing, setIsEditing] = useState(false);
-	const [value, setValue] = useState("");
-
 	const isLink = checkIsLink(propertyValue);
 
-	useEffect(() => console.log("value: ", value), [value]);
 	const updateProperty = async () => {
-		const preNewValue = value || propertyValue;
-		const newValue = isLink ? preNewValue.markdown() : preNewValue;
+		const newValue = isLink ? propertyValue.markdown() : propertyValue;
 		await updateMetaData(propertyName, newValue, file.path);
 	};
-	useEnter(ref, updateProperty);
+
+	const ref = useRef<HTMLInputElement>(null);
+	// const measuredRef = useCallback((node: HTMLInputElement) => {
+	// 	if (node === null) return;
+	// 	new Suggest(
+	// 		plugin.app,
+	// 		node,
+	// 		(q) => {
+	// 			const sugg =
+	// 				// @ts-ignore
+	// 				plugin.app.metadataCache?.getFrontmatterPropertyValuesForKey(
+	// 					propertyName,
+	// 				);
+	// 			console.log("sug: ", sugg);
+	// 			return [q, ...sugg];
+	// 		},
+	// 		(v) => updateMetaData(propertyName, v, file.path),
+	// 	);
+	// }, []);
+
+	// useEffect(() => {
+	// 	if (ref === null) return;
+	// 	new Suggest(
+	// 		plugin.app,
+	// 		ref.current,
+	// 		(q) => {
+	// 			const sugg =
+	// 				// @ts-ignore
+	// 				plugin.app.metadataCache?.getFrontmatterPropertyValuesForKey(
+	// 					propertyName,
+	// 				);
+	// 			console.log("sug: ", sugg);
+	// 			return [q, ...sugg];
+	// 		},
+	// 		(v) => updateMetaData(propertyName, v, file.path),
+	// 	);
+	// }, []);
 
 	return (
 		<div className="relative">
-			{rect && plugin.settings.autoSuggest && (
+			{/* {rect && plugin.settings.autoSuggest && (
 				<PropertySuggester
 					propertyName={propertyName}
 					position={rect}
@@ -46,9 +84,12 @@ export const StringInput = ({
 					}}
 					onMouseLeave={(e) => setValue("")}
 				/>
-			)}
+			)} */}
 			{!isEditing && (
-				<span className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
+				<span
+					className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt"
+					// style={{ display: isEditing ? "none" : "block" }}
+				>
 					{isLink ? (
 						<>
 							<LinkTableData file={propertyValue} />
@@ -62,47 +103,124 @@ export const StringInput = ({
 						</>
 					) : (
 						<span
-							className="w-full"
-							onClick={() => setIsEditing(true)}
-							onFocus={() => setIsEditing(true)}
+							className="flex w-full"
+							style={{
+								justifyContent:
+									plugin.settings.horizontalAlignment,
+							}}
+							onClick={() => {
+								ref?.current?.focus();
+								setIsEditing(true);
+							}}
+							onFocus={() => {
+								ref?.current?.focus();
+								setIsEditing(true);
+							}}
 						>
-							{propertyValue || <>&nbsp;</>}
+							{propertyValue || plugin.settings.emptyValueDisplay}
 						</span>
 					)}
 				</span>
 			)}
 			{isEditing && (
-				<input
-					ref={ref}
-					autoFocus
-					// defaultValue={d}
-					type={"text"}
-					value={isLink ? propertyValue.markdown() : propertyValue}
-					onChange={(e) => {
-						// console.log("changed");
-						setQueryResults((prev) => {
-							const copyPrev = { ...prev };
-							copyPrev.values[propertyValueArrIndex][
-								propertyValueIndex
-							] = e.target.value;
-							return copyPrev as QueryResults;
-						});
-					}}
-					onBlur={async () => {
-						await updateProperty();
-						setRect(undefined);
-						setIsEditing(false);
-					}}
-					onFocus={(e) => {
-						const rect = e.target.getBoundingClientRect();
-						setRect({
-							top: rect.top,
-							left: rect.left,
-						});
-					}}
-					className="relative m-0 border-transparent bg-transparent p-0 text-start"
+				<Input
+					isLink={isLink}
+					setQueryResults={setQueryResults}
+					setIsEditing={setIsEditing}
+					updateProperty={updateProperty}
+					updateMetaData={updateMetaData}
+					{...props}
 				/>
+				// <input
+				// 	ref={ref}
+				// 	// ref={measuredRef}
+				// 	style={{
+				// 		display: isEditing ? "block" : "none",
+				// 	}}
+				// 	autoFocus
+				// 	// defaultValue={d}
+				// 	type={"text"}
+				// 	value={isLink ? propertyValue.markdown() : propertyValue}
+				// 	onChange={(e) => {
+				// 		// console.log("changed");
+				// 		setQueryResults((prev) => {
+				// 			const copyPrev = { ...prev };
+				// 			copyPrev.values[propertyValueArrIndex][
+				// 				propertyValueIndex
+				// 			] = e.target.value;
+				// 			return copyPrev as QueryResults;
+				// 		});
+				// 	}}
+				// 	onBlur={async () => {
+				// 		await updateProperty();
+				// 		setIsEditing(false);
+				// 	}}
+				// 	onFocus={(e) => {}}
+				// 	className="relative m-0 border-transparent bg-transparent p-0 text-start"
+				// />
 			)}
 		</div>
+	);
+};
+
+const Input = ({
+	isLink,
+	propertyValue,
+	propertyName,
+	propertyValueIndex,
+	propertyValueArrIndex,
+	plugin,
+	file,
+	setQueryResults,
+	setIsEditing,
+	updateProperty,
+	updateMetaData,
+}: {
+	isLink: boolean;
+	setQueryResults: (value: React.SetStateAction<QueryResults>) => void;
+	setIsEditing: (value: React.SetStateAction<boolean>) => void;
+	updateProperty: () => Promise<void>;
+	updateMetaData: (p: string, v: any, f: string) => void;
+} & CommonEditableProps) => {
+	const ref = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (!ref?.current) return console.log("no ref");
+		new Suggest(
+			plugin.app,
+			ref.current,
+			(q) => {
+				const sugg =
+					// @ts-ignore
+					plugin.app.metadataCache?.getFrontmatterPropertyValuesForKey(
+						propertyName,
+					);
+				console.log("sug: ", sugg);
+				return [q, ...sugg];
+			},
+			(v) => updateMetaData(propertyName, v, file.path),
+		);
+		ref.current.focus();
+	}, []);
+	return (
+		<input
+			ref={ref}
+			type={"text"}
+			value={isLink ? propertyValue.markdown() : propertyValue}
+			onChange={(e) => {
+				// console.log("changed");
+				setQueryResults((prev) => {
+					const copyPrev = { ...prev };
+					copyPrev.values[propertyValueArrIndex][propertyValueIndex] =
+						e.target.value;
+					return copyPrev as QueryResults;
+				});
+			}}
+			onBlur={async () => {
+				await updateProperty();
+				setIsEditing(false);
+			}}
+			onFocus={(e) => {}}
+			className="relative m-0 border-transparent bg-transparent p-0 text-start"
+		/>
 	);
 };

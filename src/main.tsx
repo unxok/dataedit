@@ -1,14 +1,16 @@
 import { Notice, Plugin } from "obsidian";
-
 import React from "react";
 import { createRoot } from "react-dom/client";
-
 import { DataEditSettingsTab } from "@/settings-tab";
-import { loadData } from "@/saveload";
 // import { PropertySuggester } from "@/components/Popover";
 
 import App from "@/components/App";
-import { Settings } from "./components/PluginSettings";
+import {
+	Settings,
+	SettingsSchema,
+	defaultSettings,
+} from "./components/PluginSettings";
+import { addNewKeyValues } from "./lib/utils";
 
 /**
  * Loads the dependencies (plugins) that your plugin requires
@@ -28,8 +30,9 @@ export const loadDependencies = async () => {
 export default class DataEdit extends Plugin {
 	settings: Settings;
 
-	onExternalSettingsChange() {
+	async onExternalSettingsChange() {
 		console.log("settings were changed");
+		await this.loadSettings();
 	}
 
 	async onload(): Promise<void> {
@@ -37,12 +40,6 @@ export default class DataEdit extends Plugin {
 		this.addSettingTab(new DataEditSettingsTab(this.app, this));
 
 		this.registerCodeBlock();
-		// this doesn't work inside my react rendered table
-		// this.registerEditorSuggest(new PropertySuggester(this.app, this));
-
-		// app.workspace.onLayoutReady(async () => {
-		// 	this.registerCodeBlock();
-		// });
 
 		this.addCommand({
 			id: `insert`,
@@ -78,5 +75,16 @@ export default class DataEdit extends Plugin {
 	async updateSettings(newSettings: Settings) {
 		await this.saveData(newSettings);
 		this.settings = newSettings;
+	}
+
+	async loadSettings() {
+		const savedSettings = await this.loadData();
+		const potentialSettings = addNewKeyValues(
+			savedSettings,
+			defaultSettings,
+		);
+		const potentialParsed = SettingsSchema.safeParse(potentialSettings);
+		if (!potentialParsed.success) new Notice("Invalid settings detected");
+		this.saveData(potentialParsed.data);
 	}
 }

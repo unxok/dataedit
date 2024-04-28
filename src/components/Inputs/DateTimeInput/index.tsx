@@ -15,18 +15,18 @@ export const DateTimeInput = ({
 	propertyValueIndex,
 	propertyName,
 	file,
+	plugin,
 	setQueryResults,
 	updateMetaData,
 	isTime,
 }: CommonEditableProps & { isTime: boolean }) => {
 	const ref = useRef<HTMLInputElement>(null);
 	const [isEditing, setIsEditing] = useState(false);
-	const thisDate = new Date(propertyValue);
-	const dateString = !propertyValue
-		? ""
-		: isTime
-			? thisDate.toLocaleString()
-			: thisDate.toLocaleDateString();
+	const isoString = new Date(propertyValue).toISOString();
+	const parsedDateString = isTime
+		? isoString.substring(0, 16)
+		: isoString.substring(0, 9);
+	const [value, setValue] = useState(parsedDateString);
 
 	const updateProperty = async () => {
 		await updateMetaData(propertyName, propertyValue, file.path);
@@ -38,40 +38,53 @@ export const DateTimeInput = ({
 			{!isEditing && (
 				<span className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
 					<span
-						className="w-full"
+						className="flex w-full"
+						style={{
+							justifyContent: plugin.settings.horizontalAlignment,
+						}}
 						onClick={() => setIsEditing(true)}
 						onFocus={() => setIsEditing(true)}
 					>
-						{dateString || <>&nbsp;</>}
+						{!propertyValue
+							? plugin.settings.emptyValueDisplay
+							: isTime
+								? new Date(propertyValue).toLocaleString()
+								: new Date(propertyValue).toLocaleDateString()}
 					</span>
 				</span>
 			)}
 			{isEditing && (
 				<input
 					ref={ref}
-					className="metadata-input metadata-input-text mod-datetime m-0 border-transparent bg-transparent"
+					className={
+						"metadata-input metadata-input-text m-0 border-transparent bg-transparent " +
+						isTime
+							? "mod-datetime"
+							: "mod-date"
+					}
 					autoFocus
-					max="9999-12-31T23:59"
-					type="datetime-local"
-					value={dateString}
+					// max="9999-12-31T23:59"
+					type={isTime ? "datetime-local" : "date"}
+					value={value}
 					placeholder="Empty"
 					onChange={(e) => {
+						if (!e.target.validity.valid) return;
+						setValue(e.target.value);
 						// console.log("changed");
-						setQueryResults((prev) => {
-							const copyPrev = { ...prev };
-							const preNewValue = new Date(e.target.value);
-							const newValue = isTime
-								? preNewValue.toLocaleString()
-								: preNewValue.toLocaleString();
-							copyPrev.values[propertyValueArrIndex][
-								propertyValueIndex
-							] = newValue;
-							return copyPrev as QueryResults;
-						});
+						// setQueryResults((prev) => {
+						// 	const copyPrev = { ...prev };
+						// 	const newValue = new Date(e.target.value)
+						// 		.toISOString()
+						// 		.substring(0, 16);
+						// 	copyPrev.values[propertyValueArrIndex][
+						// 		propertyValueIndex
+						// 	] = newValue;
+						// 	return copyPrev as QueryResults;
+						// });
 					}}
-					onBlur={async () => {
-						await updateProperty();
+					onBlur={async (e) => {
 						setIsEditing(false);
+						updateMetaData(propertyName, e.target.value, file.path);
 					}}
 				></input>
 			)}

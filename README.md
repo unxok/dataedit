@@ -104,7 +104,7 @@ return { headers: ["Name", "Progress", "Category"], values: data };
     -   [x] number
     -   [x] Checkbox
     -   [x] Date & Datetime
-        -   [ ] Issue with not filling value from property. It does update though
+        -   [x] Issue with not filling value from property. It does update though
     -   [x] Ability to rename file
 -   [x] Links from query to frontmatter (to show in graph view, etc)
 -   [ ] Switch to Vite
@@ -114,17 +114,21 @@ return { headers: ["Name", "Progress", "Category"], values: data };
     -   [x] Links from query to frontmatter
         -   [x] property name-- string. Default 'dataedit-links'. Leave blank to turn off this feature
     -   [x] CSS classname-- string
-    -   [] Column aliases-- an array
-    -   [ ] Vertical alignment
-        -   [ ] Single value-- applies to all cells
+    -   [x] Column aliases-- an array
+    -   [] Vertical alignment
+        -   [x] Single value-- applies to all cells
         -   [ ] Array-- applies to specific collumns
     -   [ ] Horizontal alignment
-        -   [ ] Single value-- applies to all cells
+        -   [x] Single value-- applies to all cells
         -   [ ] Array-- applies to specific collumns
--   [ ] Specify default config for codeblocks from plugin settings
+-   ~~[ ] Specify default config for codeblocks from plugin settings~~
+    -   Codeblocks will inherit from plugin settings unless overriden specifically
 -   [ ] Allow for extra config in each codeblock
     -   [ ] Add `---` to the end of the query where you can use yaml to specify config
     -   [ ] Add an extra key `config` to the returned object to specify in js expressions
+-   [x] Allow for `TABLE WITHOUT ID` as long as `file.link` column is included
+-   [x] Reset plugin settings to default button
+-   [ ] pagination (set default limit per page in config)
 
 # Contributing
 

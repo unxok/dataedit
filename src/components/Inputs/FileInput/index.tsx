@@ -3,13 +3,14 @@ import { DataviewFile } from "../../../lib/types";
 import { useEnter } from "../../../hooks/useEnter";
 import { LinkTableData } from "../../LinkTableData";
 import { Plugin } from "obsidian";
+import DataEdit from "@/main";
 
 export const FileInput = ({
 	file,
 	plugin,
 }: {
 	file: DataviewFile;
-	plugin: Plugin;
+	plugin: DataEdit;
 }) => {
 	const ref = useRef<HTMLInputElement>(null);
 	const [isEditing, setIsEditing] = useState(false);
@@ -34,7 +35,12 @@ export const FileInput = ({
 	useEnter(ref, updateFileName);
 
 	return (
-		<div className="relative">
+		<div
+			className="relative flex h-full w-full"
+			style={{
+				justifyContent: plugin.settings.horizontalAlignment,
+			}}
+		>
 			{!isEditing && (
 				<span className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
 					<LinkTableData file={file} />

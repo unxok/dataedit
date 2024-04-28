@@ -1,14 +1,15 @@
 {
   "autoSuggest": true,
   "showTypeIcons": true,
+  "emptyValueDisplay": "-",
   "queryLinksPropertyName": "dataedit-links",
   "cssClassName": "",
   "columnAliases": [
     [
-      "thisColun",
-      "showThisAliassss"
+      "thisColumn",
+      "showThisAlias"
     ]
   ],
-  "verticalAlignment": "start",
+  "verticalAlignment": "top",
   "horizontalAlignment": "start"
 }

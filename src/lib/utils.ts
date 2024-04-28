@@ -70,3 +70,30 @@ export const tryToMarkdownLink = (val: any) => {
 	}
 	return val;
 };
+
+/**
+ * Add key value pairs to an object if it doesn't have the keys
+ * @param oldObj The original object to add keys to
+ * @param newObj The new object to take new key value pairs from
+ * @returns The old object but with key value pairs added form the new object
+ * ---
+ * ```js
+ *
+ * const oldObj = {foo: 'bar'};
+ * const newObj = {foo: 'bleh', fizz: 'buzz'}
+ *
+ * addNewKeyValues(oldObj, newObj) // {foo: 'bar', fizz: 'buzz'}
+ * ```
+ */
+export const addNewKeyValues = (
+	oldObj: Record<string, any>,
+	newObj: Record<string, any>,
+) => {
+	const result = { ...oldObj };
+	for (const key in newObj) {
+		if (!result.hasOwnProperty(key)) {
+			result[key] = newObj[key];
+		}
+	}
+	return result;
+};

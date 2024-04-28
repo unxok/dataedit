@@ -149,6 +149,11 @@ export const EditableTable = ({
 												propertyValueIndex
 											}
 											className="relative"
+											style={{
+												verticalAlign:
+													plugin.settings
+														.verticalAlignment,
+											}}
 										>
 											<EditableTableData
 												propertyValue={propertyValue}
@@ -167,7 +172,17 @@ export const EditableTable = ({
 													]
 												}
 												// TODO index determined by config
-												file={propertyValueArr[0]}
+												// file={propertyValueArr[0]}
+												file={
+													propertyValueArr[
+														queryResults.headers.findIndex(
+															(v) =>
+																v === "File" ||
+																v ===
+																	"file.link",
+														)
+													]
+												}
 												plugin={plugin}
 												setQueryResults={
 													setQueryResults
@@ -230,15 +245,24 @@ const TableHead = ({
 	queryResults: any;
 	settings: Settings;
 }) => {
-	//
+	const getAlias: (propertyName: string) => string | undefined = (
+		propertyName,
+	) => {
+		const possibleArr = settings.columnAliases.find(
+			(arr) => arr[0] === propertyName,
+		);
+		console.log("possibleArr", possibleArr);
+		if (!possibleArr) return;
+		return possibleArr[1];
+	};
 	return (
 		<thead className="w-fit">
 			<tr className="w-fit">
 				{queryResults.headers.map((h, i) => (
 					<th key={i} className="w-fit">
-						{h.toUpperCase() === "FILE" ? (
+						{h.toUpperCase() === "FILE" || h === "file.link" ? (
 							<span className="flex w-fit items-center text-nowrap">
-								{h}
+								{getAlias(h) ?? h}
 								{settings.showTypeIcons && (
 									<span
 										className="metadata-property-icon"
@@ -254,7 +278,7 @@ const TableHead = ({
 							</span>
 						) : (
 							<span className="flex w-fit items-center">
-								{h}
+								{getAlias(h) ?? h}
 								{settings.showTypeIcons && (
 									<PropertyIcon propertyName={h} />
 								)}

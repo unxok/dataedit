@@ -7,11 +7,17 @@ export const CheckboxInput = ({
 	propertyValueIndex,
 	propertyName,
 	file,
+	plugin,
 	setQueryResults,
 	updateMetaData,
 }: CommonEditableProps) => {
 	return (
-		<span className="flex items-center justify-center p-2">
+		<span
+			className="flex items-center p-2"
+			style={{
+				justifyContent: plugin.settings.horizontalAlignment,
+			}}
+		>
 			<input
 				// defaultValue={d}
 				type={"checkbox"}

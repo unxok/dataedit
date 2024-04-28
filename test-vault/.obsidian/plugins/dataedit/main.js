@@ -979,7 +979,7 @@ var require_react_development = __commonJS({
           }
           return lazyType2;
         }
-        function forwardRef2(render) {
+        function forwardRef4(render) {
           {
             if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
               error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1116,7 +1116,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useLayoutEffect(create, deps);
         }
-        function useCallback2(callback, deps) {
+        function useCallback5(callback, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useCallback(callback, deps);
         }
@@ -1876,13 +1876,13 @@ var require_react_development = __commonJS({
         exports.createElement = createElement$1;
         exports.createFactory = createFactory;
         exports.createRef = createRef;
-        exports.forwardRef = forwardRef2;
+        exports.forwardRef = forwardRef4;
         exports.isValidElement = isValidElement;
         exports.lazy = lazy;
         exports.memo = memo;
         exports.startTransition = startTransition;
         exports.unstable_act = act;
-        exports.useCallback = useCallback2;
+        exports.useCallback = useCallback5;
         exports.useContext = useContext;
         exports.useDebugValue = useDebugValue;
         exports.useDeferredValue = useDeferredValue;
@@ -2390,9 +2390,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React21 = require_react();
+        var React20 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React21.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React20.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -3997,7 +3997,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props.value == null) {
               if (typeof props.children === "object" && props.children !== null) {
-                React21.Children.forEach(props.children, function(child) {
+                React20.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -12444,7 +12444,7 @@ var require_react_dom_development = __commonJS({
           }
         }
         var fakeInternalInstance = {};
-        var emptyRefsObject = new React21.Component().refs;
+        var emptyRefsObject = new React20.Component().refs;
         var didWarnAboutStateAssignmentForComponent;
         var didWarnAboutUninitializedState;
         var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23522,107 +23522,57 @@ __export(main_exports, {
   loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian5 = require("obsidian");
-var import_react25 = __toESM(require_react());
+var import_obsidian6 = require("obsidian");
+var import_react20 = __toESM(require_react());
 var import_client2 = __toESM(require_client());
 
 // src/settings-tab.tsx
 var import_react6 = __toESM(require_react());
-var import_obsidian2 = require("obsidian");
+var import_obsidian3 = require("obsidian");
 var import_client = __toESM(require_client());
 
 // src/components/PluginSettings/index.tsx
 var import_react5 = __toESM(require_react());
 
 // src/components/Setting/index.tsx
-var import_react2 = __toESM(require_react());
-
-// src/hooks/useSuggest.tsx
-var import_obsidian = require("obsidian");
 var import_react = __toESM(require_react());
-var useSuggest = ({
-  app: app2,
-  getSuggestions,
-  onSelect
-}) => {
-  const [suggest, setSuggest] = (0, import_react.useState)();
-  const ref = (0, import_react.useRef)(null);
-  (0, import_react.useEffect)(() => {
-    if (!ref?.current)
-      return;
-    if (!suggest) {
-      setSuggest(new Suggest(app2, ref.current, getSuggestions, onSelect));
-    }
-    if (suggest) {
-      setSuggest((prev) => {
-        prev.inputEl = ref.current;
-        prev.getSuggestions = getSuggestions;
-        prev.onSelectCb = onSelect;
-        return prev;
-      });
-    }
-  }, [app2, getSuggestions, onSelect]);
-  return ref;
-};
-var Suggest = class extends import_obsidian.AbstractInputSuggest {
-  constructor(app2, inputEl, getSuggestions, onSelect) {
-    super(app2, inputEl);
-    this.app = app2;
-    this.inputEl = inputEl;
-    this.getSuggestions = getSuggestions;
-    this.onSelectCb = onSelect;
-  }
-  // protected getSuggestions(query: string): string[] | Promise<string[]> {
-  // 	return ["test1", "test2", "test3"];
-  // }
-  renderSuggestion(value, el) {
-    console.log("rendered sugg: ", value);
-    el.textContent = value;
-  }
-  selectSuggestion(value, evt) {
-    console.log("selected sugg: ", value);
-    this.onSelectCb(value, evt);
-  }
-};
-
-// src/components/Setting/index.tsx
 var SettingRoot = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item " + className }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: "setting-item " + className }, children);
 var SettingInfo = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-info " + className }, children);
-var SettingName = ({ children }) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-name" }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: "setting-item-info " + className }, children);
+var SettingName = ({ children }) => /* @__PURE__ */ import_react.default.createElement("div", { className: "setting-item-name" }, children);
 var SettingDescription = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-description " + className }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: "setting-item-description " + className }, children);
 var SettingControl = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: "setting-item-control " + className }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: "setting-item-control " + className }, children);
 var SettingToggle = ({
   app: app2,
   checked,
   onCheckedChange = () => {
   }
 }) => {
-  const [toggleClass, setToggleClass] = (0, import_react2.useState)("");
-  const [value, setValue] = (0, import_react2.useState)(checked);
-  const ref = (0, import_react2.useRef)(null);
+  const [toggleClass, setToggleClass] = (0, import_react.useState)("");
+  const [value, setValue] = (0, import_react.useState)(checked);
+  const ref = (0, import_react.useRef)(null);
   const setEnabledClass = (newValue) => {
     const newClass = newValue ? "is-enabled" : "";
     setToggleClass(newClass);
   };
-  (0, import_react2.useEffect)(() => {
+  (0, import_react.useEffect)(() => {
     setEnabledClass(value);
     onCheckedChange(value);
     if (!ref?.current)
       return;
   }, [value]);
-  return /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react.default.createElement(
     "div",
     {
       className: "checkbox-container " + toggleClass,
@@ -23632,7 +23582,7 @@ var SettingToggle = ({
         });
       }
     },
-    /* @__PURE__ */ import_react2.default.createElement(
+    /* @__PURE__ */ import_react.default.createElement(
       "input",
       {
         ref,
@@ -23644,36 +23594,9 @@ var SettingToggle = ({
     )
   );
 };
-var SettingInput = ({
-  app: app2,
-  value,
-  placeholder,
-  onChange,
-  onSelect,
-  getSuggestions
-}) => {
-  if (onSelect && !getSuggestions || !onSelect && getSuggestions) {
-    console.error(
-      "SettingsInput: Expected either both onSelect and getSuggestions or neither but only got one"
-    );
-  }
-  const ref = onSelect && getSuggestions && useSuggest({
-    app: app2,
-    getSuggestions,
-    onSelect
-  });
-  return /* @__PURE__ */ import_react2.default.createElement(
-    "input",
-    {
-      ref,
-      type: "text",
-      placeholder,
-      value,
-      onChange,
-      tabIndex: 0
-    }
-  );
-};
+
+// src/components/PluginSettings/index.tsx
+var import_obsidian2 = require("obsidian");
 
 // node_modules/zod/lib/index.mjs
 var util;
@@ -27593,7 +27516,7 @@ var z = /* @__PURE__ */ Object.freeze({
 });
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
-var import_react3 = __toESM(require_react());
+var import_react2 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/defaultAttributes.js
 var defaultAttributes = {
@@ -27613,7 +27536,7 @@ var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLo
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
 var createLucideIcon = (iconName, iconNode) => {
-  const Component = (0, import_react3.forwardRef)(
+  const Component = (0, import_react2.forwardRef)(
     ({
       color = "currentColor",
       size = 24,
@@ -27623,7 +27546,7 @@ var createLucideIcon = (iconName, iconNode) => {
       children,
       ...rest
     }, ref) => {
-      return (0, import_react3.createElement)(
+      return (0, import_react2.createElement)(
         "svg",
         {
           ref,
@@ -27636,7 +27559,7 @@ var createLucideIcon = (iconName, iconNode) => {
           ...rest
         },
         [
-          ...iconNode.map(([tag, attrs]) => (0, import_react3.createElement)(tag, attrs)),
+          ...iconNode.map(([tag, attrs]) => (0, import_react2.createElement)(tag, attrs)),
           ...Array.isArray(children) ? children : [children]
         ]
       );
@@ -27696,6 +27619,33 @@ var X = createLucideIcon("X", [
   ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
 ]);
 
+// src/hooks/useSuggest.tsx
+var import_obsidian = require("obsidian");
+var import_react3 = __toESM(require_react());
+var Suggest = class extends import_obsidian.AbstractInputSuggest {
+  constructor(app2, inputEl, getSuggestions, onSelect) {
+    super(app2, inputEl);
+    this.app = app2;
+    this.inputEl = inputEl;
+    this.getSuggestions = getSuggestions;
+    this.onSelectCb = onSelect;
+  }
+  // protected getSuggestions(query: string): string[] | Promise<string[]> {
+  // 	return ["test1", "test2", "test3"];
+  // }
+  renderSuggestion(value, el) {
+    console.log("rendered sugg: ", value);
+    if (el.parentNode.firstChild === el) {
+      el.style.color = "var(--text-faint)";
+    }
+    el.textContent = value;
+  }
+  selectSuggestion(value, evt) {
+    console.log("selected sugg: ", value);
+    this.onSelectCb(value, evt);
+  }
+};
+
 // src/components/BuyMeCoffee/index.tsx
 var import_react4 = __toESM(require_react());
 var BuyMeCoffee = () => {
@@ -27721,36 +27671,88 @@ var BuyMeCoffee = () => {
   ));
 };
 
+// src/lib/utils.ts
+var toPlainArray = (arr) => {
+  try {
+    console.log("preArray: ", arr);
+    const postArr = arr.array();
+    console.log("postArr: ", postArr);
+    return postArr;
+  } catch (e) {
+    return arr;
+  }
+};
+var getPropertyType = (propertyName) => {
+  const { metadataTypeManager } = app;
+  return metadataTypeManager.properties[propertyName]?.type;
+};
+var iconStyle = {
+  width: "var(--icon-size)",
+  height: "var(--icon-size)"
+};
+var checkIsLink = (val) => {
+  if (!val)
+    return false;
+  if (val.hasOwnProperty("type")) {
+    return val.type === "file";
+  }
+  return false;
+};
+var tryToMarkdownLink = (val) => {
+  if (checkIsLink(val)) {
+    return val.markdown();
+  }
+  return val;
+};
+var addNewKeyValues = (oldObj, newObj) => {
+  const result2 = { ...oldObj };
+  for (const key in newObj) {
+    if (!result2.hasOwnProperty(key)) {
+      result2[key] = newObj[key];
+    }
+  }
+  return result2;
+};
+
 // src/components/PluginSettings/index.tsx
 var StartCenterEnd = z.union([
   z.literal("start"),
   z.literal("center"),
   z.literal("end")
 ]);
-var FormSchema = z.object({
+var TopMiddleBottom = z.union([
+  z.literal("top"),
+  z.literal("middle"),
+  z.literal("bottom")
+]);
+var SettingsSchema = z.object({
   autoSuggest: z.boolean(),
   showTypeIcons: z.boolean(),
+  emptyValueDisplay: z.string(),
   queryLinksPropertyName: z.string(),
   cssClassName: z.string(),
   columnAliases: z.array(z.array(z.string(), z.string())),
-  verticalAlignment: StartCenterEnd,
+  verticalAlignment: TopMiddleBottom,
   horizontalAlignment: StartCenterEnd
 });
-var defaultFormData = {
+var defaultSettings = {
   autoSuggest: true,
   showTypeIcons: true,
+  emptyValueDisplay: "-",
   queryLinksPropertyName: "dataedit-links",
   cssClassName: "",
   columnAliases: [["thisColumn", "showThisAlias"]],
-  verticalAlignment: "start",
+  verticalAlignment: "top",
   horizontalAlignment: "start"
 };
 var PluginSettings = ({
   plugin: plugin2,
   savedSettings
 }) => {
-  const defaultForm = FormSchema.safeParse(savedSettings).success ? savedSettings : defaultFormData;
-  const [form, setForm] = (0, import_react5.useState)(defaultForm);
+  const [errors, setErrors] = (0, import_react5.useState)();
+  const potentialSettings = addNewKeyValues(savedSettings, defaultSettings);
+  const potentialParsed = SettingsSchema.safeParse(potentialSettings);
+  const [form, setForm] = (0, import_react5.useState)(potentialParsed.data);
   const updateForm = (key, value) => {
     console.log("updateForm: ", key, " ", value);
     setForm((prev) => ({
@@ -27760,33 +27762,42 @@ var PluginSettings = ({
   };
   (0, import_react5.useEffect)(() => {
     plugin2.onExternalSettingsChange = async () => {
-      const potentialSettings = await plugin2.loadData();
-      const parsed = FormSchema.safeParse(potentialSettings);
+      const potentialSettings2 = await plugin2.loadData();
+      const copyForm = addNewKeyValues(
+        potentialSettings2,
+        defaultSettings
+      );
+      const parsed = SettingsSchema.safeParse(copyForm);
       if (parsed.success) {
         setForm(parsed.data);
       }
-      parsed.error.issues.forEach(
-        ({ code, message, path, fatal }) => console.error(`
+      if (!parsed.success) {
+        setErrors(
+          () => parsed.error.issues.map(({ path, message }) => [
+            Array.isArray(path) ? path.join(", ") : path,
+            message
+          ])
+        );
+        parsed.error.issues.forEach(
+          ({ code, message, path, fatal }) => console.error(`
                 Zod validation error on Plugin Settings form
 
                 code: ${code}
-
                 message: ${message}
-
                 path: ${path}
-
                 fatal: ${fatal}
-
                 `)
-      );
+        );
+      }
     };
   }, []);
   (0, import_react5.useEffect)(() => {
     console.log("setForm called: ", form);
-    const parsed = FormSchema.safeParse(form);
+    const copyForm = addNewKeyValues(form, defaultSettings);
+    const parsed = SettingsSchema.safeParse(copyForm);
     if (parsed.success) {
       console.log("parse successful");
-      (async () => await plugin2.updateSettings(form))();
+      (async () => await plugin2.updateSettings(copyForm))();
     }
     if (!parsed.success) {
       parsed.error.issues.forEach(
@@ -27805,7 +27816,27 @@ var PluginSettings = ({
       );
     }
   }, [form]);
-  return /* @__PURE__ */ import_react5.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react5.default.createElement("h2", null, "Dataedit Settings"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "pb-3" }, /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, "Plugin repository:", " ", /* @__PURE__ */ import_react5.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "https://github.com/unxok/dataedit")), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, "Dataview docs:", " ", /* @__PURE__ */ import_react5.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "https://blacksmithgu.github.io/obsidian-dataview/")), /* @__PURE__ */ import_react5.default.createElement("br", null), /* @__PURE__ */ import_react5.default.createElement(BuyMeCoffee, null)), /* @__PURE__ */ import_react5.default.createElement(
+  return /* @__PURE__ */ import_react5.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react5.default.createElement("h2", null, "Dataedit Settings"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "pb-3" }, /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, "Plugin repository:", " ", /* @__PURE__ */ import_react5.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "https://github.com/unxok/dataedit")), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, "Dataview docs:", " ", /* @__PURE__ */ import_react5.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "https://blacksmithgu.github.io/obsidian-dataview/")), /* @__PURE__ */ import_react5.default.createElement("br", null), /* @__PURE__ */ import_react5.default.createElement("div", { className: "flex gap-2" }, /* @__PURE__ */ import_react5.default.createElement(BuyMeCoffee, null), /* @__PURE__ */ import_react5.default.createElement(
+    "button",
+    {
+      className: "text-modifier-error hover:bg-modifier-error-hover hover:text-normal",
+      onClick: (e) => {
+        new ConfirmationDialog(
+          plugin2.app,
+          "Reset settings",
+          "Are you absolutely sure? You cannot reverse this!",
+          "back to safety",
+          "go for it",
+          (b) => {
+            if (!b)
+              return;
+            setForm(defaultSettings);
+          }
+        ).open();
+      }
+    },
+    "Reset to default settings"
+  ))), !potentialParsed.success && /* @__PURE__ */ import_react5.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react5.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react5.default.createElement(SettingName, null, "Invalid Settings!"), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, errors?.map(([property, message]) => /* @__PURE__ */ import_react5.default.createElement("div", { key: property }, "Invalid setting ", /* @__PURE__ */ import_react5.default.createElement("code", null, property), ":", " ", message))), "The only way you should be able have invalid settings would be if you:", /* @__PURE__ */ import_react5.default.createElement("ul", null, /* @__PURE__ */ import_react5.default.createElement("li", null, "You manually changed the", " ", /* @__PURE__ */ import_react5.default.createElement("code", null, "data.json"), " file of this plugin"), /* @__PURE__ */ import_react5.default.createElement("li", null, "Another plugin changed this plugins settings incorrectly"), /* @__PURE__ */ import_react5.default.createElement("li", null, "There's a bug in this plugin causing an invalid setting value"))))), potentialParsed.success && /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(
     AutoSuggest,
     {
       app: plugin2.app,
@@ -27820,6 +27851,12 @@ var PluginSettings = ({
       onChange: (b) => updateForm("showTypeIcons", b)
     }
   ), /* @__PURE__ */ import_react5.default.createElement(
+    EmptyValueDisplay,
+    {
+      value: form.emptyValueDisplay,
+      onChange: (e) => updateForm("emptyValueDisplay", e.target.value)
+    }
+  ), /* @__PURE__ */ import_react5.default.createElement(
     QueryLinksPropertyName,
     {
       app: plugin2.app,
@@ -27832,7 +27869,10 @@ var PluginSettings = ({
       app: plugin2.app,
       value: form.cssClassName,
       onChange: (e) => updateForm("cssClassName", e.target.value),
-      onSelect: (v) => updateForm("cssClassName", form.cssClassName + " " + v)
+      onSelect: (v) => updateForm(
+        "cssClassName",
+        form.cssClassName + " " + v
+      )
     }
   ), /* @__PURE__ */ import_react5.default.createElement(
     VerticalAlignment,
@@ -27841,7 +27881,7 @@ var PluginSettings = ({
       value: form.verticalAlignment,
       onChange: (e) => updateForm("verticalAlignment", e.target.value)
     }
-  ), /* @__PURE__ */ import_react5.default.createElement(
+  ), /* @__PURE__ */ import_react5.default.createElement(VerticalAlignmentByType, null), /* @__PURE__ */ import_react5.default.createElement(
     HorizontalAlignment,
     {
       app: plugin2.app,
@@ -27855,7 +27895,40 @@ var PluginSettings = ({
       value: form.columnAliases,
       updateForm
     }
-  ));
+  )));
+};
+var ConfirmationDialog = class extends import_obsidian2.Modal {
+  constructor(app2, title, message, cancelText, confirmText, onClose) {
+    super(app2);
+    this.setTitle(title);
+    this.isConfirmed = false;
+    const contentEl = new DocumentFragment();
+    const messageEl = document.createElement("div");
+    contentEl.appendChild(messageEl);
+    messageEl.textContent = message;
+    const buttonContainerEl = document.createElement("div");
+    buttonContainerEl.style.display = "flex";
+    buttonContainerEl.style.justifyContent = "end";
+    buttonContainerEl.style.width = "100%";
+    buttonContainerEl.style.gap = "8px";
+    contentEl.appendChild(buttonContainerEl);
+    const cancelEl = document.createElement("button");
+    cancelEl.textContent = cancelText;
+    cancelEl.onclick = () => {
+      this.close();
+    };
+    buttonContainerEl.appendChild(cancelEl);
+    const confirmEl = document.createElement("button");
+    confirmEl.textContent = confirmText;
+    confirmEl.style.color = "var(--text-error)";
+    confirmEl.onclick = () => {
+      this.isConfirmed = true;
+      this.close();
+    };
+    buttonContainerEl.appendChild(confirmEl);
+    this.setContent(contentEl);
+    this.onClose = () => onClose(this.isConfirmed);
+  }
 };
 var AutoSuggest = ({
   app: app2,
@@ -27888,14 +27961,21 @@ var ShowTypeIcons = ({
     onCheckedChange: onChange
   }
 )));
+var EmptyValueDisplay = ({
+  value,
+  onChange
+}) => {
+  return /* @__PURE__ */ import_react5.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react5.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react5.default.createElement(SettingName, null, "Empty value display"), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, "What to show when a property is unset, undefined, or null")), /* @__PURE__ */ import_react5.default.createElement(SettingControl, null, /* @__PURE__ */ import_react5.default.createElement("input", { type: "text", value, onChange })));
+};
 var QueryLinksPropertyName = ({
   app: app2,
   value,
   onChange
-}) => /* @__PURE__ */ import_react5.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react5.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react5.default.createElement(SettingName, null, "Query links property name"), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react5.default.createElement("div", null, "The frontmatter property name for the property where Dataedit tables will update with links from files returned in the query"), /* @__PURE__ */ import_react5.default.createElement("br", null), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("b", null, "Don't want this? "), /* @__PURE__ */ import_react5.default.createElement("span", null, "Leave as blank")))), /* @__PURE__ */ import_react5.default.createElement(SettingControl, null, /* @__PURE__ */ import_react5.default.createElement(
-  SettingInput,
+}) => /* @__PURE__ */ import_react5.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react5.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react5.default.createElement(SettingName, null, "Query links property name"), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react5.default.createElement("div", null, "The frontmatter property name for the property Dataedit tables will update with links from files returned in the query"), /* @__PURE__ */ import_react5.default.createElement("br", null), /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("b", null, "Don't want this? "), /* @__PURE__ */ import_react5.default.createElement("span", null, "Leave as blank")))), /* @__PURE__ */ import_react5.default.createElement(SettingControl, null, /* @__PURE__ */ import_react5.default.createElement(
+  "input",
   {
-    app: app2,
+    type: "text",
+    tabIndex: 0,
     placeholder: "unset",
     value,
     onChange
@@ -27907,20 +27987,31 @@ var CssClassName = ({
   onChange,
   onSelect
 }) => {
+  const measuredRef = (0, import_react5.useCallback)((node) => {
+    if (node === null)
+      return;
+    new Suggest(
+      app2,
+      node,
+      (q) => [
+        q,
+        // @ts-ignore
+        ...app2.metadataCache.getFrontmatterPropertyValuesForKey(
+          "cssclasses"
+        )
+      ],
+      onSelect
+    );
+  }, []);
   return /* @__PURE__ */ import_react5.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react5.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react5.default.createElement(SettingName, null, "CSS class name"), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, "Add additional CSS class names to the Dataedit HTML table element")), /* @__PURE__ */ import_react5.default.createElement(SettingControl, null, /* @__PURE__ */ import_react5.default.createElement(
-    SettingInput,
+    "input",
     {
-      app: app2,
+      type: "text",
+      tabIndex: 0,
       placeholder: "classA classB",
       value,
       onChange,
-      getSuggestions: () => (
-        // @ts-ignore
-        app2.metadataCache.getFrontmatterPropertyValuesForKey(
-          "cssclasses"
-        )
-      ),
-      onSelect
+      ref: measuredRef
     }
   )));
 };
@@ -28001,22 +28092,31 @@ var PropertyNameInput = ({
     copyAliasArr[index][0] = newPropName;
     updateForm("columnAliases", copyAliasArr);
   };
+  const measuredRef = (0, import_react5.useCallback)((node) => {
+    if (node === null)
+      return;
+    new Suggest(
+      app2,
+      node,
+      (q) => {
+        const existingProps = Object.keys(
+          // @ts-ignore
+          app2.metadataCache.getAllPropertyInfos()
+        ).sort((a, b) => a.localeCompare(b));
+        return [q, ...existingProps];
+      },
+      (v) => updateFormValue(v)
+    );
+  }, []);
   return /* @__PURE__ */ import_react5.default.createElement(
-    SettingInput,
+    "input",
     {
-      app: app2,
+      type: "text",
+      tabIndex: 0,
+      ref: measuredRef,
       placeholder: "property name",
       value: property,
-      onChange: (e) => {
-        updateFormValue(e.target.value);
-      },
-      getSuggestions: () => (
-        // @ts-ignore
-        Object.keys(app2.metadataCache.getAllPropertyInfos()).sort(
-          (a, b) => a.localeCompare(b)
-        )
-      ),
-      onSelect: (v, e) => updateFormValue(v)
+      onChange: (e) => updateFormValue(e.target.value)
     }
   );
 };
@@ -28034,9 +28134,10 @@ var PropertyValueInput = ({
     updateForm("columnAliases", copyAliasArr);
   };
   return /* @__PURE__ */ import_react5.default.createElement(
-    SettingInput,
+    "input",
     {
-      app: app2,
+      tabIndex: 0,
+      type: "text",
       placeholder: "alias to show",
       value,
       onChange: (e) => {
@@ -28057,9 +28158,24 @@ var VerticalAlignment = ({
       value,
       onChange
     },
-    /* @__PURE__ */ import_react5.default.createElement("option", { value: "start" }, "top"),
-    /* @__PURE__ */ import_react5.default.createElement("option", { value: "center" }, "center"),
-    /* @__PURE__ */ import_react5.default.createElement("option", { value: "end" }, "bottom")
+    /* @__PURE__ */ import_react5.default.createElement("option", { value: "top" }, "top"),
+    /* @__PURE__ */ import_react5.default.createElement("option", { value: "middle" }, "middle"),
+    /* @__PURE__ */ import_react5.default.createElement("option", { value: "bottom" }, "bottom")
+  )));
+};
+var VerticalAlignmentByType = ({
+  // app,
+  // value,
+  // onChange,
+}) => {
+  return /* @__PURE__ */ import_react5.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react5.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react5.default.createElement(SettingName, null, "Vertical alignment by type"), /* @__PURE__ */ import_react5.default.createElement(SettingDescription, null, "Change vertical alignment of table cells based on the property type")), /* @__PURE__ */ import_react5.default.createElement(SettingControl, null, /* @__PURE__ */ import_react5.default.createElement(
+    "input",
+    {
+      type: "text",
+      value: "",
+      placeholder: "coming soon...",
+      disabled: true
+    }
   )));
 };
 var HorizontalAlignment = ({
@@ -28081,7 +28197,7 @@ var HorizontalAlignment = ({
 };
 
 // src/settings-tab.tsx
-var DataEditSettingsTab = class extends import_obsidian2.PluginSettingTab {
+var DataEditSettingsTab = class extends import_obsidian3.PluginSettingTab {
   constructor(app2, plugin2) {
     super(app2, plugin2);
     this.plugin = plugin2;
@@ -28132,8 +28248,8 @@ var DataEditSettingsTab = class extends import_obsidian2.PluginSettingTab {
 };
 
 // src/components/App.tsx
-var import_obsidian4 = require("obsidian");
-var import_react24 = __toESM(require_react());
+var import_obsidian5 = require("obsidian");
+var import_react19 = __toESM(require_react());
 
 // src/components/Error/index.tsx
 var import_react7 = __toESM(require_react());
@@ -28142,45 +28258,11 @@ var Error2 = ({ children }) => {
 };
 
 // src/components/EditableTable/index.tsx
-var import_react23 = __toESM(require_react());
-
-// src/lib/utils.ts
-var toPlainArray = (arr) => {
-  try {
-    console.log("preArray: ", arr);
-    const postArr = arr.array();
-    console.log("postArr: ", postArr);
-    return postArr;
-  } catch (e) {
-    return arr;
-  }
-};
-var getPropertyType = (propertyName) => {
-  const { metadataTypeManager } = app;
-  return metadataTypeManager.properties[propertyName]?.type;
-};
-var iconStyle = {
-  width: "var(--icon-size)",
-  height: "var(--icon-size)"
-};
-var checkIsLink = (val) => {
-  if (!val)
-    return false;
-  if (val.hasOwnProperty("type")) {
-    return val.type === "file";
-  }
-  return false;
-};
-var tryToMarkdownLink = (val) => {
-  if (checkIsLink(val)) {
-    return val.markdown();
-  }
-  return val;
-};
+var import_react18 = __toESM(require_react());
 
 // src/components/PropertyIcon/index.tsx
 var import_react8 = __toESM(require_react());
-var import_obsidian3 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 var PropertyIcon = ({ propertyName }) => {
   const ref = (0, import_react8.useRef)(null);
   const propertyType = getPropertyType(propertyName);
@@ -28192,7 +28274,7 @@ var PropertyIcon = ({ propertyName }) => {
     if (!ref.current || !propertyIcon)
       return;
     try {
-      (0, import_obsidian3.setIcon)(ref.current, propertyIcon);
+      (0, import_obsidian4.setIcon)(ref.current, propertyIcon);
     } catch (e) {
     }
   }, [propertyIcon]);
@@ -28208,28 +28290,10 @@ var PropertyIcon = ({ propertyName }) => {
 };
 
 // src/components/Inputs/ArrayInput/index.tsx
-var import_react17 = __toESM(require_react());
-
-// src/hooks/useEnter.tsx
-var import_react9 = __toESM(require_react());
-var useEnter = (ref, callback) => {
-  const eventCallback = (e) => {
-    if (e.key !== "Enter")
-      return;
-    callback();
-  };
-  (0, import_react9.useEffect)(() => {
-    if (!ref?.current)
-      return;
-    ref.current.addEventListener("keydown", eventCallback);
-    return () => {
-      ref?.current && ref.current.removeEventListener("keydown", eventCallback);
-    };
-  }, [ref, callback]);
-};
+var import_react11 = __toESM(require_react());
 
 // src/hooks/useKeyboardClick.tsx
-var import_react10 = __toESM(require_react());
+var import_react9 = __toESM(require_react());
 var useKeyboardClick = (ref) => {
   const keyboardFocusClick = (e) => {
     if (!(e.key === "Enter" || e.key === " "))
@@ -28237,7 +28301,7 @@ var useKeyboardClick = (ref) => {
     e.preventDefault();
     ref?.current?.click();
   };
-  (0, import_react10.useEffect)(() => {
+  (0, import_react9.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.addEventListener("keydown", keyboardFocusClick);
@@ -28246,207 +28310,8 @@ var useKeyboardClick = (ref) => {
   }, [ref]);
 };
 
-// src/components/PropertySuggester/index.tsx
-var import_react15 = __toESM(require_react());
-
-// node_modules/@babel/runtime/helpers/esm/extends.js
-function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends.apply(this, arguments);
-}
-
-// node_modules/@radix-ui/react-portal/dist/index.mjs
-var import_react14 = __toESM(require_react(), 1);
-var import_react_dom2 = __toESM(require_react_dom(), 1);
-
-// node_modules/@radix-ui/react-primitive/dist/index.mjs
-var import_react13 = __toESM(require_react(), 1);
-var import_react_dom = __toESM(require_react_dom(), 1);
-
-// node_modules/@radix-ui/react-slot/dist/index.mjs
-var import_react12 = __toESM(require_react(), 1);
-
-// node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-var import_react11 = __toESM(require_react(), 1);
-function $6ed0406888f73fc4$var$setRef(ref, value) {
-  if (typeof ref === "function")
-    ref(value);
-  else if (ref !== null && ref !== void 0)
-    ref.current = value;
-}
-function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
-  return (node) => refs.forEach(
-    (ref) => $6ed0406888f73fc4$var$setRef(ref, node)
-  );
-}
-
-// node_modules/@radix-ui/react-slot/dist/index.mjs
-var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react12.forwardRef)((props, forwardedRef) => {
-  const { children, ...slotProps } = props;
-  const childrenArray = import_react12.Children.toArray(children);
-  const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
-  if (slottable) {
-    const newElement = slottable.props.children;
-    const newChildren = childrenArray.map((child) => {
-      if (child === slottable) {
-        if (import_react12.Children.count(newElement) > 1)
-          return import_react12.Children.only(null);
-        return /* @__PURE__ */ (0, import_react12.isValidElement)(newElement) ? newElement.props.children : null;
-      } else
-        return child;
-    });
-    return /* @__PURE__ */ (0, import_react12.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
-      ref: forwardedRef
-    }), /* @__PURE__ */ (0, import_react12.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react12.cloneElement)(newElement, void 0, newChildren) : null);
-  }
-  return /* @__PURE__ */ (0, import_react12.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
-    ref: forwardedRef
-  }), children);
-});
-$5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
-var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react12.forwardRef)((props, forwardedRef) => {
-  const { children, ...slotProps } = props;
-  if (/* @__PURE__ */ (0, import_react12.isValidElement)(children))
-    return /* @__PURE__ */ (0, import_react12.cloneElement)(children, {
-      ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
-      ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
-    });
-  return import_react12.Children.count(children) > 1 ? import_react12.Children.only(null) : null;
-});
-$5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
-var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
-  return /* @__PURE__ */ (0, import_react12.createElement)(import_react12.Fragment, null, children);
-};
-function $5e63c961fc1ce211$var$isSlottable(child) {
-  return /* @__PURE__ */ (0, import_react12.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
-}
-function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
-  const overrideProps = {
-    ...childProps
-  };
-  for (const propName in childProps) {
-    const slotPropValue = slotProps[propName];
-    const childPropValue = childProps[propName];
-    const isHandler = /^on[A-Z]/.test(propName);
-    if (isHandler) {
-      if (slotPropValue && childPropValue)
-        overrideProps[propName] = (...args) => {
-          childPropValue(...args);
-          slotPropValue(...args);
-        };
-      else if (slotPropValue)
-        overrideProps[propName] = slotPropValue;
-    } else if (propName === "style")
-      overrideProps[propName] = {
-        ...slotPropValue,
-        ...childPropValue
-      };
-    else if (propName === "className")
-      overrideProps[propName] = [
-        slotPropValue,
-        childPropValue
-      ].filter(Boolean).join(" ");
-  }
-  return {
-    ...slotProps,
-    ...overrideProps
-  };
-}
-
-// node_modules/@radix-ui/react-primitive/dist/index.mjs
-var $8927f6f2acc4f386$var$NODES = [
-  "a",
-  "button",
-  "div",
-  "form",
-  "h2",
-  "h3",
-  "img",
-  "input",
-  "label",
-  "li",
-  "nav",
-  "ol",
-  "p",
-  "span",
-  "svg",
-  "ul"
-];
-var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
-  const Node = /* @__PURE__ */ (0, import_react13.forwardRef)((props, forwardedRef) => {
-    const { asChild, ...primitiveProps } = props;
-    const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
-    (0, import_react13.useEffect)(() => {
-      window[Symbol.for("radix-ui")] = true;
-    }, []);
-    return /* @__PURE__ */ (0, import_react13.createElement)(Comp, _extends({}, primitiveProps, {
-      ref: forwardedRef
-    }));
-  });
-  Node.displayName = `Primitive.${node}`;
-  return {
-    ...primitive,
-    [node]: Node
-  };
-}, {});
-
-// node_modules/@radix-ui/react-portal/dist/index.mjs
-var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react14.forwardRef)((props, forwardedRef) => {
-  var _globalThis$document;
-  const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props;
-  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react14.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
-    ref: forwardedRef
-  })), container) : null;
-});
-var $f1701beae083dbae$export$be92b6f5f03c0fe9 = $f1701beae083dbae$export$602eac185826482c;
-
-// src/components/PropertySuggester/index.tsx
-var PropertySuggester = ({
-  propertyName,
-  position,
-  onMouseEnter,
-  onMouseLeave,
-  initial
-}) => {
-  const suggestions = (
-    // @ts-ignore
-    app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
-  );
-  return /* @__PURE__ */ import_react15.default.createElement($f1701beae083dbae$export$be92b6f5f03c0fe9, { id: "twcss" }, /* @__PURE__ */ import_react15.default.createElement(
-    "div",
-    {
-      className: "absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid border-secondary-alt bg-primary-alt p-1 text-normal",
-      style: {
-        top: position?.top ? position.top + 60 : 0,
-        left: position?.left ? position.left : 0,
-        opacity: position ? 1 : 0
-      }
-    },
-    suggestions?.map((s, i) => /* @__PURE__ */ import_react15.default.createElement(
-      "div",
-      {
-        key: i + s + "suggestion",
-        className: "rounded-md p-2 hover:bg-secondary-alt",
-        onMouseEnter: async (e) => onMouseEnter(e),
-        onMouseLeave: async (e) => onMouseLeave(e)
-      },
-      s
-    )) ?? "No suggestions"
-  ));
-};
-
 // src/components/LinkTableData/index.tsx
-var import_react16 = __toESM(require_react());
+var import_react10 = __toESM(require_react());
 var LinkTableData = ({ file }) => {
   if (typeof file === "string")
     return;
@@ -28456,7 +28321,7 @@ var LinkTableData = ({ file }) => {
   } catch (e) {
     console.error("failed to get file name: ", e);
   }
-  return /* @__PURE__ */ import_react16.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react16.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement("span", { className: "flex h-full items-center p-1" }, /* @__PURE__ */ import_react10.default.createElement(
     "a",
     {
       href: file.path,
@@ -28484,9 +28349,9 @@ var ArrayInputWrapper = (props) => {
     setQueryResults: setQueryResults2,
     updateMetaData: updateMetaData2
   } = props;
-  const plusRef = (0, import_react17.useRef)(null);
+  const plusRef = (0, import_react11.useRef)(null);
   useKeyboardClick(plusRef);
-  return /* @__PURE__ */ import_react17.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react17.default.createElement(
+  return /* @__PURE__ */ import_react11.default.createElement("ul", { className: "m-0 p-0" }, propertyValue?.map((val, n) => /* @__PURE__ */ import_react11.default.createElement(
     ArrayInput,
     {
       key: propertyValueArrIndex + propertyValueIndex + n.toString(),
@@ -28494,7 +28359,7 @@ var ArrayInputWrapper = (props) => {
       itemIndex: n,
       ...props
     }
-  )), /* @__PURE__ */ import_react17.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react17.default.createElement(
+  )), /* @__PURE__ */ import_react11.default.createElement("li", { className: "flex" }, /* @__PURE__ */ import_react11.default.createElement(
     "span",
     {
       ref: plusRef,
@@ -28513,8 +28378,8 @@ var ArrayInputWrapper = (props) => {
         await updateMetaData2(propertyName, copyList, file.path);
       }
     },
-    /* @__PURE__ */ import_react17.default.createElement(Plus, { style: iconStyle })
-  ), /* @__PURE__ */ import_react17.default.createElement(
+    /* @__PURE__ */ import_react11.default.createElement(Plus, { style: iconStyle })
+  ), /* @__PURE__ */ import_react11.default.createElement(
     "input",
     {
       disabled: true,
@@ -28536,23 +28401,37 @@ var ArrayInput = ({
   itemIndex,
   plugin: plugin2
 }) => {
-  const [rect, setRect] = (0, import_react17.useState)();
-  const [isEditing, setIsEditing] = (0, import_react17.useState)(false);
-  const [value, setValue] = (0, import_react17.useState)("");
-  const ref = (0, import_react17.useRef)(null);
-  const xRef = (0, import_react17.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react11.useState)(false);
+  const xRef = (0, import_react11.useRef)(null);
   const isLink = checkIsLink(itemValue);
-  useKeyboardClick(xRef);
-  const updateProperty = async () => {
-    const preNewItemValue = value || itemValue;
+  const updateProperty = async (newItemValue) => {
     const preNewValue = [...propertyValue];
-    preNewValue[itemIndex] = preNewItemValue;
+    preNewValue[itemIndex] = newItemValue ?? itemValue;
     const newValue = preNewValue.map((v) => tryToMarkdownLink(v));
     console.log("newValue: ", newValue);
     await updateMetaData2(propertyName, newValue, file.path);
   };
-  useEnter(ref, updateProperty);
-  return /* @__PURE__ */ import_react17.default.createElement("li", { className: "flex items-center" }, /* @__PURE__ */ import_react17.default.createElement(
+  const measuredRef = (0, import_react11.useCallback)((node) => {
+    if (node === null)
+      return;
+    new Suggest(
+      plugin2.app,
+      node,
+      (q) => {
+        const sugg = (
+          // @ts-ignore
+          plugin2.app.metadataCache?.getFrontmatterPropertyValuesForKey(
+            propertyName
+          )
+        );
+        console.log("sug: ", sugg);
+        return [q, ...sugg];
+      },
+      (v) => updateProperty(v)
+    );
+  }, []);
+  useKeyboardClick(xRef);
+  return /* @__PURE__ */ import_react11.default.createElement("li", { className: "flex items-center" }, /* @__PURE__ */ import_react11.default.createElement(
     "span",
     {
       className: "multi-select-pill-remove-button focus:border-[1px] focus:border-solid focus:border-secondary-alt",
@@ -28572,19 +28451,8 @@ var ArrayInput = ({
         await updateMetaData2(propertyName, copyList, file.path);
       }
     },
-    /* @__PURE__ */ import_react17.default.createElement(X, { style: iconStyle })
-  ), rect && /* @__PURE__ */ import_react17.default.createElement(
-    PropertySuggester,
-    {
-      propertyName,
-      position: rect,
-      onMouseEnter: (e) => {
-        const newValue = e?.currentTarget?.textContent;
-        setValue(newValue);
-      },
-      onMouseLeave: (e) => setValue("")
-    }
-  ), !isEditing && /* @__PURE__ */ import_react17.default.createElement("span", { className: "flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement(LinkTableData, { file: itemValue }), /* @__PURE__ */ import_react17.default.createElement(
+    /* @__PURE__ */ import_react11.default.createElement(X, { style: iconStyle })
+  ), !isEditing && /* @__PURE__ */ import_react11.default.createElement("span", { className: "flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react11.default.createElement(import_react11.default.Fragment, null, /* @__PURE__ */ import_react11.default.createElement(LinkTableData, { file: itemValue }), /* @__PURE__ */ import_react11.default.createElement(
     "span",
     {
       className: "w-full",
@@ -28592,7 +28460,7 @@ var ArrayInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )) : propertyName.toLowerCase() === "tags" ? /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement(
+  )) : propertyName.toLowerCase() === "tags" ? /* @__PURE__ */ import_react11.default.createElement(import_react11.default.Fragment, null, /* @__PURE__ */ import_react11.default.createElement(
     "a",
     {
       href: "#" + itemValue,
@@ -28604,7 +28472,7 @@ var ArrayInput = ({
     },
     "#",
     itemValue
-  ), /* @__PURE__ */ import_react17.default.createElement(
+  ), /* @__PURE__ */ import_react11.default.createElement(
     "span",
     {
       className: "h-full w-full",
@@ -28613,7 +28481,7 @@ var ArrayInput = ({
       onFocus: () => setIsEditing(true)
     },
     "\xA0"
-  )) : /* @__PURE__ */ import_react17.default.createElement(
+  )) : /* @__PURE__ */ import_react11.default.createElement(
     "span",
     {
       className: "w-full",
@@ -28621,11 +28489,11 @@ var ArrayInput = ({
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    itemValue || /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, "\xA0")
-  )), isEditing && /* @__PURE__ */ import_react17.default.createElement(
+    itemValue || plugin2.settings.emptyValueDisplay
+  )), isEditing && /* @__PURE__ */ import_react11.default.createElement(
     "input",
     {
-      ref,
+      ref: measuredRef,
       autoFocus: true,
       type: "text",
       value: itemValue,
@@ -28645,15 +28513,7 @@ var ArrayInput = ({
       },
       onBlur: async () => {
         await updateProperty();
-        setRect(void 0);
         setIsEditing(false);
-      },
-      onFocus: (e) => {
-        const rect2 = e.target.getBoundingClientRect();
-        setRect({
-          top: rect2.top,
-          left: rect2.left
-        });
       },
       className: "m-0 border-transparent bg-transparent p-0 text-start"
     }
@@ -28661,120 +28521,154 @@ var ArrayInput = ({
 };
 
 // src/components/Inputs/CheckboxInput/index.tsx
-var import_react18 = __toESM(require_react());
+var import_react12 = __toESM(require_react());
 var CheckboxInput = ({
   propertyValue,
   propertyValueArrIndex,
   propertyValueIndex,
   propertyName,
   file,
+  plugin: plugin2,
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  return /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex items-center justify-center p-2" }, /* @__PURE__ */ import_react18.default.createElement(
-    "input",
+  return /* @__PURE__ */ import_react12.default.createElement(
+    "span",
     {
-      type: "checkbox",
-      "data-indeterminate": "false",
-      checked: !!propertyValue,
-      onChange: async (e) => {
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = e.target.checked;
-          return copyPrev;
-        });
-        await updateMetaData2(
-          propertyName,
-          e.target.checked,
-          file.path
-        );
-      },
-      className: "metadata-input-checkbox"
-    }
-  ));
+      className: "flex items-center p-2",
+      style: {
+        justifyContent: plugin2.settings.horizontalAlignment
+      }
+    },
+    /* @__PURE__ */ import_react12.default.createElement(
+      "input",
+      {
+        type: "checkbox",
+        "data-indeterminate": "false",
+        checked: !!propertyValue,
+        onChange: async (e) => {
+          setQueryResults2((prev) => {
+            const copyPrev = { ...prev };
+            copyPrev.values[propertyValueArrIndex][propertyValueIndex] = e.target.checked;
+            return copyPrev;
+          });
+          await updateMetaData2(
+            propertyName,
+            e.target.checked,
+            file.path
+          );
+        },
+        className: "metadata-input-checkbox"
+      }
+    )
+  );
 };
 
 // src/components/Inputs/DateTimeInput/index.tsx
-var import_react19 = __toESM(require_react());
+var import_react14 = __toESM(require_react());
+
+// src/hooks/useEnter.tsx
+var import_react13 = __toESM(require_react());
+var useEnter = (ref, callback) => {
+  const eventCallback = (e) => {
+    if (e.key !== "Enter")
+      return;
+    callback();
+  };
+  (0, import_react13.useEffect)(() => {
+    if (!ref?.current)
+      return;
+    ref.current.addEventListener("keydown", eventCallback);
+    return () => {
+      ref?.current && ref.current.removeEventListener("keydown", eventCallback);
+    };
+  }, [ref, callback]);
+};
+
+// src/components/Inputs/DateTimeInput/index.tsx
 var DateTimeInput = ({
   propertyValue,
   propertyValueArrIndex,
   propertyValueIndex,
   propertyName,
   file,
+  plugin: plugin2,
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2,
   isTime
 }) => {
-  const ref = (0, import_react19.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react19.useState)(false);
-  const thisDate = new Date(propertyValue);
-  const dateString = !propertyValue ? "" : isTime ? thisDate.toLocaleString() : thisDate.toLocaleDateString();
+  const ref = (0, import_react14.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react14.useState)(false);
+  const isoString = new Date(propertyValue).toISOString();
+  const parsedDateString = isTime ? isoString.substring(0, 16) : isoString.substring(0, 9);
+  const [value, setValue] = (0, import_react14.useState)(parsedDateString);
   const updateProperty = async () => {
     await updateMetaData2(propertyName, propertyValue, file.path);
   };
   useEnter(ref, updateProperty);
-  return /* @__PURE__ */ import_react19.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react19.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react19.default.createElement(
+  return /* @__PURE__ */ import_react14.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react14.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react14.default.createElement(
     "span",
     {
-      className: "w-full",
+      className: "flex w-full",
+      style: {
+        justifyContent: plugin2.settings.horizontalAlignment
+      },
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    dateString || /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, "\xA0")
-  )), isEditing && /* @__PURE__ */ import_react19.default.createElement(
+    !propertyValue ? plugin2.settings.emptyValueDisplay : isTime ? new Date(propertyValue).toLocaleString() : new Date(propertyValue).toLocaleDateString()
+  )), isEditing && /* @__PURE__ */ import_react14.default.createElement(
     "input",
     {
       ref,
-      className: "metadata-input metadata-input-text mod-datetime m-0 border-transparent bg-transparent",
+      className: "metadata-input metadata-input-text m-0 border-transparent bg-transparent " + isTime ? "mod-datetime" : "mod-date",
       autoFocus: true,
-      max: "9999-12-31T23:59",
-      type: "datetime-local",
-      value: dateString,
+      type: isTime ? "datetime-local" : "date",
+      value,
       placeholder: "Empty",
       onChange: (e) => {
-        setQueryResults2((prev) => {
-          const copyPrev = { ...prev };
-          const preNewValue = new Date(e.target.value);
-          const newValue = isTime ? preNewValue.toLocaleString() : preNewValue.toLocaleString();
-          copyPrev.values[propertyValueArrIndex][propertyValueIndex] = newValue;
-          return copyPrev;
-        });
+        if (!e.target.validity.valid)
+          return;
+        setValue(e.target.value);
       },
-      onBlur: async () => {
-        await updateProperty();
+      onBlur: async (e) => {
         setIsEditing(false);
+        updateMetaData2(propertyName, e.target.value, file.path);
       }
     }
   ));
 };
 
 // src/components/Inputs/NumberInput/index.tsx
-var import_react20 = __toESM(require_react());
+var import_react15 = __toESM(require_react());
 var NumberInput = ({
   propertyValue,
   propertyValueArrIndex,
   propertyValueIndex,
   propertyName,
   file,
+  plugin: plugin2,
   setQueryResults: setQueryResults2,
   updateMetaData: updateMetaData2
 }) => {
-  const ref = (0, import_react20.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react20.useState)(false);
+  const ref = (0, import_react15.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react15.useState)(false);
   useEnter(ref, async () => {
     await updateMetaData2(propertyName, Number(propertyValue), file.path);
   });
-  return /* @__PURE__ */ import_react20.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react20.default.createElement(
+  return /* @__PURE__ */ import_react15.default.createElement("span", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react15.default.createElement(
     "span",
     {
       className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt",
+      style: {
+        justifyContent: plugin2.settings.horizontalAlignment
+      },
       tabIndex: 0,
       onClick: () => setIsEditing(true),
       onFocus: () => setIsEditing(true)
     },
-    propertyValue
-  ), isEditing && /* @__PURE__ */ import_react20.default.createElement(
+    propertyValue ?? plugin2.settings.emptyValueDisplay
+  ), isEditing && /* @__PURE__ */ import_react15.default.createElement(
     "input",
     {
       ref,
@@ -28802,61 +28696,106 @@ var NumberInput = ({
 };
 
 // src/components/Inputs/StringInput/index.tsx
-var import_react21 = __toESM(require_react());
-var StringInput = ({
-  propertyValue,
-  propertyValueArrIndex,
-  propertyValueIndex,
-  propertyName,
-  file,
-  setQueryResults: setQueryResults2,
-  updateMetaData: updateMetaData2,
-  plugin: plugin2
-}) => {
-  const ref = (0, import_react21.useRef)(null);
-  const [rect, setRect] = (0, import_react21.useState)();
-  const [isEditing, setIsEditing] = (0, import_react21.useState)(false);
-  const [value, setValue] = (0, import_react21.useState)("");
+var import_react16 = __toESM(require_react());
+var StringInput = (props) => {
+  const {
+    propertyValue,
+    propertyValueArrIndex,
+    propertyValueIndex,
+    propertyName,
+    file,
+    setQueryResults: setQueryResults2,
+    updateMetaData: updateMetaData2,
+    plugin: plugin2
+  } = props;
+  const [isEditing, setIsEditing] = (0, import_react16.useState)(false);
   const isLink = checkIsLink(propertyValue);
-  (0, import_react21.useEffect)(() => console.log("value: ", value), [value]);
   const updateProperty = async () => {
-    const preNewValue = value || propertyValue;
-    const newValue = isLink ? preNewValue.markdown() : preNewValue;
+    const newValue = isLink ? propertyValue.markdown() : propertyValue;
     await updateMetaData2(propertyName, newValue, file.path);
   };
-  useEnter(ref, updateProperty);
-  return /* @__PURE__ */ import_react21.default.createElement("div", { className: "relative" }, rect && plugin2.settings.autoSuggest && /* @__PURE__ */ import_react21.default.createElement(
-    PropertySuggester,
+  const ref = (0, import_react16.useRef)(null);
+  return /* @__PURE__ */ import_react16.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react16.default.createElement(
+    "span",
     {
-      propertyName,
-      position: rect,
-      onMouseEnter: (e) => {
-        const newValue = e?.currentTarget?.textContent;
-        setValue(newValue ?? "");
+      className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt"
+    },
+    isLink ? /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement(LinkTableData, { file: propertyValue }), /* @__PURE__ */ import_react16.default.createElement(
+      "span",
+      {
+        className: "w-full",
+        onClick: () => setIsEditing(true),
+        onFocus: () => setIsEditing(true)
       },
-      onMouseLeave: (e) => setValue("")
+      "\xA0"
+    )) : /* @__PURE__ */ import_react16.default.createElement(
+      "span",
+      {
+        className: "flex w-full",
+        style: {
+          justifyContent: plugin2.settings.horizontalAlignment
+        },
+        onClick: () => {
+          ref?.current?.focus();
+          setIsEditing(true);
+        },
+        onFocus: () => {
+          ref?.current?.focus();
+          setIsEditing(true);
+        }
+      },
+      propertyValue || plugin2.settings.emptyValueDisplay
+    )
+  ), isEditing && /* @__PURE__ */ import_react16.default.createElement(
+    Input,
+    {
+      isLink,
+      setQueryResults: setQueryResults2,
+      setIsEditing,
+      updateProperty,
+      updateMetaData: updateMetaData2,
+      ...props
     }
-  ), !isEditing && /* @__PURE__ */ import_react21.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, isLink ? /* @__PURE__ */ import_react21.default.createElement(import_react21.default.Fragment, null, /* @__PURE__ */ import_react21.default.createElement(LinkTableData, { file: propertyValue }), /* @__PURE__ */ import_react21.default.createElement(
-    "span",
-    {
-      className: "w-full",
-      onClick: () => setIsEditing(true),
-      onFocus: () => setIsEditing(true)
-    },
-    "\xA0"
-  )) : /* @__PURE__ */ import_react21.default.createElement(
-    "span",
-    {
-      className: "w-full",
-      onClick: () => setIsEditing(true),
-      onFocus: () => setIsEditing(true)
-    },
-    propertyValue || /* @__PURE__ */ import_react21.default.createElement(import_react21.default.Fragment, null, "\xA0")
-  )), isEditing && /* @__PURE__ */ import_react21.default.createElement(
+  ));
+};
+var Input = ({
+  isLink,
+  propertyValue,
+  propertyName,
+  propertyValueIndex,
+  propertyValueArrIndex,
+  plugin: plugin2,
+  file,
+  setQueryResults: setQueryResults2,
+  setIsEditing,
+  updateProperty,
+  updateMetaData: updateMetaData2
+}) => {
+  const ref = (0, import_react16.useRef)(null);
+  (0, import_react16.useEffect)(() => {
+    if (!ref?.current)
+      return console.log("no ref");
+    new Suggest(
+      plugin2.app,
+      ref.current,
+      (q) => {
+        const sugg = (
+          // @ts-ignore
+          plugin2.app.metadataCache?.getFrontmatterPropertyValuesForKey(
+            propertyName
+          )
+        );
+        console.log("sug: ", sugg);
+        return [q, ...sugg];
+      },
+      (v) => updateMetaData2(propertyName, v, file.path)
+    );
+    ref.current.focus();
+  }, []);
+  return /* @__PURE__ */ import_react16.default.createElement(
     "input",
     {
       ref,
-      autoFocus: true,
       type: "text",
       value: isLink ? propertyValue.markdown() : propertyValue,
       onChange: (e) => {
@@ -28868,31 +28807,25 @@ var StringInput = ({
       },
       onBlur: async () => {
         await updateProperty();
-        setRect(void 0);
         setIsEditing(false);
       },
       onFocus: (e) => {
-        const rect2 = e.target.getBoundingClientRect();
-        setRect({
-          top: rect2.top,
-          left: rect2.left
-        });
       },
       className: "relative m-0 border-transparent bg-transparent p-0 text-start"
     }
-  ));
+  );
 };
 
 // src/components/Inputs/FileInput/index.tsx
-var import_react22 = __toESM(require_react());
+var import_react17 = __toESM(require_react());
 var FileInput = ({
   file,
   plugin: plugin2
 }) => {
-  const ref = (0, import_react22.useRef)(null);
-  const [isEditing, setIsEditing] = (0, import_react22.useState)(false);
-  const [value, setValue] = (0, import_react22.useState)(file.fileName());
-  (0, import_react22.useEffect)(() => console.log("value: ", value), [value]);
+  const ref = (0, import_react17.useRef)(null);
+  const [isEditing, setIsEditing] = (0, import_react17.useState)(false);
+  const [value, setValue] = (0, import_react17.useState)(file.fileName());
+  (0, import_react17.useEffect)(() => console.log("value: ", value), [value]);
   const updateFileName = async () => {
     const thisFile = plugin2.app.vault.getFileByPath(file.path);
     if (!thisFile) {
@@ -28908,31 +28841,41 @@ var FileInput = ({
     plugin2.app.fileManager.renameFile(thisFile, newPath);
   };
   useEnter(ref, updateFileName);
-  return /* @__PURE__ */ import_react22.default.createElement("div", { className: "relative" }, !isEditing && /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react22.default.createElement(LinkTableData, { file }), /* @__PURE__ */ import_react22.default.createElement(
-    "span",
+  return /* @__PURE__ */ import_react17.default.createElement(
+    "div",
     {
-      className: "w-full",
-      onClick: () => setIsEditing(true),
-      onFocus: () => setIsEditing(true)
+      className: "relative flex h-full w-full",
+      style: {
+        justifyContent: plugin2.settings.horizontalAlignment
+      }
     },
-    "\xA0"
-  )), isEditing && /* @__PURE__ */ import_react22.default.createElement(
-    "input",
-    {
-      ref,
-      autoFocus: true,
-      type: "text",
-      value,
-      onChange: (e) => {
-        setValue(e.target.value);
+    !isEditing && /* @__PURE__ */ import_react17.default.createElement("span", { className: "flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt" }, /* @__PURE__ */ import_react17.default.createElement(LinkTableData, { file }), /* @__PURE__ */ import_react17.default.createElement(
+      "span",
+      {
+        className: "w-full",
+        onClick: () => setIsEditing(true),
+        onFocus: () => setIsEditing(true)
       },
-      onBlur: async () => {
-        await updateFileName();
-        setIsEditing(false);
-      },
-      className: "relative m-0 border-transparent bg-transparent p-0 text-start"
-    }
-  ));
+      "\xA0"
+    )),
+    isEditing && /* @__PURE__ */ import_react17.default.createElement(
+      "input",
+      {
+        ref,
+        autoFocus: true,
+        type: "text",
+        value,
+        onChange: (e) => {
+          setValue(e.target.value);
+        },
+        onBlur: async () => {
+          await updateFileName();
+          setIsEditing(false);
+        },
+        className: "relative m-0 border-transparent bg-transparent p-0 text-start"
+      }
+    )
+  );
 };
 
 // src/components/EditableTable/index.tsx
@@ -28941,9 +28884,9 @@ var EditableTable = ({
   plugin,
   ctx
 }) => {
-  const [queryResults, setQueryResults] = (0, import_react23.useState)();
+  const [queryResults, setQueryResults] = (0, import_react18.useState)();
   console.log("got settings: ", plugin.settings);
-  (0, import_react23.useEffect)(() => {
+  (0, import_react18.useEffect)(() => {
     console.log("query results: ", queryResults);
     const asyncDoQuery = async () => {
       await doQuery();
@@ -29011,38 +28954,41 @@ var EditableTable = ({
     });
     await updateDataeditLinks();
   };
-  (0, import_react23.useEffect)(() => {
+  (0, import_react18.useEffect)(() => {
     doQuery();
   }, []);
   if (!queryResults)
-    return /* @__PURE__ */ import_react23.default.createElement(Error2, null, "Invalid query");
-  return /* @__PURE__ */ import_react23.default.createElement(import_react23.default.Fragment, null, /* @__PURE__ */ import_react23.default.createElement(
+    return /* @__PURE__ */ import_react18.default.createElement(Error2, null, "Invalid query");
+  return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement(
     "table",
     {
       className: "dataedit max-w-full whitespace-nowrap " + plugin.settings.cssClassName
     },
-    /* @__PURE__ */ import_react23.default.createElement(
+    /* @__PURE__ */ import_react18.default.createElement(
       TableHead,
       {
         queryResults,
         settings: plugin.settings
       }
     ),
-    /* @__PURE__ */ import_react23.default.createElement("tbody", { className: "" }, queryResults.values.map(
-      (propertyValueArr, propertyValueArrIndex) => /* @__PURE__ */ import_react23.default.createElement(
+    /* @__PURE__ */ import_react18.default.createElement("tbody", { className: "" }, queryResults.values.map(
+      (propertyValueArr, propertyValueArrIndex) => /* @__PURE__ */ import_react18.default.createElement(
         "tr",
         {
           key: propertyValueArrIndex + "table-row",
           className: ""
         },
         propertyValueArr.map(
-          (propertyValue, propertyValueIndex) => /* @__PURE__ */ import_react23.default.createElement(
+          (propertyValue, propertyValueIndex) => /* @__PURE__ */ import_react18.default.createElement(
             "td",
             {
               key: propertyValueArrIndex + propertyValueIndex,
-              className: "relative"
+              className: "relative",
+              style: {
+                verticalAlign: plugin.settings.verticalAlignment
+              }
             },
-            /* @__PURE__ */ import_react23.default.createElement(
+            /* @__PURE__ */ import_react18.default.createElement(
               EditableTableData,
               {
                 propertyValue,
@@ -29050,7 +28996,9 @@ var EditableTable = ({
                 propertyValueIndex,
                 propertyValueArr,
                 propertyName: queryResults.headers[propertyValueIndex],
-                file: propertyValueArr[0],
+                file: propertyValueArr[queryResults.headers.findIndex(
+                  (v) => v === "File" || v === "file.link"
+                )],
                 plugin,
                 setQueryResults,
                 updateMetaData
@@ -29060,60 +29008,69 @@ var EditableTable = ({
         )
       )
     ))
-  ), /* @__PURE__ */ import_react23.default.createElement(
+  ), /* @__PURE__ */ import_react18.default.createElement(
     "div",
     {
       className: "edit-block-button bottom-[4px] top-[unset]",
       "aria-label": "Edit table settings"
     },
-    /* @__PURE__ */ import_react23.default.createElement(Settings, null)
+    /* @__PURE__ */ import_react18.default.createElement(Settings, null)
   ));
 };
 var EditableTableData = (props) => {
   const { propertyName, file, plugin: plugin2 } = props;
   const propertyType = getPropertyType(propertyName);
   if (propertyName.toLowerCase() === "file") {
-    return /* @__PURE__ */ import_react23.default.createElement(FileInput, { file, plugin: plugin2 });
+    return /* @__PURE__ */ import_react18.default.createElement(FileInput, { file, plugin: plugin2 });
   }
   if (propertyType === "multitext" || propertyType === "tags") {
-    return /* @__PURE__ */ import_react23.default.createElement(ArrayInputWrapper, { ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(ArrayInputWrapper, { ...props });
   }
   if (propertyType === "date") {
-    return /* @__PURE__ */ import_react23.default.createElement(DateTimeInput, { isTime: false, ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(DateTimeInput, { isTime: false, ...props });
   }
   if (propertyType === "datetime") {
-    return /* @__PURE__ */ import_react23.default.createElement(DateTimeInput, { isTime: true, ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(DateTimeInput, { isTime: true, ...props });
   }
   if (propertyType === "checkbox") {
-    return /* @__PURE__ */ import_react23.default.createElement(CheckboxInput, { ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(CheckboxInput, { ...props });
   }
   if (propertyType === "number") {
-    return /* @__PURE__ */ import_react23.default.createElement(NumberInput, { ...props });
+    return /* @__PURE__ */ import_react18.default.createElement(NumberInput, { ...props });
   }
-  return /* @__PURE__ */ import_react23.default.createElement(StringInput, { ...props });
+  return /* @__PURE__ */ import_react18.default.createElement(StringInput, { ...props });
 };
 var TableHead = ({
   queryResults: queryResults2,
   settings
 }) => {
-  return /* @__PURE__ */ import_react23.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react23.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h, i) => /* @__PURE__ */ import_react23.default.createElement("th", { key: i, className: "w-fit" }, h.toUpperCase() === "FILE" ? /* @__PURE__ */ import_react23.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, h, settings.showTypeIcons && /* @__PURE__ */ import_react23.default.createElement(
+  const getAlias = (propertyName) => {
+    const possibleArr = settings.columnAliases.find(
+      (arr) => arr[0] === propertyName
+    );
+    console.log("possibleArr", possibleArr);
+    if (!possibleArr)
+      return;
+    return possibleArr[1];
+  };
+  return /* @__PURE__ */ import_react18.default.createElement("thead", { className: "w-fit" }, /* @__PURE__ */ import_react18.default.createElement("tr", { className: "w-fit" }, queryResults2.headers.map((h, i) => /* @__PURE__ */ import_react18.default.createElement("th", { key: i, className: "w-fit" }, h.toUpperCase() === "FILE" || h === "file.link" ? /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex w-fit items-center text-nowrap" }, getAlias(h) ?? h, settings.showTypeIcons && /* @__PURE__ */ import_react18.default.createElement(
     "span",
     {
       className: "metadata-property-icon",
       "aria-label": "file",
       "data-tooltip-position": "right"
     },
-    /* @__PURE__ */ import_react23.default.createElement(File, { style: iconStyle })
-  )) : /* @__PURE__ */ import_react23.default.createElement("span", { className: "flex w-fit items-center" }, h, settings.showTypeIcons && /* @__PURE__ */ import_react23.default.createElement(PropertyIcon, { propertyName: h }))))));
+    /* @__PURE__ */ import_react18.default.createElement(File, { style: iconStyle })
+  )) : /* @__PURE__ */ import_react18.default.createElement("span", { className: "flex w-fit items-center" }, getAlias(h) ?? h, settings.showTypeIcons && /* @__PURE__ */ import_react18.default.createElement(PropertyIcon, { propertyName: h }))))));
 };
 
 // src/components/App.tsx
-var RequiedDepsError = () => /* @__PURE__ */ import_react24.default.createElement(import_react24.default.Fragment, null, /* @__PURE__ */ import_react24.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react24.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react24.default.createElement("ul", null, /* @__PURE__ */ import_react24.default.createElement("li", null, /* @__PURE__ */ import_react24.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")))));
-var App3 = (props) => {
+var RequiedDepsError = () => /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("h3", null, "Failed to load dependencies!"), /* @__PURE__ */ import_react19.default.createElement("div", null, "Plugins required:", /* @__PURE__ */ import_react19.default.createElement("ul", null, /* @__PURE__ */ import_react19.default.createElement("li", null, /* @__PURE__ */ import_react19.default.createElement("a", { href: "https://github.com/blacksmithgu/obsidian-dataview" }, "Dataview")))));
+var App4 = (props) => {
   const { data: data2, getSectionInfo, settings, plugin: plugin2, ctx: ctx2 } = props;
-  const [ErrMsg, setErrMsg] = (0, import_react24.useState)(void 0);
-  (0, import_react24.useEffect)(() => {
-    new import_obsidian4.Notice("App rendered");
+  const [ErrMsg, setErrMsg] = (0, import_react19.useState)(void 0);
+  (0, import_react19.useEffect)(() => {
+    new import_obsidian5.Notice("App rendered");
     (async () => {
       const b = await loadDependencies();
       if (!b)
@@ -29121,11 +29078,15 @@ var App3 = (props) => {
     })();
   }, []);
   if (ErrMsg) {
-    return /* @__PURE__ */ import_react24.default.createElement(Error2, null, /* @__PURE__ */ import_react24.default.createElement(ErrMsg, null));
+    return /* @__PURE__ */ import_react19.default.createElement(Error2, null, /* @__PURE__ */ import_react19.default.createElement(ErrMsg, null));
   }
-  return /* @__PURE__ */ import_react24.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react24.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react24.default.createElement(EditableTable, { data: data2, plugin: plugin2, ctx: ctx2 })));
+  return /* @__PURE__ */ import_react19.default.createElement("div", { id: "twcss" }, /* @__PURE__ */ import_react19.default.createElement("div", { className: "w-full overflow-x-scroll" }, /* @__PURE__ */ import_react19.default.createElement(EditableTable, { data: data2, plugin: plugin2, ctx: ctx2 })), /* @__PURE__ */ import_react19.default.createElement(TestFocus, null));
 };
-var App_default = App3;
+var App_default = App4;
+var TestFocus = () => {
+  const ref = (0, import_react19.useRef)(null);
+  return /* @__PURE__ */ import_react19.default.createElement(import_react19.default.Fragment, null, /* @__PURE__ */ import_react19.default.createElement("button", { onClick: () => ref?.current?.focus() }, "focus on input"), /* @__PURE__ */ import_react19.default.createElement("input", { ref, type: "text" }));
+};
 
 // src/main.tsx
 var loadDependencies = async () => {
@@ -29137,9 +29098,10 @@ var loadDependencies = async () => {
   await plugins.loadPlugin(DATAVIEW);
   return true;
 };
-var DataEdit2 = class extends import_obsidian5.Plugin {
-  onExternalSettingsChange() {
+var DataEdit2 = class extends import_obsidian6.Plugin {
+  async onExternalSettingsChange() {
     console.log("settings were changed");
+    await this.loadSettings();
   }
   async onload() {
     this.settings = await this.loadData();
@@ -29161,7 +29123,7 @@ var DataEdit2 = class extends import_obsidian5.Plugin {
       const root = (0, import_client2.createRoot)(e);
       root.render(
         // <React.StrictMode>
-        /* @__PURE__ */ import_react25.default.createElement(
+        /* @__PURE__ */ import_react20.default.createElement(
           App_default,
           {
             data: s,
@@ -29178,6 +29140,17 @@ var DataEdit2 = class extends import_obsidian5.Plugin {
   async updateSettings(newSettings) {
     await this.saveData(newSettings);
     this.settings = newSettings;
+  }
+  async loadSettings() {
+    const savedSettings = await this.loadData();
+    const potentialSettings = addNewKeyValues(
+      savedSettings,
+      defaultSettings
+    );
+    const potentialParsed = SettingsSchema.safeParse(potentialSettings);
+    if (!potentialParsed.success)
+      new import_obsidian6.Notice("Invalid settings detected");
+    this.saveData(potentialParsed.data);
   }
 };
 /*! Bundled license information:

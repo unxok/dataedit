@@ -71,8 +71,24 @@ const App = (props: {
 			<div className="w-full overflow-x-scroll">
 				<EditableTable data={data} plugin={plugin} ctx={ctx} />
 			</div>
+			<TestFocus />
 		</div>
 	);
 };
 
 export default App;
+
+const TestFocus = () => {
+	//
+
+	const ref = useRef<HTMLInputElement>(null);
+
+	return (
+		<>
+			<button onClick={() => ref?.current?.focus()}>
+				focus on input
+			</button>
+			<input ref={ref} type="text" />
+		</>
+	);
+};

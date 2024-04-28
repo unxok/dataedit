@@ -1,6 +1,15 @@
 import { AbstractInputSuggest, App } from "obsidian";
 import React, { useEffect, useRef, useState } from "react";
 
+export const createSuggest = (
+	app: App,
+	inputEl: HTMLInputElement,
+	getSuggestions: (query: string) => string[] | Promise<string[]>,
+	onSelect: (value: string, evt: MouseEvent | KeyboardEvent) => void,
+) => {
+	new Suggest(app, inputEl, getSuggestions, onSelect);
+};
+
 /**
  * Render suggestions for an autocomplete popover and automatically set the value of the input that uses the returned ref
  * @param ConfigObject object with keys for `app` and `getSuggestions` callback
@@ -10,32 +19,42 @@ export const useSuggest = ({
 	app,
 	getSuggestions,
 	onSelect,
+	ref,
 }: {
 	app: App;
 	getSuggestions: (query: string) => string[] | Promise<string[]>;
 	onSelect: (value: string, evt: MouseEvent | KeyboardEvent) => void;
-}) => {
+	ref?: React.MutableRefObject<HTMLInputElement>;
+}): [
+	React.MutableRefObject<HTMLInputElement>,
+	(inputEl: HTMLInputElement) => void,
+] => {
 	const [suggest, setSuggest] = useState<Suggest>();
-	const ref = useRef<HTMLInputElement>(null);
+	const inputRef = ref === undefined ? useRef<HTMLInputElement>(null) : ref;
+
+	const createSuggest = (inputEl: HTMLInputElement) => {
+		setSuggest(new Suggest(app, inputEl, getSuggestions, onSelect));
+	};
 
 	useEffect(() => {
-		if (!ref?.current) return;
+		console.log("use effect called");
+		if (!inputRef?.current) return;
 		if (!suggest) {
-			setSuggest(new Suggest(app, ref.current, getSuggestions, onSelect));
+			createSuggest(inputRef.current);
 		}
 		if (suggest) {
 			setSuggest((prev) => {
-				prev.inputEl = ref.current;
+				prev.inputEl = inputRef.current;
 				prev.getSuggestions = getSuggestions;
 				prev.onSelectCb = onSelect;
 				return prev;
 			});
 		}
 	}, [app, getSuggestions, onSelect]);
-	return ref;
+	return [inputRef, createSuggest];
 };
 
-class Suggest extends AbstractInputSuggest<string> {
+export class Suggest extends AbstractInputSuggest<string> {
 	app: App;
 	inputEl: HTMLInputElement;
 	getSuggestions: (query: string) => string[] | Promise<string[]>;
@@ -60,6 +79,9 @@ class Suggest extends AbstractInputSuggest<string> {
 
 	renderSuggestion(value: string, el: HTMLElement): void {
 		console.log("rendered sugg: ", value);
+		if (el.parentNode.firstChild === el) {
+			el.style.color = "var(--text-faint)";
+		}
 		el.textContent = value;
 	}
 
