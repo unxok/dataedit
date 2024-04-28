@@ -108,6 +108,7 @@ return { headers: ["Name", "Progress", "Category"], values: data };
     -   [x] Ability to rename file
 -   [x] Links from query to frontmatter (to show in graph view, etc)
 -   [ ] Switch to Vite
+    -   bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite
 -   [ ] Config options (YAML in a query, JSON in js expression)
     -   [x] Auto suggest-- boolean. default true
     -   [x] Show type icons-- boolean. default true
