@@ -8,6 +8,16 @@ This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
 
 This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin to query frontmatter metadata. Please show the creators some love for all their hardwork!
 
+## Beta
+
+I am about ready for a beta release! I recently found out that using a community theme can cause some UI issues with the plugin that I will need to go and look for (feel free to open an issue) before I make posts about getting people to start testing.
+
+You can join the beta now by installing the plugin directly from the repo or by using the [BRAT plugin](https://github.com/TfTHacker/obsidian42-brat) by TfTHacker
+
+Please an open an issue if needed for bugs, feature requests, and questions.
+
+Thank you!!
+
 ## Demo
 
 Forgive the terrible quality😅
