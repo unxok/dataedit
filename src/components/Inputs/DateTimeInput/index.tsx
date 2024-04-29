@@ -22,10 +22,18 @@ export const DateTimeInput = ({
 }: CommonEditableProps & { isTime: boolean }) => {
 	const ref = useRef<HTMLInputElement>(null);
 	const [isEditing, setIsEditing] = useState(false);
-	const isoString = new Date(propertyValue).toISOString();
+	const isoString = (() => {
+		try {
+			return new Date(propertyValue).toISOString();
+		} catch (e) {
+			console.error("error in datetime: ", e);
+			return new Date().toISOString();
+		}
+	})();
 	const parsedDateString = isTime
 		? isoString.substring(0, 16)
 		: isoString.substring(0, 9);
+
 	const [value, setValue] = useState(parsedDateString);
 
 	const updateProperty = async () => {
@@ -74,7 +82,7 @@ export const DateTimeInput = ({
 					value={value}
 					placeholder="Empty"
 					onChange={(e) => {
-						if (!e.target.validity.valid) return;
+						if (!e.target.validity.valid || !e.target.value) return;
 						setValue(e.target.value);
 						// console.log("changed");
 						// setQueryResults((prev) => {
@@ -90,7 +98,10 @@ export const DateTimeInput = ({
 					}}
 					onBlur={async (e) => {
 						setIsEditing(false);
-						updateMetaData(propertyName, e.target.value, file.path);
+						const newVal = isTime
+							? new Date(e.target.value).toLocaleString()
+							: new Date(e.target.value).toLocaleDateString();
+						updateMetaData(propertyName, newVal, file.path);
 					}}
 				></input>
 			)}

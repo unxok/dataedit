@@ -10,9 +10,8 @@ tags:
   - onemoretagg
   - testtt
   - test
-date: 2001-02-01
 checkboxtest: false
-datetime: 2556-10-25T02:21
+datetime: 2005-02-01T00:20:00
 number: 123
 dataedit-links:
   - "[[test noteee.md|test noteee]]"
@@ -23,11 +22,8 @@ cssclasses:
   - classB
   - classC
 test: 
+date: 2/2/2004
 ---
-`code` 
-
-[test](https://example.com)
-
 ## Dataedit
 
 ```dataedit
@@ -35,6 +31,27 @@ TABLE WITHOUT ID test, some-list, number, tags, date, checkboxtest, datetime, da
 FROM #test
 SORT file.name
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Dataview
 
 ```dataview
