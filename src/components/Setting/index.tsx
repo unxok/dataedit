@@ -51,18 +51,15 @@ const SettingControl = ({
 );
 
 const SettingToggle = ({
-	app,
 	checked,
-	onCheckedChange = () => {},
+	onCheckedChange,
 }: {
-	app: App;
 	checked: boolean;
 	onCheckedChange: (b: boolean) => void;
 }) => {
 	const [toggleClass, setToggleClass] = useState("");
-	const [value, setValue] = useState(checked);
 	// const [suggest, setSuggest] = useState<Suggest>();
-	const ref = useRef<HTMLInputElement>(null);
+	// const ref = useRef<HTMLInputElement>(null);
 
 	const setEnabledClass = (newValue?: boolean) => {
 		const newClass = newValue ? "is-enabled" : "";
@@ -70,25 +67,24 @@ const SettingToggle = ({
 	};
 
 	useEffect(() => {
-		setEnabledClass(value);
-		onCheckedChange(value);
-		if (!ref?.current) return;
+		// console.log("value changed: ", checked);
+		setEnabledClass(checked);
+		onCheckedChange(checked);
+		// if (!ref?.current) return;
 		// setSuggest(new Suggest(app, ref.current));
-	}, [value]);
+	}, [checked]);
 
 	return (
 		<div
 			className={"checkbox-container " + toggleClass}
 			onClick={() => {
-				setValue((b) => {
-					return !b;
-				});
+				onCheckedChange(!checked);
 			}}
 		>
 			<input
-				ref={ref}
+				// ref={ref}
 				type="checkbox"
-				checked={value}
+				checked={checked}
 				tabIndex={0}
 				readOnly
 			/>
@@ -132,7 +128,7 @@ export {
 	SettingToggle,
 };
 
-export const SampleSetting = ({ app }: { app: App }) => {
+export const SampleSetting = () => {
 	const [inp, setInp] = useState("");
 
 	return (
@@ -143,7 +139,6 @@ export const SampleSetting = ({ app }: { app: App }) => {
 			</SettingInfo>
 			<SettingControl>
 				<SettingToggle
-					app={app}
 					checked={true}
 					onCheckedChange={(b) => console.log("toggle: ", b)}
 				/>

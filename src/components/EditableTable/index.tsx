@@ -30,7 +30,12 @@ import {
 } from "../Inputs";
 import { LinkTableData } from "../LinkTableData";
 import DataEdit from "@/main";
-import { Settings, SettingsSchema, defaultSettings } from "../PluginSettings";
+import {
+	BlockSettings,
+	Settings,
+	SettingsSchema,
+	defaultSettings,
+} from "../PluginSettings";
 
 export const EditableTable = ({
 	data,
@@ -44,6 +49,7 @@ export const EditableTable = ({
 	ctx: MarkdownPostProcessorContext;
 }) => {
 	const [queryResults, setQueryResults] = useState<QueryResults>();
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	console.log("got settings: ", plugin.settings);
 
@@ -253,12 +259,21 @@ export const EditableTable = ({
 					)}
 				</tbody>
 			</table>
-			{/* <div
+			<div
 				className="edit-block-button bottom-[4px] top-[unset]"
 				aria-label="Edit table settings"
+				onClick={() => setIsDialogOpen(true)}
 			>
 				<SettingsIcon />
-			</div> */}
+			</div>
+			<BlockSettings
+				plugin={plugin}
+				savedSettings={parsedConfig}
+				ctx={ctx}
+				query={query}
+				open={isDialogOpen}
+				onOpenChange={setIsDialogOpen}
+			/>
 		</>
 	);
 };
@@ -267,7 +282,7 @@ const EditableTableData = (props: CommonEditableProps) => {
 	const { propertyName, file, plugin, config } = props;
 	const propertyType = getPropertyType(propertyName);
 
-	if (propertyName.toLowerCase() === "file") {
+	if (propertyName.toLowerCase() === "file" || propertyName === "file.link") {
 		return <FileInput file={file} plugin={plugin} config={config} />;
 	}
 

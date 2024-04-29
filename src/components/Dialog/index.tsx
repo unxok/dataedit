@@ -3,17 +3,19 @@ import React, { ReactNode, useCallback, useEffect, useRef } from "react";
 import { Root, createRoot } from "react-dom/client";
 import * as Portal from "@radix-ui/react-portal";
 import * as Dialog from "@radix-ui/react-dialog";
+import { cn } from "@/lib/utils";
 
 export const DialogSample = ({
 	defaultOpen,
 	open,
 	onOpenChange,
+	modal,
 }: Dialog.DialogProps) => (
 	<Dialog.Root
 		defaultOpen={defaultOpen}
 		open={open}
 		onOpenChange={onOpenChange}
-		modal={true}
+		modal={modal}
 	>
 		<Dialog.Portal>
 			<div id="twcss" className="modal-container">
@@ -45,8 +47,11 @@ const DialogRoot = (props: Dialog.DialogProps) => (
 		</Dialog.Portal>
 	</Dialog.Root>
 );
+const DialogTrigger = (props: Dialog.DialogTriggerProps) => (
+	<Dialog.Trigger {...props}>{props.children}</Dialog.Trigger>
+);
 const DialogContent = (props: Dialog.DialogContentProps) => (
-	<Dialog.Content className="modal" {...props}>
+	<Dialog.Content {...props} className={cn("modal", props.className)}>
 		{props.children}
 	</Dialog.Content>
 );
@@ -65,6 +70,7 @@ const DialogClose = (props: Dialog.DialogCloseProps) => (
 
 export {
 	DialogRoot,
+	DialogTrigger,
 	DialogContent,
 	DialogTitle,
 	DialogDescription,

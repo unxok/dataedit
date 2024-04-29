@@ -22,6 +22,7 @@ export const FileInput = ({
 	useEffect(() => console.log("value: ", value), [value]);
 
 	const updateFileName = async () => {
+		// console.log("update file name called");
 		const thisFile = plugin.app.vault.getFileByPath(file.path);
 		if (!thisFile) {
 			return console.error("Tried renaming file when it doesn't exist?");

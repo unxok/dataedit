@@ -1,6 +1,6 @@
 ---
 some-list:
-  - aasss
+  - asdrf
   - sdfsdfdddd
   - sdfsd
   - aasss
@@ -10,28 +10,67 @@ tags:
   - onemoretagg
   - testtt
   - test
-checkboxtest: false
-datetime: 2005-02-01T00:20:00
+checkboxtest: true
+datetime: 2005-02-01T16:20
 number: 123
 dataedit-links:
+  - "[[new file name.md|new file name]]"
   - "[[test noteee.md|test noteee]]"
-  - "[[testt.md|testt]]"
   - "[[Welcome.md|Welcome]]"
 cssclasses:
   - classA
   - classB
   - classC
-test: 
+test: new value
 date: 1970-01-01
 ---
-## Dataedit
+## Dataedit demo
+- [x] Edit in place (updates after press enter or click away)
+- [x] fast, no-flicker updates
+- [ ] highly customizable
+	- [ ] plugin (global) settings and individual block settings
 
 ```dataedit
-TABLE WITHOUT ID test, some-list, number, tags, date, checkboxtest, datetime, date, file.link
+TABLE WITHOUT ID test, file.link, some-list, number, tags, date, checkboxtest, datetime
 FROM #test
 SORT file.name
 ---
-showTypeIcons: false
+autoSuggest: true
+showNumberButtons: true
+showTypeIcons: true
+emptyValueDisplay: "-"
+queryLinksPropertyName: dataedit-links
+cssClassName: ""
+columnAliases:
+  - - thisColumn
+    - showThisAlias
+verticalAlignment: top
+horizontalAlignment: start
+alignmentByType:
+  text:
+    vertical: top
+    horizontal: start
+    enabled: false
+  list:
+    vertical: top
+    horizontal: start
+    enabled: false
+  number:
+    vertical: top
+    horizontal: start
+    enabled: false
+  checkbox:
+    vertical: top
+    horizontal: start
+    enabled: false
+  date:
+    vertical: top
+    horizontal: start
+    enabled: false
+  datetime:
+    vertical: top
+    horizontal: start
+    enabled: false
 ```
 
 

@@ -83,6 +83,9 @@ export class Suggest extends AbstractInputSuggest<string> {
 			el.style.color = "var(--text-faint)";
 		}
 		el.textContent = value;
+		// el.addEventListener("click", (e) => {
+		// 	this.onSelectCb(value, e);
+		// });
 	}
 
 	selectSuggestion(value: string, evt: MouseEvent | KeyboardEvent): void {

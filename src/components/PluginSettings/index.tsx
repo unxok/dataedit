@@ -14,7 +14,15 @@ import {
 	SettingRoot,
 	SettingToggle,
 } from "../Setting";
-import { App, Modal, Notice, Plugin } from "obsidian";
+import {
+	App,
+	MarkdownPostProcessorContext,
+	Modal,
+	Notice,
+	Plugin,
+	parseYaml,
+	stringifyYaml,
+} from "obsidian";
 import { z } from "zod";
 import {
 	ArrowRight,
@@ -24,12 +32,21 @@ import {
 	MessageCircleQuestion,
 	MessageCircleWarning,
 	Plus,
+	TriangleAlert,
 	X,
 } from "lucide-react";
 import DataEdit from "@/main";
 import { Suggest, useSuggest } from "@/hooks/useSuggest";
 import { BuyMeCoffee } from "../BuyMeCoffee";
 import { addNewKeyValues, removeKeys } from "@/lib/utils";
+import {
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogRoot,
+	DialogTitle,
+	DialogTrigger,
+} from "../Dialog";
 
 const StartCenterEnd = z.union([
 	z.literal("start"),
@@ -265,17 +282,14 @@ export const PluginSettings = ({
 			{potentialParsed.success && (
 				<>
 					<AutoSuggest
-						app={plugin.app}
 						value={form.autoSuggest}
 						onChange={(b) => updateForm("autoSuggest", b)}
 					/>
 					<ShowNumberButtons
-						app={plugin.app}
 						value={form.showNumberButtons}
 						onChange={(b) => updateForm("showNumberButtons", b)}
 					/>
 					<ShowTypeIcons
-						app={plugin.app}
 						value={form.showTypeIcons}
 						onChange={(b) => updateForm("showTypeIcons", b)}
 					/>
@@ -286,7 +300,6 @@ export const PluginSettings = ({
 						}
 					/>
 					<QueryLinksPropertyName
-						app={plugin.app}
 						value={form.queryLinksPropertyName}
 						onChange={(e) =>
 							updateForm("queryLinksPropertyName", e.target.value)
@@ -335,6 +348,348 @@ export const PluginSettings = ({
 	);
 };
 
+export const BlockSettings = ({
+	plugin,
+	savedSettings,
+	ctx,
+	query,
+	open,
+	onOpenChange,
+}: {
+	plugin: DataEdit;
+	savedSettings: Settings;
+	ctx: MarkdownPostProcessorContext;
+	query: string;
+	open: boolean;
+	onOpenChange: (b: boolean) => void;
+}) => {
+	const [errors, setErrors] = useState<(string | number)[][]>();
+	const prePotentialSettings = addNewKeyValues(
+		savedSettings,
+		plugin.settings,
+	);
+	const potentialSettings = addNewKeyValues(
+		prePotentialSettings,
+		defaultSettings,
+	);
+	const potentialParsed = SettingsSchema.safeParse(potentialSettings);
+	const [form, setForm] = useState<Settings>(potentialParsed.data);
+	const [dialog, setDialog] = useState({ open: false, type: "" });
+	const updateForm = <T,>(key: string, value: T) => {
+		console.log("updateForm: ", key, " ", value);
+		setForm((prev) => ({
+			...prev,
+			[key]: value,
+		}));
+	};
+
+	useEffect(() => console.log("set form called: ", form), [form]);
+
+	const updateConfig = async (newConfig: string) => {
+		const f = plugin.app.vault.getFileByPath(ctx.sourcePath);
+		const contents = await plugin.app.vault.read(f);
+		const contentArr = contents.split("\n");
+		// @ts-ignore
+		const { lineStart, lineEnd } = ctx.getSectionInfo(ctx.el);
+		const preBlockContent = contentArr.slice(0, lineStart);
+		const postBlockContent = contentArr.slice(lineEnd + 1);
+		// console.log("pre: ", preBlockContent);
+		// console.log("post: ", postBlockContent);
+		const newContent = `${preBlockContent.join("\n")}\n\`\`\`dataedit\n${query}\n---\n${newConfig}\`\`\`\n${postBlockContent.join("\n")}`;
+		await plugin.app.vault.modify(f, newContent);
+	};
+
+	// useEffect(() => {
+	// 	// console.log("setForm called: ", form);
+	// 	// adds key/values from default if form is missing keys
+	// 	// useful for when new settings are added
+	// 	const copyForm = addNewKeyValues(form, defaultSettings);
+	// 	const parsed = SettingsSchema.safeParse(copyForm);
+	// 	if (parsed.success) {
+	// 		console.log("parse successful");
+	// 		(async () => await plugin.updateSettings(copyForm))();
+	// 	}
+	// 	if (!parsed.success) {
+	// 		parsed.error.issues.forEach(({ code, message, path, fatal }) =>
+	// 			console.error(`
+	//         Zod validation error on Plugin Settings form\n
+	//         code: ${code}\n
+	//         message: ${message}\n
+	//         path: ${path}\n
+	//         fatal: ${fatal}\n
+	//         `),
+	// 		);
+	// 	}
+	// }, [form]);
+
+	return (
+		<DialogRoot open={open} onOpenChange={onOpenChange} modal={false}>
+			<DialogContent className="vertical-tab-content">
+				<DialogClose />
+				<h2>Dataedit Settings for block</h2>
+				<div
+					className="callout overflow-visible"
+					data-callout="caution"
+					data-callout-metadata
+					data-callout-fold
+				>
+					<div className="callout-title">
+						<div className="callout-icon">
+							<TriangleAlert />
+						</div>
+						<div className="callout-title-inner">Caution</div>
+					</div>
+					<div className="callout-content">
+						<p>Remember to press save at the bottom!</p>
+					</div>
+				</div>
+				<div className="pb-3">
+					<SettingDescription>
+						Plugin repository:{" "}
+						<a href="https://github.com/unxok/dataedit">
+							https://github.com/unxok/dataedit
+						</a>
+					</SettingDescription>
+					<SettingDescription>
+						Dataview docs:{" "}
+						<a href="https://blacksmithgu.github.io/obsidian-dataview/">
+							https://blacksmithgu.github.io/obsidian-dataview/
+						</a>
+					</SettingDescription>
+					<br />
+					<div className="flex gap-2">
+						<button
+							className="text-modifier-error hover:bg-modifier-error-hover hover:text-normal"
+							onClick={() =>
+								setDialog({ open: true, type: "plugin" })
+							}
+						>
+							Copy from plugin settings
+						</button>
+						{dialog.type === "plugin" && (
+							<DialogRoot
+								open={dialog.open}
+								onOpenChange={(b) =>
+									setDialog({ open: false, type: "" })
+								}
+							>
+								<DialogContent>
+									<DialogClose />
+									<DialogTitle>
+										Copy from plugin settings
+									</DialogTitle>
+									<DialogDescription>
+										Are you absolutely sure? You cannot
+										reverse this!
+									</DialogDescription>
+									<div className="flex w-full items-center justify-end gap-3">
+										<button
+											onClick={() =>
+												setDialog({
+													open: false,
+													type: "",
+												})
+											}
+										>
+											back to safety
+										</button>
+										<button
+											className="bg-accent text-on-accent"
+											onClick={() => {
+												setForm(plugin.settings);
+												setDialog({
+													open: false,
+													type: "",
+												});
+											}}
+										>
+											go for it
+										</button>
+									</div>
+								</DialogContent>
+							</DialogRoot>
+						)}
+						<button
+							className="text-modifier-error hover:bg-modifier-error-hover hover:text-normal"
+							onClick={() =>
+								setDialog({ open: true, type: "default" })
+							}
+						>
+							Reset to default settings
+						</button>
+						{dialog.type === "default" && (
+							<DialogRoot
+								open={dialog.open}
+								onOpenChange={(b) =>
+									setDialog({ open: false, type: "" })
+								}
+							>
+								<DialogContent>
+									<DialogClose />
+									<DialogTitle>
+										Copy from default settings
+									</DialogTitle>
+									<DialogDescription>
+										Are you absolutely sure? You cannot
+										reverse this!
+									</DialogDescription>
+									<div className="flex w-full items-center justify-end gap-3">
+										<button
+											onClick={() =>
+												setDialog({
+													open: false,
+													type: "",
+												})
+											}
+										>
+											back to safety
+										</button>
+										<button
+											className="bg-accent text-on-accent"
+											onClick={() => {
+												setForm(defaultSettings);
+												setDialog({
+													open: false,
+													type: "",
+												});
+											}}
+										>
+											go for it
+										</button>
+									</div>
+								</DialogContent>
+							</DialogRoot>
+						)}
+					</div>
+				</div>
+				{!potentialParsed.success && (
+					<SettingRoot>
+						<SettingInfo>
+							<SettingName>Invalid Settings!</SettingName>
+							<SettingDescription>
+								<>
+									{errors?.map(([property, message]) => (
+										<div key={property}>
+											Invalid setting{" "}
+											<code>{property}</code>: {message}
+										</div>
+									))}
+								</>
+								The only way you should be able have invalid
+								settings would be if you:
+								<ul>
+									<li>
+										You manually changed the{" "}
+										<code>data.json</code> file of this
+										plugin
+									</li>
+									<li>
+										Another plugin changed this plugins
+										settings incorrectly
+									</li>
+									<li>
+										There's a bug in this plugin causing an
+										invalid setting value
+									</li>
+								</ul>
+							</SettingDescription>
+						</SettingInfo>
+					</SettingRoot>
+				)}
+				{potentialParsed.success && (
+					<>
+						<AutoSuggest
+							value={form.autoSuggest}
+							onChange={(b) => updateForm("autoSuggest", b)}
+						/>
+						<ShowNumberButtons
+							value={form.showNumberButtons}
+							onChange={(b) => updateForm("showNumberButtons", b)}
+						/>
+						<ShowTypeIcons
+							value={form.showTypeIcons}
+							onChange={(b) => updateForm("showTypeIcons", b)}
+						/>
+						<EmptyValueDisplay
+							value={form.emptyValueDisplay}
+							onChange={(e) =>
+								updateForm("emptyValueDisplay", e.target.value)
+							}
+						/>
+						<QueryLinksPropertyName
+							value={form.queryLinksPropertyName}
+							onChange={(e) =>
+								updateForm(
+									"queryLinksPropertyName",
+									e.target.value,
+								)
+							}
+						/>
+						<CssClassName
+							app={plugin.app}
+							value={form.cssClassName}
+							onChange={(e) =>
+								updateForm("cssClassName", e.target.value)
+							}
+							onSelect={(v) =>
+								updateForm(
+									"cssClassName",
+									form.cssClassName + " " + v,
+								)
+							}
+						/>
+						<VerticalAlignment
+							app={plugin.app}
+							value={form.verticalAlignment}
+							onChange={(e) =>
+								updateForm("verticalAlignment", e.target.value)
+							}
+						/>
+						<HorizontalAlignment
+							app={plugin.app}
+							value={form.horizontalAlignment}
+							onChange={(e) =>
+								updateForm(
+									"horizontalAlignment",
+									e.target.value,
+								)
+							}
+						/>
+						<AlignmentByType
+							app={plugin.app}
+							value={form.alignmentByType}
+							updateForm={updateForm}
+						/>
+						<ColumnAliases
+							app={plugin.app}
+							value={form.columnAliases}
+							updateForm={updateForm}
+						/>
+					</>
+				)}
+				<span
+					className="flex w-full justify-end pt-4"
+					style={{
+						borderTop:
+							"1px solid var(--background-modifier-border)",
+					}}
+				>
+					<button
+						className="bg-accent text-on-accent"
+						onClick={async () => {
+							const str = stringifyYaml(form);
+							await updateConfig(str);
+							onOpenChange(false);
+						}}
+					>
+						save to block
+					</button>
+				</span>
+			</DialogContent>
+		</DialogRoot>
+	);
+};
+
 class ConfirmationDialog extends Modal {
 	isConfirmed: boolean;
 	constructor(
@@ -377,12 +732,37 @@ class ConfirmationDialog extends Modal {
 	}
 }
 
+const DisableToggle = ({
+	checked,
+	onSetTrue,
+	onSetFalse,
+}: {
+	checked: boolean;
+	onSetTrue: () => void;
+	onSetFalse: () => void;
+}) => {
+	//
+	return (
+		<span className="flex w-fit items-center justify-center gap-1 py-1 text-sm">
+			<span>Enabled</span>
+			<input
+				defaultChecked={checked}
+				onChange={(e) => {
+					if (e.target.checked) {
+						return onSetTrue();
+					}
+					onSetFalse();
+				}}
+				type="checkbox"
+			/>
+		</span>
+	);
+};
+
 const AutoSuggest = <T,>({
-	app,
 	value,
 	onChange,
 }: {
-	app: App;
 	value: T;
 	onChange: (value: T) => void;
 }) => (
@@ -409,7 +789,6 @@ const AutoSuggest = <T,>({
 		</SettingInfo>
 		<SettingControl>
 			<SettingToggle
-				app={app}
 				checked={value as boolean}
 				onCheckedChange={onChange as (b: boolean) => void}
 			/>
@@ -418,11 +797,9 @@ const AutoSuggest = <T,>({
 );
 
 const ShowNumberButtons = <T,>({
-	app,
 	value,
 	onChange,
 }: {
-	app: App;
 	value: T;
 	onChange: (value: T) => void;
 }) => (
@@ -436,7 +813,6 @@ const ShowNumberButtons = <T,>({
 		</SettingInfo>
 		<SettingControl>
 			<SettingToggle
-				app={app}
 				checked={value as boolean}
 				onCheckedChange={onChange as (b: boolean) => void}
 			/>
@@ -445,11 +821,9 @@ const ShowNumberButtons = <T,>({
 );
 
 const ShowTypeIcons = <T,>({
-	app,
 	value,
 	onChange,
 }: {
-	app: App;
 	value: T;
 	onChange: (value: T) => void;
 }) => (
@@ -463,7 +837,6 @@ const ShowTypeIcons = <T,>({
 		</SettingInfo>
 		<SettingControl>
 			<SettingToggle
-				app={app}
 				checked={value as boolean}
 				onCheckedChange={onChange as (b: boolean) => void}
 			/>
@@ -494,11 +867,9 @@ const EmptyValueDisplay = <T,>({
 };
 
 const QueryLinksPropertyName = <T,>({
-	app,
 	value,
 	onChange,
 }: {
-	app: App;
 	value: T;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
@@ -510,6 +881,12 @@ const QueryLinksPropertyName = <T,>({
 					The frontmatter property name for the property Dataedit
 					tables will update with links from files returned in the
 					query
+				</div>
+				<br />
+				<div>
+					<b>Note:</b> If you have multiple dataedit blocks, this may
+					be updated arbitrarily. To circumvent this, set a specific
+					property name for each block's configuration
 				</div>
 				<br />
 				<div>
