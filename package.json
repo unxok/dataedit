@@ -37,6 +37,7 @@
 		"@radix-ui/react-popover": "^1.0.7",
 		"@radix-ui/react-portal": "^1.0.4",
 		"@radix-ui/react-slot": "^1.0.2",
+		"@vitejs/plugin-react": "^4.2.1",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.372.0",
@@ -44,6 +45,7 @@
 		"react-dom": "^18.2.0",
 		"tailwind-merge": "^2.3.0",
 		"tailwindcss-animate": "^1.0.7",
+		"vite": "^5.2.10",
 		"zod": "^3.23.4"
 	}
 }
