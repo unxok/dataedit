@@ -7,7 +7,7 @@
 		"css": "tailwind -i src/main.css -o test-vault/.obsidian/plugins/dataedit/styles.css --watch",
 		"css:build": "tailwind -i src/main.css -o test-vault/.obsidian/plugins/dataedit/styles.css --minify",
 		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production && npm run css:build && node scope.js",
+		"build": "SET NODE_ENV=production tsc -noEmit -skipLibCheck && node esbuild.config.mjs production && npm run css:build && node scope.js",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"viteDev": "vite",
 		"viteBuild": "tsc && vite"
