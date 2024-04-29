@@ -150,9 +150,25 @@ export const EditableTable = ({
 											}
 											className="relative"
 											style={{
-												verticalAlign:
-													plugin.settings
-														.verticalAlignment,
+												verticalAlign: plugin.settings
+													.alignmentByType[
+													getPropertyType(
+														queryResults.headers[
+															propertyValueIndex
+														],
+													)
+												]?.enabled
+													? plugin.settings
+															.alignmentByType[
+															getPropertyType(
+																queryResults
+																	.headers[
+																	propertyValueIndex
+																],
+															)
+														].vertical
+													: plugin.settings
+															.verticalAlignment,
 											}}
 										>
 											<EditableTableData
@@ -197,12 +213,12 @@ export const EditableTable = ({
 					)}
 				</tbody>
 			</table>
-			<div
+			{/* <div
 				className="edit-block-button bottom-[4px] top-[unset]"
 				aria-label="Edit table settings"
 			>
 				<SettingsIcon />
-			</div>
+			</div> */}
 		</>
 	);
 };

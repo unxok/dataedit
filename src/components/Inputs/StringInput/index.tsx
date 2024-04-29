@@ -13,7 +13,7 @@ import {
 import { PropertySuggester } from "../../PropertySuggester";
 import { useEnter, useEnterEl } from "../../../hooks/useEnter";
 import { LinkTableData } from "@/components/LinkTableData";
-import { checkIsLink } from "@/lib/utils";
+import { checkIsLink, getPropertyType } from "@/lib/utils";
 import { Suggest, createSuggest, useSuggest } from "@/hooks/useSuggest";
 
 export const StringInput = (props: CommonEditableProps) => {
@@ -36,60 +36,11 @@ export const StringInput = (props: CommonEditableProps) => {
 	};
 
 	const ref = useRef<HTMLInputElement>(null);
-	// const measuredRef = useCallback((node: HTMLInputElement) => {
-	// 	if (node === null) return;
-	// 	new Suggest(
-	// 		plugin.app,
-	// 		node,
-	// 		(q) => {
-	// 			const sugg =
-	// 				// @ts-ignore
-	// 				plugin.app.metadataCache?.getFrontmatterPropertyValuesForKey(
-	// 					propertyName,
-	// 				);
-	// 			console.log("sug: ", sugg);
-	// 			return [q, ...sugg];
-	// 		},
-	// 		(v) => updateMetaData(propertyName, v, file.path),
-	// 	);
-	// }, []);
-
-	// useEffect(() => {
-	// 	if (ref === null) return;
-	// 	new Suggest(
-	// 		plugin.app,
-	// 		ref.current,
-	// 		(q) => {
-	// 			const sugg =
-	// 				// @ts-ignore
-	// 				plugin.app.metadataCache?.getFrontmatterPropertyValuesForKey(
-	// 					propertyName,
-	// 				);
-	// 			console.log("sug: ", sugg);
-	// 			return [q, ...sugg];
-	// 		},
-	// 		(v) => updateMetaData(propertyName, v, file.path),
-	// 	);
-	// }, []);
 
 	return (
 		<div className="relative">
-			{/* {rect && plugin.settings.autoSuggest && (
-				<PropertySuggester
-					propertyName={propertyName}
-					position={rect}
-					onMouseEnter={(e) => {
-						const newValue = e?.currentTarget?.textContent;
-						setValue(newValue ?? "");
-					}}
-					onMouseLeave={(e) => setValue("")}
-				/>
-			)} */}
 			{!isEditing && (
-				<span
-					className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt"
-					// style={{ display: isEditing ? "none" : "block" }}
-				>
+				<span className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
 					{isLink ? (
 						<>
 							<LinkTableData file={propertyValue} />
@@ -105,8 +56,13 @@ export const StringInput = (props: CommonEditableProps) => {
 						<span
 							className="flex w-full"
 							style={{
-								justifyContent:
-									plugin.settings.horizontalAlignment,
+								justifyContent: plugin.settings.alignmentByType[
+									getPropertyType(propertyName)
+								]?.enabled
+									? plugin.settings.alignmentByType[
+											getPropertyType(propertyName)
+										].horizontal
+									: plugin.settings.horizontalAlignment,
 							}}
 							onClick={() => {
 								ref?.current?.focus();

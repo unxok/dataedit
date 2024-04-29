@@ -29,7 +29,7 @@ import {
 import DataEdit from "@/main";
 import { Suggest, useSuggest } from "@/hooks/useSuggest";
 import { BuyMeCoffee } from "../BuyMeCoffee";
-import { addNewKeyValues } from "@/lib/utils";
+import { addNewKeyValues, removeKeys } from "@/lib/utils";
 
 const StartCenterEnd = z.union([
 	z.literal("start"),
@@ -43,8 +43,15 @@ const TopMiddleBottom = z.union([
 	z.literal("bottom"),
 ]);
 
+const Alignment = z.object({
+	vertical: TopMiddleBottom,
+	horizontal: StartCenterEnd,
+	enabled: z.boolean(),
+});
+
 export const SettingsSchema = z.object({
 	autoSuggest: z.boolean(),
+	showNumberButtons: z.boolean(),
 	showTypeIcons: z.boolean(),
 	emptyValueDisplay: z.string(),
 	queryLinksPropertyName: z.string(),
@@ -52,12 +59,21 @@ export const SettingsSchema = z.object({
 	columnAliases: z.array(z.array(z.string(), z.string())),
 	verticalAlignment: TopMiddleBottom,
 	horizontalAlignment: StartCenterEnd,
+	alignmentByType: z.object({
+		text: Alignment,
+		list: Alignment,
+		number: Alignment,
+		checkbox: Alignment,
+		date: Alignment,
+		datetime: Alignment,
+	}),
 });
 
 export type Settings = z.infer<typeof SettingsSchema>;
 
 export const defaultSettings: Settings = {
 	autoSuggest: true,
+	showNumberButtons: true,
 	showTypeIcons: true,
 	emptyValueDisplay: "-",
 	queryLinksPropertyName: "dataedit-links",
@@ -65,6 +81,38 @@ export const defaultSettings: Settings = {
 	columnAliases: [["thisColumn", "showThisAlias"]],
 	verticalAlignment: "top",
 	horizontalAlignment: "start",
+	alignmentByType: {
+		text: {
+			vertical: "top",
+			horizontal: "start",
+			enabled: false,
+		},
+		list: {
+			vertical: "top",
+			horizontal: "start",
+			enabled: false,
+		},
+		number: {
+			vertical: "top",
+			horizontal: "start",
+			enabled: false,
+		},
+		checkbox: {
+			vertical: "top",
+			horizontal: "start",
+			enabled: false,
+		},
+		date: {
+			vertical: "top",
+			horizontal: "start",
+			enabled: false,
+		},
+		datetime: {
+			vertical: "top",
+			horizontal: "start",
+			enabled: false,
+		},
+	},
 };
 
 export const PluginSettings = ({
@@ -89,12 +137,12 @@ export const PluginSettings = ({
 	useEffect(() => {
 		plugin.onExternalSettingsChange = async () => {
 			const potentialSettings = await plugin.loadData();
-			const copyForm = addNewKeyValues(
+			const preCopyForm = addNewKeyValues(
 				potentialSettings,
 				defaultSettings,
 			);
+			const copyForm = removeKeys(preCopyForm, defaultSettings);
 			const parsed = SettingsSchema.safeParse(copyForm);
-
 			if (parsed.success) {
 				setForm(parsed.data);
 			}
@@ -221,6 +269,11 @@ export const PluginSettings = ({
 						value={form.autoSuggest}
 						onChange={(b) => updateForm("autoSuggest", b)}
 					/>
+					<ShowNumberButtons
+						app={plugin.app}
+						value={form.showNumberButtons}
+						onChange={(b) => updateForm("showNumberButtons", b)}
+					/>
 					<ShowTypeIcons
 						app={plugin.app}
 						value={form.showTypeIcons}
@@ -259,13 +312,17 @@ export const PluginSettings = ({
 							updateForm("verticalAlignment", e.target.value)
 						}
 					/>
-					<VerticalAlignmentByType />
 					<HorizontalAlignment
 						app={plugin.app}
 						value={form.horizontalAlignment}
 						onChange={(e) =>
 							updateForm("horizontalAlignment", e.target.value)
 						}
+					/>
+					<AlignmentByType
+						app={plugin.app}
+						value={form.alignmentByType}
+						updateForm={updateForm}
 					/>
 					<ColumnAliases
 						app={plugin.app}
@@ -348,6 +405,33 @@ const AutoSuggest = <T,>({
 						<CircleHelp size={"1em"} className="text-accent" />
 					</div>
 				</div>
+			</SettingDescription>
+		</SettingInfo>
+		<SettingControl>
+			<SettingToggle
+				app={app}
+				checked={value as boolean}
+				onCheckedChange={onChange as (b: boolean) => void}
+			/>
+		</SettingControl>
+	</SettingRoot>
+);
+
+const ShowNumberButtons = <T,>({
+	app,
+	value,
+	onChange,
+}: {
+	app: App;
+	value: T;
+	onChange: (value: T) => void;
+}) => (
+	<SettingRoot>
+		<SettingInfo>
+			<SettingName>Number buttons</SettingName>
+			<SettingDescription>
+				Show a minus, plus, and expression button below each input for a
+				number type property
 			</SettingDescription>
 		</SettingInfo>
 		<SettingControl>
@@ -704,43 +788,121 @@ const VerticalAlignment = <T,>({
 	);
 };
 
-const VerticalAlignmentByType = <T,>(
-	{
-		// app,
-		// value,
-		// onChange,
-	}: {
-		// app: App;
-		// value: T;
-		// onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-	},
-) => {
+const AlignmentByType = <T,>({
+	app,
+	value,
+	updateForm,
+}: {
+	app: App;
+	value: Settings["alignmentByType"];
+	updateForm: <T>(key: string, value: T) => void;
+}) => {
 	return (
-		<SettingRoot>
+		<SettingRoot className="flex flex-col gap-3">
 			<SettingInfo>
-				<SettingName>Vertical alignment by type</SettingName>
+				<SettingName>Alignment by type</SettingName>
 				<SettingDescription>
-					Change vertical alignment of table cells based on the
-					property type
+					<span>
+						Align table cells based on property type. Vertical
+						alignment is the first dropdown and horizontal is the
+						second.
+					</span>
+					<br />
+					<br />
+					<span>
+						This will override the alignment set in the{" "}
+						<b>Vertical alignment</b> and{" "}
+						<b>Horizontal alignment</b> settings
+					</span>
 				</SettingDescription>
 			</SettingInfo>
-			<SettingControl>
-				<input
-					type="text"
-					value={""}
-					placeholder={"coming soon..."}
-					disabled
-				/>
-				{/* <select
-					className="dropdown"
-					value={value as string}
-					onChange={onChange}
-				>
-					<option value="top">top</option>
-					<option value="middle">middle</option>
-					<option value="bottom">bottom</option>
-				</select> */}
-			</SettingControl>
+			<div className="flex w-full flex-col justify-end gap-3">
+				{Object.keys(value).map((typeName, i) => (
+					<div
+						key={i + "-setting-control-alignmentByType"}
+						className="flex items-center justify-end gap-2 "
+						style={{
+							color: value[typeName].enabled
+								? "var(--text-normal)"
+								: "var(--text-faint)",
+						}}
+					>
+						<span>{typeName}: </span>
+						<div className="flex justify-end gap-3">
+							<SettingControl className="flex-none">
+								<select
+									name="vertical"
+									disabled={!value[typeName].enabled}
+									className="dropdown"
+									value={value[typeName].vertical}
+									onChange={(e) => {
+										const copyValue = {
+											...value,
+											[typeName]: {
+												...value[typeName],
+												vertical: e.target.value,
+											},
+										};
+										updateForm(
+											"alignmentByType",
+											copyValue,
+										);
+									}}
+								>
+									<option value="top">top</option>
+									<option value="middle">middle</option>
+									<option value="bottom">bottom</option>
+								</select>
+							</SettingControl>
+							<SettingControl className="flex-none">
+								<select
+									name="horizontal"
+									disabled={!value[typeName].enabled}
+									className="dropdown"
+									value={value[typeName].horizontal}
+									onChange={(e) => {
+										const copyValue = {
+											...value,
+											[typeName]: {
+												...value[typeName],
+												horizontal: e.target.value,
+											},
+										};
+										updateForm(
+											"alignmentByType",
+											copyValue,
+										);
+									}}
+								>
+									<option value="start">left</option>
+									<option value="center">center</option>
+									<option value="end">end</option>
+								</select>
+							</SettingControl>
+							<SettingControl className="flex-none">
+								<input
+									type="checkbox"
+									data-indeterminate="false"
+									checked={value[typeName].enabled}
+									onChange={(e) => {
+										const copyValue = {
+											...value,
+											[typeName]: {
+												...value[typeName],
+												enabled: e.target.checked,
+											},
+										};
+										updateForm(
+											"alignmentByType",
+											copyValue,
+										);
+									}}
+								/>
+							</SettingControl>
+						</div>
+					</div>
+				))}
+			</div>
 		</SettingRoot>
 	);
 };

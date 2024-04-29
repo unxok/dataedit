@@ -97,3 +97,30 @@ export const addNewKeyValues = (
 	}
 	return result;
 };
+
+/**
+ * Remove keys from old object if key is not in new object
+ * @param oldObj The original object to add keys to
+ * @param newObj The new object to take new key value pairs from
+ * @returns The old object but with keys removed
+ * ---
+ * ```js
+ *
+ * const oldObj = {foo: 'bleh', fizz: 'buzz'}
+ * const newObj = {foo: 'bar'};
+ *
+ * addNewKeyValues(oldObj, newObj) // {foo: 'bleh'}
+ * ```
+ */
+export const removeKeys = (
+	oldObj: Record<string, any>,
+	newObj: Record<string, any>,
+) => {
+	const result = { ...oldObj };
+	for (const key in oldObj) {
+		if (!newObj.hasOwnProperty(key)) {
+			delete result[key];
+		}
+	}
+	return result;
+};

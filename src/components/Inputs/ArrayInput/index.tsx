@@ -1,5 +1,5 @@
 import { Hash, Plus, X } from "lucide-react";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useEnter } from "../../../hooks/useEnter";
 import {
 	CommonEditableProps,
@@ -78,19 +78,22 @@ export const ArrayInputWrapper = (props: CommonEditableProps) => {
 	);
 };
 
-const ArrayInput = ({
-	propertyValue,
-	propertyValueArrIndex,
-	propertyValueIndex,
-	propertyValueArr,
-	propertyName,
-	file,
-	setQueryResults,
-	updateMetaData,
-	itemValue,
-	itemIndex,
-	plugin,
-}: CommonEditableProps & { itemValue: string; itemIndex: number }) => {
+const ArrayInput = (
+	props: CommonEditableProps & { itemValue: string; itemIndex: number },
+) => {
+	const {
+		propertyValue,
+		propertyValueArrIndex,
+		propertyValueIndex,
+		propertyValueArr,
+		propertyName,
+		file,
+		setQueryResults,
+		updateMetaData,
+		itemValue,
+		itemIndex,
+		plugin,
+	} = props;
 	const [isEditing, setIsEditing] = useState(false);
 	const xRef = useRef<HTMLSpanElement>(null);
 	// @ts-ignore
@@ -102,24 +105,6 @@ const ArrayInput = ({
 		console.log("newValue: ", newValue);
 		await updateMetaData(propertyName, newValue, file.path);
 	};
-
-	const measuredRef = useCallback((node: HTMLInputElement) => {
-		if (node === null) return;
-		new Suggest(
-			plugin.app,
-			node,
-			(q) => {
-				const sugg =
-					// @ts-ignore
-					plugin.app.metadataCache?.getFrontmatterPropertyValuesForKey(
-						propertyName,
-					);
-				console.log("sug: ", sugg);
-				return [q, ...sugg];
-			},
-			(v) => updateProperty(v),
-		);
-	}, []);
 
 	useKeyboardClick(xRef);
 
@@ -195,33 +180,79 @@ const ArrayInput = ({
 				</span>
 			)}
 			{isEditing && (
-				<input
-					ref={measuredRef}
-					autoFocus
-					// defaultValue={dd}
-					type="text"
-					value={itemValue}
-					onChange={(e) => {
-						const copyValues = toPlainArray(propertyValueArr);
-						console.log("e.value: ", e.target.value);
-						const copyList = toPlainArray(
-							copyValues[propertyValueIndex],
-						);
-						copyList[itemIndex] = e.target.value;
-						copyValues[propertyValueIndex] = copyList;
-						setQueryResults((prev) => {
-							const copyPrev = { ...prev };
-							copyPrev.values[propertyValueArrIndex] = copyValues;
-							return copyPrev as QueryResults;
-						});
-					}}
-					onBlur={async () => {
-						await updateProperty();
-						setIsEditing(false);
-					}}
-					className="m-0 border-transparent bg-transparent p-0 text-start"
+				<Input
+					updateProperty={updateProperty}
+					isLink={isLink}
+					setIsEditing={setIsEditing}
+					{...props}
 				/>
 			)}
 		</li>
+	);
+};
+
+const Input = ({
+	isLink,
+	propertyValue,
+	propertyName,
+	propertyValueIndex,
+	propertyValueArr,
+	propertyValueArrIndex,
+	plugin,
+	itemValue,
+	itemIndex,
+	setQueryResults,
+	setIsEditing,
+	updateProperty,
+}: {
+	isLink: boolean;
+	itemValue: string;
+	itemIndex: number;
+	setIsEditing: (value: React.SetStateAction<boolean>) => void;
+	updateProperty: (newItemValue?: string) => Promise<void>;
+} & CommonEditableProps) => {
+	const ref = useRef<HTMLInputElement>(null);
+	useEffect(() => {
+		if (!ref?.current) return console.log("no ref");
+		new Suggest(
+			plugin.app,
+			ref.current,
+			(q) => {
+				const sugg =
+					// @ts-ignore
+					plugin.app.metadataCache?.getFrontmatterPropertyValuesForKey(
+						propertyName,
+					);
+				console.log("sug: ", sugg);
+				return [q, ...sugg];
+			},
+			(v) => updateProperty(v),
+		);
+		ref.current.focus();
+	}, []);
+	return (
+		<input
+			ref={ref}
+			type={"text"}
+			value={itemValue}
+			onChange={(e) => {
+				const copyValues = toPlainArray(propertyValueArr);
+				console.log("e.value: ", e.target.value);
+				const copyList = toPlainArray(copyValues[propertyValueIndex]);
+				copyList[itemIndex] = e.target.value;
+				copyValues[propertyValueIndex] = copyList;
+				setQueryResults((prev) => {
+					const copyPrev = { ...prev };
+					copyPrev.values[propertyValueArrIndex] = copyValues;
+					return copyPrev as QueryResults;
+				});
+			}}
+			onBlur={async () => {
+				await updateProperty();
+				setIsEditing(false);
+			}}
+			onFocus={(e) => {}}
+			className="relative m-0 border-transparent bg-transparent p-0 text-start"
+		/>
 	);
 };

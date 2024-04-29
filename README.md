@@ -130,6 +130,7 @@ return { headers: ["Name", "Progress", "Category"], values: data };
 -   [x] Allow for `TABLE WITHOUT ID` as long as `file.link` column is included
 -   [x] Reset plugin settings to default button
 -   [ ] pagination (set default limit per page in config)
+-   [ ] image embedsmarkdown rendering?
 
 # Contributing
 

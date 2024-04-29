@@ -1,5 +1,6 @@
 import React from "react";
 import { CommonEditableProps, QueryResults } from "../../../lib/types";
+import { getPropertyType } from "@/lib/utils";
 
 export const CheckboxInput = ({
 	propertyValue,
@@ -15,7 +16,13 @@ export const CheckboxInput = ({
 		<span
 			className="flex items-center p-2"
 			style={{
-				justifyContent: plugin.settings.horizontalAlignment,
+				justifyContent: plugin.settings.alignmentByType[
+					getPropertyType(propertyName)
+				]?.enabled
+					? plugin.settings.alignmentByType[
+							getPropertyType(propertyName)
+						].horizontal
+					: plugin.settings.horizontalAlignment,
 			}}
 		>
 			<input

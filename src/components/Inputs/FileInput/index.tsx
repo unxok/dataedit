@@ -38,7 +38,9 @@ export const FileInput = ({
 		<div
 			className="relative flex h-full w-full"
 			style={{
-				justifyContent: plugin.settings.horizontalAlignment,
+				justifyContent: plugin.settings.alignmentByType["text"]?.enabled
+					? plugin.settings.alignmentByType["text"].horizontal
+					: plugin.settings.horizontalAlignment,
 			}}
 		>
 			{!isEditing && (

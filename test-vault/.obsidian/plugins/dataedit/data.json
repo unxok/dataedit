@@ -1,5 +1,6 @@
 {
   "autoSuggest": true,
+  "showNumberButtons": true,
   "showTypeIcons": true,
   "emptyValueDisplay": "-",
   "queryLinksPropertyName": "dataedit-links",
@@ -11,5 +12,37 @@
     ]
   ],
   "verticalAlignment": "top",
-  "horizontalAlignment": "start"
+  "horizontalAlignment": "start",
+  "alignmentByType": {
+    "text": {
+      "vertical": "bottom",
+      "horizontal": "start",
+      "enabled": false
+    },
+    "list": {
+      "vertical": "top",
+      "horizontal": "start",
+      "enabled": false
+    },
+    "number": {
+      "vertical": "bottom",
+      "horizontal": "end",
+      "enabled": false
+    },
+    "checkbox": {
+      "vertical": "top",
+      "horizontal": "start",
+      "enabled": false
+    },
+    "date": {
+      "vertical": "top",
+      "horizontal": "start",
+      "enabled": false
+    },
+    "datetime": {
+      "vertical": "top",
+      "horizontal": "start",
+      "enabled": false
+    }
+  }
 }

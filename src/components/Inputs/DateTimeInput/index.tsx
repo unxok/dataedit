@@ -7,7 +7,7 @@ import {
 import { PropertySuggester } from "../../PropertySuggester";
 import { useEnter } from "../../../hooks/useEnter";
 import { LinkTableData } from "@/components/LinkTableData";
-import { checkIsLink } from "@/lib/utils";
+import { checkIsLink, getPropertyType } from "@/lib/utils";
 
 export const DateTimeInput = ({
 	propertyValue,
@@ -40,7 +40,13 @@ export const DateTimeInput = ({
 					<span
 						className="flex w-full"
 						style={{
-							justifyContent: plugin.settings.horizontalAlignment,
+							justifyContent: plugin.settings.alignmentByType[
+								getPropertyType(propertyName)
+							]?.enabled
+								? plugin.settings.alignmentByType[
+										getPropertyType(propertyName)
+									].horizontal
+								: plugin.settings.horizontalAlignment,
 						}}
 						onClick={() => setIsEditing(true)}
 						onFocus={() => setIsEditing(true)}
