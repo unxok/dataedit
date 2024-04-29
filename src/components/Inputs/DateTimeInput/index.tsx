@@ -32,7 +32,7 @@ export const DateTimeInput = ({
 	})();
 	const parsedDateString = isTime
 		? isoString.substring(0, 16)
-		: isoString.substring(0, 9);
+		: isoString.substring(0, 10);
 
 	const [value, setValue] = useState(parsedDateString);
 
@@ -98,9 +98,10 @@ export const DateTimeInput = ({
 					}}
 					onBlur={async (e) => {
 						setIsEditing(false);
+						const str = new Date(value ?? undefined).toISOString();
 						const newVal = isTime
-							? new Date(e.target.value).toLocaleString()
-							: new Date(e.target.value).toLocaleDateString();
+							? str.substring(0, 16)
+							: str.substring(0, 10);
 						updateMetaData(propertyName, newVal, file.path);
 					}}
 				></input>

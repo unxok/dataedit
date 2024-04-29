@@ -22,7 +22,7 @@ cssclasses:
   - classB
   - classC
 test: 
-date: 2/2/2004
+date: 1970-01-01
 ---
 ## Dataedit
 

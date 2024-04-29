@@ -7,7 +7,7 @@ some-list:
   - asdrf
 tags: []
 date: 
-datetime: 
+datetime: 1970-01-01T08:00
 ---
 #test
 

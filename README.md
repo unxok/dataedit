@@ -63,17 +63,10 @@ SORT file.name
 > [!WARNING]
 > The exceptions to the statement above are:
 >
-> -   You <u>cannot</u> use `WITHOUT ID`
-> -   You <u>cannot</u> specify column aliases in the query (on roadmap)
-> -   I haven't tried it yet, but I am pretty sure `GROUP BY` will <u>not</u> work
-
-```sql
-TABLE WITHOUT ID progress, category, file.link AS Name
-FROM #tasks
-SORT file.name
-
-...this will NOT work
-```
+> -   You <u>must</u> include the note link as one of the columns.
+>     -   the 'File' column is included by default, but if you use `TABLE WITHOUT ID`, then you <u>must</u> include `file.link`.
+> -   You <u>cannot</u> specify column aliases in the query (you can set up aliases in this plugin's settings though)
+> -   I haven't tried it yet, but I am pretty sure `GROUP BY` will <u>not</u> work (on roadmap)
 
 #### Javascript expression
 
@@ -82,7 +75,7 @@ SORT file.name
 -   _Technically_ you don't have to use dataview here, but currently I rely on some data types produced by it so it won't work properly
 
 ````js
-// surround with ```dataedit ... ``` like normal
+// surround with ```dataedit <newline> ``` like normal
 const data = dv
 	.pages("#tasks")
 	.map((p) => [p.file.link, p.progress, p.category]);
@@ -108,7 +101,8 @@ return { headers: ["Name", "Progress", "Category"], values: data };
     -   [x] Ability to rename file
 -   [x] Links from query to frontmatter (to show in graph view, etc)
 -   [ ] Switch to Vite
-    -   bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite
+    -   ~~bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite~~
+        -   Yup, esbuild didn't have minify on lol
 -   [ ] Config options (YAML in a query, JSON in js expression)
     -   [x] Auto suggest-- boolean. default true
     -   [x] Show type icons-- boolean. default true
@@ -116,7 +110,7 @@ return { headers: ["Name", "Progress", "Category"], values: data };
         -   [x] property name-- string. Default 'dataedit-links'. Leave blank to turn off this feature
     -   [x] CSS classname-- string
     -   [x] Column aliases-- an array
-    -   [] Vertical alignment
+    -   [ ] Vertical alignment
         -   [x] Single value-- applies to all cells
         -   [ ] Array-- applies to specific collumns
     -   [ ] Horizontal alignment
@@ -130,7 +124,9 @@ return { headers: ["Name", "Progress", "Category"], values: data };
 -   [x] Allow for `TABLE WITHOUT ID` as long as `file.link` column is included
 -   [x] Reset plugin settings to default button
 -   [ ] pagination (set default limit per page in config)
--   [ ] image embedsmarkdown rendering?
+-   [ ] image embeds markdown rendering?
+-   [ ] Allow `GROUP BY` and JS expression grouping
+-   [ ]
 
 # Contributing
 
