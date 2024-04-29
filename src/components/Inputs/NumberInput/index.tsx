@@ -19,6 +19,7 @@ export const NumberInput = ({
 	propertyName,
 	file,
 	plugin,
+	config,
 	setQueryResults,
 	updateMetaData,
 }: CommonEditableProps) => {
@@ -56,19 +57,19 @@ export const NumberInput = ({
 				<span
 					className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt"
 					style={{
-						justifyContent: plugin.settings.alignmentByType[
+						justifyContent: config.alignmentByType[
 							getPropertyType(propertyName)
 						]?.enabled
-							? plugin.settings.alignmentByType[
+							? config.alignmentByType[
 									getPropertyType(propertyName)
 								].horizontal
-							: plugin.settings.horizontalAlignment,
+							: config.horizontalAlignment,
 					}}
 					tabIndex={0}
 					onClick={() => setIsEditing(true)}
 					onFocus={() => setIsEditing(true)}
 				>
-					{propertyValue ?? plugin.settings.emptyValueDisplay}
+					{propertyValue ?? config.emptyValueDisplay}
 				</span>
 			)}
 			{isEditing && (
@@ -100,7 +101,7 @@ export const NumberInput = ({
 					className="m-0 border-transparent bg-transparent p-0 text-start"
 				/>
 			)}
-			{plugin.settings.showNumberButtons && (
+			{config.showNumberButtons && (
 				<>
 					<span className="flex w-full items-center justify-center gap-1 p-2">
 						<button>

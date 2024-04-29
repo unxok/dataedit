@@ -30,6 +30,8 @@ date: 1970-01-01
 TABLE WITHOUT ID test, some-list, number, tags, date, checkboxtest, datetime, date, file.link
 FROM #test
 SORT file.name
+---
+showTypeIcons: false
 ```
 
 

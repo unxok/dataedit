@@ -8,6 +8,7 @@ export const CheckboxInput = ({
 	propertyValueIndex,
 	propertyName,
 	file,
+	config,
 	plugin,
 	setQueryResults,
 	updateMetaData,
@@ -16,13 +17,12 @@ export const CheckboxInput = ({
 		<span
 			className="flex items-center p-2"
 			style={{
-				justifyContent: plugin.settings.alignmentByType[
+				justifyContent: config.alignmentByType[
 					getPropertyType(propertyName)
 				]?.enabled
-					? plugin.settings.alignmentByType[
-							getPropertyType(propertyName)
-						].horizontal
-					: plugin.settings.horizontalAlignment,
+					? config.alignmentByType[getPropertyType(propertyName)]
+							.horizontal
+					: config.horizontalAlignment,
 			}}
 		>
 			<input

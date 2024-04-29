@@ -12,9 +12,9 @@ export /**
  */
 const toPlainArray = (arr: any) => {
 	try {
-		console.log("preArray: ", arr);
+		// console.log("preArray: ", arr);
 		const postArr = arr.array();
-		console.log("postArr: ", postArr);
+		// console.log("postArr: ", postArr);
 		return postArr;
 	} catch (e) {
 		return arr;

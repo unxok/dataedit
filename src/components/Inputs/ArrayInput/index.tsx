@@ -88,6 +88,7 @@ const ArrayInput = (
 		propertyValueArr,
 		propertyName,
 		file,
+		config,
 		setQueryResults,
 		updateMetaData,
 		itemValue,
@@ -174,7 +175,7 @@ const ArrayInput = (
 							onClick={() => setIsEditing(true)}
 							onFocus={() => setIsEditing(true)}
 						>
-							{itemValue || plugin.settings.emptyValueDisplay}
+							{itemValue || config.emptyValueDisplay}
 						</span>
 					)}
 				</span>

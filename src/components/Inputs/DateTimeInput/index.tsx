@@ -11,12 +11,10 @@ import { checkIsLink, getPropertyType } from "@/lib/utils";
 
 export const DateTimeInput = ({
 	propertyValue,
-	propertyValueArrIndex,
-	propertyValueIndex,
 	propertyName,
 	file,
 	plugin,
-	setQueryResults,
+	config,
 	updateMetaData,
 	isTime,
 }: CommonEditableProps & { isTime: boolean }) => {
@@ -48,19 +46,19 @@ export const DateTimeInput = ({
 					<span
 						className="flex w-full"
 						style={{
-							justifyContent: plugin.settings.alignmentByType[
+							justifyContent: config.alignmentByType[
 								getPropertyType(propertyName)
 							]?.enabled
-								? plugin.settings.alignmentByType[
+								? config.alignmentByType[
 										getPropertyType(propertyName)
 									].horizontal
-								: plugin.settings.horizontalAlignment,
+								: config.horizontalAlignment,
 						}}
 						onClick={() => setIsEditing(true)}
 						onFocus={() => setIsEditing(true)}
 					>
 						{!propertyValue
-							? plugin.settings.emptyValueDisplay
+							? config.emptyValueDisplay
 							: isTime
 								? new Date(propertyValue).toLocaleString()
 								: new Date(propertyValue).toLocaleDateString()}

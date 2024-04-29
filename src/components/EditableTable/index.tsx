@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { MarkdownPostProcessorContext, Plugin } from "obsidian";
 import {
+	MarkdownPostProcessorContext,
+	Notice,
+	Plugin,
+	parseYaml,
+} from "obsidian";
+import {
+	addNewKeyValues,
 	checkIsLink,
 	getPropertyType,
 	iconStyle,
@@ -24,14 +30,16 @@ import {
 } from "../Inputs";
 import { LinkTableData } from "../LinkTableData";
 import DataEdit from "@/main";
-import { Settings } from "../PluginSettings";
+import { Settings, SettingsSchema, defaultSettings } from "../PluginSettings";
 
 export const EditableTable = ({
 	data,
+	// config,
 	plugin,
 	ctx,
 }: {
 	data: string;
+	// config: string;
 	plugin: DataEdit;
 	ctx: MarkdownPostProcessorContext;
 }) => {
@@ -39,8 +47,40 @@ export const EditableTable = ({
 
 	console.log("got settings: ", plugin.settings);
 
+	const reg = new RegExp(/\n^---$\n/gm);
+	const [query, config] = data.split(reg);
+
+	const potentialConfigJson: () => Record<string, any> = (() => {
+		try {
+			return parseYaml(config);
+		} catch (e) {
+			return {};
+		}
+	})();
+
+	console.log("potential json: ", potentialConfigJson);
+
+	const parsedConfig = (() => {
+		const configWithSettings = addNewKeyValues(
+			potentialConfigJson,
+			plugin.settings,
+		);
+		console.log("configWithSettings: ", configWithSettings);
+		const parsed = SettingsSchema.safeParse(configWithSettings);
+		if (!parsed.success) {
+			const msg =
+				"Invalid block config detected. Reverting to use the plugin settings";
+			new Notice(msg);
+			console.error(msg);
+			return plugin.settings;
+		}
+		return parsed.data;
+	})();
+
+	console.log("parsed config: ", parsedConfig);
+
 	useEffect(() => {
-		console.log("query results: ", queryResults);
+		// console.log("query results: ", queryResults);
 		const asyncDoQuery = async () => {
 			await doQuery();
 			await updateDataeditLinks();
@@ -68,13 +108,13 @@ export const EditableTable = ({
 	const doQuery = async () => {
 		// @ts-ignore
 		const dv = app.plugins.plugins.dataview.api;
-		if (data.split(" ")[0] !== "TABLE") {
-			const result = eval(`(() => {${data}})()`);
+		if (query.split(" ")[0] !== "TABLE") {
+			const result = eval(`(() => {${query}})()`);
 			// console.log("result: ", result);
 			if (!result) return;
 			return setQueryResults(result);
 		}
-		const qr = await dv.query(data);
+		const qr = await dv.query(query);
 		if (!qr.successful) {
 			return;
 		}
@@ -83,7 +123,7 @@ export const EditableTable = ({
 	};
 
 	const updateDataeditLinks = async () => {
-		const propName = plugin.settings.queryLinksPropertyName;
+		const propName = parsedConfig.queryLinksPropertyName;
 		if (!propName) return;
 		const values = queryResults?.values;
 		if (!values) return;
@@ -98,7 +138,7 @@ export const EditableTable = ({
 		if (!file) return;
 		await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
 			frontmatter[propName] = readyLinks;
-			console.log("fm: ", frontmatter);
+			// console.log("fm: ", frontmatter);
 		});
 	};
 
@@ -127,12 +167,12 @@ export const EditableTable = ({
 			<table
 				className={
 					"dataedit max-w-full whitespace-nowrap " +
-					plugin.settings.cssClassName
+					parsedConfig.cssClassName
 				}
 			>
 				<TableHead
 					queryResults={queryResults}
-					settings={plugin.settings}
+					settings={parsedConfig}
 				/>
 				<tbody className="">
 					{queryResults.values.map(
@@ -150,7 +190,7 @@ export const EditableTable = ({
 											}
 											className="relative"
 											style={{
-												verticalAlign: plugin.settings
+												verticalAlign: parsedConfig
 													.alignmentByType[
 													getPropertyType(
 														queryResults.headers[
@@ -158,7 +198,7 @@ export const EditableTable = ({
 														],
 													)
 												]?.enabled
-													? plugin.settings
+													? parsedConfig
 															.alignmentByType[
 															getPropertyType(
 																queryResults
@@ -167,8 +207,7 @@ export const EditableTable = ({
 																],
 															)
 														].vertical
-													: plugin.settings
-															.verticalAlignment,
+													: parsedConfig.verticalAlignment,
 											}}
 										>
 											<EditableTableData
@@ -200,6 +239,7 @@ export const EditableTable = ({
 													]
 												}
 												plugin={plugin}
+												config={parsedConfig}
 												setQueryResults={
 													setQueryResults
 												}
@@ -224,11 +264,11 @@ export const EditableTable = ({
 };
 
 const EditableTableData = (props: CommonEditableProps) => {
-	const { propertyName, file, plugin } = props;
+	const { propertyName, file, plugin, config } = props;
 	const propertyType = getPropertyType(propertyName);
 
 	if (propertyName.toLowerCase() === "file") {
-		return <FileInput file={file} plugin={plugin} />;
+		return <FileInput file={file} plugin={plugin} config={config} />;
 	}
 
 	if (propertyType === "multitext" || propertyType === "tags") {
@@ -267,7 +307,7 @@ const TableHead = ({
 		const possibleArr = settings.columnAliases.find(
 			(arr) => arr[0] === propertyName,
 		);
-		console.log("possibleArr", possibleArr);
+		// console.log("possibleArr", possibleArr);
 		if (!possibleArr) return;
 		return possibleArr[1];
 	};

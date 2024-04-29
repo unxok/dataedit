@@ -19,10 +19,9 @@ import { Suggest, createSuggest, useSuggest } from "@/hooks/useSuggest";
 export const StringInput = (props: CommonEditableProps) => {
 	const {
 		propertyValue,
-		propertyValueArrIndex,
-		propertyValueIndex,
 		propertyName,
 		file,
+		config,
 		setQueryResults,
 		updateMetaData,
 		plugin,
@@ -56,13 +55,13 @@ export const StringInput = (props: CommonEditableProps) => {
 						<span
 							className="flex w-full"
 							style={{
-								justifyContent: plugin.settings.alignmentByType[
+								justifyContent: config.alignmentByType[
 									getPropertyType(propertyName)
 								]?.enabled
-									? plugin.settings.alignmentByType[
+									? config.alignmentByType[
 											getPropertyType(propertyName)
 										].horizontal
-									: plugin.settings.horizontalAlignment,
+									: config.horizontalAlignment,
 							}}
 							onClick={() => {
 								ref?.current?.focus();
@@ -73,7 +72,7 @@ export const StringInput = (props: CommonEditableProps) => {
 								setIsEditing(true);
 							}}
 						>
-							{propertyValue || plugin.settings.emptyValueDisplay}
+							{propertyValue || config.emptyValueDisplay}
 						</span>
 					)}
 				</span>

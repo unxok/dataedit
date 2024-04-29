@@ -45,7 +45,7 @@ const App = (props: {
 	const [ErrMsg, setErrMsg] = useState<() => React.JSX.Element>(undefined);
 
 	useEffect(() => {
-		new Notice("App rendered");
+		// new Notice("App rendered");
 		(async () => {
 			const b = await loadDependencies();
 			if (!b) return setErrMsg(() => RequiedDepsError);
@@ -66,10 +66,34 @@ const App = (props: {
 		);
 	}
 
+	const reg = new RegExp(/\n^---$\n/gm);
+	const [query, config] = data.split(reg);
+
+	const updateConfig = async (newConfig: string) => {
+		const f = plugin.app.vault.getFileByPath(ctx.sourcePath);
+		const contents = await plugin.app.vault.read(f);
+		const contentArr = contents.split("\n");
+		// @ts-ignore
+		const { lineStart, lineEnd } = ctx.getSectionInfo(ctx.el);
+		const preBlockContent = contentArr.slice(0, lineStart);
+		const postBlockContent = contentArr.slice(lineEnd + 1);
+		// console.log("pre: ", preBlockContent);
+		// console.log("post: ", postBlockContent);
+		const newContent = `${preBlockContent.join("\n")}\n${query}\n---\n${newConfig}\n${postBlockContent.join("\n")}`;
+		console.log("# new content\n", newContent);
+	};
+
+	// updateConfig("new: config");
+
 	return (
 		<div id="twcss">
 			<div className="w-full overflow-x-scroll">
-				<EditableTable data={data} plugin={plugin} ctx={ctx} />
+				<EditableTable
+					data={data}
+					// config={config}
+					plugin={plugin}
+					ctx={ctx}
+				/>
 			</div>
 		</div>
 	);

@@ -1,3 +1,4 @@
+import { Settings } from "@/components/PluginSettings";
 import DataEdit from "@/main";
 import { Plugin } from "obsidian";
 
@@ -28,6 +29,7 @@ export type CommonEditableProps = {
 	propertyName: string;
 	file: DataviewFile;
 	plugin: DataEdit;
+	config: Settings;
 	setQueryResults: React.Dispatch<
 		React.SetStateAction<QueryResults | undefined>
 	>;

@@ -103,24 +103,21 @@ return { headers: ["Name", "Progress", "Category"], values: data };
 -   [ ] Switch to Vite
     -   ~~bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite~~
         -   Yup, esbuild didn't have minify on lol
--   [ ] Config options (YAML in a query, JSON in js expression)
+-   [x] Config options
     -   [x] Auto suggest-- boolean. default true
     -   [x] Show type icons-- boolean. default true
     -   [x] Links from query to frontmatter
         -   [x] property name-- string. Default 'dataedit-links'. Leave blank to turn off this feature
     -   [x] CSS classname-- string
     -   [x] Column aliases-- an array
-    -   [ ] Vertical alignment
-        -   [x] Single value-- applies to all cells
-        -   [ ] Array-- applies to specific collumns
-    -   [ ] Horizontal alignment
-        -   [x] Single value-- applies to all cells
-        -   [ ] Array-- applies to specific collumns
+    -   [x] Vertical alignment-- top, middle, bottom
+        -   Single value-- applies to all cells
+    -   [x] Horizontal alignment-- left (start), center, right (end)
+        -   Single value-- applies to all cells
 -   ~~[ ] Specify default config for codeblocks from plugin settings~~
     -   Codeblocks will inherit from plugin settings unless overriden specifically
--   [ ] Allow for extra config in each codeblock
-    -   [ ] Add `---` to the end of the query where you can use yaml to specify config
-    -   [ ] Add an extra key `config` to the returned object to specify in js expressions
+-   [x] Allow for extra config in each codeblock
+    -   [x] Add `---` to the end of the query where you can use yaml to specify config
 -   [x] Allow for `TABLE WITHOUT ID` as long as `file.link` column is included
 -   [x] Reset plugin settings to default button
 -   [ ] pagination (set default limit per page in config)
