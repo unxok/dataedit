@@ -1176,7 +1176,7 @@ const AlignmentByType = <T,>({
 }) => {
 	return (
 		<SettingRoot className="flex flex-col gap-3">
-			<SettingInfo>
+			<SettingInfo className="m-0 w-full">
 				<SettingName>Alignment by type</SettingName>
 				<SettingDescription>
 					<span>

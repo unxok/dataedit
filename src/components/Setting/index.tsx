@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { App, Setting } from "obsidian";
 import { useSuggest } from "@/hooks/useSuggest";
+import { cn } from "@/lib/utils";
 
 const SettingRoot = ({
 	children,
@@ -14,7 +15,7 @@ const SettingRoot = ({
 }: {
 	children: ReactNode;
 	className?: string;
-}) => <div className={"setting-item " + className ?? ""}>{children}</div>;
+}) => <div className={cn("setting-item", className)}>{children}</div>;
 
 const SettingInfo = ({
 	children,
@@ -22,11 +23,15 @@ const SettingInfo = ({
 }: {
 	children: ReactNode;
 	className?: string;
-}) => <div className={"setting-item-info " + className ?? ""}>{children}</div>;
+}) => <div className={cn("setting-item-info", className)}>{children}</div>;
 
-const SettingName = ({ children }: { children: ReactNode }) => (
-	<div className="setting-item-name">{children}</div>
-);
+const SettingName = ({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) => <div className={cn("setting-item-name", className)}>{children}</div>;
 
 const SettingDescription = ({
 	children,
@@ -35,9 +40,7 @@ const SettingDescription = ({
 	children: ReactNode;
 	className?: string;
 }) => (
-	<div className={"setting-item-description " + className ?? ""}>
-		{children}
-	</div>
+	<div className={cn("setting-item-description", className)}>{children}</div>
 );
 
 const SettingControl = ({
@@ -46,9 +49,7 @@ const SettingControl = ({
 }: {
 	children: ReactNode;
 	className?: string;
-}) => (
-	<div className={"setting-item-control " + className ?? ""}>{children}</div>
-);
+}) => <div className={cn("setting-item-control", className)}>{children}</div>;
 
 const SettingToggle = ({
 	checked,
