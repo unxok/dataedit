@@ -8,7 +8,9 @@ This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
 
 This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin to query frontmatter metadata. This plugin would not be possible without Dataview, so please show the creators some love for all their hardwork!
 
-> [!NOTE] A special note about Datacore
+> [!NOTE]
+> ### A special note about Datacore
+> 
 > The existence of the [Datacore](https://github.com/blacksmithgu/datacore) plugin, made by [blacksmithgu](https://github.com/blacksmithgu) (creator of Dataview) may <u>make this plugin irrelevent</u>, as it aims to achieve (likely) very similar functionality that this plugin implements, along with creating a more optimized query engine.
 >
 > _However_, The Datacore plugin was [created 2 years](https://github.com/blacksmithgu/datacore/commits/master/README.md) ago and is not yet usuable for the public. It's roadmap also hasn't been [updated since 9 months ago](https://github.com/blacksmithgu/datacore/commits/master/ROADMAP.md) at the time of writing this. So, I made this to get the editing functionality _now_ without having to wait for a release from Datacore.
@@ -35,7 +37,7 @@ Thank you!!
 -   Property type support
 -   Auto suggest on text and multitext properties
 -   Links and tags are clickable and editable
--   **_Highly configurable_** (see [Customization](#Customization) section below)
+-   **_Highly configurable_** (see [Customization](https://github.com/unxok/dataedit/edit/main/README.md#customization) section below)
 
 ![demo gif](gifs/demo.gif)
 
