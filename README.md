@@ -275,6 +275,8 @@ Below are what the default plugin settings are when you first install the plugin
             -   [ ] color-- string (valid css color)
         -   [ ] collapsible columns (persisted state)
         -   [ ] custom swim lanes? (may or may not do this)
+- [ ] inline property support
+- [ ] select cols to show totals for
 
 # Contributing
 
