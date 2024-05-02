@@ -68,6 +68,7 @@ const Alignment = z.object({
 
 export const SettingsSchema = z.object({
 	autoSuggest: z.boolean(),
+	renderMarkdown: z.boolean(),
 	showNumberButtons: z.boolean(),
 	showTypeIcons: z.boolean(),
 	emptyValueDisplay: z.string(),
@@ -90,6 +91,7 @@ export type Settings = z.infer<typeof SettingsSchema>;
 
 export const defaultSettings: Settings = {
 	autoSuggest: true,
+	renderMarkdown: true,
 	showNumberButtons: true,
 	showTypeIcons: true,
 	emptyValueDisplay: "-",
@@ -284,6 +286,10 @@ export const PluginSettings = ({
 					<AutoSuggest
 						value={form.autoSuggest}
 						onChange={(b) => updateForm("autoSuggest", b)}
+					/>
+					<RenderMarkdown
+						value={form.renderMarkdown}
+						onChange={(b) => updateForm("renderMarkdown", b)}
 					/>
 					<ShowNumberButtons
 						value={form.showNumberButtons}
@@ -602,6 +608,10 @@ export const BlockSettings = ({
 							value={form.autoSuggest}
 							onChange={(b) => updateForm("autoSuggest", b)}
 						/>
+						<RenderMarkdown
+							value={form.renderMarkdown}
+							onChange={(b) => updateForm("renderMarkdown", b)}
+						/>
 						<ShowNumberButtons
 							value={form.showNumberButtons}
 							onChange={(b) => updateForm("showNumberButtons", b)}
@@ -784,6 +794,50 @@ const AutoSuggest = <T,>({
 					>
 						<CircleHelp size={"1em"} className="text-accent" />
 					</div>
+				</div>
+			</SettingDescription>
+		</SettingInfo>
+		<SettingControl>
+			<SettingToggle
+				checked={value as boolean}
+				onCheckedChange={onChange as (b: boolean) => void}
+			/>
+		</SettingControl>
+	</SettingRoot>
+);
+
+const RenderMarkdown = <T,>({
+	value,
+	onChange,
+}: {
+	value: T;
+	onChange: (value: T) => void;
+}) => (
+	<SettingRoot>
+		<SettingInfo>
+			<SettingName>Render markdown</SettingName>
+			<SettingDescription>
+				<div>
+					Render markdown syntax plain text to HTML when not editing
+				</div>
+				<br />
+				<div className="flex items-center gap-1">
+					<b>Note:</b>
+					<span>
+						This is <i>not</i> live preview markdown.
+					</span>
+					<div
+						className="flex items-center hover:cursor-help"
+						aria-label="I have almost figured out the best way to implement live preview markdown editing, but not yet!"
+					>
+						<CircleHelp size={"1em"} className="text-accent" />
+					</div>
+				</div>
+				<br />
+				<div>
+					Also, clicking links and tags will edit the cell currently
+					rather than allowing you to follow navigation, unless the{" "}
+					<i>only</i> thing in the cell is the link
 				</div>
 			</SettingDescription>
 		</SettingInfo>

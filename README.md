@@ -9,8 +9,9 @@ This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
 This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin to query frontmatter metadata. This plugin would not be possible without Dataview, so please show the creators some love for all their hardwork!
 
 > [!NOTE]
+>
 > ### A special note about Datacore
-> 
+>
 > The existence of the [Datacore](https://github.com/blacksmithgu/datacore) plugin, made by [blacksmithgu](https://github.com/blacksmithgu) (creator of Dataview) may <u>make this plugin irrelevent</u>, as it aims to achieve (likely) very similar functionality that this plugin implements, along with creating a more optimized query engine.
 >
 > _However_, The Datacore plugin was [created 2 years](https://github.com/blacksmithgu/datacore/commits/master/README.md) ago and is not yet usuable for the public. It's roadmap also hasn't been [updated since 9 months ago](https://github.com/blacksmithgu/datacore/commits/master/ROADMAP.md) at the time of writing this. So, I made this to get the editing functionality _now_ without having to wait for a release from Datacore.
@@ -148,6 +149,7 @@ const Alignment = z.object({
 
 export const SettingsSchema = z.object({
 	autoSuggest: z.boolean(),
+	renderMarkdown: z.boolean(),
 	showNumberButtons: z.boolean(),
 	showTypeIcons: z.boolean(),
 	emptyValueDisplay: z.string(),
@@ -179,6 +181,7 @@ Below are what the default plugin settings are when you first install the plugin
 ```ts
 {
 	autoSuggest: true,
+    renderMarkdown: true,
 	showNumberButtons: true,
 	showTypeIcons: true,
 	emptyValueDisplay: "-",
@@ -226,6 +229,54 @@ Below are what the default plugin settings are when you first install the plugin
 
 # Roadmap
 
+Items will be moved to the appropriate release once I start working on them or have them planned out
+
+-   [ ] Switch to Vite
+    -   ~~bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite~~
+        -   Yup, esbuild didn't have minify on lol so I might not do this
+-   [ ] Allow `GROUP BY` and JS expression grouping
+-   [ ] Alternative views to table
+    -   [ ] cards
+        -   [ ] custom rows and columns count
+    -   [ ] kanban
+        -   [ ] custom columns
+            -   [ ] property name-- string (will display alias if set in settings/config)
+            -   [ ] show count-- boolean
+            -   [ ] color-- string (valid css color)
+        -   [ ] collapsible columns (persisted state)
+        -   [ ] custom swim lanes? (may or may not do this)
+-   [ ] Live preview markdown editing
+-   [ ] Date display options in settings and config
+
+# Releases
+
+## 0.0.3 (TBD upcoming)
+
+-   [ ] select cols to show totals for
+-   [ ] nested property support
+-   [ ] pagination (set default limit per page in config)
+
+## 0.0.2 (TBD upcoming)
+
+-   [x] Render markdown
+    -   Render markdown as html in text and multitext cells
+    -   Will not be live-preview editable (working on that for another release)
+    -   Links and tags are not clickable (unless a link is the only thing in the
+    -   cell)
+    -   Basic support for image embed via markdown embed link
+        -   I'm not super happy with the way it sizes the image, so I will continue to work on this
+    -   Can turn off feature in plugin settings and/or codeblock config
+-   [x] Fixed case sensitivity issue
+    -   Previously, I incorrectly assumed that `TABLE` in a Dataview query must always be capitalized. Now it works with any case as long as `TABLE` (or `tAblE` or whatever) is at the start of the query
+-   [ ] Inline properties
+    -   Inline properties can now be updated from Dataedit tables
+    -   Can be turned on in plugin settings and/or codeblock config
+        -   Default **OFF** due to it having potential performance impacts
+
+## [0.0.1](https://github.com/unxok/dataedit/releases/tag/0.0.1) (2024-05-30)
+
+Initial beta release!
+
 -   [x] Support different property types
     -   [x] string
         -   [x] auto suggest
@@ -241,9 +292,6 @@ Below are what the default plugin settings are when you first install the plugin
         -   [x] Issue with not filling value from property. It does update though
     -   [x] Ability to rename file
 -   [x] Links from query to frontmatter (to show in graph view, etc)
--   [ ] Switch to Vite
-    -   ~~bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite~~
-        -   Yup, esbuild didn't have minify on lol
 -   [x] Config options
     -   [x] Auto suggest-- boolean. default true
     -   [x] Show type icons-- boolean. default true
@@ -262,21 +310,6 @@ Below are what the default plugin settings are when you first install the plugin
     -   [x] Setting button to add/edit config from a dialog rather than manually in code block (will automatically update code block and add yaml config)
 -   [x] Allow for `TABLE WITHOUT ID` as long as `file.link` column is included
 -   [x] Reset plugin settings to default button
--   [ ] pagination (set default limit per page in config)
--   [ ] image embeds markdown rendering?
--   [ ] Allow `GROUP BY` and JS expression grouping
--   [ ] Alternative views to table
-    -   [ ] cards
-        -   [ ] custom rows and columns count
-    -   [ ] kanban
-        -   [ ] custom columns
-            -   [ ] property name-- string (will display alias if set in settings/config)
-            -   [ ] show count-- boolean
-            -   [ ] color-- string (valid css color)
-        -   [ ] collapsible columns (persisted state)
-        -   [ ] custom swim lanes? (may or may not do this)
-- [ ] inline property support
-- [ ] select cols to show totals for
 
 # Contributing
 

@@ -1,8 +1,9 @@
 {
   "autoSuggest": true,
+  "renderMarkdown": true,
   "showNumberButtons": true,
   "showTypeIcons": true,
-  "emptyValueDisplay": "-",
+  "emptyValueDisplay": "\\-",
   "queryLinksPropertyName": "dataedit-links",
   "cssClassName": "",
   "columnAliases": [

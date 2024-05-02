@@ -17,6 +17,7 @@ import { useKeyboardClick } from "../../../hooks/useKeyboardClick";
 import { PropertySuggester } from "@/components/PropertySuggester";
 import { LinkTableData } from "@/components/LinkTableData";
 import { Suggest } from "@/hooks/useSuggest";
+import { Markdown } from "@/components/Markdown";
 
 export const ArrayInputWrapper = (props: CommonEditableProps) => {
 	const {
@@ -134,16 +135,35 @@ const ArrayInput = (
 			{!isEditing && (
 				<span className="flex h-full w-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
 					{isLink ? (
-						<>
-							<LinkTableData file={itemValue} />
-							<span
-								className="w-full"
-								onClick={() => setIsEditing(true)}
-								onFocus={() => setIsEditing(true)}
-							>
-								&nbsp;
-							</span>
-						</>
+						// @ts-ignore
+						itemValue.embed ? (
+							<div className="flex h-full flex-col">
+								<Markdown
+									app={plugin.app}
+									filePath={file.path}
+									// @ts-ignore
+									plainText={itemValue.markdown()}
+								/>
+								<span
+									className=""
+									onClick={() => setIsEditing(true)}
+									onFocus={() => setIsEditing(true)}
+								>
+									&nbsp;
+								</span>
+							</div>
+						) : (
+							<>
+								<LinkTableData file={itemValue} />
+								<span
+									className="w-full"
+									onClick={() => setIsEditing(true)}
+									onFocus={() => setIsEditing(true)}
+								>
+									&nbsp;
+								</span>
+							</>
+						)
 					) : propertyName.toLowerCase() === "tags" ? (
 						<>
 							<a
@@ -175,7 +195,17 @@ const ArrayInput = (
 							onClick={() => setIsEditing(true)}
 							onFocus={() => setIsEditing(true)}
 						>
-							{itemValue || config.emptyValueDisplay}
+							{plugin.settings.renderMarkdown ? (
+								<Markdown
+									app={plugin.app}
+									filePath={file.path}
+									plainText={
+										itemValue || config.emptyValueDisplay
+									}
+								/>
+							) : (
+								itemValue || config.emptyValueDisplay
+							)}
 						</span>
 					)}
 				</span>

@@ -17,6 +17,10 @@ import { Error } from "./Error";
 import { EditableTable } from "./EditableTable";
 import { Settings } from "./PluginSettings";
 import { Markdown } from "./Markdown";
+import EmbeddableMarkdownEditorComponent, {
+	MarkdownEditor,
+	TestMdEditor,
+} from "./MarkdownEditor";
 
 const RequiedDepsError = () => (
 	<>
@@ -86,6 +90,8 @@ const App = (props: {
 
 	// updateConfig("new: config");
 
+	const [value, setValue] = useState("# testing");
+
 	return (
 		<div id="twcss">
 			<div className="w-full overflow-x-scroll">
@@ -96,11 +102,21 @@ const App = (props: {
 					ctx={ctx}
 				/>
 			</div>
-			<Markdown
+			{/* <Markdown
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={`# Hello\n- *how*\n- are **you**`}
-			/>
+				plainText={`# Hello\n- *how*\n- are **you**\n [[Welcomeee]]`}
+			/> */}
+			{/* <MarkdownEditor
+				app={plugin.app}
+				plainText={`# Hello\n- *how*\n- are **you**\n [[Welcomeee]]`}
+			/> */}
+			{/* <EmbeddableMarkdownEditorComponent
+				app={plugin.app}
+				value={value}
+				onChange={(v) => setValue(v)}
+			/> */}
+			{/* <TestMdEditor app={plugin.app} /> */}
 		</div>
 	);
 };

@@ -13,6 +13,7 @@ checkboxtest: true
 datetime: 2005-02-02T08:20
 number: 125
 dataedit-links:
+  - "![[demo.gif|demo.gif]]"
   - "[[Welcomeee.md|Welcomeee]]"
   - "[[test noteee.md|test noteee]]"
   - "[[new file name.md|new file name]]"
@@ -20,7 +21,7 @@ cssclasses:
   - classA
   - classB
   - classC
-test: another value
+test: "![[demo.gif|demo.gif]]"
 date: 1970-01-01
 ---
 ```dataedit

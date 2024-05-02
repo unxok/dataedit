@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.no-p-margin > p {
+	margin: 0;
+}

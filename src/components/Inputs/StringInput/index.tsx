@@ -15,6 +15,7 @@ import { useEnter, useEnterEl } from "../../../hooks/useEnter";
 import { LinkTableData } from "@/components/LinkTableData";
 import { checkIsLink, getPropertyType } from "@/lib/utils";
 import { Suggest, createSuggest, useSuggest } from "@/hooks/useSuggest";
+import { Markdown } from "@/components/Markdown";
 
 export const StringInput = (props: CommonEditableProps) => {
 	const {
@@ -39,18 +40,35 @@ export const StringInput = (props: CommonEditableProps) => {
 	return (
 		<div className="relative">
 			{!isEditing && (
-				<span className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
+				<span className="flex h-full items-center whitespace-nowrap p-2 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
 					{isLink ? (
-						<>
-							<LinkTableData file={propertyValue} />
-							<span
-								className="w-full"
-								onClick={() => setIsEditing(true)}
-								onFocus={() => setIsEditing(true)}
-							>
-								&nbsp;
-							</span>
-						</>
+						propertyValue.embed ? (
+							<div className="flex h-full flex-col">
+								<Markdown
+									app={plugin.app}
+									filePath={file.path}
+									plainText={propertyValue.markdown()}
+								/>
+								<span
+									className=""
+									onClick={() => setIsEditing(true)}
+									onFocus={() => setIsEditing(true)}
+								>
+									&nbsp;
+								</span>
+							</div>
+						) : (
+							<>
+								<LinkTableData file={propertyValue} />
+								<span
+									className="w-full"
+									onClick={() => setIsEditing(true)}
+									onFocus={() => setIsEditing(true)}
+								>
+									&nbsp;
+								</span>
+							</>
+						)
 					) : (
 						<span
 							className="flex w-full"
@@ -72,7 +90,19 @@ export const StringInput = (props: CommonEditableProps) => {
 								setIsEditing(true);
 							}}
 						>
-							{propertyValue || config.emptyValueDisplay}
+							{/* {propertyValue || config.emptyValueDisplay} */}
+							{plugin.settings.renderMarkdown ? (
+								<Markdown
+									app={plugin.app}
+									filePath={file.path}
+									plainText={
+										propertyValue ||
+										config.emptyValueDisplay
+									}
+								/>
+							) : (
+								propertyValue || config.emptyValueDisplay
+							)}
 						</span>
 					)}
 				</span>

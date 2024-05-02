@@ -18,7 +18,7 @@ export const Markdown = ({
 	plainText: string;
 }) => {
 	const component = new Component();
-	const ref = useRef<HTMLSpanElement>(null);
+	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		if (!ref?.current) return;
 		ref.current.textContent = "";
@@ -30,5 +30,5 @@ export const Markdown = ({
 			component,
 		);
 	}, []);
-	return <span ref={ref}></span>;
+	return <div ref={ref} className="no-p-margin h-fit w-fit"></div>;
 };
