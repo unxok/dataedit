@@ -238,7 +238,7 @@ Below are what the default plugin settings are when you first install the plugin
 Items will be moved to the appropriate release once I start working on them or have them planned out
 
 -   [ ] Switch to Vite
-    -   ~~bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite~~
+    -   <s>bundle size at ~1.1mb :( Pretty sure this is in part due to esbuild and it not minifying and/or bundling as good as Vite</s>
         -   Yup, esbuild didn't have minify on lol so I might not do this
 -   [ ] Allow `GROUP BY` and JS expression grouping
 -   [ ] Alternative views to table
