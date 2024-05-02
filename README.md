@@ -1,53 +1,62 @@
-# Obsidian Dataedit
+# Obsidian Dataedit📝
 
-_Transform your Dataview queries into <u>editable-in-place</u> tables!_
+Transform Your Dataview Queries into Editable Tables!✨
+
+This is an Obsidian plugin that turns your static [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) queries into dynamic, editable tables. Start tweaking data right where you see it!
+
+💌 Support the Project: I humbly appreciate any support you would like to give me to keep updates brewing! *However*, please consider [supporting blacksmithgu](https://github.com/blacksmithgu/obsidian-dataview/tree/master?tab=readme-ov-file#support) first and foremost for all their hardwork which makes this plugin possible.
 
 <a href="https://www.buymeacoffee.com/unxok" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
-This is a plugin for the note-taking app [Obsidian](https://obsidian.md/)
+## TOC
+- [Join the beta](https://github.com/unxok/dataedit/edit/main/README.md#join-the-beta-)
+- [Demo](https://github.com/unxok/dataedit/edit/main/README.md#demo)
+- [Usage](https://github.com/unxok/dataedit/edit/main/README.md#usage)
+- [Customization](https://github.com/unxok/dataedit/edit/main/README.md#customization)
+- [Roadmap](https://github.com/unxok/dataedit/edit/main/README.md#roadmap)
+- [Releases](https://github.com/unxok/dataedit/edit/main/README.md#releases)
 
-This depends on the [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin to query frontmatter metadata. This plugin would not be possible without Dataview, so please show the creators some love for all their hardwork!
+## Dependencies
 
-> [!NOTE]
->
-> ### A special note about Datacore
->
-> The existence of the [Datacore](https://github.com/blacksmithgu/datacore) plugin, made by [blacksmithgu](https://github.com/blacksmithgu) (creator of Dataview) may <u>make this plugin irrelevent</u>, as it aims to achieve (likely) very similar functionality that this plugin implements, along with creating a more optimized query engine.
->
-> _However_, The Datacore plugin was [created 2 years](https://github.com/blacksmithgu/datacore/commits/master/README.md) ago and is not yet usuable for the public. It's roadmap also hasn't been [updated since 9 months ago](https://github.com/blacksmithgu/datacore/commits/master/ROADMAP.md) at the time of writing this. So, I made this to get the editing functionality _now_ without having to wait for a release from Datacore.
+This plugin leans heavily on the mighty [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin to make querying note metadata possible. Huge shoutout to [blacksmithgu](https://github.com/blacksmithgu) (and [other contributers](https://github.com/blacksmithgu/obsidian-dataview/graphs/contributors)) for their outstanding work. This would not be possible without them!
 
-## Beta
+## What about Datacore?
+The development of [Datacore](https://github.com/blacksmithgu/datacore), another brilliant creation by blacksmithgu, will eventually eclipse the need for this plugin. Datacore promises similar features ***along with*** an enhanced query engine. However, it's not ready for the public yet—created [2 years ago](https://github.com/blacksmithgu/datacore/commits/master/README.md) and with no recent roadmap updates (last checked [9 months ago](https://github.com/blacksmithgu/datacore/commits/master/ROADMAP.md)).
 
-Officially in beta!
+So, why wait? This plugin is here to fill that gap, bringing you those slick editing capabilities today!
 
-Before I attempt to get this plugin on the community plugins page, I would love if I could get some people to try it out first so I can find some issues that may not be obvious to me, as well as get some feature requests I may want to implement beforehand.
+# Join the Beta 🚀
+We're Officially Beta Testing!
+Before this plugin hits the Obsidian community page, I’m hoping for some brave souls to dive in, test it out, and help me spot bugs and share your ideas for new features.
 
-You can join the beta now by installing the plugin directly from the repo or by using the [BRAT plugin](https://github.com/TfTHacker/obsidian42-brat) by TfTHacker
+## How to Get Involved
+1. Direct Install: Grab the plugin straight from the [release](https://github.com/unxok/dataedit/releases)
+2. BRAT Plugin: Or install it using the [BRAT plugin](https://github.com/TfTHacker/obsidian42-brat) by TfTHacker for a quick and easy install.
 
-Please an open an issue if needed for bugs, feature requests, and questions.
+## Found a Bug? Got a Feature Idea?
+Don’t be shy! Open an issue on GitHub for any bugs 🐞, feature suggestions 💡, or questions ❓ you might have. Your feedback is valuable!
 
 Thank you!!
 
-## Demo
+# Demo🎥
 
-### Key features
+## Key features🌟
 
--   Edit frontmatter properties and rename files directly in the table
--   Updates happen and are updated in the table very swiftly
--   Files from query are linked to the file and will show in graph view
--   Property type support
--   Auto suggest on text and multitext properties
--   Links and tags are clickable and editable
--   **_Highly configurable_** (see [Customization](https://github.com/unxok/dataedit/edit/main/README.md#customization) section below)
+-   **Instant Edits:** Tweak frontmatter properties and rename files right from your table. Changes are swift and sync in real-time!
+-   **Connected Files:** All files in your query are linked to the current file and visible in the graph view. (can be turned off)
+-   **Type Support:** Handles various property types smoothly.
+-   **Auto Suggestions:** Get auto-suggestions for text and multitext properties.
+-   **Interactive Elements:** Click and edit links and tags directly in the table.
+-   Highly Configurable: Tailor everything to your liking. Dive into the [Customization](https://github.com/unxok/dataedit/edit/main/README.md#customization) section to learn more.
 
 ![demo gif](gifs/demo.gif)
 
-## Usage
+# Usage
 
 > [!IMPORTANT]
 > The [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin <u>must</u> installed and enabled separately!
 
-Set your codeblock langauge to `dataedit`
+Set your codeblock language to `dataedit`
 
 ````
 ```dataedit
@@ -58,15 +67,12 @@ FROM #bar
 
 The codeblock will accept a **_dataview query_** or a **_Javascript expression_** that returns an object with `headers` and `values` keys with arrays respectively.
 
-### Example
-
-#### Dataview Query
+## Dataview Query
 
 Most _(exceptions below)_ valid Dataview queries _should_ work (let me know if not!)
 
 > [!CAUTION]
-> Inline metadata may show in the table, but editing it will cause it to be added as a frontmatter property.
-> I have no intention of supporting inline property edits, but if someone has an easy and computationally cheap way to do it, I will look into it
+> Inline metadata may show in the table, but editing it will cause it to be added as a frontmatter property (support coming soon).
 
 ````sql
 ```dataedit
@@ -84,7 +90,7 @@ SORT file.name
 > -   You <u>cannot</u> specify column aliases in the query (you can set up aliases in this plugin or block settings though)
 > -   I haven't tried it yet, but I am pretty sure `GROUP BY` will <u>not</u> work (on roadmap)
 
-#### Javascript expression
+## Javascript expression
 
 -   You will have access to the dataview api through `dv` just like in a dataview js expression
     -   Dataview [render methods](https://blacksmithgu.github.io/obsidian-dataview/api/code-reference/#render) will not work properly, so don't use them.
@@ -247,6 +253,12 @@ Items will be moved to the appropriate release once I start working on them or h
         -   [ ] custom swim lanes? (may or may not do this)
 -   [ ] Live preview markdown editing
 -   [ ] Date display options in settings and config
+-   [ ] Improve autosuggestions
+	-   [ ] Once a character is entered, only show suggestions starting with what has been typed so far
+ 	-   [ ] Rewrite suggest component from scratch
+  		- The class imlementation from Obsidian has issues when used in Radix dialogs since the suggest element is rendered to the document body.
+			- Idea is to use a portal wrapper to allow it to be rendered to a custom element
+	-   [ ] detect wikilinks and suggest from files
 
 # Releases
 
