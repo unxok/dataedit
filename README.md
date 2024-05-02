@@ -10,11 +10,11 @@ This is an Obsidian plugin that turns your static [Dataview](https://github.com/
 
 ## TOC
 - [Join the beta](#join-the-beta-)
-- [Demo](https://github.com/unxok/dataedit/edit/main/README.md#demo)
-- [Usage](https://github.com/unxok/dataedit/edit/main/README.md#usage)
-- [Customization](https://github.com/unxok/dataedit/edit/main/README.md#customization)
-- [Roadmap](https://github.com/unxok/dataedit/edit/main/README.md#roadmap)
-- [Releases](https://github.com/unxok/dataedit/edit/main/README.md#releases)
+- [Demo](#demo)
+- [Usage](#usage)
+- [Customization](#customization)
+- [Roadmap](#roadmap)
+- [Releases](#releases)
 
 ## Dependencies
 
