@@ -114,7 +114,7 @@ export const EditableTable = ({
 	const doQuery = async () => {
 		// @ts-ignore
 		const dv = app.plugins.plugins.dataview.api;
-		if (query.split(" ")[0] !== "TABLE") {
+		if (query.split(" ")[0].toLowerCase() !== "table") {
 			const result = eval(`(() => {${query}})()`);
 			// console.log("result: ", result);
 			if (!result) return;
