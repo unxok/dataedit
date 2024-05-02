@@ -16,6 +16,7 @@ import React, {
 import { Error } from "./Error";
 import { EditableTable } from "./EditableTable";
 import { Settings } from "./PluginSettings";
+import { Markdown } from "./Markdown";
 
 const RequiedDepsError = () => (
 	<>
@@ -95,6 +96,11 @@ const App = (props: {
 					ctx={ctx}
 				/>
 			</div>
+			<Markdown
+				app={plugin.app}
+				filePath={ctx.sourcePath}
+				plainText={`# Hello\n- *how*\n- are **you**`}
+			/>
 		</div>
 	);
 };
