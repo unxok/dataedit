@@ -9,7 +9,7 @@ This is an Obsidian plugin that turns your static [Dataview](https://github.com/
 <a href="https://www.buymeacoffee.com/unxok" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
 ## TOC
-- [Join the beta](https://github.com/unxok/dataedit/edit/main/README.md#join-the-beta-)
+- [Join the beta](#join-the-beta-)
 - [Demo](https://github.com/unxok/dataedit/edit/main/README.md#demo)
 - [Usage](https://github.com/unxok/dataedit/edit/main/README.md#usage)
 - [Customization](https://github.com/unxok/dataedit/edit/main/README.md#customization)
