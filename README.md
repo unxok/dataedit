@@ -1,8 +1,8 @@
 # Obsidian Dataedit📝
 
-Transform Your Dataview Queries into Editable Tables!✨
+Transform Your Dataview queries into editable tables ✨
 
-This is an Obsidian plugin that turns your static [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) queries into dynamic, editable tables. Start tweaking data right where you see it!
+This is an Obsidian plugin that turns your static [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) queries into dynamic, editable tables. Edit data right where you see it, without needing to leave your current view.
 
 💌 Support the Project: I humbly appreciate any support you would like to give me to keep updates brewing! *However*, please consider [supporting blacksmithgu](https://github.com/blacksmithgu/obsidian-dataview/tree/master?tab=readme-ov-file#support) first and foremost for all their hardwork which makes this plugin possible.
 
@@ -21,9 +21,9 @@ This is an Obsidian plugin that turns your static [Dataview](https://github.com/
 This plugin leans heavily on the mighty [Dataview](https://github.com/blacksmithgu/obsidian-dataview/tree/master) plugin to make querying note metadata possible. Huge shoutout to [blacksmithgu](https://github.com/blacksmithgu) (and [other contributers](https://github.com/blacksmithgu/obsidian-dataview/graphs/contributors)) for their outstanding work. This would not be possible without them!
 
 ## What about Datacore?
-The development of [Datacore](https://github.com/blacksmithgu/datacore), another brilliant creation by blacksmithgu, will eventually eclipse the need for this plugin. Datacore promises similar features ***along with*** an enhanced query engine. However, it's not ready for the public yet—created [2 years ago](https://github.com/blacksmithgu/datacore/commits/master/README.md) and with no recent roadmap updates (last checked [9 months ago](https://github.com/blacksmithgu/datacore/commits/master/ROADMAP.md)).
+The development of [Datacore](https://github.com/blacksmithgu/datacore), another brilliant creation by blacksmithgu, will fulfill most needs to use this plugin. Datacore promises similar features ***along with*** an enhanced query engine. However, it's not ready for the public yet—created [2 years ago](https://github.com/blacksmithgu/datacore/commits/master/README.md) and with no recent roadmap updates (last checked [9 months ago](https://github.com/blacksmithgu/datacore/commits/master/ROADMAP.md)).
 
-So, why wait? This plugin is here to fill that gap, bringing you those slick editing capabilities today!
+So, why wait? This plugin is here to fill that gap, bringing you the editing capabilities today!
 
 # Join the Beta 🚀
 We're Officially Beta Testing!
