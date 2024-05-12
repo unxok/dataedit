@@ -17,7 +17,7 @@ export class DataEditSettingsTab extends PluginSettingTab {
 
 	display(): void {
 		this.root.render(
-			<div id="twcss">
+			<div className="twcss">
 				<PluginSettings
 					plugin={this.plugin}
 					savedSettings={this.plugin.settings as Settings}

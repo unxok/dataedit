@@ -31,7 +31,7 @@ export const PropertySuggester = ({
 	//   console.log("suggester rendered");
 	// });
 	return (
-		<Portal.Root id="twcss">
+		<Portal.Root className="twcss">
 			<div
 				className="absolute z-[99999] flex flex-col gap-2 rounded-md border-[1px] border-solid border-secondary-alt bg-primary-alt p-1 text-normal"
 				style={{

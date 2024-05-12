@@ -12,7 +12,7 @@ const css = fs.readFileSync(
 const out = postcss()
 	.use(
 		prefixer({
-			prefix: "#twcss ",
+			prefix: ".twcss ",
 			transform: function (
 				prefix,
 				selector,

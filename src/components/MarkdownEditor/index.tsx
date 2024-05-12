@@ -163,7 +163,7 @@ export const TestMdEditor = ({ app }: { app: App }) => {
 
 	return (
 		<Portal
-			id="twcss"
+			className="twcss"
 			container={app.workspace.containerEl.find(".cm-sizer")}
 		>
 			<div

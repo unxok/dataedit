@@ -93,7 +93,7 @@ const App = (props: {
 	const [value, setValue] = useState("# testing");
 
 	return (
-		<div id="twcss">
+		<div className="twcss">
 			<div className="w-full overflow-x-scroll">
 				<EditableTable
 					data={data}

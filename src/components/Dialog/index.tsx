@@ -18,7 +18,7 @@ export const DialogSample = ({
 		modal={modal}
 	>
 		<Dialog.Portal>
-			<div id="twcss" className="modal-container">
+			<div className="twcss modal-container">
 				<Dialog.Overlay className="modal-bg" />
 				<Dialog.Content className="modal">
 					<Dialog.Title className="m-0">Sample Dialog</Dialog.Title>
@@ -40,7 +40,7 @@ const DialogRoot = (props: Dialog.DialogProps) => (
 		modal={true}
 	>
 		<Dialog.Portal>
-			<div id="twcss" className="modal-container">
+			<div className="twcss modal-container">
 				<Dialog.Overlay className="modal-bg" />
 				{props.children}
 			</div>
