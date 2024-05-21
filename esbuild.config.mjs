@@ -64,6 +64,6 @@ esbuild
 		logLevel: "info",
 		treeShaking: true,
 		outfile: "main.js",
-		minify: true,
+		minify: false,
 	})
 	.catch(() => process.exit(1));

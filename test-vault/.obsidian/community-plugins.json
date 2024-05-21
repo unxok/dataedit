@@ -1,6 +1,6 @@
 [
   "hot-reload",
-  "dataview",
   "metaedit",
-  "dataedit"
+  "dataedit",
+  "dataview"
 ]

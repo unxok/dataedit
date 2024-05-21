@@ -29,6 +29,6 @@ export const Markdown = ({
 			filePath,
 			component,
 		);
-	}, []);
+	}, [app, filePath, plainText]);
 	return <div ref={ref} className="no-p-margin h-fit w-fit"></div>;
 };

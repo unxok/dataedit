@@ -1,9 +1,9 @@
 ---
-dataedit-links:
-  - "[[new file name.md|new file name]]"
-  - "[[test noteee.md|test noteee]]"
-  - "[[Todo.md|Todo]]"
-  - "[[Welcomeee.md|Welcomeee]]"
+test: asdeeff
+text: asdfasdf
+multitext:
+  - asdf
+  - asdfdfd
 ---
 
 
@@ -17,5 +17,7 @@ dataedit-links:
 
 
 ```dataedit
-TABLE test
+TABLE WITHOUT ID file.link as asldkjflskjdf, test as alias, another.one as alias2
+---
+test: hi
 ```

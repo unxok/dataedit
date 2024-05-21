@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { DataEditSettingsTab } from "@/settings-tab";
 // import { PropertySuggester } from "@/components/Popover";
 
-import App from "@/components/App";
+import { App } from "@/components/App";
 import {
 	Settings,
 	SettingsSchema,
@@ -53,8 +53,8 @@ export default class DataEdit extends Plugin {
 
 	registerCodeBlock() {
 		this.registerMarkdownCodeBlockProcessor("dataedit", (s, e, ctx) => {
-			console.log("registered mcbp: ", s);
-			console.log("ctx: ", ctx);
+			// console.log("registered mcbp: ", s);
+			// console.log("ctx: ", ctx);
 			e.empty();
 			const root = createRoot(e);
 			root.render(

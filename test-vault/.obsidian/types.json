@@ -11,6 +11,7 @@
     "test": "text",
     "some-list": "multitext",
     "number": "number",
-    "checkboxtest": "checkbox"
+    "checkboxtest": "checkbox",
+    "multitext": "multitext"
   }
 }
