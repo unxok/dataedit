@@ -12,11 +12,12 @@ export const Markdown = ({
 	app,
 	filePath,
 	plainText,
+	...props
 }: {
 	app: App;
 	filePath: string;
 	plainText: string;
-}) => {
+} & React.HTMLAttributes<HTMLDivElement>) => {
 	const component = new Component();
 	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
@@ -30,5 +31,11 @@ export const Markdown = ({
 			component,
 		);
 	}, [app, filePath, plainText]);
-	return <div ref={ref} className="no-p-margin h-fit w-fit"></div>;
+	return (
+		<div
+			ref={ref}
+			className="no-p-margin h-fit w-fit [&>p]:whitespace-pre"
+			{...props}
+		></div>
+	);
 };

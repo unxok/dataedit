@@ -1,9 +1,11 @@
 ---
-test: asdeeff
+test: ddd
 text: asdfasdf
 multitext:
   - asdf
   - asdfdfd
+num: 456
+alias: asdeeffe
 ---
 
 
@@ -14,10 +16,8 @@ multitext:
 
 
 
-
-
 ```dataedit
-TABLE WITHOUT ID file.link as asldkjflskjdf, test as alias, another.one as alias2
+TABLE test as testAlias, text
 ---
 test: hi
 ```

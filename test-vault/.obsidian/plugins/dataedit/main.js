@@ -30443,6 +30443,13 @@ var Forward = createLucideIcon("Forward", [
   ["path", { d: "M4 18v-2a4 4 0 0 1 4-4h12", key: "jmiej9" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/info.js
+var Info = createLucideIcon("Info", [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "M12 16v-4", key: "1dtifu" }],
+  ["path", { d: "M12 8h.01", key: "e9boi3" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/list.js
 var List = createLucideIcon("List", [
   ["line", { x1: "8", x2: "21", y1: "6", y2: "6", key: "7ey8pc" }],
@@ -30451,6 +30458,18 @@ var List = createLucideIcon("List", [
   ["line", { x1: "3", x2: "3.01", y1: "6", y2: "6", key: "1g7gq3" }],
   ["line", { x1: "3", x2: "3.01", y1: "12", y2: "12", key: "1pjlvk" }],
   ["line", { x1: "3", x2: "3.01", y1: "18", y2: "18", key: "28t2mc" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/lock-open.js
+var LockOpen = createLucideIcon("LockOpen", [
+  ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
+  ["path", { d: "M7 11V7a5 5 0 0 1 9.9-1", key: "1mm8w8" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/lock.js
+var Lock = createLucideIcon("Lock", [
+  ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
+  ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
 ]);
 
 // node_modules/lucide-react/dist/esm/icons/plus.js
@@ -31250,7 +31269,8 @@ var import_react8 = __toESM(require_react());
 var Markdown = ({
   app: app2,
   filePath,
-  plainText
+  plainText,
+  ...props2
 }) => {
   const component = new import_obsidian5.Component();
   const ref = (0, import_react8.useRef)(null);
@@ -31266,7 +31286,14 @@ var Markdown = ({
       component
     );
   }, [app2, filePath, plainText]);
-  return /* @__PURE__ */ import_react8.default.createElement("div", { ref, className: "no-p-margin h-fit w-fit" });
+  return /* @__PURE__ */ import_react8.default.createElement(
+    "div",
+    {
+      ref,
+      className: "no-p-margin h-fit w-fit [&>p]:whitespace-pre",
+      ...props2
+    }
+  );
 };
 
 // node_modules/zustand/esm/vanilla.mjs
@@ -31341,6 +31368,16 @@ var createImpl = (createState) => {
 var create = (createState) => createState ? createImpl(createState) : createImpl;
 
 // src/components/App.tsx
+var updateMetaData = async (propertyName, propertyValue, filePath, plugin2) => {
+  const file = plugin2.app.vault.getFileByPath(filePath);
+  if (!file) {
+    throw new Error("Tried to update property but couldn't find file");
+    return;
+  }
+  await plugin2.app.fileManager.processFrontMatter(file, (frontmatter) => {
+    frontmatter[propertyName] = propertyValue;
+  });
+};
 var PropertyIcon = ({
   propertyType
 }) => {
@@ -31377,45 +31414,11 @@ var PropertyIcon = ({
     }
   }
 };
-var Th = ({
-  children,
-  className
-}) => {
-  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
-  const propName = aliasObj2[children] ?? children;
-  const isFileProp = propName.toLowerCase() === "file" || propName === "file.link";
-  const propertyType = isFileProp ? "file" : getPropertyType(propName);
-  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, /* @__PURE__ */ import_react10.default.createElement(
-    Markdown,
-    {
-      app: plugin2.app,
-      filePath: ctx2.sourcePath,
-      plainText: children
-    }
-  ), "\xA0", /* @__PURE__ */ import_react10.default.createElement(PropertyIcon, { propertyType })));
-};
-var Td = ({
-  children,
-  propertyName,
-  className
-}) => {
-  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
-  const propName = aliasObj2[propertyName] ?? propertyName;
-  const isFileProp = propName.toLowerCase() === "file" || propName === "file.link";
-  const propertyType = isFileProp ? "file" : getPropertyType(propName);
-  const content = tryToMarkdownLink(children);
-  return /* @__PURE__ */ import_react10.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, propertyType === "text" || isFileProp ? /* @__PURE__ */ import_react10.default.createElement(
-    Markdown,
-    {
-      app: plugin2.app,
-      filePath: ctx2.sourcePath,
-      plainText: content
-    }
-  ) : /* @__PURE__ */ import_react10.default.createElement("p", null, content)));
-};
 var getColAliasObj = (text) => {
-  const regex = /\b([\w\.]+)\s+as\s+([\w\.]+)\b/gi;
+  const regex = /\b([^\s]+)\s+as\s+([^\s]+)\b/gi;
   const matches = text.match(regex);
+  if (!matches)
+    return {};
   return matches.reduce((acc, cur) => {
     const arr = cur.split(/\sas\s/gi);
     return {
@@ -31423,6 +31426,28 @@ var getColAliasObj = (text) => {
       [arr[1].trim()]: arr[0].trim()
     };
   }, {});
+};
+var ensureFileLink = (query2) => {
+  const regex1 = new RegExp(/table without id/gi);
+  const regex2 = new RegExp(/file.link/gi);
+  if (regex1.test(query2) && !regex2.test(query2)) {
+    const arr = query2.split("\n");
+    arr[0] += ", file.link";
+    return { query: arr.join("\n"), hideFileLink: true };
+  }
+  return { query: query2, hideFileLink: false };
+};
+var findFileHeaderIndex = (headers) => {
+  const found = headers.findIndex((h) => {
+    const l = h.toLowerCase();
+    if (l === "file" || l === "file.link")
+      return true;
+  });
+  if (found === -1)
+    throw new Error(
+      "Could not find file link header. This should be impossible"
+    );
+  return found;
 };
 var useBlock = create()((set) => ({
   plugin: void 0,
@@ -31436,9 +31461,13 @@ var useBlock = create()((set) => ({
 var App6 = (props) => {
   const { data, getSectionInfo, settings, plugin, ctx } = props;
   const [queryResults, setQueryResults] = (0, import_react10.useState)();
+  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react10.useState)();
+  const [dvErr, setDvErr] = (0, import_react10.useState)();
   const { setBlockState } = useBlock();
+  const [isLocked, setIsLocked] = (0, import_react10.useState)(false);
   const reg = new RegExp(/\n^---$\n/gm);
-  const [query, config] = data.split(reg);
+  const [preQuery, config] = data.split(reg);
+  const { query, hideFileLink } = ensureFileLink(preQuery);
   const aliasObj = getColAliasObj(query);
   const doQuery = async () => {
     const dv = app.plugins.plugins.dataview.api;
@@ -31449,8 +31478,9 @@ var App6 = (props) => {
       return setQueryResults(result);
     }
     const qr = await dv.query(query);
+    console.log("dv q: ", qr);
     if (!qr.successful) {
-      return;
+      return setDvErr(qr.error);
     }
     setQueryResults(qr.value);
   };
@@ -31492,19 +31522,141 @@ var App6 = (props) => {
   }, []);
   (0, import_react10.useEffect)(() => {
     console.log("queryResults changed: ", queryResults);
+    if (!queryResults)
+      return;
+    setFileHeaderIndex(findFileHeaderIndex(queryResults.headers));
   }, [queryResults]);
   if (!queryResults) {
-    return /* @__PURE__ */ import_react10.default.createElement("div", null, "Query results undefined");
+    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react10.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react10.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
   }
-  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react10.default.createElement("table", null, /* @__PURE__ */ import_react10.default.createElement("thead", null, /* @__PURE__ */ import_react10.default.createElement("tr", null, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react10.default.createElement(Th, { key: i + "table-header", className: "py-3" }, h)))), /* @__PURE__ */ import_react10.default.createElement("tbody", null, queryResults?.values?.map((r2, i) => /* @__PURE__ */ import_react10.default.createElement("tr", { key: i + "-table-body-row" }, r2?.map((d, k) => /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react10.default.createElement("table", { className: "dataedit" }, /* @__PURE__ */ import_react10.default.createElement("thead", null, /* @__PURE__ */ import_react10.default.createElement("tr", null, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react10.default.createElement(
+    Th,
+    {
+      key: i + "table-header",
+      className: "py-3",
+      hideFileLink
+    },
+    h
+  )))), /* @__PURE__ */ import_react10.default.createElement("tbody", null, queryResults?.values?.map((r2, i) => /* @__PURE__ */ import_react10.default.createElement("tr", { key: i + "-table-body-row" }, r2?.map((d, k) => /* @__PURE__ */ import_react10.default.createElement(
     Td,
     {
       key: k + "table-data",
       propertyName: queryResults.headers[k],
-      className: "py-3"
+      className: "py-3",
+      hideFileLink,
+      filePath: queryResults.values[i][fileHeaderIndex]?.path,
+      isLocked
     },
     d
-  )))))));
+  )))))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex w-full flex-row p-2" }, /* @__PURE__ */ import_react10.default.createElement(
+    LockToggle,
+    {
+      isLocked,
+      toggleLock: () => setIsLocked((b) => !b)
+    }
+  )));
+};
+var LockToggle = ({
+  isLocked: isLocked2,
+  toggleLock
+}) => {
+  const Icon = isLocked2 ? Lock : LockOpen;
+  return /* @__PURE__ */ import_react10.default.createElement(
+    "div",
+    {
+      onClick: () => toggleLock(),
+      "aria-label": "Lock editing",
+      className: "hover:cursor-pointer"
+    },
+    /* @__PURE__ */ import_react10.default.createElement(
+      Icon,
+      {
+        style: iconStyle,
+        className: !isLocked2 ? "text-muted opacity-50" : "text-inherit opacity-100"
+      }
+    )
+  );
+};
+var Th = ({
+  children,
+  className,
+  hideFileLink: hideFileLink2
+}) => {
+  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
+  const propName = aliasObj2[children] ?? children;
+  const isFileProp = propName.toLowerCase() === "file" || propName === "file.link";
+  const propertyType = isFileProp ? "file" : getPropertyType(propName);
+  if (isFileProp && hideFileLink2)
+    return;
+  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, /* @__PURE__ */ import_react10.default.createElement(
+    Markdown,
+    {
+      app: plugin2.app,
+      filePath: ctx2.sourcePath,
+      plainText: children
+    }
+  ), "\xA0", /* @__PURE__ */ import_react10.default.createElement(PropertyIcon, { propertyType })));
+};
+var Td = (props2) => {
+  const { children, propertyName, className, hideFileLink: hideFileLink2 } = props2;
+  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
+  const propName = aliasObj2[propertyName] ?? propertyName;
+  const isFileProp = propName.toLowerCase() === "file" || propName === "file.link";
+  const propertyType = isFileProp ? "file" : getPropertyType(propName);
+  const content = tryToMarkdownLink(children);
+  if (isFileProp && hideFileLink2)
+    return;
+  return /* @__PURE__ */ import_react10.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, propertyType === "text" || isFileProp ? /* @__PURE__ */ import_react10.default.createElement(TextInput, { ...props2, propertyName: propName }, content) : isFileProp ? /* @__PURE__ */ import_react10.default.createElement(
+    Markdown,
+    {
+      app: plugin2.app,
+      filePath: ctx2.sourcePath,
+      plainText: children
+    }
+  ) : /* @__PURE__ */ import_react10.default.createElement("p", null, content)));
+};
+var TextInput = (props2) => {
+  const {
+    children,
+    propertyName,
+    className,
+    hideFileLink: hideFileLink2,
+    filePath,
+    isLocked: isLocked2
+  } = props2;
+  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react10.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: children,
+        onClick: (e) => {
+          !isLocked2 && setIsEditing(true);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react10.default.createElement(
+    "input",
+    {
+      type: "text",
+      defaultValue: children,
+      autoFocus: true,
+      onBlur: async (e) => {
+        console.log(e.target.value);
+        await updateMetaData(
+          propertyName,
+          e.target.value,
+          filePath,
+          plugin2
+        );
+        setIsEditing(false);
+      }
+    }
+  );
 };
 
 // src/main.tsx
@@ -31720,7 +31872,31 @@ lucide-react/dist/esm/icons/forward.js:
    * See the LICENSE file in the root directory of this source tree.
    *)
 
+lucide-react/dist/esm/icons/info.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
 lucide-react/dist/esm/icons/list.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/lock-open.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/lock.js:
   (**
    * @license lucide-react v0.372.0 - ISC
    *
