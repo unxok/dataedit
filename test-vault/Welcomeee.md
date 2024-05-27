@@ -31,7 +31,7 @@ func('world')
 
 
 ```dataedit
-TABLE obj.key as ObjKeyAlias, test as testAlias, text, num
+TABLE dot.notation, test as testAlias, text, num
 Id my-id
 ```
 

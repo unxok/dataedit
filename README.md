@@ -250,7 +250,38 @@ Items will be moved to the appropriate release once I start working on them or h
 
 # Releases
 
-## 0.0.3 (TBD upcoming)
+## 0.1.0 (TBD)
+
+Major rework!
+
+I thought about it a lot and decided I wanted to pretty much rework how a lot of things were currently set up after getting it to this point. It should be a bit less of a mess with this one.
+
+-   [x] Allow aliases in Dataview query
+    -   You no longer need to use Dataedit's settings to set aliases. Just specifiy them like normal in Dataview ('TABLE prop AS alias...')
+-   [x] Allow no file link being displayed
+-   [x] You can now do 'TABLE WITHOUT ID...' _without_ including `file.link`
+-   [x] Nested property support
+    -   If you use YAML or JSON objects in frontmatter, that will update correctly
+-   [x] Block toolbar
+    -   You can now choose items to show in a toolbar near your Dataedit block for quick access to common settings and tools for Dataedit
+-   [ ] Settings overhaul
+    -   [ ] Block config
+        -   Previously, Dataedit would write block configs directly to their own block in your markdown note. I disliked this approach. Instead, you just add `ID some-id` as the last line of your query and click the button like normal to change block config. This config is saved to Dataedit's settings file. This makes block id's reusable across different Dataedit blocks so you can easily reuse settings.
+        -   [ ] Lock editing- Allows links and tags to be clickable
+        -   [ ] Render markdown or plaintext
+        -   [ ] Alignment- vertical and horizontal
+            -   [ ] Whole table
+            -   [ ] Columns
+            -   [ ] Rows
+            -   [ ] What to do in conflicts?
+        -   [ ] Show icons
+        -   [ ] Show number buttons
+        -   [ ] Show autocomplete
+        -   [ ] Configurable column value presets?
+    -   [ ] Plugin settings
+        -   Previously, after changing plugin settings you would need to start editing an already rendered Dataedit block and click away to force a rerender with the new plugin settings. This is no longer needed
+
+## ~~0.0.3~~ (cancelled)
 
 -   [ ] select cols to show totals for
 -   [ ] nested property support
