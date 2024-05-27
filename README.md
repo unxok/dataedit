@@ -277,9 +277,16 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
         -   [ ] Show icons
         -   [ ] Show number buttons
         -   [ ] Show autocomplete
+        -   [ ] pagination
+        -   [ ] inline property support?
         -   [ ] Configurable column value presets?
     -   [ ] Plugin settings
         -   Previously, after changing plugin settings you would need to start editing an already rendered Dataedit block and click away to force a rerender with the new plugin settings. This is no longer needed
+        -   Also previously, plugin settings were exactly the same as block config. Instead, they are not completely different but you _can_ still set default settings for block configs from within the plugin settings (see default block config)
+        -   [ ] Default block config- Applies settings to all Dataedit blocks that do _not_ have an id set
+        -   [ ] Allow JS- Default off?
+            -   Because there isn't a separate codeblock language like `dataedit-js` (which I don't really want to do), you are at risk of accidentally running JS in your Dataedit block if you don't specify 'TABLE' (not case sensitive). Maybe I should do a separate block language?
+        -   [ ] Read from dataview for null value display
 
 ## ~~0.0.3~~ (cancelled)
 
