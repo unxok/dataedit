@@ -416,27 +416,27 @@ var require_react_development = __commonJS({
         {
           didWarnAboutStringRefs = {};
         }
-        function hasValidRef(config2) {
+        function hasValidRef(config) {
           {
-            if (hasOwnProperty.call(config2, "ref")) {
-              var getter = Object.getOwnPropertyDescriptor(config2, "ref").get;
+            if (hasOwnProperty.call(config, "ref")) {
+              var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
               if (getter && getter.isReactWarning) {
                 return false;
               }
             }
           }
-          return config2.ref !== void 0;
+          return config.ref !== void 0;
         }
-        function hasValidKey(config2) {
+        function hasValidKey(config) {
           {
-            if (hasOwnProperty.call(config2, "key")) {
-              var getter = Object.getOwnPropertyDescriptor(config2, "key").get;
+            if (hasOwnProperty.call(config, "key")) {
+              var getter = Object.getOwnPropertyDescriptor(config, "key").get;
               if (getter && getter.isReactWarning) {
                 return false;
               }
             }
           }
-          return config2.key !== void 0;
+          return config.key !== void 0;
         }
         function defineKeyPropWarningGetter(props2, displayName) {
           var warnAboutAccessingKey = function() {
@@ -468,12 +468,12 @@ var require_react_development = __commonJS({
             configurable: true
           });
         }
-        function warnIfStringRefCannotBeAutoConverted(config2) {
+        function warnIfStringRefCannotBeAutoConverted(config) {
           {
-            if (typeof config2.ref === "string" && ReactCurrentOwner.current && config2.__self && ReactCurrentOwner.current.stateNode !== config2.__self) {
+            if (typeof config.ref === "string" && ReactCurrentOwner.current && config.__self && ReactCurrentOwner.current.stateNode !== config.__self) {
               var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
               if (!didWarnAboutStringRefs[componentName]) {
-                error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config2.ref);
+                error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config.ref);
                 didWarnAboutStringRefs[componentName] = true;
               }
             }
@@ -518,31 +518,31 @@ var require_react_development = __commonJS({
           }
           return element;
         };
-        function createElement2(type, config2, children) {
+        function createElement2(type, config, children) {
           var propName;
           var props2 = {};
           var key = null;
           var ref = null;
           var self = null;
           var source = null;
-          if (config2 != null) {
-            if (hasValidRef(config2)) {
-              ref = config2.ref;
+          if (config != null) {
+            if (hasValidRef(config)) {
+              ref = config.ref;
               {
-                warnIfStringRefCannotBeAutoConverted(config2);
+                warnIfStringRefCannotBeAutoConverted(config);
               }
             }
-            if (hasValidKey(config2)) {
+            if (hasValidKey(config)) {
               {
-                checkKeyStringCoercion(config2.key);
+                checkKeyStringCoercion(config.key);
               }
-              key = "" + config2.key;
+              key = "" + config.key;
             }
-            self = config2.__self === void 0 ? null : config2.__self;
-            source = config2.__source === void 0 ? null : config2.__source;
-            for (propName in config2) {
-              if (hasOwnProperty.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                props2[propName] = config2[propName];
+            self = config.__self === void 0 ? null : config.__self;
+            source = config.__source === void 0 ? null : config.__source;
+            for (propName in config) {
+              if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                props2[propName] = config[propName];
               }
             }
           }
@@ -586,7 +586,7 @@ var require_react_development = __commonJS({
           var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
           return newElement;
         }
-        function cloneElement(element, config2, children) {
+        function cloneElement(element, config, children) {
           if (element === null || element === void 0) {
             throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
           }
@@ -597,27 +597,27 @@ var require_react_development = __commonJS({
           var self = element._self;
           var source = element._source;
           var owner = element._owner;
-          if (config2 != null) {
-            if (hasValidRef(config2)) {
-              ref = config2.ref;
+          if (config != null) {
+            if (hasValidRef(config)) {
+              ref = config.ref;
               owner = ReactCurrentOwner.current;
             }
-            if (hasValidKey(config2)) {
+            if (hasValidKey(config)) {
               {
-                checkKeyStringCoercion(config2.key);
+                checkKeyStringCoercion(config.key);
               }
-              key = "" + config2.key;
+              key = "" + config.key;
             }
             var defaultProps;
             if (element.type && element.type.defaultProps) {
               defaultProps = element.type.defaultProps;
             }
-            for (propName in config2) {
-              if (hasOwnProperty.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                if (config2[propName] === void 0 && defaultProps !== void 0) {
+            for (propName in config) {
+              if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                if (config[propName] === void 0 && defaultProps !== void 0) {
                   props2[propName] = defaultProps[propName];
                 } else {
-                  props2[propName] = config2[propName];
+                  props2[propName] = config[propName];
                 }
               }
             }
@@ -23841,12 +23841,12 @@ function clsx() {
 
 // node_modules/tailwind-merge/dist/bundle-mjs.mjs
 var CLASS_PART_SEPARATOR = "-";
-function createClassUtils(config2) {
-  const classMap = createClassMap(config2);
+function createClassUtils(config) {
+  const classMap = createClassMap(config);
   const {
     conflictingClassGroups,
     conflictingClassGroupModifiers
-  } = config2;
+  } = config;
   function getClassGroupId(className) {
     const classParts = className.split(CLASS_PART_SEPARATOR);
     if (classParts[0] === "" && classParts.length !== 1) {
@@ -23894,16 +23894,16 @@ function getGroupIdForArbitraryProperty(className) {
     }
   }
 }
-function createClassMap(config2) {
+function createClassMap(config) {
   const {
     theme,
     prefix
-  } = config2;
+  } = config;
   const classMap = {
     nextPart: /* @__PURE__ */ new Map(),
     validators: []
   };
-  const prefixedClassGroupEntries = getPrefixedClassGroupEntries(Object.entries(config2.classGroups), prefix);
+  const prefixedClassGroupEntries = getPrefixedClassGroupEntries(Object.entries(config.classGroups), prefix);
   prefixedClassGroupEntries.forEach(([classGroupId, classGroup]) => {
     processClassesRecursively(classGroup, classMap, classGroupId, theme);
   });
@@ -24006,8 +24006,8 @@ function createLruCache(maxCacheSize) {
   };
 }
 var IMPORTANT_MODIFIER = "!";
-function createSplitModifiers(config2) {
-  const separator = config2.separator;
+function createSplitModifiers(config) {
+  const separator = config.separator;
   const isSeparatorSingleCharacter = separator.length === 1;
   const firstSeparatorCharacter = separator[0];
   const separatorLength = separator.length;
@@ -24065,11 +24065,11 @@ function sortModifiers(modifiers) {
   sortedModifiers.push(...unsortedModifiers.sort());
   return sortedModifiers;
 }
-function createConfigUtils(config2) {
+function createConfigUtils(config) {
   return {
-    cache: createLruCache(config2.cacheSize),
-    splitModifiers: createSplitModifiers(config2),
-    ...createClassUtils(config2)
+    cache: createLruCache(config.cacheSize),
+    splitModifiers: createSplitModifiers(config),
+    ...createClassUtils(config)
   };
 }
 var SPLIT_CLASSES_REGEX = /\s+/;
@@ -24169,8 +24169,8 @@ function createTailwindMerge(createConfigFirst, ...createConfigRest) {
   let cacheSet;
   let functionToCall = initTailwindMerge;
   function initTailwindMerge(classList) {
-    const config2 = createConfigRest.reduce((previousConfig, createConfigCurrent) => createConfigCurrent(previousConfig), createConfigFirst());
-    configUtils = createConfigUtils(config2);
+    const config = createConfigRest.reduce((previousConfig, createConfigCurrent) => createConfigCurrent(previousConfig), createConfigFirst());
+    configUtils = createConfigUtils(config);
     cacheGet = configUtils.cache.get;
     cacheSet = configUtils.cache.set;
     functionToCall = tailwindMerge;
@@ -26327,7 +26327,7 @@ function cn(...inputs) {
 }
 var getPropertyType = (propertyName) => {
   const { metadataTypeManager } = app;
-  return metadataTypeManager.properties[propertyName]?.type;
+  return metadataTypeManager.properties[propertyName]?.type ?? "text";
 };
 var iconStyle = {
   width: "var(--icon-size)",
@@ -26364,6 +26364,18 @@ var removeKeys = (oldObj, newObj) => {
     }
   }
   return result2;
+};
+var iterateStringKeys = (obj, str, val) => {
+  const keys = str.split(".");
+  let current = obj;
+  keys.forEach((key, index) => {
+    if (index === keys.length - 1) {
+      return current[key] = val;
+    }
+    current[key] = current[key] || {};
+    current = current[key];
+  });
+  return obj;
 };
 
 // src/components/Setting/index.tsx
@@ -30478,6 +30490,18 @@ var Plus = createLucideIcon("Plus", [
   ["path", { d: "M12 5v14", key: "s699le" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/settings.js
+var Settings = createLucideIcon("Settings", [
+  [
+    "path",
+    {
+      d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z",
+      key: "1qme2f"
+    }
+  ],
+  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/square-check-big.js
 var SquareCheckBig = createLucideIcon("SquareCheckBig", [
   ["path", { d: "m9 11 3 3L22 4", key: "1pflzl" }],
@@ -31270,6 +31294,7 @@ var Markdown = ({
   app: app2,
   filePath,
   plainText,
+  className,
   ...props2
 }) => {
   const component = new import_obsidian5.Component();
@@ -31290,7 +31315,10 @@ var Markdown = ({
     "div",
     {
       ref,
-      className: "no-p-margin h-fit w-fit [&>p]:whitespace-pre",
+      className: cn(
+        "no-p-margin h-fit w-fit [&>p]:whitespace-pre",
+        className
+      ),
       ...props2
     }
   );
@@ -31375,7 +31403,15 @@ var updateMetaData = async (propertyName, propertyValue, filePath, plugin2) => {
     return;
   }
   await plugin2.app.fileManager.processFrontMatter(file, (frontmatter) => {
-    frontmatter[propertyName] = propertyValue;
+    const arr = propertyName.split(".");
+    if (arr.length === 1) {
+      return frontmatter[propertyName] = propertyValue;
+    }
+    return frontmatter = iterateStringKeys(
+      frontmatter,
+      propertyName,
+      propertyValue
+    );
   });
 };
 var PropertyIcon = ({
@@ -31449,6 +31485,21 @@ var findFileHeaderIndex = (headers) => {
     );
   return found;
 };
+var getBlockId = (multiLine) => {
+  const arr = multiLine.trim().split("\n");
+  const line = arr[arr.length - 1];
+  const regex = new RegExp(/^ID\s\S/gim);
+  const hasId = regex.test(line);
+  if (!hasId)
+    return {
+      blockId: void 0,
+      query: multiLine
+    };
+  return {
+    blockId: line.slice(3),
+    query: arr.slice(0, -1).join("\n")
+  };
+};
 var useBlock = create()((set) => ({
   plugin: void 0,
   setBlockState: (state) => {
@@ -31466,23 +31517,34 @@ var App6 = (props) => {
   const { setBlockState } = useBlock();
   const [isLocked, setIsLocked] = (0, import_react10.useState)(false);
   const reg = new RegExp(/\n^---$\n/gm);
-  const [preQuery, config] = data.split(reg);
+  const { blockId, query: preQuery } = getBlockId(data);
   const { query, hideFileLink } = ensureFileLink(preQuery);
   const aliasObj = getColAliasObj(query);
+  const safeSetQueryResults = (qr2) => {
+    setQueryResults((prev) => {
+      if (qr2)
+        return qr2;
+      if (prev)
+        return prev;
+      return qr2;
+    });
+  };
+  console.log("blockid: ", blockId);
   const doQuery = async () => {
+    console.log("do query called: ", query);
     const dv = app.plugins.plugins.dataview.api;
     if (query.split(" ")[0].toLowerCase() !== "table") {
       const result = eval(`(() => {${query}})()`);
       if (!result)
         return;
-      return setQueryResults(result);
+      return safeSetQueryResults(result);
     }
     const qr = await dv.query(query);
     console.log("dv q: ", qr);
     if (!qr.successful) {
       return setDvErr(qr.error);
     }
-    setQueryResults(qr.value);
+    safeSetQueryResults(qr.value);
   };
   (0, import_react10.useEffect)(() => {
     setBlockState((prev) => ({
@@ -31548,7 +31610,7 @@ var App6 = (props) => {
       isLocked
     },
     d
-  )))))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex w-full flex-row p-2" }, /* @__PURE__ */ import_react10.default.createElement(
+  )))))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react10.default.createElement(SettingsGear, { blockId }), /* @__PURE__ */ import_react10.default.createElement(
     LockToggle,
     {
       isLocked,
@@ -31566,15 +31628,28 @@ var LockToggle = ({
     {
       onClick: () => toggleLock(),
       "aria-label": "Lock editing",
-      className: "hover:cursor-pointer"
+      className: "clickable-icon side-dock-ribbon-action"
     },
     /* @__PURE__ */ import_react10.default.createElement(
       Icon,
       {
-        style: iconStyle,
-        className: !isLocked2 ? "text-muted opacity-50" : "text-inherit opacity-100"
+        className: `svg-icon lucide-lock ${!isLocked2 ? "text-muted opacity-50" : "text-inherit opacity-100"}`
       }
     )
+  );
+};
+var SettingsGear = ({ blockId: blockId2 }) => {
+  return /* @__PURE__ */ import_react10.default.createElement(
+    "div",
+    {
+      "aria-label": blockId2 ? `id: ${blockId2}` : `First specify an id to configure settings
+
+TABLE fizz
+FROM buzz
+ID my-id`,
+      className: "clickable-icon side-dock-ribbon-action"
+    },
+    /* @__PURE__ */ import_react10.default.createElement(Settings, { className: "svg-icon lucide-settings" })
   );
 };
 var Th = ({
@@ -31603,6 +31678,7 @@ var Td = (props2) => {
   const propName = aliasObj2[propertyName] ?? propertyName;
   const isFileProp = propName.toLowerCase() === "file" || propName === "file.link";
   const propertyType = isFileProp ? "file" : getPropertyType(propName);
+  console.log(`property ${propName} is type: ${propertyType}`);
   const content = tryToMarkdownLink(children);
   if (isFileProp && hideFileLink2)
     return;
@@ -31613,9 +31689,9 @@ var Td = (props2) => {
       filePath: ctx2.sourcePath,
       plainText: children
     }
-  ) : /* @__PURE__ */ import_react10.default.createElement("p", null, content)));
+  ) : /* @__PURE__ */ import_react10.default.createElement("div", null, content)));
 };
-var TextInput = (props2) => {
+var TextInput2 = (props2) => {
   const {
     children,
     propertyName,
@@ -31626,6 +31702,32 @@ var TextInput = (props2) => {
   } = props2;
   const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
   const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
+  if (!isEditing || isLocked2 || true) {
+    return /* @__PURE__ */ import_react10.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: children,
+        className: "h-fit w-fit [&_*]:my-0",
+        onBlur: async (e) => {
+          console.log(e.target.textContent);
+          await updateMetaData(
+            propertyName,
+            e.target.textContent,
+            filePath,
+            plugin2
+          );
+          setIsEditing(false);
+        }
+      }
+    );
+  }
+};
+var TextInput = (props2) => {
+  const { children, propertyName, filePath, isLocked: isLocked2 } = props2;
+  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
   if (!isEditing || isLocked2) {
     return /* @__PURE__ */ import_react10.default.createElement(
       Markdown,
@@ -31633,7 +31735,9 @@ var TextInput = (props2) => {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
         plainText: children,
-        onClick: (e) => {
+        className: "[&_*]:my-0",
+        onClick: () => {
+          console.log("clicked");
           !isLocked2 && setIsEditing(true);
         }
       }
@@ -31905,6 +32009,14 @@ lucide-react/dist/esm/icons/lock.js:
    *)
 
 lucide-react/dist/esm/icons/plus.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/settings.js:
   (**
    * @license lucide-react v0.372.0 - ISC
    *

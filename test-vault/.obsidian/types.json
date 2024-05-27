@@ -12,6 +12,7 @@
     "some-list": "multitext",
     "number": "number",
     "checkboxtest": "checkbox",
-    "multitext": "multitext"
+    "multitext": "multitext",
+    "obj": "text"
   }
 }

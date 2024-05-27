@@ -1,8 +1,19 @@
-import { MarkdownPostProcessorContext, Notice } from "obsidian";
+import {
+	MarkdownPostProcessorContext,
+	Notice,
+	parseYaml,
+	stringifyYaml,
+} from "obsidian";
 import { Settings } from "./PluginSettings";
 import React, { useEffect, useState } from "react";
 import DataEdit, { loadDependencies } from "@/main";
-import { cn, getPropertyType, iconStyle, tryToMarkdownLink } from "@/lib/utils";
+import {
+	cn,
+	getPropertyType,
+	iconStyle,
+	iterateStringKeys,
+	tryToMarkdownLink,
+} from "@/lib/utils";
 import { Markdown } from "./Markdown";
 import {
 	Binary,
@@ -14,6 +25,7 @@ import {
 	Info,
 	List,
 	Lock,
+	Settings as Gear,
 	Tags,
 	Text,
 	Unlock,
@@ -35,7 +47,15 @@ export const updateMetaData = async (
 	}
 	await plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
 		// console.log("fm: ", frontmatter);
-		frontmatter[propertyName] = propertyValue;
+		const arr = propertyName.split(".");
+		if (arr.length === 1) {
+			return (frontmatter[propertyName] = propertyValue);
+		}
+		return (frontmatter = iterateStringKeys(
+			frontmatter,
+			propertyName,
+			propertyValue,
+		));
 	});
 	// await updateDataeditLinks();
 };
@@ -125,6 +145,22 @@ const findFileHeaderIndex = (headers: string[]) => {
 	return found;
 };
 
+const getBlockId = (multiLine: string) => {
+	const arr = multiLine.trim().split("\n");
+	const line = arr[arr.length - 1];
+	const regex = new RegExp(/^ID\s\S/gim);
+	const hasId = regex.test(line);
+	if (!hasId)
+		return {
+			blockId: undefined,
+			query: multiLine,
+		};
+	return {
+		blockId: line.slice(3),
+		query: arr.slice(0, -1).join("\n"),
+	};
+};
+
 type QueryResults = {
 	headers: string[];
 	values: any[][];
@@ -164,18 +200,33 @@ export const App = (props: {
 	const [isLocked, setIsLocked] = useState(false);
 
 	const reg = new RegExp(/\n^---$\n/gm);
-	const [preQuery, config] = data.split(reg);
+	const { blockId, query: preQuery } = getBlockId(data);
 	const { query, hideFileLink } = ensureFileLink(preQuery);
 	const aliasObj = getColAliasObj(query);
 
+	/**
+	 * Block data becomes undefined in reading mode, so this protects against setting it undefined
+	 * @param qr new Query Results
+	 */
+	const safeSetQueryResults = (qr: QueryResults) => {
+		setQueryResults((prev) => {
+			if (qr) return qr;
+			if (prev) return prev;
+			return qr;
+		});
+	};
+
+	console.log("blockid: ", blockId);
+
 	const doQuery = async () => {
+		console.log("do query called: ", query);
 		// @ts-ignore
 		const dv = app.plugins.plugins.dataview.api;
 		if (query.split(" ")[0].toLowerCase() !== "table") {
 			const result = eval(`(() => {${query}})()`);
 			// console.log("result: ", result);
 			if (!result) return;
-			return setQueryResults(result);
+			return safeSetQueryResults(result);
 		}
 		const qr = await dv.query(query);
 		console.log("dv q: ", qr);
@@ -183,7 +234,7 @@ export const App = (props: {
 			return setDvErr(qr.error);
 		}
 		// console.log(qr.value);
-		setQueryResults(qr.value);
+		safeSetQueryResults(qr.value);
 	};
 
 	useEffect(() => {
@@ -280,7 +331,8 @@ export const App = (props: {
 					))}
 				</tbody>
 			</table>
-			<div className="flex w-full flex-row p-2">
+			<div className="flex w-full flex-row items-center p-2">
+				<SettingsGear blockId={blockId} />
 				<LockToggle
 					isLocked={isLocked}
 					toggleLock={() => setIsLocked((b) => !b)}
@@ -302,16 +354,31 @@ const LockToggle = ({
 		<div
 			onClick={() => toggleLock()}
 			aria-label="Lock editing"
-			className="hover:cursor-pointer"
+			className="clickable-icon side-dock-ribbon-action"
 		>
 			<Icon
-				style={iconStyle}
-				className={
+				className={`svg-icon lucide-lock ${
 					!isLocked
 						? "text-muted opacity-50"
 						: "text-inherit opacity-100"
-				}
+				}`}
 			/>
+		</div>
+	);
+};
+
+const SettingsGear = ({ blockId }: { blockId?: string }) => {
+	return (
+		<div
+			// onClick={() => toggleLock()}
+			aria-label={
+				blockId
+					? `id: ${blockId}`
+					: `First specify an id to configure settings\n\nTABLE fizz\nFROM buzz\nID my-id`
+			}
+			className="clickable-icon side-dock-ribbon-action"
+		>
+			<Gear className="svg-icon lucide-settings" />
 		</div>
 	);
 };
@@ -364,6 +431,7 @@ const Td = (props: TdProps) => {
 	const isFileProp =
 		propName.toLowerCase() === "file" || propName === "file.link";
 	const propertyType = isFileProp ? "file" : getPropertyType(propName);
+	console.log(`property ${propName} is type: ${propertyType}`);
 	const content = tryToMarkdownLink(children);
 
 	if (isFileProp && hideFileLink) return;
@@ -382,14 +450,14 @@ const Td = (props: TdProps) => {
 						plainText={children}
 					/>
 				) : (
-					<p>{content}</p>
+					<div>{content}</div>
 				)}
 			</div>
 		</td>
 	);
 };
 
-const TextInput = (props: TdProps) => {
+const TextInput2 = (props: TdProps) => {
 	const {
 		children,
 		propertyName,
@@ -401,18 +469,86 @@ const TextInput = (props: TdProps) => {
 	const { ctx, plugin, aliasObj } = useBlock();
 	const [isEditing, setIsEditing] = useState(false);
 
+	if (!isEditing || isLocked || true) {
+		return (
+			<Markdown
+				app={plugin.app}
+				filePath={ctx.sourcePath}
+				plainText={children}
+				className="h-fit w-fit [&_*]:my-0"
+				// onClick={() => {
+				// 	console.log("clicked");
+				// 	!isLocked && setIsEditing(true);
+				// }}
+				onBlur={async (e) => {
+					console.log(e.target.textContent);
+					await updateMetaData(
+						propertyName,
+						e.target.textContent,
+						filePath,
+						plugin,
+					);
+					setIsEditing(false);
+				}}
+			/>
+		);
+	}
+
+	// return (
+	// 	<div
+	// 		contentEditable
+	// 		onBlur={async (e) => {
+	// 			console.log(e.target.textContent);
+	// 			await updateMetaData(
+	// 				propertyName,
+	// 				e.target.textContent,
+	// 				filePath,
+	// 				plugin,
+	// 			);
+	// 			setIsEditing(false);
+	// 		}}
+	// 	>
+	// 		{children}
+	// 	</div>
+	// );
+};
+
+const TextInput = (props: TdProps) => {
+	const { children, propertyName, filePath, isLocked } = props;
+	const { ctx, plugin, aliasObj } = useBlock();
+	const [isEditing, setIsEditing] = useState(false);
+
 	if (!isEditing || isLocked) {
 		return (
 			<Markdown
 				app={plugin.app}
 				filePath={ctx.sourcePath}
 				plainText={children}
-				onClick={(e) => {
+				className="[&_*]:my-0"
+				onClick={() => {
+					console.log("clicked");
 					!isLocked && setIsEditing(true);
 				}}
 			/>
 		);
 	}
+
+	// return (
+	// 	<textarea
+	// 		defaultValue={children}
+	// 		autoFocus
+	// 		onBlur={async (e) => {
+	// 			console.log(e.target.value);
+	// 			await updateMetaData(
+	// 				propertyName,
+	// 				e.target.value,
+	// 				filePath,
+	// 				plugin,
+	// 			);
+	// 			setIsEditing(false);
+	// 		}}
+	// 	/>
+	// );
 
 	return (
 		<input

@@ -29,9 +29,8 @@ const toPlainArray = (arr: any) => {
 export const getPropertyType = (propertyName: string) => {
 	// @ts-ignore
 	const { metadataTypeManager } = app;
-	return metadataTypeManager.properties[propertyName]?.type as
-		| string
-		| undefined;
+	return (metadataTypeManager.properties[propertyName]?.type ??
+		"text") as string;
 };
 
 export const iconStyle = {
@@ -123,4 +122,37 @@ export const removeKeys = (
 		}
 	}
 	return result;
+};
+
+/**
+ * Using keys provided in a dot separated string, assign a value and return the object
+ * @param obj The starting object
+ * @param str Dot separated values corresponding to keys of `obj`
+ * @param val The value to set for the final key from `str`
+ * @returns A copy of `obj` but with `val` as a value for the key specified in `str`
+ * ---
+ * ```js
+ * const keyStr = 'propName.some.nested.property'
+ * iterateStringKeys({}, keyStr, 'value')
+ * // { some: { nested: { property: 'value' } } }
+ * ```
+ */
+export const iterateStringKeys = (
+	obj: Record<string, any>,
+	str: string,
+	val: any,
+) => {
+	const keys = str.split(".");
+	let current = obj;
+
+	keys.forEach((key, index) => {
+		// if (index === 0) return;
+		if (index === keys.length - 1) {
+			return (current[key] = val);
+		}
+		current[key] = current[key] || {};
+		current = current[key];
+	});
+
+	return obj;
 };

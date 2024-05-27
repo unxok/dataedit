@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import {
 	App,
 	Component,
@@ -6,12 +7,11 @@ import {
 } from "obsidian";
 import React, { useEffect, useRef, useState } from "react";
 
-class Comp extends Component {}
-
 export const Markdown = ({
 	app,
 	filePath,
 	plainText,
+	className,
 	...props
 }: {
 	app: App;
@@ -34,7 +34,10 @@ export const Markdown = ({
 	return (
 		<div
 			ref={ref}
-			className="no-p-margin h-fit w-fit [&>p]:whitespace-pre"
+			className={cn(
+				"no-p-margin h-fit w-fit [&>p]:whitespace-pre",
+				className,
+			)}
 			{...props}
 		></div>
 	);
