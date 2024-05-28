@@ -23803,13 +23803,13 @@ __export(main_exports, {
   loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian7 = require("obsidian");
+var import_obsidian8 = require("obsidian");
 var import_react11 = __toESM(require_react());
 var import_client3 = __toESM(require_client());
 
 // src/settings-tab.tsx
 var import_react7 = __toESM(require_react());
-var import_obsidian4 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 var import_client2 = __toESM(require_client());
 
 // src/components/PluginSettings/index.tsx
@@ -23838,6 +23838,9 @@ function clsx() {
     (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
   return n;
 }
+
+// src/lib/utils.ts
+var import_obsidian = require("obsidian");
 
 // node_modules/tailwind-merge/dist/bundle-mjs.mjs
 var CLASS_PART_SEPARATOR = "-";
@@ -26327,7 +26330,12 @@ function cn(...inputs) {
 }
 var getPropertyType = (propertyName) => {
   const { metadataTypeManager } = app;
-  return metadataTypeManager.properties[propertyName]?.type ?? "text";
+  const preType = metadataTypeManager.properties[propertyName]?.type;
+  if (preType)
+    return preType;
+  if (propertyName.includes("."))
+    return "object";
+  return "inline";
 };
 var iconStyle = {
   width: "var(--icon-size)",
@@ -26376,6 +26384,95 @@ var iterateStringKeys = (obj, str, val) => {
     current = current[key];
   });
   return obj;
+};
+var checkForInlineField = (propertyName, filePath, dataviewApi) => {
+  const f = dataviewApi.page(filePath);
+  if (f.file.frontmatter.hasOwnProperty(propertyName))
+    return { success: false };
+  if (f.hasOwnProperty(propertyName))
+    return { success: true, value: f[propertyName] };
+  return { success: false };
+};
+var parseLinesForInlineFields = (lines) => {
+  const reg2 = new RegExp(
+    /[\[\(]?([^\n\r\(\[]*)::[ ]*([^\)\]\n\r]*)[\]\)]?/gm
+  );
+  return lines.reduce((prev, curr, index) => {
+    let matches = reg2.exec(curr);
+    if (!matches) {
+      return prev;
+    }
+    const key = matches[1].trim();
+    const oldVal = matches[2].trim();
+    return [
+      ...prev,
+      {
+        key,
+        value: oldVal,
+        line: index,
+        match: matches[0]
+      }
+    ];
+  }, []);
+};
+var udpateInlineField = async (propertyName, oldValue, newValue, file, plugin2) => {
+  const pageContent = await plugin2.app.vault.cachedRead(file);
+  const lines = pageContent.split("\n");
+  const inlineFields = parseLinesForInlineFields(lines);
+  const foundField = inlineFields.find(({ key, value }) => {
+    if (key !== propertyName)
+      return false;
+    if (value.toString() !== oldValue.toString())
+      return false;
+    return true;
+  });
+  if (!foundField) {
+    throw new Error(
+      "Tried updating an inline field but couldn't find matching field. This should be impossible. Property name: " + propertyName
+    );
+  }
+  const oldLineContent = lines[foundField.line];
+  const newLineContent = oldLineContent.replace(
+    foundField.match,
+    foundField.match.replace(oldValue?.toString(), newValue?.toString())
+  );
+  lines[foundField.line] = newLineContent;
+  await plugin2.app.vault.modify(file, lines.join("\n"));
+};
+var updateMetaData = async (propertyName, propertyValue, filePath, plugin2) => {
+  const file = plugin2.app.vault.getFileByPath(filePath);
+  if (!file) {
+    throw new Error("Tried to update property but couldn't find file");
+  }
+  await plugin2.app.fileManager.processFrontMatter(file, (frontmatter) => {
+    const arr = propertyName.split(".");
+    if (arr.length === 1) {
+      const dv2 = app.plugins.plugins.dataview.api;
+      const isInlineField = checkForInlineField(
+        propertyName,
+        filePath,
+        dv2
+      );
+      if (isInlineField.success) {
+        if (propertyValue === isInlineField.value)
+          return;
+        return udpateInlineField(
+          propertyName,
+          isInlineField.value,
+          propertyValue,
+          file,
+          plugin2
+        );
+      }
+      return frontmatter[propertyName] = propertyValue;
+    }
+    const frontmatterObj = iterateStringKeys(
+      frontmatter,
+      propertyName,
+      propertyValue
+    );
+    return frontmatter = (0, import_obsidian.stringifyYaml)(frontmatterObj);
+  });
 };
 
 // src/components/Setting/index.tsx
@@ -26433,7 +26530,7 @@ var SettingToggle = ({
 };
 
 // src/components/PluginSettings/index.tsx
-var import_obsidian3 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 
 // node_modules/zod/lib/index.mjs
 var util;
@@ -30422,6 +30519,21 @@ var Binary = createLucideIcon("Binary", [
   ["path", { d: "M14 4h2v6", key: "1idq9u" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/braces.js
+var Braces = createLucideIcon("Braces", [
+  [
+    "path",
+    { d: "M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1", key: "ezmyqa" }
+  ],
+  [
+    "path",
+    {
+      d: "M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1",
+      key: "e1hn23"
+    }
+  ]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/calendar.js
 var Calendar = createLucideIcon("Calendar", [
   ["path", { d: "M8 2v4", key: "1cmpym" }],
@@ -30490,6 +30602,17 @@ var Plus = createLucideIcon("Plus", [
   ["path", { d: "M12 5v14", key: "s699le" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/scan-text.js
+var ScanText = createLucideIcon("ScanText", [
+  ["path", { d: "M3 7V5a2 2 0 0 1 2-2h2", key: "aa7l1z" }],
+  ["path", { d: "M17 3h2a2 2 0 0 1 2 2v2", key: "4qcy5o" }],
+  ["path", { d: "M21 17v2a2 2 0 0 1-2 2h-2", key: "6vwrx8" }],
+  ["path", { d: "M7 21H5a2 2 0 0 1-2-2v-2", key: "ioqczr" }],
+  ["path", { d: "M7 8h8", key: "1jbsf9" }],
+  ["path", { d: "M7 12h10", key: "b7w52i" }],
+  ["path", { d: "M7 16h6", key: "1vyc9m" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/settings.js
 var Settings = createLucideIcon("Settings", [
   [
@@ -30535,9 +30658,9 @@ var X = createLucideIcon("X", [
 ]);
 
 // src/hooks/useSuggest.tsx
-var import_obsidian = require("obsidian");
+var import_obsidian2 = require("obsidian");
 var import_react3 = __toESM(require_react());
-var Suggest = class extends import_obsidian.AbstractInputSuggest {
+var Suggest = class extends import_obsidian2.AbstractInputSuggest {
   constructor(app2, inputEl, getSuggestions, onSelect) {
     super(app2, inputEl);
     this.app = app2;
@@ -30587,7 +30710,7 @@ var BuyMeCoffee = () => {
 };
 
 // src/components/Dialog/index.tsx
-var import_obsidian2 = require("obsidian");
+var import_obsidian3 = require("obsidian");
 var import_react5 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
@@ -30840,7 +30963,7 @@ var PluginSettings = ({
     }
   )));
 };
-var ConfirmationDialog = class extends import_obsidian3.Modal {
+var ConfirmationDialog = class extends import_obsidian4.Modal {
   constructor(app2, title, message, cancelText, confirmText, onClose) {
     super(app2);
     this.setTitle(title);
@@ -31233,7 +31356,7 @@ var HorizontalAlignment = ({
 };
 
 // src/settings-tab.tsx
-var DataEditSettingsTab = class extends import_obsidian4.PluginSettingTab {
+var DataEditSettingsTab = class extends import_obsidian5.PluginSettingTab {
   constructor(app2, plugin2) {
     super(app2, plugin2);
     this.plugin = plugin2;
@@ -31284,11 +31407,11 @@ var DataEditSettingsTab = class extends import_obsidian4.PluginSettingTab {
 };
 
 // src/components/App.tsx
-var import_obsidian6 = require("obsidian");
+var import_obsidian7 = require("obsidian");
 var import_react10 = __toESM(require_react());
 
 // src/components/Markdown/index.tsx
-var import_obsidian5 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 var import_react8 = __toESM(require_react());
 var Markdown = ({
   app: app2,
@@ -31297,13 +31420,13 @@ var Markdown = ({
   className,
   ...props2
 }) => {
-  const component = new import_obsidian5.Component();
+  const component = new import_obsidian6.Component();
   const ref = (0, import_react8.useRef)(null);
   (0, import_react8.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.textContent = "";
-    import_obsidian5.MarkdownRenderer.render(
+    import_obsidian6.MarkdownRenderer.render(
       app2,
       plainText,
       ref.current,
@@ -31395,25 +31518,10 @@ var createImpl = (createState) => {
 };
 var create = (createState) => createState ? createImpl(createState) : createImpl;
 
+// src/lib/consts.ts
+var FILE = "file";
+
 // src/components/App.tsx
-var updateMetaData = async (propertyName, propertyValue, filePath, plugin2) => {
-  const file = plugin2.app.vault.getFileByPath(filePath);
-  if (!file) {
-    throw new Error("Tried to update property but couldn't find file");
-    return;
-  }
-  await plugin2.app.fileManager.processFrontMatter(file, (frontmatter) => {
-    const arr = propertyName.split(".");
-    if (arr.length === 1) {
-      return frontmatter[propertyName] = propertyValue;
-    }
-    return frontmatter = iterateStringKeys(
-      frontmatter,
-      propertyName,
-      propertyValue
-    );
-  });
-};
 var PropertyIcon = ({
   propertyType
 }) => {
@@ -31445,21 +31553,32 @@ var PropertyIcon = ({
     case "file": {
       return /* @__PURE__ */ import_react10.default.createElement(File, { style: iconStyle });
     }
+    case "inline": {
+      return /* @__PURE__ */ import_react10.default.createElement(ScanText, { style: iconStyle });
+    }
+    case "object": {
+      return /* @__PURE__ */ import_react10.default.createElement(Braces, { style: iconStyle });
+    }
     default: {
       return /* @__PURE__ */ import_react10.default.createElement(Text, { style: iconStyle });
     }
   }
 };
 var getColAliasObj = (text) => {
-  const regex = /\b([^\s]+)\s+as\s+([^\s]+)\b/gi;
+  const regex = new RegExp(/(\S+)\s+AS\s+"?([^\s,"]+)"?,?/gim);
   const matches = text.match(regex);
+  console.log("matches: ", matches);
   if (!matches)
     return {};
   return matches.reduce((acc, cur) => {
-    const arr = cur.split(/\sas\s/gi);
+    const match = regex.exec(cur);
+    console.log("match: ", match);
+    if (!match)
+      return acc;
+    const [_, property, alias] = match;
     return {
       ...acc,
-      [arr[1].trim()]: arr[0].trim()
+      [alias]: property
     };
   }, {});
 };
@@ -31476,7 +31595,7 @@ var ensureFileLink = (query2) => {
 var findFileHeaderIndex = (headers) => {
   const found = headers.findIndex((h) => {
     const l = h.toLowerCase();
-    if (l === "file" || l === "file.link")
+    if (l === FILE || l === "file.link")
       return true;
   });
   if (found === -1)
@@ -31512,7 +31631,7 @@ var useBlock = create()((set) => ({
 var App6 = (props) => {
   const { data, getSectionInfo, settings, plugin, ctx } = props;
   const [queryResults, setQueryResults] = (0, import_react10.useState)();
-  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react10.useState)();
+  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react10.useState)(-1);
   const [dvErr, setDvErr] = (0, import_react10.useState)();
   const { setBlockState } = useBlock();
   const [isLocked, setIsLocked] = (0, import_react10.useState)(false);
@@ -31529,9 +31648,7 @@ var App6 = (props) => {
       return qr2;
     });
   };
-  console.log("blockid: ", blockId);
   const doQuery = async () => {
-    console.log("do query called: ", query);
     const dv = app.plugins.plugins.dataview.api;
     if (query.split(" ")[0].toLowerCase() !== "table") {
       const result = eval(`(() => {${query}})()`);
@@ -31557,7 +31674,7 @@ var App6 = (props) => {
     (async () => {
       const b = await loadDependencies();
       if (!b) {
-        return new import_obsidian6.Notice(
+        return new import_obsidian7.Notice(
           "Datedit: Failed to load dependencies\n\nIs Dataview installed and enabled?"
         );
       }
@@ -31588,7 +31705,7 @@ var App6 = (props) => {
       return;
     setFileHeaderIndex(findFileHeaderIndex(queryResults.headers));
   }, [queryResults]);
-  if (!queryResults) {
+  if (!queryResults || fileHeaderIndex === -1) {
     return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react10.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react10.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
   }
   return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react10.default.createElement("table", { className: "dataedit" }, /* @__PURE__ */ import_react10.default.createElement("thead", null, /* @__PURE__ */ import_react10.default.createElement("tr", null, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react10.default.createElement(
@@ -31596,20 +31713,20 @@ var App6 = (props) => {
     {
       key: i + "table-header",
       className: "py-3",
-      hideFileLink
-    },
-    h
+      hideFileLink,
+      propertyName: h
+    }
   )))), /* @__PURE__ */ import_react10.default.createElement("tbody", null, queryResults?.values?.map((r2, i) => /* @__PURE__ */ import_react10.default.createElement("tr", { key: i + "-table-body-row" }, r2?.map((d, k) => /* @__PURE__ */ import_react10.default.createElement(
     Td,
     {
       key: k + "table-data",
       propertyName: queryResults.headers[k],
+      propertyValue: d,
       className: "py-3",
       hideFileLink,
       filePath: queryResults.values[i][fileHeaderIndex]?.path,
       isLocked
-    },
-    d
+    }
   )))))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react10.default.createElement(SettingsGear, { blockId }), /* @__PURE__ */ import_react10.default.createElement(
     LockToggle,
     {
@@ -31653,79 +31770,90 @@ ID my-id`,
   );
 };
 var Th = ({
-  children,
+  propertyName,
   className,
   hideFileLink: hideFileLink2
 }) => {
   const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
-  const propName = aliasObj2[children] ?? children;
-  const isFileProp = propName.toLowerCase() === "file" || propName === "file.link";
-  const propertyType = isFileProp ? "file" : getPropertyType(propName);
+  const propName = aliasObj2[propertyName] ?? propertyName;
+  const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
+  const prePropertyType = isFileProp ? FILE : getPropertyType(propName);
+  const propertyType = prePropertyType ?? "inline";
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement(
     Markdown,
     {
       app: plugin2.app,
       filePath: ctx2.sourcePath,
-      plainText: children
+      plainText: propertyName
     }
-  ), "\xA0", /* @__PURE__ */ import_react10.default.createElement(PropertyIcon, { propertyType })));
+  ), "\xA0", /* @__PURE__ */ import_react10.default.createElement(
+    "div",
+    {
+      "aria-label": propertyType,
+      className: "flex items-center justify-center"
+    },
+    /* @__PURE__ */ import_react10.default.createElement(PropertyIcon, { propertyType })
+  )));
 };
 var Td = (props2) => {
-  const { children, propertyName, className, hideFileLink: hideFileLink2 } = props2;
+  const { propertyValue, propertyName, className, hideFileLink: hideFileLink2, filePath } = props2;
   const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
   const propName = aliasObj2[propertyName] ?? propertyName;
-  const isFileProp = propName.toLowerCase() === "file" || propName === "file.link";
-  const propertyType = isFileProp ? "file" : getPropertyType(propName);
-  console.log(`property ${propName} is type: ${propertyType}`);
-  const content = tryToMarkdownLink(children);
+  console.log(aliasObj2);
+  const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
+  const prePropertyType = isFileProp ? FILE : getPropertyType(propName);
+  const propertyType = checkForInlineField(
+    propName,
+    filePath,
+    // @ts-ignore
+    plugin2.app.plugins.plugins.dataview.api
+  ).success ? "inline" : prePropertyType;
+  const propValue = tryToMarkdownLink(propertyValue);
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react10.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, propertyType === "text" || isFileProp ? /* @__PURE__ */ import_react10.default.createElement(TextInput, { ...props2, propertyName: propName }, content) : isFileProp ? /* @__PURE__ */ import_react10.default.createElement(
-    Markdown,
+  return /* @__PURE__ */ import_react10.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, /* @__PURE__ */ import_react10.default.createElement(
+    InputSwitch,
     {
-      app: plugin2.app,
-      filePath: ctx2.sourcePath,
-      plainText: children
+      ...props2,
+      propertyName: propName,
+      propertyValue: propValue,
+      propertyType
     }
-  ) : /* @__PURE__ */ import_react10.default.createElement("div", null, content)));
+  )));
 };
-var TextInput2 = (props2) => {
-  const {
-    children,
-    propertyName,
-    className,
-    hideFileLink: hideFileLink2,
-    filePath,
-    isLocked: isLocked2
-  } = props2;
-  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
-  if (!isEditing || isLocked2 || true) {
+var InputSwitch = (props2) => {
+  const { plugin: plugin2, ctx: ctx2 } = useBlock();
+  const { propertyValue, propertyType } = props2;
+  if (props2.propertyType === FILE) {
     return /* @__PURE__ */ import_react10.default.createElement(
       Markdown,
       {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: children,
-        className: "h-fit w-fit [&_*]:my-0",
-        onBlur: async (e) => {
-          console.log(e.target.textContent);
-          await updateMetaData(
-            propertyName,
-            e.target.textContent,
-            filePath,
-            plugin2
-          );
-          setIsEditing(false);
-        }
+        plainText: propertyValue,
+        className: "[&_*]:my-0"
       }
     );
   }
+  console.log("got propertyName: ", props2.propertyName);
+  if (!propertyValue) {
+    return;
+  }
+  switch (typeof propertyValue) {
+    case "string":
+      return /* @__PURE__ */ import_react10.default.createElement(StringInput, { ...props2 });
+    case "number":
+      return /* @__PURE__ */ import_react10.default.createElement(NumberInput, { ...props2 });
+    case "object":
+      return Array.isArray(propertyValue) ? /* @__PURE__ */ import_react10.default.createElement("div", null, propertyValue.join(", ")) : /* @__PURE__ */ import_react10.default.createElement("div", null, propertyValue);
+    default:
+      return /* @__PURE__ */ import_react10.default.createElement("div", null, propertyValue);
+  }
 };
-var TextInput = (props2) => {
-  const { children, propertyName, filePath, isLocked: isLocked2 } = props2;
+var StringInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
   const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
   const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
   if (!isEditing || isLocked2) {
@@ -31734,10 +31862,9 @@ var TextInput = (props2) => {
       {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: children,
-        className: "[&_*]:my-0",
+        plainText: propertyValue,
+        className: "h-full w-full [&_*]:my-0",
         onClick: () => {
-          console.log("clicked");
           !isLocked2 && setIsEditing(true);
         }
       }
@@ -31747,7 +31874,7 @@ var TextInput = (props2) => {
     "input",
     {
       type: "text",
-      defaultValue: children,
+      defaultValue: propertyValue,
       autoFocus: true,
       onBlur: async (e) => {
         console.log(e.target.value);
@@ -31757,6 +31884,38 @@ var TextInput = (props2) => {
           filePath,
           plugin2
         );
+        setIsEditing(false);
+      }
+    }
+  );
+};
+var NumberInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
+  const { plugin: plugin2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react10.default.createElement(
+      "div",
+      {
+        className: "h-full w-full",
+        onClick: () => {
+          !isLocked2 && setIsEditing(true);
+        }
+      },
+      propertyValue
+    );
+  }
+  return /* @__PURE__ */ import_react10.default.createElement(
+    "input",
+    {
+      type: "number",
+      defaultValue: propertyValue,
+      autoFocus: true,
+      onBlur: async (e) => {
+        const num = Number(e.target.value);
+        if (Number.isNaN(num))
+          return;
+        await updateMetaData(propertyName, num, filePath, plugin2);
         setIsEditing(false);
       }
     }
@@ -31773,7 +31932,7 @@ var loadDependencies = async () => {
   await plugins.loadPlugin(DATAVIEW);
   return true;
 };
-var DataEdit2 = class extends import_obsidian7.Plugin {
+var DataEdit2 = class extends import_obsidian8.Plugin {
   async onExternalSettingsChange() {
     console.log("settings were changed");
     await this.loadSettings();
@@ -31822,7 +31981,7 @@ var DataEdit2 = class extends import_obsidian7.Plugin {
     );
     const potentialParsed = SettingsSchema.safeParse(potentialSettings);
     if (!potentialParsed.success)
-      new import_obsidian7.Notice("Invalid settings detected");
+      new import_obsidian8.Notice("Invalid settings detected");
     this.saveData(potentialParsed.data);
   }
 };
@@ -31936,6 +32095,14 @@ lucide-react/dist/esm/icons/binary.js:
    * See the LICENSE file in the root directory of this source tree.
    *)
 
+lucide-react/dist/esm/icons/braces.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
 lucide-react/dist/esm/icons/calendar.js:
   (**
    * @license lucide-react v0.372.0 - ISC
@@ -32009,6 +32176,14 @@ lucide-react/dist/esm/icons/lock.js:
    *)
 
 lucide-react/dist/esm/icons/plus.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/scan-text.js:
   (**
    * @license lucide-react v0.372.0 - ISC
    *

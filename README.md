@@ -261,8 +261,11 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
 -   [x] Allow no file link being displayed
 -   [x] You can now do 'TABLE WITHOUT ID...' _without_ including `file.link`
 -   [x] Nested property support
-    -   If you use YAML or JSON objects in frontmatter, that will update correctly
--   [x] Block toolbar
+    -   If you use YAML objects in frontmatter, that will update correctly
+-   [ ] Grouped results support?
+-           - This might not make sense...
+-   [x] Inline property support
+-   [ ] Block toolbar
     -   You can now choose items to show in a toolbar near your Dataedit block for quick access to common settings and tools for Dataedit
 -   [ ] Settings overhaul
     -   [ ] Block config
@@ -275,14 +278,18 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
             -   [ ] Rows
             -   [ ] What to do in conflicts?
         -   [ ] Show icons
+            -   [ ] Add examples for using the Iconize plugin to do custom icons
         -   [ ] Show number buttons
         -   [ ] Show autocomplete
         -   [ ] pagination
         -   [ ] inline property support?
+            -   I may not make this a toggle because I found a cheap way to check if a property is inline before doing the work of reading and modifying the entire contents of a note
         -   [ ] Configurable column value presets?
     -   [ ] Plugin settings
         -   Previously, after changing plugin settings you would need to start editing an already rendered Dataedit block and click away to force a rerender with the new plugin settings. This is no longer needed
         -   Also previously, plugin settings were exactly the same as block config. Instead, they are not completely different but you _can_ still set default settings for block configs from within the plugin settings (see default block config)
+        -   [ ] Nested property format
+            -   I can't easily tell if JSON vs YAML is used in a nested property because it's always exposed as JSON. This will allow the output of a Dataedit cell to cause JSON or YAML to be outputted to the property value
         -   [ ] Default block config- Applies settings to all Dataedit blocks that do _not_ have an id set
         -   [ ] Allow JS- Default off?
             -   Because there isn't a separate codeblock language like `dataedit-js` (which I don't really want to do), you are at risk of accidentally running JS in your Dataedit block if you don't specify 'TABLE' (not case sensitive). Maybe I should do a separate block language?

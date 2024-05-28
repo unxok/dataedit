@@ -2,21 +2,46 @@
 test: dddffddd *sdf* ww
 text: asdfasdf
 obj:
-  key: val
+  key: dd
   anotherKey: anotherValue
+json:
+  key: asdlff
 multitext:
   - asdf
   - asdfdfd
 num: 4566
 aliases:
   - asdeeffe
-dot.notation: sdlkfj
+dotnotation: "123"
+category: cat1
 ---
+ 
+
+inlineProp:: 551
+
+## Editing inline fields
+An inline field can be of two types:
+1. Entire line
+	- Regex: `/^\S+::[ ]*\S+/gm`
+2. Wrapped with `()` or `[]`
+	- Regex: `/[\[\(]([^\n\r\(\[]*)::[ ]*([^\)\]\n\r]*)[\]\)]/gm`
+In both cases, they can either be a string or an array.
+- if an array, that means that the field is declared multiple times in a file
 
 
-
-
-
+To find inline fields:
+1. Given a line, trimmed of whitespace
+2. Parse every line for a line or wrapped inline field
+3. Get key and value
+	- split on `/::(.+)` and trim
+4. add to an array
+To edit a field:
+- If value from dataview was an array
+	1. Find field-value pair where the value matches the old value before editing
+	2. Replace value in that line
+- If value from dataview was a string
+	1. Replace value in that line
+1. Modify that line in file with new line content
 
 ```python
 def func(x):
@@ -30,9 +55,10 @@ func('world')
 - asdf
 
 
+
+
 ```dataedit
-TABLE dot.notation, test as testAlias, text, num
-Id my-id
+TABLE inlineProp as "inli'n'e", multitext, json.key, obj.key, test as testAlias, text, num
 ```
 
 

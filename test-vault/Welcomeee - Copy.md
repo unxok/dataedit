@@ -5,7 +5,9 @@ multitext:
   - asdf
   - asdfdfd
 num: 456
-alias: asdeeffe
+aliases:
+  - asdeeffe
+category: cat1
 ---
 
 
