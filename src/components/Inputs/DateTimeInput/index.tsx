@@ -1,109 +1,78 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-	CommonEditableProps,
-	DataviewFile,
-	QueryResults,
-} from "../../../lib/types";
-import { PropertySuggester } from "../../PropertySuggester";
-import { useEnter } from "../../../hooks/useEnter";
-import { LinkTableData } from "@/components/LinkTableData";
-import { checkIsLink, getPropertyType } from "@/lib/utils";
+import { useBlock } from "@/components/App";
+import { Markdown } from "@/components/Markdown";
+import { currentLocale, dvRenderNullAs, updateMetaData } from "@/lib/utils";
+import { DateTime } from "luxon";
+import React, { useEffect, useState } from "react";
+import { InputSwitchProps } from "..";
 
-export const DateTimeInput = ({
-	propertyValue,
-	propertyName,
-	file,
-	plugin,
-	config,
-	updateMetaData,
-	isTime,
-}: CommonEditableProps & { isTime: boolean }) => {
-	const ref = useRef<HTMLInputElement>(null);
+export const DateTimeInput = (
+	props: InputSwitchProps<DateTime> & { hasTime: boolean },
+) => {
+	const { propertyName, propertyValue, filePath, isLocked, hasTime } = props;
+	const { ctx, plugin } = useBlock();
 	const [isEditing, setIsEditing] = useState(false);
-	const isoString = (() => {
-		try {
-			return new Date(propertyValue).toISOString();
-		} catch (e) {
-			console.error("error in datetime: ", e);
-			return new Date().toISOString();
+	const [{ formattedDate, inputDate }, setDateStrings] = useState({
+		formattedDate: null,
+		inputDate: null,
+	});
+	const locale = currentLocale();
+	const dvSettings: {
+		defaultDateTimeFormat: string;
+		defaultDateFormat: string;
+		// @ts-ignore
+	} = app.plugins.plugins?.dataview?.settings;
+	const defaultFormat = hasTime
+		? dvSettings.defaultDateTimeFormat
+		: dvSettings.defaultDateFormat;
+	const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
+	const max = hasTime ? "9999-12-31T23:59" : "9999-12-31";
+
+	useEffect(() => {
+		if (!DateTime.isDateTime(propertyValue)) {
+			setDateStrings({
+				formattedDate: null,
+				inputDate: null,
+			});
 		}
-	})();
-	const parsedDateString = isTime
-		? isoString.substring(0, 16)
-		: isoString.substring(0, 10);
+		if (DateTime.isDateTime(propertyValue)) {
+			const formattedDate = propertyValue
+				.toLocal()
+				.toFormat(defaultFormat, { locale });
+			const inputDate = propertyValue.toLocal().toFormat(inputFormat);
+			setDateStrings({ formattedDate, inputDate });
+		}
+	}, [propertyValue]);
 
-	const [value, setValue] = useState(parsedDateString);
-
-	const updateProperty = async () => {
-		await updateMetaData(propertyName, propertyValue, file.path);
-	};
-	useEnter(ref, updateProperty);
+	if (!isEditing || isLocked) {
+		return (
+			<Markdown
+				app={plugin.app}
+				filePath={ctx.sourcePath}
+				plainText={formattedDate ?? dvRenderNullAs}
+				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+				onClick={() => {
+					!isLocked && setIsEditing(true);
+				}}
+			/>
+		);
+	}
 
 	return (
-		<div className="relative">
-			{!isEditing && (
-				<span className="flex h-full items-center whitespace-nowrap p-1 focus:border-[1px] focus:border-solid focus:border-secondary-alt">
-					<span
-						className="flex w-full"
-						style={{
-							justifyContent: config.alignmentByType[
-								getPropertyType(propertyName)
-							]?.enabled
-								? config.alignmentByType[
-										getPropertyType(propertyName)
-									].horizontal
-								: config.horizontalAlignment,
-						}}
-						onClick={() => setIsEditing(true)}
-						onFocus={() => setIsEditing(true)}
-					>
-						{!propertyValue
-							? config.emptyValueDisplay
-							: isTime
-								? new Date(propertyValue).toLocaleString()
-								: new Date(propertyValue).toLocaleDateString()}
-					</span>
-				</span>
-			)}
-			{isEditing && (
-				<input
-					ref={ref}
-					className={
-						"metadata-input metadata-input-text m-0 border-transparent bg-transparent " +
-						isTime
-							? "mod-datetime"
-							: "mod-date"
-					}
-					autoFocus
-					// max="9999-12-31T23:59"
-					type={isTime ? "datetime-local" : "date"}
-					value={value}
-					placeholder="Empty"
-					onChange={(e) => {
-						if (!e.target.validity.valid || !e.target.value) return;
-						setValue(e.target.value);
-						// console.log("changed");
-						// setQueryResults((prev) => {
-						// 	const copyPrev = { ...prev };
-						// 	const newValue = new Date(e.target.value)
-						// 		.toISOString()
-						// 		.substring(0, 16);
-						// 	copyPrev.values[propertyValueArrIndex][
-						// 		propertyValueIndex
-						// 	] = newValue;
-						// 	return copyPrev as QueryResults;
-						// });
-					}}
-					onBlur={async (e) => {
-						setIsEditing(false);
-						const str = new Date(value ?? undefined).toISOString();
-						const newVal = isTime
-							? str.substring(0, 16)
-							: str.substring(0, 10);
-						updateMetaData(propertyName, newVal, file.path);
-					}}
-				></input>
-			)}
-		</div>
+		<input
+			type={hasTime ? "datetime-local" : "date"}
+			defaultValue={inputDate}
+			max={max}
+			autoFocus
+			onBlur={async (e) => {
+				await updateMetaData(
+					propertyName,
+					e.target.value,
+					filePath,
+					plugin,
+				);
+
+				setIsEditing(false);
+			}}
+		/>
 	);
 };

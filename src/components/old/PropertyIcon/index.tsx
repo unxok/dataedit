@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { getPropertyType } from "../../lib/utils";
+import { getPropertyType } from "../../../lib/utils";
 import { setIcon } from "obsidian";
 
 export const PropertyIcon = ({ propertyName }: { propertyName: string }) => {

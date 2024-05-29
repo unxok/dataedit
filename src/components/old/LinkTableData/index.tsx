@@ -1,5 +1,5 @@
 import React from "react";
-import { DataviewFile } from "../../lib/types";
+import { DataviewFile } from "../../../lib/types";
 
 export const LinkTableData = ({ file }: { file: DataviewFile | string }) => {
 	// console.log("got file: ", file);

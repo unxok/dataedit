@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { DataviewFile } from "../../../lib/types";
-import { useEnter } from "../../../hooks/useEnter";
+import { DataviewFile } from "../../../../lib/types";
+import { useEnter } from "../../../../hooks/useEnter";
 import { LinkTableData } from "../../LinkTableData";
 import { Plugin } from "obsidian";
 import DataEdit from "@/main";

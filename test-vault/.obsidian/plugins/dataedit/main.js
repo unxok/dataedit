@@ -518,7 +518,7 @@ var require_react_development = __commonJS({
           }
           return element;
         };
-        function createElement2(type, config, children) {
+        function createElement7(type, config, children) {
           var propName;
           var props2 = {};
           var key = null;
@@ -586,7 +586,7 @@ var require_react_development = __commonJS({
           var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
           return newElement;
         }
-        function cloneElement(element, config, children) {
+        function cloneElement2(element, config, children) {
           if (element === null || element === void 0) {
             throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
           }
@@ -655,14 +655,14 @@ var require_react_development = __commonJS({
         function escapeUserProvidedKey(text) {
           return text.replace(userProvidedKeyEscapeRegex, "$&/");
         }
-        function getElementKey(element, index) {
+        function getElementKey(element, index2) {
           if (typeof element === "object" && element !== null && element.key != null) {
             {
               checkKeyStringCoercion(element.key);
             }
             return escape("" + element.key);
           }
-          return index.toString(36);
+          return index2.toString(36);
         }
         function mapIntoArray(children, array, escapedPrefix, nameSoFar, callback) {
           var type = typeof children;
@@ -979,7 +979,7 @@ var require_react_development = __commonJS({
           }
           return lazyType2;
         }
-        function forwardRef3(render) {
+        function forwardRef5(render) {
           {
             if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
               error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState6(initialState) {
+        function useState16(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -1100,11 +1100,11 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef7(initialValue) {
+        function useRef11(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect7(create2, deps) {
+        function useEffect15(create2, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create2, deps);
         }
@@ -1112,15 +1112,15 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useInsertionEffect(create2, deps);
         }
-        function useLayoutEffect(create2, deps) {
+        function useLayoutEffect3(create2, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useLayoutEffect(create2, deps);
         }
-        function useCallback4(callback, deps) {
+        function useCallback6(callback, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useCallback(callback, deps);
         }
-        function useMemo(create2, deps) {
+        function useMemo3(create2, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useMemo(create2, deps);
         }
@@ -1617,7 +1617,7 @@ var require_react_development = __commonJS({
               error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
             }
           }
-          var element = createElement2.apply(this, arguments);
+          var element = createElement7.apply(this, arguments);
           if (element == null) {
             return element;
           }
@@ -1656,7 +1656,7 @@ var require_react_development = __commonJS({
           return validatedFactory;
         }
         function cloneElementWithValidation(element, props2, children) {
-          var newElement = cloneElement.apply(this, arguments);
+          var newElement = cloneElement2.apply(this, arguments);
           for (var i = 2; i < arguments.length; i++) {
             validateChildKeys(arguments[i], newElement.type);
           }
@@ -1856,14 +1856,14 @@ var require_react_development = __commonJS({
         var createElement$1 = createElementWithValidation;
         var cloneElement$1 = cloneElementWithValidation;
         var createFactory = createFactoryWithValidation;
-        var Children = {
+        var Children2 = {
           map: mapChildren,
           forEach: forEachChildren,
           count: countChildren,
           toArray,
           only: onlyChild
         };
-        exports.Children = Children;
+        exports.Children = Children2;
         exports.Component = Component2;
         exports.Fragment = REACT_FRAGMENT_TYPE;
         exports.Profiler = REACT_PROFILER_TYPE;
@@ -1877,25 +1877,25 @@ var require_react_development = __commonJS({
         exports.createElement = createElement$1;
         exports.createFactory = createFactory;
         exports.createRef = createRef;
-        exports.forwardRef = forwardRef3;
+        exports.forwardRef = forwardRef5;
         exports.isValidElement = isValidElement;
         exports.lazy = lazy;
         exports.memo = memo;
         exports.startTransition = startTransition;
         exports.unstable_act = act;
-        exports.useCallback = useCallback4;
+        exports.useCallback = useCallback6;
         exports.useContext = useContext;
         exports.useDebugValue = useDebugValue2;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect7;
+        exports.useEffect = useEffect15;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
-        exports.useLayoutEffect = useLayoutEffect;
-        exports.useMemo = useMemo;
+        exports.useLayoutEffect = useLayoutEffect3;
+        exports.useMemo = useMemo3;
         exports.useReducer = useReducer;
-        exports.useRef = useRef7;
-        exports.useState = useState6;
+        exports.useRef = useRef11;
+        exports.useState = useState16;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -1933,9 +1933,9 @@ var require_scheduler_development = __commonJS({
         var enableProfiling = false;
         var frameYieldMs = 5;
         function push(heap, node) {
-          var index = heap.length;
+          var index2 = heap.length;
           heap.push(node);
-          siftUp(heap, node, index);
+          siftUp(heap, node, index2);
         }
         function peek(heap) {
           return heap.length === 0 ? null : heap[0];
@@ -1953,42 +1953,42 @@ var require_scheduler_development = __commonJS({
           return first;
         }
         function siftUp(heap, node, i) {
-          var index = i;
-          while (index > 0) {
-            var parentIndex = index - 1 >>> 1;
+          var index2 = i;
+          while (index2 > 0) {
+            var parentIndex = index2 - 1 >>> 1;
             var parent = heap[parentIndex];
             if (compare(parent, node) > 0) {
               heap[parentIndex] = node;
-              heap[index] = parent;
-              index = parentIndex;
+              heap[index2] = parent;
+              index2 = parentIndex;
             } else {
               return;
             }
           }
         }
         function siftDown(heap, node, i) {
-          var index = i;
+          var index2 = i;
           var length = heap.length;
           var halfLength = length >>> 1;
-          while (index < halfLength) {
-            var leftIndex = (index + 1) * 2 - 1;
+          while (index2 < halfLength) {
+            var leftIndex = (index2 + 1) * 2 - 1;
             var left = heap[leftIndex];
             var rightIndex = leftIndex + 1;
             var right = heap[rightIndex];
             if (compare(left, node) < 0) {
               if (rightIndex < length && compare(right, left) < 0) {
-                heap[index] = right;
+                heap[index2] = right;
                 heap[rightIndex] = node;
-                index = rightIndex;
+                index2 = rightIndex;
               } else {
-                heap[index] = left;
+                heap[index2] = left;
                 heap[leftIndex] = node;
-                index = leftIndex;
+                index2 = leftIndex;
               }
             } else if (rightIndex < length && compare(right, node) < 0) {
-              heap[index] = right;
+              heap[index2] = right;
               heap[rightIndex] = node;
-              index = rightIndex;
+              index2 = rightIndex;
             } else {
               return;
             }
@@ -2391,9 +2391,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React10 = require_react();
+        var React25 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React10.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React25.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -2442,7 +2442,7 @@ var require_react_dom_development = __commonJS({
         var HostPortal = 4;
         var HostComponent = 5;
         var HostText = 6;
-        var Fragment = 7;
+        var Fragment3 = 7;
         var Mode = 8;
         var ContextConsumer = 9;
         var ContextProvider = 10;
@@ -3598,7 +3598,7 @@ var require_react_dom_development = __commonJS({
               return "DehydratedFragment";
             case ForwardRef:
               return getWrappedName$1(type, type.render, "ForwardRef");
-            case Fragment:
+            case Fragment3:
               return "Fragment";
             case HostComponent:
               return type;
@@ -3998,7 +3998,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props2.value == null) {
               if (typeof props2.children === "object" && props2.children !== null) {
-                React10.Children.forEach(props2.children, function(child) {
+                React25.Children.forEach(props2.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -6157,7 +6157,7 @@ var require_react_dom_development = __commonJS({
           {
             var map = /* @__PURE__ */ new Map();
             var lane = 1;
-            for (var index2 = 0; index2 < TotalLanes; index2++) {
+            for (var index3 = 0; index3 < TotalLanes; index3++) {
               var label = getLabelForLane(lane);
               map.set(lane, label);
               lane *= 2;
@@ -6660,9 +6660,9 @@ var require_react_dom_development = __commonJS({
             var entanglements = root2.entanglements;
             var lanes = nextLanes & entangledLanes;
             while (lanes > 0) {
-              var index2 = pickArbitraryLaneIndex(lanes);
-              var lane = 1 << index2;
-              nextLanes |= entanglements[index2];
+              var index3 = pickArbitraryLaneIndex(lanes);
+              var lane = 1 << index3;
+              nextLanes |= entanglements[index3];
               lanes &= ~lane;
             }
           }
@@ -6672,9 +6672,9 @@ var require_react_dom_development = __commonJS({
           var eventTimes = root2.eventTimes;
           var mostRecentEventTime = NoTimestamp;
           while (lanes > 0) {
-            var index2 = pickArbitraryLaneIndex(lanes);
-            var lane = 1 << index2;
-            var eventTime = eventTimes[index2];
+            var index3 = pickArbitraryLaneIndex(lanes);
+            var lane = 1 << index3;
+            var eventTime = eventTimes[index3];
             if (eventTime > mostRecentEventTime) {
               mostRecentEventTime = eventTime;
             }
@@ -6733,12 +6733,12 @@ var require_react_dom_development = __commonJS({
           var expirationTimes = root2.expirationTimes;
           var lanes = pendingLanes;
           while (lanes > 0) {
-            var index2 = pickArbitraryLaneIndex(lanes);
-            var lane = 1 << index2;
-            var expirationTime = expirationTimes[index2];
+            var index3 = pickArbitraryLaneIndex(lanes);
+            var lane = 1 << index3;
+            var expirationTime = expirationTimes[index3];
             if (expirationTime === NoTimestamp) {
               if ((lane & suspendedLanes) === NoLanes || (lane & pingedLanes) !== NoLanes) {
-                expirationTimes[index2] = computeExpirationTime(lane, currentTime);
+                expirationTimes[index3] = computeExpirationTime(lane, currentTime);
               }
             } else if (expirationTime <= currentTime) {
               root2.expiredLanes |= lane;
@@ -6848,8 +6848,8 @@ var require_react_dom_development = __commonJS({
             root2.pingedLanes = NoLanes;
           }
           var eventTimes = root2.eventTimes;
-          var index2 = laneToIndex(updateLane);
-          eventTimes[index2] = eventTime;
+          var index3 = laneToIndex(updateLane);
+          eventTimes[index3] = eventTime;
         }
         function markRootSuspended(root2, suspendedLanes) {
           root2.suspendedLanes |= suspendedLanes;
@@ -6857,9 +6857,9 @@ var require_react_dom_development = __commonJS({
           var expirationTimes = root2.expirationTimes;
           var lanes = suspendedLanes;
           while (lanes > 0) {
-            var index2 = pickArbitraryLaneIndex(lanes);
-            var lane = 1 << index2;
-            expirationTimes[index2] = NoTimestamp;
+            var index3 = pickArbitraryLaneIndex(lanes);
+            var lane = 1 << index3;
+            expirationTimes[index3] = NoTimestamp;
             lanes &= ~lane;
           }
         }
@@ -6879,11 +6879,11 @@ var require_react_dom_development = __commonJS({
           var expirationTimes = root2.expirationTimes;
           var lanes = noLongerPendingLanes;
           while (lanes > 0) {
-            var index2 = pickArbitraryLaneIndex(lanes);
-            var lane = 1 << index2;
-            entanglements[index2] = NoLanes;
-            eventTimes[index2] = NoTimestamp;
-            expirationTimes[index2] = NoTimestamp;
+            var index3 = pickArbitraryLaneIndex(lanes);
+            var lane = 1 << index3;
+            entanglements[index3] = NoLanes;
+            eventTimes[index3] = NoTimestamp;
+            expirationTimes[index3] = NoTimestamp;
             lanes &= ~lane;
           }
         }
@@ -6892,14 +6892,14 @@ var require_react_dom_development = __commonJS({
           var entanglements = root2.entanglements;
           var lanes = rootEntangledLanes;
           while (lanes) {
-            var index2 = pickArbitraryLaneIndex(lanes);
-            var lane = 1 << index2;
+            var index3 = pickArbitraryLaneIndex(lanes);
+            var lane = 1 << index3;
             if (
               // Is this one of the newly entangled lanes?
               lane & entangledLanes | // Is this lane transitively entangled with the newly entangled lanes?
-              entanglements[index2] & entangledLanes
+              entanglements[index3] & entangledLanes
             ) {
-              entanglements[index2] |= entangledLanes;
+              entanglements[index3] |= entangledLanes;
             }
             lanes &= ~lane;
           }
@@ -6955,9 +6955,9 @@ var require_react_dom_development = __commonJS({
           }
           var pendingUpdatersLaneMap = root2.pendingUpdatersLaneMap;
           while (lanes > 0) {
-            var index2 = laneToIndex(lanes);
-            var lane = 1 << index2;
-            var updaters = pendingUpdatersLaneMap[index2];
+            var index3 = laneToIndex(lanes);
+            var lane = 1 << index3;
+            var updaters = pendingUpdatersLaneMap[index3];
             updaters.add(fiber);
             lanes &= ~lane;
           }
@@ -6969,9 +6969,9 @@ var require_react_dom_development = __commonJS({
           var pendingUpdatersLaneMap = root2.pendingUpdatersLaneMap;
           var memoizedUpdaters = root2.memoizedUpdaters;
           while (lanes > 0) {
-            var index2 = laneToIndex(lanes);
-            var lane = 1 << index2;
-            var updaters = pendingUpdatersLaneMap[index2];
+            var index3 = laneToIndex(lanes);
+            var lane = 1 << index3;
+            var updaters = pendingUpdatersLaneMap[index3];
             if (updaters.size > 0) {
               updaters.forEach(function(fiber) {
                 var alternate = fiber.alternate;
@@ -8426,17 +8426,17 @@ var require_react_dom_development = __commonJS({
             node = node.parentNode;
           }
         }
-        function getNodeForCharacterOffset(root2, offset2) {
+        function getNodeForCharacterOffset(root2, offset4) {
           var node = getLeafNode(root2);
           var nodeStart = 0;
           var nodeEnd = 0;
           while (node) {
             if (node.nodeType === TEXT_NODE) {
               nodeEnd = nodeStart + node.textContent.length;
-              if (nodeStart <= offset2 && nodeEnd >= offset2) {
+              if (nodeStart <= offset4 && nodeEnd >= offset4) {
                 return {
                   node,
-                  offset: offset2 - nodeStart
+                  offset: offset4 - nodeStart
                 };
               }
               nodeStart = nodeEnd;
@@ -9397,7 +9397,7 @@ var require_react_dom_development = __commonJS({
             }
           }
         }
-        function createElement2(type, props2, rootContainerElement, parentNamespace) {
+        function createElement7(type, props2, rootContainerElement, parentNamespace) {
           var isCustomComponentTag;
           var ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement);
           var domElement;
@@ -10258,7 +10258,7 @@ var require_react_dom_development = __commonJS({
             }
             parentNamespace = hostContextDev.namespace;
           }
-          var domElement = createElement2(type, props2, rootContainerInstance, parentNamespace);
+          var domElement = createElement7(type, props2, rootContainerInstance, parentNamespace);
           precacheFiberNode(internalInstanceHandle, domElement);
           updateFiberProps(domElement, props2);
           return domElement;
@@ -10818,36 +10818,36 @@ var require_react_dom_development = __commonJS({
         {
           fiberStack = [];
         }
-        var index = -1;
+        var index2 = -1;
         function createCursor(defaultValue) {
           return {
             current: defaultValue
           };
         }
         function pop(cursor, fiber) {
-          if (index < 0) {
+          if (index2 < 0) {
             {
               error("Unexpected pop.");
             }
             return;
           }
           {
-            if (fiber !== fiberStack[index]) {
+            if (fiber !== fiberStack[index2]) {
               error("Unexpected Fiber popped.");
             }
           }
-          cursor.current = valueStack[index];
-          valueStack[index] = null;
+          cursor.current = valueStack[index2];
+          valueStack[index2] = null;
           {
-            fiberStack[index] = null;
+            fiberStack[index2] = null;
           }
-          index--;
+          index2--;
         }
         function push(cursor, value, fiber) {
-          index++;
-          valueStack[index] = cursor.current;
+          index2++;
+          valueStack[index2] = cursor.current;
           {
-            fiberStack[index] = fiber;
+            fiberStack[index2] = fiber;
           }
           cursor.current = value;
         }
@@ -11094,7 +11094,7 @@ var require_react_dom_development = __commonJS({
           treeForkProvider = workInProgress2;
           treeForkCount = totalChildren;
         }
-        function pushTreeId(workInProgress2, totalChildren, index2) {
+        function pushTreeId(workInProgress2, totalChildren, index3) {
           warnIfNotHydrating();
           idStack[idStackIndex++] = treeContextId;
           idStack[idStackIndex++] = treeContextOverflow;
@@ -11104,7 +11104,7 @@ var require_react_dom_development = __commonJS({
           var baseOverflow = treeContextOverflow;
           var baseLength = getBitLength(baseIdWithLeadingBit) - 1;
           var baseId = baseIdWithLeadingBit & ~(1 << baseLength);
-          var slot = index2 + 1;
+          var slot = index3 + 1;
           var length = getBitLength(totalChildren) + baseLength;
           if (length > 30) {
             var numberOfOverflowBits = baseLength - baseLength % 5;
@@ -11999,7 +11999,7 @@ var require_react_dom_development = __commonJS({
             }
           }
           function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-            if (current2 === null || current2.tag !== Fragment) {
+            if (current2 === null || current2.tag !== Fragment3) {
               var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
               created.return = returnFiber;
               return created;
@@ -12402,7 +12402,7 @@ var require_react_dom_development = __commonJS({
               if (child.key === key) {
                 var elementType = element.type;
                 if (elementType === REACT_FRAGMENT_TYPE) {
-                  if (child.tag === Fragment) {
+                  if (child.tag === Fragment3) {
                     deleteRemainingChildren(returnFiber, child.sibling);
                     var existing = useFiber(child, element.props.children);
                     existing.return = returnFiber;
@@ -17399,13 +17399,13 @@ var require_react_dom_development = __commonJS({
             }
           }
         }
-        function validateSuspenseListNestedChild(childSlot, index2) {
+        function validateSuspenseListNestedChild(childSlot, index3) {
           {
             var isAnArray = isArray(childSlot);
             var isIterable = !isAnArray && typeof getIteratorFn(childSlot) === "function";
             if (isAnArray || isIterable) {
               var type = isAnArray ? "array" : "iterable";
-              error("A nested %s was passed to row #%s in <SuspenseList />. Wrap it in an additional SuspenseList to configure its revealOrder: <SuspenseList revealOrder=...> ... <SuspenseList revealOrder=...>{%s}</SuspenseList> ... </SuspenseList>", type, index2, type);
+              error("A nested %s was passed to row #%s in <SuspenseList />. Wrap it in an additional SuspenseList to configure its revealOrder: <SuspenseList revealOrder=...> ... <SuspenseList revealOrder=...>{%s}</SuspenseList> ... </SuspenseList>", type, index3, type);
               return false;
             }
           }
@@ -17879,7 +17879,7 @@ var require_react_dom_development = __commonJS({
               var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
               return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
             }
-            case Fragment:
+            case Fragment3:
               return updateFragment(current2, workInProgress2, renderLanes2);
             case Mode:
               return updateMode(current2, workInProgress2, renderLanes2);
@@ -18152,7 +18152,7 @@ var require_react_dom_development = __commonJS({
             case SimpleMemoComponent:
             case FunctionComponent:
             case ForwardRef:
-            case Fragment:
+            case Fragment3:
             case Mode:
             case Profiler:
             case ContextConsumer:
@@ -20877,7 +20877,7 @@ var require_react_dom_development = __commonJS({
             }
           }
         }
-        function flushSync(fn) {
+        function flushSync2(fn) {
           if (rootWithPendingPassiveEffects !== null && rootWithPendingPassiveEffects.tag === LegacyRoot && (executionContext & (RenderContext | CommitContext)) === NoContext) {
             flushPassiveEffects();
           }
@@ -21943,7 +21943,7 @@ var require_react_dom_development = __commonJS({
             }
             var staleFamilies = update.staleFamilies, updatedFamilies = update.updatedFamilies;
             flushPassiveEffects();
-            flushSync(function() {
+            flushSync2(function() {
               scheduleFibersWithFamiliesRecursively(root2.current, updatedFamilies, staleFamilies);
             });
           }
@@ -21954,7 +21954,7 @@ var require_react_dom_development = __commonJS({
               return;
             }
             flushPassiveEffects();
-            flushSync(function() {
+            flushSync2(function() {
               updateContainer(element, root2, null, null);
             });
           }
@@ -22411,7 +22411,7 @@ var require_react_dom_development = __commonJS({
           return fiber;
         }
         function createFiberFromFragment(elements, mode, lanes, key) {
-          var fiber = createFiber(Fragment, elements, key, mode);
+          var fiber = createFiber(Fragment3, elements, key, mode);
           fiber.lanes = lanes;
           return fiber;
         }
@@ -22744,7 +22744,7 @@ var require_react_dom_development = __commonJS({
               break;
             }
             case SuspenseComponent: {
-              flushSync(function() {
+              flushSync2(function() {
                 var root3 = enqueueConcurrentRenderForLane(fiber, SyncLane);
                 if (root3 !== null) {
                   var eventTime = requestEventTime();
@@ -22823,10 +22823,10 @@ var require_react_dom_development = __commonJS({
         var setErrorHandler = null;
         var setSuspenseHandler = null;
         {
-          var copyWithDeleteImpl = function(obj, path, index2) {
-            var key = path[index2];
+          var copyWithDeleteImpl = function(obj, path, index3) {
+            var key = path[index3];
             var updated = isArray(obj) ? obj.slice() : assign({}, obj);
-            if (index2 + 1 === path.length) {
+            if (index3 + 1 === path.length) {
               if (isArray(updated)) {
                 updated.splice(key, 1);
               } else {
@@ -22834,17 +22834,17 @@ var require_react_dom_development = __commonJS({
               }
               return updated;
             }
-            updated[key] = copyWithDeleteImpl(obj[key], path, index2 + 1);
+            updated[key] = copyWithDeleteImpl(obj[key], path, index3 + 1);
             return updated;
           };
           var copyWithDelete = function(obj, path) {
             return copyWithDeleteImpl(obj, path, 0);
           };
-          var copyWithRenameImpl = function(obj, oldPath, newPath, index2) {
-            var oldKey = oldPath[index2];
+          var copyWithRenameImpl = function(obj, oldPath, newPath, index3) {
+            var oldKey = oldPath[index3];
             var updated = isArray(obj) ? obj.slice() : assign({}, obj);
-            if (index2 + 1 === oldPath.length) {
-              var newKey = newPath[index2];
+            if (index3 + 1 === oldPath.length) {
+              var newKey = newPath[index3];
               updated[newKey] = updated[oldKey];
               if (isArray(updated)) {
                 updated.splice(oldKey, 1);
@@ -22857,7 +22857,7 @@ var require_react_dom_development = __commonJS({
                 obj[oldKey],
                 oldPath,
                 newPath,
-                index2 + 1
+                index3 + 1
               );
             }
             return updated;
@@ -22876,13 +22876,13 @@ var require_react_dom_development = __commonJS({
             }
             return copyWithRenameImpl(obj, oldPath, newPath, 0);
           };
-          var copyWithSetImpl = function(obj, path, index2, value) {
-            if (index2 >= path.length) {
+          var copyWithSetImpl = function(obj, path, index3, value) {
+            if (index3 >= path.length) {
               return value;
             }
-            var key = path[index2];
+            var key = path[index3];
             var updated = isArray(obj) ? obj.slice() : assign({}, obj);
-            updated[key] = copyWithSetImpl(obj[key], path, index2 + 1, value);
+            updated[key] = copyWithSetImpl(obj[key], path, index3 + 1, value);
             return updated;
           };
           var copyWithSet = function(obj, path, value) {
@@ -23073,7 +23073,7 @@ var require_react_dom_development = __commonJS({
                 error("Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.");
               }
             }
-            flushSync(function() {
+            flushSync2(function() {
               updateContainer(null, root2, null, null);
             });
             unmarkContainerAsRoot(container);
@@ -23248,7 +23248,7 @@ var require_react_dom_development = __commonJS({
             markContainerAsRoot(root2.current, container);
             var rootContainerElement = container.nodeType === COMMENT_NODE ? container.parentNode : container;
             listenToAllSupportedEvents(rootContainerElement);
-            flushSync();
+            flushSync2();
             return root2;
           } else {
             var rootSibling;
@@ -23279,7 +23279,7 @@ var require_react_dom_development = __commonJS({
             markContainerAsRoot(_root.current, container);
             var _rootContainerElement = container.nodeType === COMMENT_NODE ? container.parentNode : container;
             listenToAllSupportedEvents(_rootContainerElement);
-            flushSync(function() {
+            flushSync2(function() {
               updateContainer(initialChildren, _root, parentComponent, callback);
             });
             return _root;
@@ -23407,7 +23407,7 @@ var require_react_dom_development = __commonJS({
                 error("unmountComponentAtNode(): The node you're attempting to unmount was rendered by another copy of React.");
               }
             }
-            flushSync(function() {
+            flushSync2(function() {
               legacyRenderSubtreeIntoContainer(null, null, container, false, function() {
                 container._reactRootContainer = null;
                 unmarkContainerAsRoot(container);
@@ -23439,7 +23439,7 @@ var require_react_dom_development = __commonJS({
           }
         }
         setRestoreImplementation(restoreControlledState$3);
-        setBatchingImplementation(batchedUpdates$1, discreteUpdates, flushSync);
+        setBatchingImplementation(batchedUpdates$1, discreteUpdates, flushSync2);
         function createPortal$1(children, container) {
           var key = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : null;
           if (!isValidContainer(container)) {
@@ -23478,7 +23478,7 @@ var require_react_dom_development = __commonJS({
               error("flushSync was called from inside a lifecycle method. React cannot flush when React is already rendering. Consider moving this call to a scheduler task or micro task.");
             }
           }
-          return flushSync(fn);
+          return flushSync2(fn);
         }
         var foundDevTools = injectIntoDevTools({
           findFiberByHostInstance: getClosestInstanceFromNode,
@@ -23570,8 +23570,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React10 = require_react();
-        var ReactSharedInternals = React10.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var React25 = require_react();
+        var ReactSharedInternals = React25.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function error(format) {
           {
             {
@@ -23601,13 +23601,13 @@ var require_use_sync_external_store_shim_development = __commonJS({
           return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y;
         }
         var objectIs = typeof Object.is === "function" ? Object.is : is;
-        var useState6 = React10.useState, useEffect7 = React10.useEffect, useLayoutEffect = React10.useLayoutEffect, useDebugValue2 = React10.useDebugValue;
+        var useState16 = React25.useState, useEffect15 = React25.useEffect, useLayoutEffect3 = React25.useLayoutEffect, useDebugValue2 = React25.useDebugValue;
         var didWarnOld18Alpha = false;
         var didWarnUncachedGetSnapshot = false;
         function useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
           {
             if (!didWarnOld18Alpha) {
-              if (React10.startTransition !== void 0) {
+              if (React25.startTransition !== void 0) {
                 didWarnOld18Alpha = true;
                 error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
               }
@@ -23623,13 +23623,13 @@ var require_use_sync_external_store_shim_development = __commonJS({
               }
             }
           }
-          var _useState = useState6({
+          var _useState = useState16({
             inst: {
               value,
               getSnapshot
             }
           }), inst = _useState[0].inst, forceUpdate = _useState[1];
-          useLayoutEffect(function() {
+          useLayoutEffect3(function() {
             inst.value = value;
             inst.getSnapshot = getSnapshot;
             if (checkIfSnapshotChanged(inst)) {
@@ -23638,7 +23638,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
               });
             }
           }, [subscribe, value, getSnapshot]);
-          useEffect7(function() {
+          useEffect15(function() {
             if (checkIfSnapshotChanged(inst)) {
               forceUpdate({
                 inst
@@ -23672,7 +23672,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         var canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
         var isServerEnvironment = !canUseDOM;
         var shim = isServerEnvironment ? useSyncExternalStore$1 : useSyncExternalStore;
-        var useSyncExternalStore$2 = React10.useSyncExternalStore !== void 0 ? React10.useSyncExternalStore : shim;
+        var useSyncExternalStore$2 = React25.useSyncExternalStore !== void 0 ? React25.useSyncExternalStore : shim;
         exports.useSyncExternalStore = useSyncExternalStore$2;
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
@@ -23704,16 +23704,16 @@ var require_with_selector_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React10 = require_react();
+        var React25 = require_react();
         var shim = require_shim();
         function is(x, y) {
           return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y;
         }
         var objectIs = typeof Object.is === "function" ? Object.is : is;
         var useSyncExternalStore = shim.useSyncExternalStore;
-        var useRef7 = React10.useRef, useEffect7 = React10.useEffect, useMemo = React10.useMemo, useDebugValue2 = React10.useDebugValue;
+        var useRef11 = React25.useRef, useEffect15 = React25.useEffect, useMemo3 = React25.useMemo, useDebugValue2 = React25.useDebugValue;
         function useSyncExternalStoreWithSelector2(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-          var instRef = useRef7(null);
+          var instRef = useRef11(null);
           var inst;
           if (instRef.current === null) {
             inst = {
@@ -23724,7 +23724,7 @@ var require_with_selector_development = __commonJS({
           } else {
             inst = instRef.current;
           }
-          var _useMemo = useMemo(function() {
+          var _useMemo = useMemo3(function() {
             var hasMemo = false;
             var memoizedSnapshot;
             var memoizedSelection;
@@ -23768,7 +23768,7 @@ var require_with_selector_development = __commonJS({
             return [getSnapshotWithSelector, getServerSnapshotWithSelector];
           }, [getSnapshot, getServerSnapshot, selector, isEqual]), getSelection = _useMemo[0], getServerSelection = _useMemo[1];
           var value = useSyncExternalStore(subscribe, getSelection, getServerSelection);
-          useEffect7(function() {
+          useEffect15(function() {
             inst.hasValue = true;
             inst.value = value;
           }, [value]);
@@ -23804,16 +23804,16 @@ __export(main_exports, {
 });
 module.exports = __toCommonJS(main_exports);
 var import_obsidian8 = require("obsidian");
-var import_react11 = __toESM(require_react());
+var import_react36 = __toESM(require_react());
 var import_client3 = __toESM(require_client());
 
 // src/settings-tab.tsx
-var import_react7 = __toESM(require_react());
+var import_react21 = __toESM(require_react());
 var import_obsidian5 = require("obsidian");
 var import_client2 = __toESM(require_client());
 
 // src/components/PluginSettings/index.tsx
-var import_react6 = __toESM(require_react());
+var import_react20 = __toESM(require_react());
 
 // src/components/Setting/index.tsx
 var import_react = __toESM(require_react());
@@ -24019,16 +24019,16 @@ function createSplitModifiers(config) {
     let bracketDepth = 0;
     let modifierStart = 0;
     let postfixModifierPosition;
-    for (let index = 0; index < className.length; index++) {
-      let currentCharacter = className[index];
+    for (let index2 = 0; index2 < className.length; index2++) {
+      let currentCharacter = className[index2];
       if (bracketDepth === 0) {
-        if (currentCharacter === firstSeparatorCharacter && (isSeparatorSingleCharacter || className.slice(index, index + separatorLength) === separator)) {
-          modifiers.push(className.slice(modifierStart, index));
-          modifierStart = index + separatorLength;
+        if (currentCharacter === firstSeparatorCharacter && (isSeparatorSingleCharacter || className.slice(index2, index2 + separatorLength) === separator)) {
+          modifiers.push(className.slice(modifierStart, index2));
+          modifierStart = index2 + separatorLength;
           continue;
         }
         if (currentCharacter === "/") {
-          postfixModifierPosition = index;
+          postfixModifierPosition = index2;
           continue;
         }
       }
@@ -24136,12 +24136,12 @@ function mergeClassList(classList, configUtils) {
   }).reverse().map((parsed) => parsed.originalClassName).join(" ");
 }
 function twJoin() {
-  let index = 0;
+  let index2 = 0;
   let argument;
   let resolvedValue;
   let string = "";
-  while (index < arguments.length) {
-    if (argument = arguments[index++]) {
+  while (index2 < arguments.length) {
+    if (argument = arguments[index2++]) {
       if (resolvedValue = toValue(argument)) {
         string && (string += " ");
         string += resolvedValue;
@@ -26392,8 +26392,8 @@ var removeKeys = (oldObj, newObj) => {
 var iterateStringKeys = (obj, str, val) => {
   const keys = str.split(".");
   let current = obj;
-  keys.forEach((key, index) => {
-    if (index === keys.length - 1) {
+  keys.forEach((key, index2) => {
+    if (index2 === keys.length - 1) {
       return current[key] = val;
     }
     current[key] = current[key] || {};
@@ -26413,7 +26413,7 @@ var parseLinesForInlineFields = (lines) => {
   const reg2 = new RegExp(
     /[\[\(]?([^\n\r\(\[]*)::[ ]*([^\)\]\n\r]*)[\]\)]?/gm
   );
-  return lines.reduce((prev, curr, index) => {
+  return lines.reduce((prev, curr, index2) => {
     let matches = reg2.exec(curr);
     if (!matches) {
       return prev;
@@ -26425,7 +26425,7 @@ var parseLinesForInlineFields = (lines) => {
       {
         key,
         value: oldVal,
-        line: index,
+        line: index2,
         match: matches[0]
       }
     ];
@@ -27863,24 +27863,24 @@ var ZodString = class _ZodString extends ZodType {
     return !!this._def.checks.find((ch) => ch.kind === "base64");
   }
   get minLength() {
-    let min = null;
+    let min2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "min") {
-        if (min === null || ch.value > min)
-          min = ch.value;
+        if (min2 === null || ch.value > min2)
+          min2 = ch.value;
       }
     }
-    return min;
+    return min2;
   }
   get maxLength() {
-    let max = null;
+    let max2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "max") {
-        if (max === null || ch.value < max)
-          max = ch.value;
+        if (max2 === null || ch.value < max2)
+          max2 = ch.value;
       }
     }
-    return max;
+    return max2;
   }
 };
 ZodString.create = (params) => {
@@ -28085,42 +28085,42 @@ var ZodNumber = class _ZodNumber extends ZodType {
     });
   }
   get minValue() {
-    let min = null;
+    let min2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "min") {
-        if (min === null || ch.value > min)
-          min = ch.value;
+        if (min2 === null || ch.value > min2)
+          min2 = ch.value;
       }
     }
-    return min;
+    return min2;
   }
   get maxValue() {
-    let max = null;
+    let max2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "max") {
-        if (max === null || ch.value < max)
-          max = ch.value;
+        if (max2 === null || ch.value < max2)
+          max2 = ch.value;
       }
     }
-    return max;
+    return max2;
   }
   get isInt() {
     return !!this._def.checks.find((ch) => ch.kind === "int" || ch.kind === "multipleOf" && util.isInteger(ch.value));
   }
   get isFinite() {
-    let max = null, min = null;
+    let max2 = null, min2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "finite" || ch.kind === "int" || ch.kind === "multipleOf") {
         return true;
       } else if (ch.kind === "min") {
-        if (min === null || ch.value > min)
-          min = ch.value;
+        if (min2 === null || ch.value > min2)
+          min2 = ch.value;
       } else if (ch.kind === "max") {
-        if (max === null || ch.value < max)
-          max = ch.value;
+        if (max2 === null || ch.value < max2)
+          max2 = ch.value;
       }
     }
-    return Number.isFinite(min) && Number.isFinite(max);
+    return Number.isFinite(min2) && Number.isFinite(max2);
   }
 };
 ZodNumber.create = (params) => {
@@ -28268,24 +28268,24 @@ var ZodBigInt = class _ZodBigInt extends ZodType {
     });
   }
   get minValue() {
-    let min = null;
+    let min2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "min") {
-        if (min === null || ch.value > min)
-          min = ch.value;
+        if (min2 === null || ch.value > min2)
+          min2 = ch.value;
       }
     }
-    return min;
+    return min2;
   }
   get maxValue() {
-    let max = null;
+    let max2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "max") {
-        if (max === null || ch.value < max)
-          max = ch.value;
+        if (max2 === null || ch.value < max2)
+          max2 = ch.value;
       }
     }
-    return max;
+    return max2;
   }
 };
 ZodBigInt.create = (params) => {
@@ -28403,24 +28403,24 @@ var ZodDate = class _ZodDate extends ZodType {
     });
   }
   get minDate() {
-    let min = null;
+    let min2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "min") {
-        if (min === null || ch.value > min)
-          min = ch.value;
+        if (min2 === null || ch.value > min2)
+          min2 = ch.value;
       }
     }
-    return min != null ? new Date(min) : null;
+    return min2 != null ? new Date(min2) : null;
   }
   get maxDate() {
-    let max = null;
+    let max2 = null;
     for (const ch of this._def.checks) {
       if (ch.kind === "max") {
-        if (max === null || ch.value < max)
-          max = ch.value;
+        if (max2 === null || ch.value < max2)
+          max2 = ch.value;
       }
     }
-    return max != null ? new Date(max) : null;
+    return max2 != null ? new Date(max2) : null;
   }
 };
 ZodDate.create = (params) => {
@@ -28927,10 +28927,10 @@ var ZodObject = class _ZodObject extends ZodType {
   //   }) as any;
   //   return merged;
   // }
-  catchall(index) {
+  catchall(index2) {
     return new _ZodObject({
       ...this._def,
-      catchall: index
+      catchall: index2
     });
   }
   pick(mask) {
@@ -29248,9 +29248,9 @@ function mergeValues(a, b) {
       return { valid: false };
     }
     const newArray = [];
-    for (let index = 0; index < a.length; index++) {
-      const itemA = a[index];
-      const itemB = b[index];
+    for (let index2 = 0; index2 < a.length; index2++) {
+      const itemA = a[index2];
+      const itemB = b[index2];
       const sharedValue = mergeValues(itemA, itemB);
       if (!sharedValue.valid) {
         return { valid: false };
@@ -29456,10 +29456,10 @@ var ZodMap = class extends ZodType {
     }
     const keyType = this._def.keyType;
     const valueType = this._def.valueType;
-    const pairs = [...ctx2.data.entries()].map(([key, value], index) => {
+    const pairs = [...ctx2.data.entries()].map(([key, value], index2) => {
       return {
-        key: keyType._parse(new ParseInputLazyPath(ctx2, key, ctx2.path, [index, "key"])),
-        value: valueType._parse(new ParseInputLazyPath(ctx2, value, ctx2.path, [index, "value"]))
+        key: keyType._parse(new ParseInputLazyPath(ctx2, key, ctx2.path, [index2, "key"])),
+        value: valueType._parse(new ParseInputLazyPath(ctx2, value, ctx2.path, [index2, "value"]))
       };
     });
     if (ctx2.common.async) {
@@ -29572,8 +29572,8 @@ var ZodSet = class _ZodSet extends ZodType {
       maxSize: { value: maxSize, message: errorUtil.toString(message) }
     });
   }
-  size(size, message) {
-    return this.min(size, message).max(size, message);
+  size(size3, message) {
+    return this.min(size3, message).max(size3, message);
   }
   nonempty(message) {
     return this.min(1, message);
@@ -30503,7 +30503,7 @@ var createLucideIcon = (iconName, iconNode) => {
   const Component2 = (0, import_react2.forwardRef)(
     ({
       color = "currentColor",
-      size = 24,
+      size: size3 = 24,
       strokeWidth = 2,
       absoluteStrokeWidth,
       className = "",
@@ -30515,10 +30515,10 @@ var createLucideIcon = (iconName, iconNode) => {
         {
           ref,
           ...defaultAttributes,
-          width: size,
-          height: size,
+          width: size3,
+          height: size3,
           stroke: color,
-          strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+          strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size3) : strokeWidth,
           className: ["lucide", `lucide-${toKebabCase(iconName)}`, className].join(" "),
           ...rest
         },
@@ -30763,8 +30763,1817 @@ var BuyMeCoffee = () => {
 
 // src/components/Dialog/index.tsx
 var import_obsidian3 = require("obsidian");
-var import_react5 = __toESM(require_react());
+var import_react19 = __toESM(require_react());
 var import_client = __toESM(require_client());
+
+// node_modules/@babel/runtime/helpers/esm/extends.js
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+// node_modules/@radix-ui/primitive/dist/index.mjs
+function $e42e1063c40fb3ef$export$b9ecd428b558ff10(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
+  return function handleEvent(event) {
+    originalEventHandler === null || originalEventHandler === void 0 || originalEventHandler(event);
+    if (checkForDefaultPrevented === false || !event.defaultPrevented)
+      return ourEventHandler === null || ourEventHandler === void 0 ? void 0 : ourEventHandler(event);
+  };
+}
+
+// node_modules/@radix-ui/react-compose-refs/dist/index.mjs
+var import_react5 = __toESM(require_react(), 1);
+function $6ed0406888f73fc4$var$setRef(ref, value) {
+  if (typeof ref === "function")
+    ref(value);
+  else if (ref !== null && ref !== void 0)
+    ref.current = value;
+}
+function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
+  return (node) => refs.forEach(
+    (ref) => $6ed0406888f73fc4$var$setRef(ref, node)
+  );
+}
+function $6ed0406888f73fc4$export$c7b2cbe3552a0d05(...refs) {
+  return (0, import_react5.useCallback)($6ed0406888f73fc4$export$43e446d32b3d21af(...refs), refs);
+}
+
+// node_modules/@radix-ui/react-context/dist/index.mjs
+var import_react6 = __toESM(require_react(), 1);
+function $c512c27ab02ef895$export$50c7b4e9d9f19c1(scopeName, createContextScopeDeps = []) {
+  let defaultContexts = [];
+  function $c512c27ab02ef895$export$fd42f52fd3ae1109(rootComponentName, defaultContext) {
+    const BaseContext = /* @__PURE__ */ (0, import_react6.createContext)(defaultContext);
+    const index2 = defaultContexts.length;
+    defaultContexts = [
+      ...defaultContexts,
+      defaultContext
+    ];
+    function Provider(props2) {
+      const { scope, children, ...context } = props2;
+      const Context = (scope === null || scope === void 0 ? void 0 : scope[scopeName][index2]) || BaseContext;
+      const value = (0, import_react6.useMemo)(
+        () => context,
+        Object.values(context)
+      );
+      return /* @__PURE__ */ (0, import_react6.createElement)(Context.Provider, {
+        value
+      }, children);
+    }
+    function useContext(consumerName, scope) {
+      const Context = (scope === null || scope === void 0 ? void 0 : scope[scopeName][index2]) || BaseContext;
+      const context = (0, import_react6.useContext)(Context);
+      if (context)
+        return context;
+      if (defaultContext !== void 0)
+        return defaultContext;
+      throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
+    }
+    Provider.displayName = rootComponentName + "Provider";
+    return [
+      Provider,
+      useContext
+    ];
+  }
+  const createScope = () => {
+    const scopeContexts = defaultContexts.map((defaultContext) => {
+      return /* @__PURE__ */ (0, import_react6.createContext)(defaultContext);
+    });
+    return function useScope(scope) {
+      const contexts = (scope === null || scope === void 0 ? void 0 : scope[scopeName]) || scopeContexts;
+      return (0, import_react6.useMemo)(
+        () => ({
+          [`__scope${scopeName}`]: {
+            ...scope,
+            [scopeName]: contexts
+          }
+        }),
+        [
+          scope,
+          contexts
+        ]
+      );
+    };
+  };
+  createScope.scopeName = scopeName;
+  return [
+    $c512c27ab02ef895$export$fd42f52fd3ae1109,
+    $c512c27ab02ef895$var$composeContextScopes(createScope, ...createContextScopeDeps)
+  ];
+}
+function $c512c27ab02ef895$var$composeContextScopes(...scopes) {
+  const baseScope = scopes[0];
+  if (scopes.length === 1)
+    return baseScope;
+  const createScope1 = () => {
+    const scopeHooks = scopes.map(
+      (createScope) => ({
+        useScope: createScope(),
+        scopeName: createScope.scopeName
+      })
+    );
+    return function useComposedScopes(overrideScopes) {
+      const nextScopes1 = scopeHooks.reduce((nextScopes, { useScope, scopeName }) => {
+        const scopeProps = useScope(overrideScopes);
+        const currentScope = scopeProps[`__scope${scopeName}`];
+        return {
+          ...nextScopes,
+          ...currentScope
+        };
+      }, {});
+      return (0, import_react6.useMemo)(
+        () => ({
+          [`__scope${baseScope.scopeName}`]: nextScopes1
+        }),
+        [
+          nextScopes1
+        ]
+      );
+    };
+  };
+  createScope1.scopeName = baseScope.scopeName;
+  return createScope1;
+}
+
+// node_modules/@radix-ui/react-id/dist/index.mjs
+var $2AODx$react = __toESM(require_react(), 1);
+
+// node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
+var import_react7 = __toESM(require_react(), 1);
+var $9f79659886946c16$export$e5c5a5f917a5871c = Boolean(globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) ? import_react7.useLayoutEffect : () => {
+};
+
+// node_modules/@radix-ui/react-id/dist/index.mjs
+var $1746a345f3d73bb7$var$useReactId = $2AODx$react["useId".toString()] || (() => void 0);
+var $1746a345f3d73bb7$var$count = 0;
+function $1746a345f3d73bb7$export$f680877a34711e37(deterministicId) {
+  const [id, setId] = $2AODx$react.useState($1746a345f3d73bb7$var$useReactId());
+  $9f79659886946c16$export$e5c5a5f917a5871c(() => {
+    if (!deterministicId)
+      setId(
+        (reactId) => reactId !== null && reactId !== void 0 ? reactId : String($1746a345f3d73bb7$var$count++)
+      );
+  }, [
+    deterministicId
+  ]);
+  return deterministicId || (id ? `radix-${id}` : "");
+}
+
+// node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
+var import_react9 = __toESM(require_react(), 1);
+
+// node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
+var import_react8 = __toESM(require_react(), 1);
+function $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(callback) {
+  const callbackRef = (0, import_react8.useRef)(callback);
+  (0, import_react8.useEffect)(() => {
+    callbackRef.current = callback;
+  });
+  return (0, import_react8.useMemo)(
+    () => (...args) => {
+      var _callbackRef$current;
+      return (_callbackRef$current = callbackRef.current) === null || _callbackRef$current === void 0 ? void 0 : _callbackRef$current.call(callbackRef, ...args);
+    },
+    []
+  );
+}
+
+// node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
+function $71cd76cc60e0454e$export$6f32135080cb4c3({ prop, defaultProp, onChange = () => {
+} }) {
+  const [uncontrolledProp, setUncontrolledProp] = $71cd76cc60e0454e$var$useUncontrolledState({
+    defaultProp,
+    onChange
+  });
+  const isControlled = prop !== void 0;
+  const value1 = isControlled ? prop : uncontrolledProp;
+  const handleChange = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onChange);
+  const setValue = (0, import_react9.useCallback)((nextValue) => {
+    if (isControlled) {
+      const setter = nextValue;
+      const value = typeof nextValue === "function" ? setter(prop) : nextValue;
+      if (value !== prop)
+        handleChange(value);
+    } else
+      setUncontrolledProp(nextValue);
+  }, [
+    isControlled,
+    prop,
+    setUncontrolledProp,
+    handleChange
+  ]);
+  return [
+    value1,
+    setValue
+  ];
+}
+function $71cd76cc60e0454e$var$useUncontrolledState({ defaultProp, onChange }) {
+  const uncontrolledState = (0, import_react9.useState)(defaultProp);
+  const [value] = uncontrolledState;
+  const prevValueRef = (0, import_react9.useRef)(value);
+  const handleChange = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onChange);
+  (0, import_react9.useEffect)(() => {
+    if (prevValueRef.current !== value) {
+      handleChange(value);
+      prevValueRef.current = value;
+    }
+  }, [
+    value,
+    prevValueRef,
+    handleChange
+  ]);
+  return uncontrolledState;
+}
+
+// node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
+var import_react13 = __toESM(require_react(), 1);
+
+// node_modules/@radix-ui/react-primitive/dist/index.mjs
+var import_react11 = __toESM(require_react(), 1);
+var import_react_dom = __toESM(require_react_dom(), 1);
+
+// node_modules/@radix-ui/react-slot/dist/index.mjs
+var import_react10 = __toESM(require_react(), 1);
+var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react10.forwardRef)((props2, forwardedRef) => {
+  const { children, ...slotProps } = props2;
+  const childrenArray = import_react10.Children.toArray(children);
+  const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
+  if (slottable) {
+    const newElement = slottable.props.children;
+    const newChildren = childrenArray.map((child) => {
+      if (child === slottable) {
+        if (import_react10.Children.count(newElement) > 1)
+          return import_react10.Children.only(null);
+        return /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? newElement.props.children : null;
+      } else
+        return child;
+    });
+    return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+      ref: forwardedRef
+    }), /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react10.cloneElement)(newElement, void 0, newChildren) : null);
+  }
+  return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+    ref: forwardedRef
+  }), children);
+});
+$5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
+var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react10.forwardRef)((props2, forwardedRef) => {
+  const { children, ...slotProps } = props2;
+  if (/* @__PURE__ */ (0, import_react10.isValidElement)(children))
+    return /* @__PURE__ */ (0, import_react10.cloneElement)(children, {
+      ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
+      ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
+    });
+  return import_react10.Children.count(children) > 1 ? import_react10.Children.only(null) : null;
+});
+$5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
+var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
+  return /* @__PURE__ */ (0, import_react10.createElement)(import_react10.Fragment, null, children);
+};
+function $5e63c961fc1ce211$var$isSlottable(child) {
+  return /* @__PURE__ */ (0, import_react10.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
+}
+function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
+  const overrideProps = {
+    ...childProps
+  };
+  for (const propName in childProps) {
+    const slotPropValue = slotProps[propName];
+    const childPropValue = childProps[propName];
+    const isHandler = /^on[A-Z]/.test(propName);
+    if (isHandler) {
+      if (slotPropValue && childPropValue)
+        overrideProps[propName] = (...args) => {
+          childPropValue(...args);
+          slotPropValue(...args);
+        };
+      else if (slotPropValue)
+        overrideProps[propName] = slotPropValue;
+    } else if (propName === "style")
+      overrideProps[propName] = {
+        ...slotPropValue,
+        ...childPropValue
+      };
+    else if (propName === "className")
+      overrideProps[propName] = [
+        slotPropValue,
+        childPropValue
+      ].filter(Boolean).join(" ");
+  }
+  return {
+    ...slotProps,
+    ...overrideProps
+  };
+}
+
+// node_modules/@radix-ui/react-primitive/dist/index.mjs
+var $8927f6f2acc4f386$var$NODES = [
+  "a",
+  "button",
+  "div",
+  "form",
+  "h2",
+  "h3",
+  "img",
+  "input",
+  "label",
+  "li",
+  "nav",
+  "ol",
+  "p",
+  "span",
+  "svg",
+  "ul"
+];
+var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
+  const Node2 = /* @__PURE__ */ (0, import_react11.forwardRef)((props2, forwardedRef) => {
+    const { asChild, ...primitiveProps } = props2;
+    const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
+    (0, import_react11.useEffect)(() => {
+      window[Symbol.for("radix-ui")] = true;
+    }, []);
+    return /* @__PURE__ */ (0, import_react11.createElement)(Comp, _extends({}, primitiveProps, {
+      ref: forwardedRef
+    }));
+  });
+  Node2.displayName = `Primitive.${node}`;
+  return {
+    ...primitive,
+    [node]: Node2
+  };
+}, {});
+function $8927f6f2acc4f386$export$6d1a0317bde7de7f(target, event) {
+  if (target)
+    (0, import_react_dom.flushSync)(
+      () => target.dispatchEvent(event)
+    );
+}
+
+// node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs
+var import_react12 = __toESM(require_react(), 1);
+function $addc16e1bbe58fd0$export$3a72a57244d6e765(onEscapeKeyDownProp, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
+  const onEscapeKeyDown = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onEscapeKeyDownProp);
+  (0, import_react12.useEffect)(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape")
+        onEscapeKeyDown(event);
+    };
+    ownerDocument.addEventListener("keydown", handleKeyDown);
+    return () => ownerDocument.removeEventListener("keydown", handleKeyDown);
+  }, [
+    onEscapeKeyDown,
+    ownerDocument
+  ]);
+}
+
+// node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
+var $5cb92bef7577960e$var$CONTEXT_UPDATE = "dismissableLayer.update";
+var $5cb92bef7577960e$var$POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
+var $5cb92bef7577960e$var$FOCUS_OUTSIDE = "dismissableLayer.focusOutside";
+var $5cb92bef7577960e$var$originalBodyPointerEvents;
+var $5cb92bef7577960e$var$DismissableLayerContext = /* @__PURE__ */ (0, import_react13.createContext)({
+  layers: /* @__PURE__ */ new Set(),
+  layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
+  branches: /* @__PURE__ */ new Set()
+});
+var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react13.forwardRef)((props2, forwardedRef) => {
+  var _node$ownerDocument;
+  const { disableOutsidePointerEvents = false, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, onDismiss, ...layerProps } = props2;
+  const context = (0, import_react13.useContext)($5cb92bef7577960e$var$DismissableLayerContext);
+  const [node1, setNode] = (0, import_react13.useState)(null);
+  const ownerDocument = (_node$ownerDocument = node1 === null || node1 === void 0 ? void 0 : node1.ownerDocument) !== null && _node$ownerDocument !== void 0 ? _node$ownerDocument : globalThis === null || globalThis === void 0 ? void 0 : globalThis.document;
+  const [, force] = (0, import_react13.useState)({});
+  const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
+    forwardedRef,
+    (node) => setNode(node)
+  );
+  const layers = Array.from(context.layers);
+  const [highestLayerWithOutsidePointerEventsDisabled] = [
+    ...context.layersWithOutsidePointerEventsDisabled
+  ].slice(-1);
+  const highestLayerWithOutsidePointerEventsDisabledIndex = layers.indexOf(highestLayerWithOutsidePointerEventsDisabled);
+  const index2 = node1 ? layers.indexOf(node1) : -1;
+  const isBodyPointerEventsDisabled = context.layersWithOutsidePointerEventsDisabled.size > 0;
+  const isPointerEventsEnabled = index2 >= highestLayerWithOutsidePointerEventsDisabledIndex;
+  const pointerDownOutside = $5cb92bef7577960e$var$usePointerDownOutside((event) => {
+    const target = event.target;
+    const isPointerDownOnBranch = [
+      ...context.branches
+    ].some(
+      (branch) => branch.contains(target)
+    );
+    if (!isPointerEventsEnabled || isPointerDownOnBranch)
+      return;
+    onPointerDownOutside === null || onPointerDownOutside === void 0 || onPointerDownOutside(event);
+    onInteractOutside === null || onInteractOutside === void 0 || onInteractOutside(event);
+    if (!event.defaultPrevented)
+      onDismiss === null || onDismiss === void 0 || onDismiss();
+  }, ownerDocument);
+  const focusOutside = $5cb92bef7577960e$var$useFocusOutside((event) => {
+    const target = event.target;
+    const isFocusInBranch = [
+      ...context.branches
+    ].some(
+      (branch) => branch.contains(target)
+    );
+    if (isFocusInBranch)
+      return;
+    onFocusOutside === null || onFocusOutside === void 0 || onFocusOutside(event);
+    onInteractOutside === null || onInteractOutside === void 0 || onInteractOutside(event);
+    if (!event.defaultPrevented)
+      onDismiss === null || onDismiss === void 0 || onDismiss();
+  }, ownerDocument);
+  $addc16e1bbe58fd0$export$3a72a57244d6e765((event) => {
+    const isHighestLayer = index2 === context.layers.size - 1;
+    if (!isHighestLayer)
+      return;
+    onEscapeKeyDown === null || onEscapeKeyDown === void 0 || onEscapeKeyDown(event);
+    if (!event.defaultPrevented && onDismiss) {
+      event.preventDefault();
+      onDismiss();
+    }
+  }, ownerDocument);
+  (0, import_react13.useEffect)(() => {
+    if (!node1)
+      return;
+    if (disableOutsidePointerEvents) {
+      if (context.layersWithOutsidePointerEventsDisabled.size === 0) {
+        $5cb92bef7577960e$var$originalBodyPointerEvents = ownerDocument.body.style.pointerEvents;
+        ownerDocument.body.style.pointerEvents = "none";
+      }
+      context.layersWithOutsidePointerEventsDisabled.add(node1);
+    }
+    context.layers.add(node1);
+    $5cb92bef7577960e$var$dispatchUpdate();
+    return () => {
+      if (disableOutsidePointerEvents && context.layersWithOutsidePointerEventsDisabled.size === 1)
+        ownerDocument.body.style.pointerEvents = $5cb92bef7577960e$var$originalBodyPointerEvents;
+    };
+  }, [
+    node1,
+    ownerDocument,
+    disableOutsidePointerEvents,
+    context
+  ]);
+  (0, import_react13.useEffect)(() => {
+    return () => {
+      if (!node1)
+        return;
+      context.layers.delete(node1);
+      context.layersWithOutsidePointerEventsDisabled.delete(node1);
+      $5cb92bef7577960e$var$dispatchUpdate();
+    };
+  }, [
+    node1,
+    context
+  ]);
+  (0, import_react13.useEffect)(() => {
+    const handleUpdate = () => force({});
+    document.addEventListener($5cb92bef7577960e$var$CONTEXT_UPDATE, handleUpdate);
+    return () => document.removeEventListener($5cb92bef7577960e$var$CONTEXT_UPDATE, handleUpdate);
+  }, []);
+  return /* @__PURE__ */ (0, import_react13.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, layerProps, {
+    ref: composedRefs,
+    style: {
+      pointerEvents: isBodyPointerEventsDisabled ? isPointerEventsEnabled ? "auto" : "none" : void 0,
+      ...props2.style
+    },
+    onFocusCapture: $e42e1063c40fb3ef$export$b9ecd428b558ff10(props2.onFocusCapture, focusOutside.onFocusCapture),
+    onBlurCapture: $e42e1063c40fb3ef$export$b9ecd428b558ff10(props2.onBlurCapture, focusOutside.onBlurCapture),
+    onPointerDownCapture: $e42e1063c40fb3ef$export$b9ecd428b558ff10(props2.onPointerDownCapture, pointerDownOutside.onPointerDownCapture)
+  }));
+});
+function $5cb92bef7577960e$var$usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
+  const handlePointerDownOutside = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onPointerDownOutside);
+  const isPointerInsideReactTreeRef = (0, import_react13.useRef)(false);
+  const handleClickRef = (0, import_react13.useRef)(() => {
+  });
+  (0, import_react13.useEffect)(() => {
+    const handlePointerDown = (event) => {
+      if (event.target && !isPointerInsideReactTreeRef.current) {
+        let handleAndDispatchPointerDownOutsideEvent = function() {
+          $5cb92bef7577960e$var$handleAndDispatchCustomEvent($5cb92bef7577960e$var$POINTER_DOWN_OUTSIDE, handlePointerDownOutside, eventDetail, {
+            discrete: true
+          });
+        };
+        const eventDetail = {
+          originalEvent: event
+        };
+        if (event.pointerType === "touch") {
+          ownerDocument.removeEventListener("click", handleClickRef.current);
+          handleClickRef.current = handleAndDispatchPointerDownOutsideEvent;
+          ownerDocument.addEventListener("click", handleClickRef.current, {
+            once: true
+          });
+        } else
+          handleAndDispatchPointerDownOutsideEvent();
+      } else
+        ownerDocument.removeEventListener("click", handleClickRef.current);
+      isPointerInsideReactTreeRef.current = false;
+    };
+    const timerId = window.setTimeout(() => {
+      ownerDocument.addEventListener("pointerdown", handlePointerDown);
+    }, 0);
+    return () => {
+      window.clearTimeout(timerId);
+      ownerDocument.removeEventListener("pointerdown", handlePointerDown);
+      ownerDocument.removeEventListener("click", handleClickRef.current);
+    };
+  }, [
+    ownerDocument,
+    handlePointerDownOutside
+  ]);
+  return {
+    // ensures we check React component tree (not just DOM tree)
+    onPointerDownCapture: () => isPointerInsideReactTreeRef.current = true
+  };
+}
+function $5cb92bef7577960e$var$useFocusOutside(onFocusOutside, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
+  const handleFocusOutside = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onFocusOutside);
+  const isFocusInsideReactTreeRef = (0, import_react13.useRef)(false);
+  (0, import_react13.useEffect)(() => {
+    const handleFocus = (event) => {
+      if (event.target && !isFocusInsideReactTreeRef.current) {
+        const eventDetail = {
+          originalEvent: event
+        };
+        $5cb92bef7577960e$var$handleAndDispatchCustomEvent($5cb92bef7577960e$var$FOCUS_OUTSIDE, handleFocusOutside, eventDetail, {
+          discrete: false
+        });
+      }
+    };
+    ownerDocument.addEventListener("focusin", handleFocus);
+    return () => ownerDocument.removeEventListener("focusin", handleFocus);
+  }, [
+    ownerDocument,
+    handleFocusOutside
+  ]);
+  return {
+    onFocusCapture: () => isFocusInsideReactTreeRef.current = true,
+    onBlurCapture: () => isFocusInsideReactTreeRef.current = false
+  };
+}
+function $5cb92bef7577960e$var$dispatchUpdate() {
+  const event = new CustomEvent($5cb92bef7577960e$var$CONTEXT_UPDATE);
+  document.dispatchEvent(event);
+}
+function $5cb92bef7577960e$var$handleAndDispatchCustomEvent(name, handler, detail, { discrete }) {
+  const target = detail.originalEvent.target;
+  const event = new CustomEvent(name, {
+    bubbles: false,
+    cancelable: true,
+    detail
+  });
+  if (handler)
+    target.addEventListener(name, handler, {
+      once: true
+    });
+  if (discrete)
+    $8927f6f2acc4f386$export$6d1a0317bde7de7f(target, event);
+  else
+    target.dispatchEvent(event);
+}
+
+// node_modules/@radix-ui/react-focus-scope/dist/index.mjs
+var import_react14 = __toESM(require_react(), 1);
+var $d3863c46a17e8a28$var$AUTOFOCUS_ON_MOUNT = "focusScope.autoFocusOnMount";
+var $d3863c46a17e8a28$var$AUTOFOCUS_ON_UNMOUNT = "focusScope.autoFocusOnUnmount";
+var $d3863c46a17e8a28$var$EVENT_OPTIONS = {
+  bubbles: false,
+  cancelable: true
+};
+var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react14.forwardRef)((props2, forwardedRef) => {
+  const { loop = false, trapped = false, onMountAutoFocus: onMountAutoFocusProp, onUnmountAutoFocus: onUnmountAutoFocusProp, ...scopeProps } = props2;
+  const [container1, setContainer] = (0, import_react14.useState)(null);
+  const onMountAutoFocus = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onMountAutoFocusProp);
+  const onUnmountAutoFocus = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onUnmountAutoFocusProp);
+  const lastFocusedElementRef = (0, import_react14.useRef)(null);
+  const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
+    forwardedRef,
+    (node) => setContainer(node)
+  );
+  const focusScope = (0, import_react14.useRef)({
+    paused: false,
+    pause() {
+      this.paused = true;
+    },
+    resume() {
+      this.paused = false;
+    }
+  }).current;
+  (0, import_react14.useEffect)(() => {
+    if (trapped) {
+      let handleFocusIn = function(event) {
+        if (focusScope.paused || !container1)
+          return;
+        const target = event.target;
+        if (container1.contains(target))
+          lastFocusedElementRef.current = target;
+        else
+          $d3863c46a17e8a28$var$focus(lastFocusedElementRef.current, {
+            select: true
+          });
+      }, handleFocusOut = function(event) {
+        if (focusScope.paused || !container1)
+          return;
+        const relatedTarget = event.relatedTarget;
+        if (relatedTarget === null)
+          return;
+        if (!container1.contains(relatedTarget))
+          $d3863c46a17e8a28$var$focus(lastFocusedElementRef.current, {
+            select: true
+          });
+      }, handleMutations = function(mutations) {
+        const focusedElement = document.activeElement;
+        if (focusedElement !== document.body)
+          return;
+        for (const mutation of mutations)
+          if (mutation.removedNodes.length > 0)
+            $d3863c46a17e8a28$var$focus(container1);
+      };
+      document.addEventListener("focusin", handleFocusIn);
+      document.addEventListener("focusout", handleFocusOut);
+      const mutationObserver = new MutationObserver(handleMutations);
+      if (container1)
+        mutationObserver.observe(container1, {
+          childList: true,
+          subtree: true
+        });
+      return () => {
+        document.removeEventListener("focusin", handleFocusIn);
+        document.removeEventListener("focusout", handleFocusOut);
+        mutationObserver.disconnect();
+      };
+    }
+  }, [
+    trapped,
+    container1,
+    focusScope.paused
+  ]);
+  (0, import_react14.useEffect)(() => {
+    if (container1) {
+      $d3863c46a17e8a28$var$focusScopesStack.add(focusScope);
+      const previouslyFocusedElement = document.activeElement;
+      const hasFocusedCandidate = container1.contains(previouslyFocusedElement);
+      if (!hasFocusedCandidate) {
+        const mountEvent = new CustomEvent($d3863c46a17e8a28$var$AUTOFOCUS_ON_MOUNT, $d3863c46a17e8a28$var$EVENT_OPTIONS);
+        container1.addEventListener($d3863c46a17e8a28$var$AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
+        container1.dispatchEvent(mountEvent);
+        if (!mountEvent.defaultPrevented) {
+          $d3863c46a17e8a28$var$focusFirst($d3863c46a17e8a28$var$removeLinks($d3863c46a17e8a28$var$getTabbableCandidates(container1)), {
+            select: true
+          });
+          if (document.activeElement === previouslyFocusedElement)
+            $d3863c46a17e8a28$var$focus(container1);
+        }
+      }
+      return () => {
+        container1.removeEventListener($d3863c46a17e8a28$var$AUTOFOCUS_ON_MOUNT, onMountAutoFocus);
+        setTimeout(() => {
+          const unmountEvent = new CustomEvent($d3863c46a17e8a28$var$AUTOFOCUS_ON_UNMOUNT, $d3863c46a17e8a28$var$EVENT_OPTIONS);
+          container1.addEventListener($d3863c46a17e8a28$var$AUTOFOCUS_ON_UNMOUNT, onUnmountAutoFocus);
+          container1.dispatchEvent(unmountEvent);
+          if (!unmountEvent.defaultPrevented)
+            $d3863c46a17e8a28$var$focus(previouslyFocusedElement !== null && previouslyFocusedElement !== void 0 ? previouslyFocusedElement : document.body, {
+              select: true
+            });
+          container1.removeEventListener($d3863c46a17e8a28$var$AUTOFOCUS_ON_UNMOUNT, onUnmountAutoFocus);
+          $d3863c46a17e8a28$var$focusScopesStack.remove(focusScope);
+        }, 0);
+      };
+    }
+  }, [
+    container1,
+    onMountAutoFocus,
+    onUnmountAutoFocus,
+    focusScope
+  ]);
+  const handleKeyDown = (0, import_react14.useCallback)((event) => {
+    if (!loop && !trapped)
+      return;
+    if (focusScope.paused)
+      return;
+    const isTabKey = event.key === "Tab" && !event.altKey && !event.ctrlKey && !event.metaKey;
+    const focusedElement = document.activeElement;
+    if (isTabKey && focusedElement) {
+      const container = event.currentTarget;
+      const [first, last] = $d3863c46a17e8a28$var$getTabbableEdges(container);
+      const hasTabbableElementsInside = first && last;
+      if (!hasTabbableElementsInside) {
+        if (focusedElement === container)
+          event.preventDefault();
+      } else {
+        if (!event.shiftKey && focusedElement === last) {
+          event.preventDefault();
+          if (loop)
+            $d3863c46a17e8a28$var$focus(first, {
+              select: true
+            });
+        } else if (event.shiftKey && focusedElement === first) {
+          event.preventDefault();
+          if (loop)
+            $d3863c46a17e8a28$var$focus(last, {
+              select: true
+            });
+        }
+      }
+    }
+  }, [
+    loop,
+    trapped,
+    focusScope.paused
+  ]);
+  return /* @__PURE__ */ (0, import_react14.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
+    tabIndex: -1
+  }, scopeProps, {
+    ref: composedRefs,
+    onKeyDown: handleKeyDown
+  }));
+});
+function $d3863c46a17e8a28$var$focusFirst(candidates, { select = false } = {}) {
+  const previouslyFocusedElement = document.activeElement;
+  for (const candidate of candidates) {
+    $d3863c46a17e8a28$var$focus(candidate, {
+      select
+    });
+    if (document.activeElement !== previouslyFocusedElement)
+      return;
+  }
+}
+function $d3863c46a17e8a28$var$getTabbableEdges(container) {
+  const candidates = $d3863c46a17e8a28$var$getTabbableCandidates(container);
+  const first = $d3863c46a17e8a28$var$findVisible(candidates, container);
+  const last = $d3863c46a17e8a28$var$findVisible(candidates.reverse(), container);
+  return [
+    first,
+    last
+  ];
+}
+function $d3863c46a17e8a28$var$getTabbableCandidates(container) {
+  const nodes = [];
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, {
+    acceptNode: (node) => {
+      const isHiddenInput = node.tagName === "INPUT" && node.type === "hidden";
+      if (node.disabled || node.hidden || isHiddenInput)
+        return NodeFilter.FILTER_SKIP;
+      return node.tabIndex >= 0 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+    }
+  });
+  while (walker.nextNode())
+    nodes.push(walker.currentNode);
+  return nodes;
+}
+function $d3863c46a17e8a28$var$findVisible(elements, container) {
+  for (const element of elements) {
+    if (!$d3863c46a17e8a28$var$isHidden(element, {
+      upTo: container
+    }))
+      return element;
+  }
+}
+function $d3863c46a17e8a28$var$isHidden(node, { upTo }) {
+  if (getComputedStyle(node).visibility === "hidden")
+    return true;
+  while (node) {
+    if (upTo !== void 0 && node === upTo)
+      return false;
+    if (getComputedStyle(node).display === "none")
+      return true;
+    node = node.parentElement;
+  }
+  return false;
+}
+function $d3863c46a17e8a28$var$isSelectableInput(element) {
+  return element instanceof HTMLInputElement && "select" in element;
+}
+function $d3863c46a17e8a28$var$focus(element, { select = false } = {}) {
+  if (element && element.focus) {
+    const previouslyFocusedElement = document.activeElement;
+    element.focus({
+      preventScroll: true
+    });
+    if (element !== previouslyFocusedElement && $d3863c46a17e8a28$var$isSelectableInput(element) && select)
+      element.select();
+  }
+}
+var $d3863c46a17e8a28$var$focusScopesStack = $d3863c46a17e8a28$var$createFocusScopesStack();
+function $d3863c46a17e8a28$var$createFocusScopesStack() {
+  let stack = [];
+  return {
+    add(focusScope) {
+      const activeFocusScope = stack[0];
+      if (focusScope !== activeFocusScope)
+        activeFocusScope === null || activeFocusScope === void 0 || activeFocusScope.pause();
+      stack = $d3863c46a17e8a28$var$arrayRemove(stack, focusScope);
+      stack.unshift(focusScope);
+    },
+    remove(focusScope) {
+      var _stack$;
+      stack = $d3863c46a17e8a28$var$arrayRemove(stack, focusScope);
+      (_stack$ = stack[0]) === null || _stack$ === void 0 || _stack$.resume();
+    }
+  };
+}
+function $d3863c46a17e8a28$var$arrayRemove(array, item) {
+  const updatedArray = [
+    ...array
+  ];
+  const index2 = updatedArray.indexOf(item);
+  if (index2 !== -1)
+    updatedArray.splice(index2, 1);
+  return updatedArray;
+}
+function $d3863c46a17e8a28$var$removeLinks(items) {
+  return items.filter(
+    (item) => item.tagName !== "A"
+  );
+}
+
+// node_modules/@radix-ui/react-portal/dist/index.mjs
+var import_react15 = __toESM(require_react(), 1);
+var import_react_dom2 = __toESM(require_react_dom(), 1);
+var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react15.forwardRef)((props2, forwardedRef) => {
+  var _globalThis$document;
+  const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props2;
+  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react15.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
+    ref: forwardedRef
+  })), container) : null;
+});
+
+// node_modules/@radix-ui/react-presence/dist/index.mjs
+var import_react16 = __toESM(require_react(), 1);
+var import_react_dom3 = __toESM(require_react_dom(), 1);
+function $fe963b355347cc68$export$3e6543de14f8614f(initialState, machine) {
+  return (0, import_react16.useReducer)((state, event) => {
+    const nextState = machine[state][event];
+    return nextState !== null && nextState !== void 0 ? nextState : state;
+  }, initialState);
+}
+var $921a889cee6df7e8$export$99c2b779aa4e8b8b = (props2) => {
+  const { present, children } = props2;
+  const presence = $921a889cee6df7e8$var$usePresence(present);
+  const child = typeof children === "function" ? children({
+    present: presence.isPresent
+  }) : import_react16.Children.only(children);
+  const ref = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(presence.ref, child.ref);
+  const forceMount = typeof children === "function";
+  return forceMount || presence.isPresent ? /* @__PURE__ */ (0, import_react16.cloneElement)(child, {
+    ref
+  }) : null;
+};
+$921a889cee6df7e8$export$99c2b779aa4e8b8b.displayName = "Presence";
+function $921a889cee6df7e8$var$usePresence(present) {
+  const [node1, setNode] = (0, import_react16.useState)();
+  const stylesRef = (0, import_react16.useRef)({});
+  const prevPresentRef = (0, import_react16.useRef)(present);
+  const prevAnimationNameRef = (0, import_react16.useRef)("none");
+  const initialState = present ? "mounted" : "unmounted";
+  const [state, send] = $fe963b355347cc68$export$3e6543de14f8614f(initialState, {
+    mounted: {
+      UNMOUNT: "unmounted",
+      ANIMATION_OUT: "unmountSuspended"
+    },
+    unmountSuspended: {
+      MOUNT: "mounted",
+      ANIMATION_END: "unmounted"
+    },
+    unmounted: {
+      MOUNT: "mounted"
+    }
+  });
+  (0, import_react16.useEffect)(() => {
+    const currentAnimationName = $921a889cee6df7e8$var$getAnimationName(stylesRef.current);
+    prevAnimationNameRef.current = state === "mounted" ? currentAnimationName : "none";
+  }, [
+    state
+  ]);
+  $9f79659886946c16$export$e5c5a5f917a5871c(() => {
+    const styles = stylesRef.current;
+    const wasPresent = prevPresentRef.current;
+    const hasPresentChanged = wasPresent !== present;
+    if (hasPresentChanged) {
+      const prevAnimationName = prevAnimationNameRef.current;
+      const currentAnimationName = $921a889cee6df7e8$var$getAnimationName(styles);
+      if (present)
+        send("MOUNT");
+      else if (currentAnimationName === "none" || (styles === null || styles === void 0 ? void 0 : styles.display) === "none")
+        send("UNMOUNT");
+      else {
+        const isAnimating = prevAnimationName !== currentAnimationName;
+        if (wasPresent && isAnimating)
+          send("ANIMATION_OUT");
+        else
+          send("UNMOUNT");
+      }
+      prevPresentRef.current = present;
+    }
+  }, [
+    present,
+    send
+  ]);
+  $9f79659886946c16$export$e5c5a5f917a5871c(() => {
+    if (node1) {
+      const handleAnimationEnd = (event) => {
+        const currentAnimationName = $921a889cee6df7e8$var$getAnimationName(stylesRef.current);
+        const isCurrentAnimation = currentAnimationName.includes(event.animationName);
+        if (event.target === node1 && isCurrentAnimation)
+          (0, import_react_dom3.flushSync)(
+            () => send("ANIMATION_END")
+          );
+      };
+      const handleAnimationStart = (event) => {
+        if (event.target === node1)
+          prevAnimationNameRef.current = $921a889cee6df7e8$var$getAnimationName(stylesRef.current);
+      };
+      node1.addEventListener("animationstart", handleAnimationStart);
+      node1.addEventListener("animationcancel", handleAnimationEnd);
+      node1.addEventListener("animationend", handleAnimationEnd);
+      return () => {
+        node1.removeEventListener("animationstart", handleAnimationStart);
+        node1.removeEventListener("animationcancel", handleAnimationEnd);
+        node1.removeEventListener("animationend", handleAnimationEnd);
+      };
+    } else
+      send("ANIMATION_END");
+  }, [
+    node1,
+    send
+  ]);
+  return {
+    isPresent: [
+      "mounted",
+      "unmountSuspended"
+    ].includes(state),
+    ref: (0, import_react16.useCallback)((node) => {
+      if (node)
+        stylesRef.current = getComputedStyle(node);
+      setNode(node);
+    }, [])
+  };
+}
+function $921a889cee6df7e8$var$getAnimationName(styles) {
+  return (styles === null || styles === void 0 ? void 0 : styles.animationName) || "none";
+}
+
+// node_modules/@radix-ui/react-focus-guards/dist/index.mjs
+var import_react17 = __toESM(require_react(), 1);
+var $3db38b7d1fb3fe6a$var$count = 0;
+function $3db38b7d1fb3fe6a$export$b7ece24a22aeda8c() {
+  (0, import_react17.useEffect)(() => {
+    var _edgeGuards$, _edgeGuards$2;
+    const edgeGuards = document.querySelectorAll("[data-radix-focus-guard]");
+    document.body.insertAdjacentElement("afterbegin", (_edgeGuards$ = edgeGuards[0]) !== null && _edgeGuards$ !== void 0 ? _edgeGuards$ : $3db38b7d1fb3fe6a$var$createFocusGuard());
+    document.body.insertAdjacentElement("beforeend", (_edgeGuards$2 = edgeGuards[1]) !== null && _edgeGuards$2 !== void 0 ? _edgeGuards$2 : $3db38b7d1fb3fe6a$var$createFocusGuard());
+    $3db38b7d1fb3fe6a$var$count++;
+    return () => {
+      if ($3db38b7d1fb3fe6a$var$count === 1)
+        document.querySelectorAll("[data-radix-focus-guard]").forEach(
+          (node) => node.remove()
+        );
+      $3db38b7d1fb3fe6a$var$count--;
+    };
+  }, []);
+}
+function $3db38b7d1fb3fe6a$var$createFocusGuard() {
+  const element = document.createElement("span");
+  element.setAttribute("data-radix-focus-guard", "");
+  element.tabIndex = 0;
+  element.style.cssText = "outline: none; opacity: 0; position: fixed; pointer-events: none";
+  return element;
+}
+
+// node_modules/tslib/tslib.es6.mjs
+var __assign = function() {
+  __assign = Object.assign || function __assign2(t) {
+    for (var s2, i = 1, n2 = arguments.length; i < n2; i++) {
+      s2 = arguments[i];
+      for (var p in s2)
+        if (Object.prototype.hasOwnProperty.call(s2, p))
+          t[p] = s2[p];
+    }
+    return t;
+  };
+  return __assign.apply(this, arguments);
+};
+function __rest(s2, e) {
+  var t = {};
+  for (var p in s2)
+    if (Object.prototype.hasOwnProperty.call(s2, p) && e.indexOf(p) < 0)
+      t[p] = s2[p];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
+    for (var i = 0, p = Object.getOwnPropertySymbols(s2); i < p.length; i++) {
+      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p[i]))
+        t[p[i]] = s2[p[i]];
+    }
+  return t;
+}
+function __spreadArray(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l2 = from.length, ar; i < l2; i++) {
+      if (ar || !(i in from)) {
+        if (!ar)
+          ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
+      }
+    }
+  return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+// node_modules/react-remove-scroll/dist/es2015/Combination.js
+var React10 = __toESM(require_react());
+
+// node_modules/react-remove-scroll/dist/es2015/UI.js
+var React6 = __toESM(require_react());
+
+// node_modules/react-remove-scroll-bar/dist/es2015/constants.js
+var zeroRightClassName = "right-scroll-bar-position";
+var fullWidthClassName = "width-before-scroll-bar";
+var noScrollbarsClassName = "with-scroll-bars-hidden";
+var removedBarSizeVariable = "--removed-body-scroll-bar-size";
+
+// node_modules/use-callback-ref/dist/es2015/assignRef.js
+function assignRef(ref, value) {
+  if (typeof ref === "function") {
+    ref(value);
+  } else if (ref) {
+    ref.current = value;
+  }
+  return ref;
+}
+
+// node_modules/use-callback-ref/dist/es2015/useRef.js
+var import_react18 = __toESM(require_react());
+function useCallbackRef(initialValue, callback) {
+  var ref = (0, import_react18.useState)(function() {
+    return {
+      // value
+      value: initialValue,
+      // last callback
+      callback,
+      // "memoized" public interface
+      facade: {
+        get current() {
+          return ref.value;
+        },
+        set current(value) {
+          var last = ref.value;
+          if (last !== value) {
+            ref.value = value;
+            ref.callback(value, last);
+          }
+        }
+      }
+    };
+  })[0];
+  ref.callback = callback;
+  return ref.facade;
+}
+
+// node_modules/use-callback-ref/dist/es2015/useMergeRef.js
+var React4 = __toESM(require_react());
+var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React4.useLayoutEffect : React4.useEffect;
+var currentValues = /* @__PURE__ */ new WeakMap();
+function useMergeRefs(refs, defaultValue) {
+  var callbackRef = useCallbackRef(defaultValue || null, function(newValue) {
+    return refs.forEach(function(ref) {
+      return assignRef(ref, newValue);
+    });
+  });
+  useIsomorphicLayoutEffect(function() {
+    var oldValue = currentValues.get(callbackRef);
+    if (oldValue) {
+      var prevRefs_1 = new Set(oldValue);
+      var nextRefs_1 = new Set(refs);
+      var current_1 = callbackRef.current;
+      prevRefs_1.forEach(function(ref) {
+        if (!nextRefs_1.has(ref)) {
+          assignRef(ref, null);
+        }
+      });
+      nextRefs_1.forEach(function(ref) {
+        if (!prevRefs_1.has(ref)) {
+          assignRef(ref, current_1);
+        }
+      });
+    }
+    currentValues.set(callbackRef, refs);
+  }, [refs]);
+  return callbackRef;
+}
+
+// node_modules/use-sidecar/dist/es2015/medium.js
+function ItoI(a) {
+  return a;
+}
+function innerCreateMedium(defaults, middleware) {
+  if (middleware === void 0) {
+    middleware = ItoI;
+  }
+  var buffer = [];
+  var assigned = false;
+  var medium = {
+    read: function() {
+      if (assigned) {
+        throw new Error("Sidecar: could not `read` from an `assigned` medium. `read` could be used only with `useMedium`.");
+      }
+      if (buffer.length) {
+        return buffer[buffer.length - 1];
+      }
+      return defaults;
+    },
+    useMedium: function(data2) {
+      var item = middleware(data2, assigned);
+      buffer.push(item);
+      return function() {
+        buffer = buffer.filter(function(x) {
+          return x !== item;
+        });
+      };
+    },
+    assignSyncMedium: function(cb) {
+      assigned = true;
+      while (buffer.length) {
+        var cbs = buffer;
+        buffer = [];
+        cbs.forEach(cb);
+      }
+      buffer = {
+        push: function(x) {
+          return cb(x);
+        },
+        filter: function() {
+          return buffer;
+        }
+      };
+    },
+    assignMedium: function(cb) {
+      assigned = true;
+      var pendingQueue = [];
+      if (buffer.length) {
+        var cbs = buffer;
+        buffer = [];
+        cbs.forEach(cb);
+        pendingQueue = buffer;
+      }
+      var executeQueue = function() {
+        var cbs2 = pendingQueue;
+        pendingQueue = [];
+        cbs2.forEach(cb);
+      };
+      var cycle = function() {
+        return Promise.resolve().then(executeQueue);
+      };
+      cycle();
+      buffer = {
+        push: function(x) {
+          pendingQueue.push(x);
+          cycle();
+        },
+        filter: function(filter) {
+          pendingQueue = pendingQueue.filter(filter);
+          return buffer;
+        }
+      };
+    }
+  };
+  return medium;
+}
+function createSidecarMedium(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  var medium = innerCreateMedium(null);
+  medium.options = __assign({ async: true, ssr: false }, options);
+  return medium;
+}
+
+// node_modules/use-sidecar/dist/es2015/exports.js
+var React5 = __toESM(require_react());
+var SideCar = function(_a) {
+  var sideCar = _a.sideCar, rest = __rest(_a, ["sideCar"]);
+  if (!sideCar) {
+    throw new Error("Sidecar: please provide `sideCar` property to import the right car");
+  }
+  var Target = sideCar.read();
+  if (!Target) {
+    throw new Error("Sidecar medium not found");
+  }
+  return React5.createElement(Target, __assign({}, rest));
+};
+SideCar.isSideCarExport = true;
+function exportSidecar(medium, exported) {
+  medium.useMedium(exported);
+  return SideCar;
+}
+
+// node_modules/react-remove-scroll/dist/es2015/medium.js
+var effectCar = createSidecarMedium();
+
+// node_modules/react-remove-scroll/dist/es2015/UI.js
+var nothing = function() {
+  return;
+};
+var RemoveScroll = React6.forwardRef(function(props2, parentRef) {
+  var ref = React6.useRef(null);
+  var _a = React6.useState({
+    onScrollCapture: nothing,
+    onWheelCapture: nothing,
+    onTouchMoveCapture: nothing
+  }), callbacks = _a[0], setCallbacks = _a[1];
+  var forwardProps = props2.forwardProps, children = props2.children, className = props2.className, removeScrollBar = props2.removeScrollBar, enabled = props2.enabled, shards = props2.shards, sideCar = props2.sideCar, noIsolation = props2.noIsolation, inert = props2.inert, allowPinchZoom = props2.allowPinchZoom, _b = props2.as, Container = _b === void 0 ? "div" : _b, rest = __rest(props2, ["forwardProps", "children", "className", "removeScrollBar", "enabled", "shards", "sideCar", "noIsolation", "inert", "allowPinchZoom", "as"]);
+  var SideCar2 = sideCar;
+  var containerRef = useMergeRefs([ref, parentRef]);
+  var containerProps = __assign(__assign({}, rest), callbacks);
+  return React6.createElement(
+    React6.Fragment,
+    null,
+    enabled && React6.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref }),
+    forwardProps ? React6.cloneElement(React6.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React6.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
+  );
+});
+RemoveScroll.defaultProps = {
+  enabled: true,
+  removeScrollBar: true,
+  inert: false
+};
+RemoveScroll.classNames = {
+  fullWidth: fullWidthClassName,
+  zeroRight: zeroRightClassName
+};
+
+// node_modules/react-remove-scroll/dist/es2015/SideEffect.js
+var React9 = __toESM(require_react());
+
+// node_modules/react-remove-scroll-bar/dist/es2015/component.js
+var React8 = __toESM(require_react());
+
+// node_modules/react-style-singleton/dist/es2015/hook.js
+var React7 = __toESM(require_react());
+
+// node_modules/get-nonce/dist/es2015/index.js
+var currentNonce;
+var getNonce = function() {
+  if (currentNonce) {
+    return currentNonce;
+  }
+  if (typeof __webpack_nonce__ !== "undefined") {
+    return __webpack_nonce__;
+  }
+  return void 0;
+};
+
+// node_modules/react-style-singleton/dist/es2015/singleton.js
+function makeStyleTag() {
+  if (!document)
+    return null;
+  var tag = document.createElement("style");
+  tag.type = "text/css";
+  var nonce = getNonce();
+  if (nonce) {
+    tag.setAttribute("nonce", nonce);
+  }
+  return tag;
+}
+function injectStyles(tag, css) {
+  if (tag.styleSheet) {
+    tag.styleSheet.cssText = css;
+  } else {
+    tag.appendChild(document.createTextNode(css));
+  }
+}
+function insertStyleTag(tag) {
+  var head = document.head || document.getElementsByTagName("head")[0];
+  head.appendChild(tag);
+}
+var stylesheetSingleton = function() {
+  var counter = 0;
+  var stylesheet = null;
+  return {
+    add: function(style) {
+      if (counter == 0) {
+        if (stylesheet = makeStyleTag()) {
+          injectStyles(stylesheet, style);
+          insertStyleTag(stylesheet);
+        }
+      }
+      counter++;
+    },
+    remove: function() {
+      counter--;
+      if (!counter && stylesheet) {
+        stylesheet.parentNode && stylesheet.parentNode.removeChild(stylesheet);
+        stylesheet = null;
+      }
+    }
+  };
+};
+
+// node_modules/react-style-singleton/dist/es2015/hook.js
+var styleHookSingleton = function() {
+  var sheet = stylesheetSingleton();
+  return function(styles, isDynamic) {
+    React7.useEffect(function() {
+      sheet.add(styles);
+      return function() {
+        sheet.remove();
+      };
+    }, [styles && isDynamic]);
+  };
+};
+
+// node_modules/react-style-singleton/dist/es2015/component.js
+var styleSingleton = function() {
+  var useStyle = styleHookSingleton();
+  var Sheet = function(_a) {
+    var styles = _a.styles, dynamic = _a.dynamic;
+    useStyle(styles, dynamic);
+    return null;
+  };
+  return Sheet;
+};
+
+// node_modules/react-remove-scroll-bar/dist/es2015/utils.js
+var zeroGap = {
+  left: 0,
+  top: 0,
+  right: 0,
+  gap: 0
+};
+var parse = function(x) {
+  return parseInt(x || "", 10) || 0;
+};
+var getOffset = function(gapMode) {
+  var cs = window.getComputedStyle(document.body);
+  var left = cs[gapMode === "padding" ? "paddingLeft" : "marginLeft"];
+  var top = cs[gapMode === "padding" ? "paddingTop" : "marginTop"];
+  var right = cs[gapMode === "padding" ? "paddingRight" : "marginRight"];
+  return [parse(left), parse(top), parse(right)];
+};
+var getGapWidth = function(gapMode) {
+  if (gapMode === void 0) {
+    gapMode = "margin";
+  }
+  if (typeof window === "undefined") {
+    return zeroGap;
+  }
+  var offsets = getOffset(gapMode);
+  var documentWidth = document.documentElement.clientWidth;
+  var windowWidth = window.innerWidth;
+  return {
+    left: offsets[0],
+    top: offsets[1],
+    right: offsets[2],
+    gap: Math.max(0, windowWidth - documentWidth + offsets[2] - offsets[0])
+  };
+};
+
+// node_modules/react-remove-scroll-bar/dist/es2015/component.js
+var Style = styleSingleton();
+var lockAttribute = "data-scroll-locked";
+var getStyles = function(_a, allowRelative, gapMode, important) {
+  var left = _a.left, top = _a.top, right = _a.right, gap = _a.gap;
+  if (gapMode === void 0) {
+    gapMode = "margin";
+  }
+  return "\n  .".concat(noScrollbarsClassName, " {\n   overflow: hidden ").concat(important, ";\n   padding-right: ").concat(gap, "px ").concat(important, ";\n  }\n  body[").concat(lockAttribute, "] {\n    overflow: hidden ").concat(important, ";\n    overscroll-behavior: contain;\n    ").concat([
+    allowRelative && "position: relative ".concat(important, ";"),
+    gapMode === "margin" && "\n    padding-left: ".concat(left, "px;\n    padding-top: ").concat(top, "px;\n    padding-right: ").concat(right, "px;\n    margin-left:0;\n    margin-top:0;\n    margin-right: ").concat(gap, "px ").concat(important, ";\n    "),
+    gapMode === "padding" && "padding-right: ".concat(gap, "px ").concat(important, ";")
+  ].filter(Boolean).join(""), "\n  }\n  \n  .").concat(zeroRightClassName, " {\n    right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(fullWidthClassName, " {\n    margin-right: ").concat(gap, "px ").concat(important, ";\n  }\n  \n  .").concat(zeroRightClassName, " .").concat(zeroRightClassName, " {\n    right: 0 ").concat(important, ";\n  }\n  \n  .").concat(fullWidthClassName, " .").concat(fullWidthClassName, " {\n    margin-right: 0 ").concat(important, ";\n  }\n  \n  body[").concat(lockAttribute, "] {\n    ").concat(removedBarSizeVariable, ": ").concat(gap, "px;\n  }\n");
+};
+var getCurrentUseCounter = function() {
+  var counter = parseInt(document.body.getAttribute(lockAttribute) || "0", 10);
+  return isFinite(counter) ? counter : 0;
+};
+var useLockAttribute = function() {
+  React8.useEffect(function() {
+    document.body.setAttribute(lockAttribute, (getCurrentUseCounter() + 1).toString());
+    return function() {
+      var newCounter = getCurrentUseCounter() - 1;
+      if (newCounter <= 0) {
+        document.body.removeAttribute(lockAttribute);
+      } else {
+        document.body.setAttribute(lockAttribute, newCounter.toString());
+      }
+    };
+  }, []);
+};
+var RemoveScrollBar = function(_a) {
+  var noRelative = _a.noRelative, noImportant = _a.noImportant, _b = _a.gapMode, gapMode = _b === void 0 ? "margin" : _b;
+  useLockAttribute();
+  var gap = React8.useMemo(function() {
+    return getGapWidth(gapMode);
+  }, [gapMode]);
+  return React8.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
+};
+
+// node_modules/react-remove-scroll/dist/es2015/aggresiveCapture.js
+var passiveSupported = false;
+if (typeof window !== "undefined") {
+  try {
+    options = Object.defineProperty({}, "passive", {
+      get: function() {
+        passiveSupported = true;
+        return true;
+      }
+    });
+    window.addEventListener("test", options, options);
+    window.removeEventListener("test", options, options);
+  } catch (err) {
+    passiveSupported = false;
+  }
+}
+var options;
+var nonPassive = passiveSupported ? { passive: false } : false;
+
+// node_modules/react-remove-scroll/dist/es2015/handleScroll.js
+var alwaysContainsScroll = function(node) {
+  return node.tagName === "TEXTAREA";
+};
+var elementCanBeScrolled = function(node, overflow) {
+  var styles = window.getComputedStyle(node);
+  return (
+    // not-not-scrollable
+    styles[overflow] !== "hidden" && // contains scroll inside self
+    !(styles.overflowY === styles.overflowX && !alwaysContainsScroll(node) && styles[overflow] === "visible")
+  );
+};
+var elementCouldBeVScrolled = function(node) {
+  return elementCanBeScrolled(node, "overflowY");
+};
+var elementCouldBeHScrolled = function(node) {
+  return elementCanBeScrolled(node, "overflowX");
+};
+var locationCouldBeScrolled = function(axis, node) {
+  var current = node;
+  do {
+    if (typeof ShadowRoot !== "undefined" && current instanceof ShadowRoot) {
+      current = current.host;
+    }
+    var isScrollable = elementCouldBeScrolled(axis, current);
+    if (isScrollable) {
+      var _a = getScrollVariables(axis, current), s2 = _a[1], d = _a[2];
+      if (s2 > d) {
+        return true;
+      }
+    }
+    current = current.parentNode;
+  } while (current && current !== document.body);
+  return false;
+};
+var getVScrollVariables = function(_a) {
+  var scrollTop = _a.scrollTop, scrollHeight = _a.scrollHeight, clientHeight = _a.clientHeight;
+  return [
+    scrollTop,
+    scrollHeight,
+    clientHeight
+  ];
+};
+var getHScrollVariables = function(_a) {
+  var scrollLeft = _a.scrollLeft, scrollWidth = _a.scrollWidth, clientWidth = _a.clientWidth;
+  return [
+    scrollLeft,
+    scrollWidth,
+    clientWidth
+  ];
+};
+var elementCouldBeScrolled = function(axis, node) {
+  return axis === "v" ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node);
+};
+var getScrollVariables = function(axis, node) {
+  return axis === "v" ? getVScrollVariables(node) : getHScrollVariables(node);
+};
+var getDirectionFactor = function(axis, direction) {
+  return axis === "h" && direction === "rtl" ? -1 : 1;
+};
+var handleScroll = function(axis, endTarget, event, sourceDelta, noOverscroll) {
+  var directionFactor = getDirectionFactor(axis, window.getComputedStyle(endTarget).direction);
+  var delta = directionFactor * sourceDelta;
+  var target = event.target;
+  var targetInLock = endTarget.contains(target);
+  var shouldCancelScroll = false;
+  var isDeltaPositive = delta > 0;
+  var availableScroll = 0;
+  var availableScrollTop = 0;
+  do {
+    var _a = getScrollVariables(axis, target), position = _a[0], scroll_1 = _a[1], capacity = _a[2];
+    var elementScroll = scroll_1 - capacity - directionFactor * position;
+    if (position || elementScroll) {
+      if (elementCouldBeScrolled(axis, target)) {
+        availableScroll += elementScroll;
+        availableScrollTop += position;
+      }
+    }
+    target = target.parentNode;
+  } while (
+    // portaled content
+    !targetInLock && target !== document.body || // self content
+    targetInLock && (endTarget.contains(target) || endTarget === target)
+  );
+  if (isDeltaPositive && (noOverscroll && availableScroll === 0 || !noOverscroll && delta > availableScroll)) {
+    shouldCancelScroll = true;
+  } else if (!isDeltaPositive && (noOverscroll && availableScrollTop === 0 || !noOverscroll && -delta > availableScrollTop)) {
+    shouldCancelScroll = true;
+  }
+  return shouldCancelScroll;
+};
+
+// node_modules/react-remove-scroll/dist/es2015/SideEffect.js
+var getTouchXY = function(event) {
+  return "changedTouches" in event ? [event.changedTouches[0].clientX, event.changedTouches[0].clientY] : [0, 0];
+};
+var getDeltaXY = function(event) {
+  return [event.deltaX, event.deltaY];
+};
+var extractRef = function(ref) {
+  return ref && "current" in ref ? ref.current : ref;
+};
+var deltaCompare = function(x, y) {
+  return x[0] === y[0] && x[1] === y[1];
+};
+var generateStyle = function(id) {
+  return "\n  .block-interactivity-".concat(id, " {pointer-events: none;}\n  .allow-interactivity-").concat(id, " {pointer-events: all;}\n");
+};
+var idCounter = 0;
+var lockStack = [];
+function RemoveScrollSideCar(props2) {
+  var shouldPreventQueue = React9.useRef([]);
+  var touchStartRef = React9.useRef([0, 0]);
+  var activeAxis = React9.useRef();
+  var id = React9.useState(idCounter++)[0];
+  var Style2 = React9.useState(function() {
+    return styleSingleton();
+  })[0];
+  var lastProps = React9.useRef(props2);
+  React9.useEffect(function() {
+    lastProps.current = props2;
+  }, [props2]);
+  React9.useEffect(function() {
+    if (props2.inert) {
+      document.body.classList.add("block-interactivity-".concat(id));
+      var allow_1 = __spreadArray([props2.lockRef.current], (props2.shards || []).map(extractRef), true).filter(Boolean);
+      allow_1.forEach(function(el) {
+        return el.classList.add("allow-interactivity-".concat(id));
+      });
+      return function() {
+        document.body.classList.remove("block-interactivity-".concat(id));
+        allow_1.forEach(function(el) {
+          return el.classList.remove("allow-interactivity-".concat(id));
+        });
+      };
+    }
+    return;
+  }, [props2.inert, props2.lockRef.current, props2.shards]);
+  var shouldCancelEvent = React9.useCallback(function(event, parent) {
+    if ("touches" in event && event.touches.length === 2) {
+      return !lastProps.current.allowPinchZoom;
+    }
+    var touch = getTouchXY(event);
+    var touchStart = touchStartRef.current;
+    var deltaX = "deltaX" in event ? event.deltaX : touchStart[0] - touch[0];
+    var deltaY = "deltaY" in event ? event.deltaY : touchStart[1] - touch[1];
+    var currentAxis;
+    var target = event.target;
+    var moveDirection = Math.abs(deltaX) > Math.abs(deltaY) ? "h" : "v";
+    if ("touches" in event && moveDirection === "h" && target.type === "range") {
+      return false;
+    }
+    var canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
+    if (!canBeScrolledInMainDirection) {
+      return true;
+    }
+    if (canBeScrolledInMainDirection) {
+      currentAxis = moveDirection;
+    } else {
+      currentAxis = moveDirection === "v" ? "h" : "v";
+      canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
+    }
+    if (!canBeScrolledInMainDirection) {
+      return false;
+    }
+    if (!activeAxis.current && "changedTouches" in event && (deltaX || deltaY)) {
+      activeAxis.current = currentAxis;
+    }
+    if (!currentAxis) {
+      return true;
+    }
+    var cancelingAxis = activeAxis.current || currentAxis;
+    return handleScroll(cancelingAxis, parent, event, cancelingAxis === "h" ? deltaX : deltaY, true);
+  }, []);
+  var shouldPrevent = React9.useCallback(function(_event) {
+    var event = _event;
+    if (!lockStack.length || lockStack[lockStack.length - 1] !== Style2) {
+      return;
+    }
+    var delta = "deltaY" in event ? getDeltaXY(event) : getTouchXY(event);
+    var sourceEvent = shouldPreventQueue.current.filter(function(e) {
+      return e.name === event.type && e.target === event.target && deltaCompare(e.delta, delta);
+    })[0];
+    if (sourceEvent && sourceEvent.should) {
+      if (event.cancelable) {
+        event.preventDefault();
+      }
+      return;
+    }
+    if (!sourceEvent) {
+      var shardNodes = (lastProps.current.shards || []).map(extractRef).filter(Boolean).filter(function(node) {
+        return node.contains(event.target);
+      });
+      var shouldStop = shardNodes.length > 0 ? shouldCancelEvent(event, shardNodes[0]) : !lastProps.current.noIsolation;
+      if (shouldStop) {
+        if (event.cancelable) {
+          event.preventDefault();
+        }
+      }
+    }
+  }, []);
+  var shouldCancel = React9.useCallback(function(name, delta, target, should) {
+    var event = { name, delta, target, should };
+    shouldPreventQueue.current.push(event);
+    setTimeout(function() {
+      shouldPreventQueue.current = shouldPreventQueue.current.filter(function(e) {
+        return e !== event;
+      });
+    }, 1);
+  }, []);
+  var scrollTouchStart = React9.useCallback(function(event) {
+    touchStartRef.current = getTouchXY(event);
+    activeAxis.current = void 0;
+  }, []);
+  var scrollWheel = React9.useCallback(function(event) {
+    shouldCancel(event.type, getDeltaXY(event), event.target, shouldCancelEvent(event, props2.lockRef.current));
+  }, []);
+  var scrollTouchMove = React9.useCallback(function(event) {
+    shouldCancel(event.type, getTouchXY(event), event.target, shouldCancelEvent(event, props2.lockRef.current));
+  }, []);
+  React9.useEffect(function() {
+    lockStack.push(Style2);
+    props2.setCallbacks({
+      onScrollCapture: scrollWheel,
+      onWheelCapture: scrollWheel,
+      onTouchMoveCapture: scrollTouchMove
+    });
+    document.addEventListener("wheel", shouldPrevent, nonPassive);
+    document.addEventListener("touchmove", shouldPrevent, nonPassive);
+    document.addEventListener("touchstart", scrollTouchStart, nonPassive);
+    return function() {
+      lockStack = lockStack.filter(function(inst) {
+        return inst !== Style2;
+      });
+      document.removeEventListener("wheel", shouldPrevent, nonPassive);
+      document.removeEventListener("touchmove", shouldPrevent, nonPassive);
+      document.removeEventListener("touchstart", scrollTouchStart, nonPassive);
+    };
+  }, []);
+  var removeScrollBar = props2.removeScrollBar, inert = props2.inert;
+  return React9.createElement(
+    React9.Fragment,
+    null,
+    inert ? React9.createElement(Style2, { styles: generateStyle(id) }) : null,
+    removeScrollBar ? React9.createElement(RemoveScrollBar, { gapMode: "margin" }) : null
+  );
+}
+
+// node_modules/react-remove-scroll/dist/es2015/sidecar.js
+var sidecar_default = exportSidecar(effectCar, RemoveScrollSideCar);
+
+// node_modules/react-remove-scroll/dist/es2015/Combination.js
+var ReactRemoveScroll = React10.forwardRef(function(props2, ref) {
+  return React10.createElement(RemoveScroll, __assign({}, props2, { ref, sideCar: sidecar_default }));
+});
+ReactRemoveScroll.classNames = RemoveScroll.classNames;
+var Combination_default = ReactRemoveScroll;
+
+// node_modules/aria-hidden/dist/es2015/index.js
+var getDefaultParent = function(originalTarget) {
+  if (typeof document === "undefined") {
+    return null;
+  }
+  var sampleTarget = Array.isArray(originalTarget) ? originalTarget[0] : originalTarget;
+  return sampleTarget.ownerDocument.body;
+};
+var counterMap = /* @__PURE__ */ new WeakMap();
+var uncontrolledNodes = /* @__PURE__ */ new WeakMap();
+var markerMap = {};
+var lockCount = 0;
+var unwrapHost = function(node) {
+  return node && (node.host || unwrapHost(node.parentNode));
+};
+var correctTargets = function(parent, targets) {
+  return targets.map(function(target) {
+    if (parent.contains(target)) {
+      return target;
+    }
+    var correctedTarget = unwrapHost(target);
+    if (correctedTarget && parent.contains(correctedTarget)) {
+      return correctedTarget;
+    }
+    console.error("aria-hidden", target, "in not contained inside", parent, ". Doing nothing");
+    return null;
+  }).filter(function(x) {
+    return Boolean(x);
+  });
+};
+var applyAttributeToOthers = function(originalTarget, parentNode, markerName, controlAttribute) {
+  var targets = correctTargets(parentNode, Array.isArray(originalTarget) ? originalTarget : [originalTarget]);
+  if (!markerMap[markerName]) {
+    markerMap[markerName] = /* @__PURE__ */ new WeakMap();
+  }
+  var markerCounter = markerMap[markerName];
+  var hiddenNodes = [];
+  var elementsToKeep = /* @__PURE__ */ new Set();
+  var elementsToStop = new Set(targets);
+  var keep = function(el) {
+    if (!el || elementsToKeep.has(el)) {
+      return;
+    }
+    elementsToKeep.add(el);
+    keep(el.parentNode);
+  };
+  targets.forEach(keep);
+  var deep = function(parent) {
+    if (!parent || elementsToStop.has(parent)) {
+      return;
+    }
+    Array.prototype.forEach.call(parent.children, function(node) {
+      if (elementsToKeep.has(node)) {
+        deep(node);
+      } else {
+        try {
+          var attr = node.getAttribute(controlAttribute);
+          var alreadyHidden = attr !== null && attr !== "false";
+          var counterValue = (counterMap.get(node) || 0) + 1;
+          var markerValue = (markerCounter.get(node) || 0) + 1;
+          counterMap.set(node, counterValue);
+          markerCounter.set(node, markerValue);
+          hiddenNodes.push(node);
+          if (counterValue === 1 && alreadyHidden) {
+            uncontrolledNodes.set(node, true);
+          }
+          if (markerValue === 1) {
+            node.setAttribute(markerName, "true");
+          }
+          if (!alreadyHidden) {
+            node.setAttribute(controlAttribute, "true");
+          }
+        } catch (e) {
+          console.error("aria-hidden: cannot operate on ", node, e);
+        }
+      }
+    });
+  };
+  deep(parentNode);
+  elementsToKeep.clear();
+  lockCount++;
+  return function() {
+    hiddenNodes.forEach(function(node) {
+      var counterValue = counterMap.get(node) - 1;
+      var markerValue = markerCounter.get(node) - 1;
+      counterMap.set(node, counterValue);
+      markerCounter.set(node, markerValue);
+      if (!counterValue) {
+        if (!uncontrolledNodes.has(node)) {
+          node.removeAttribute(controlAttribute);
+        }
+        uncontrolledNodes.delete(node);
+      }
+      if (!markerValue) {
+        node.removeAttribute(markerName);
+      }
+    });
+    lockCount--;
+    if (!lockCount) {
+      counterMap = /* @__PURE__ */ new WeakMap();
+      counterMap = /* @__PURE__ */ new WeakMap();
+      uncontrolledNodes = /* @__PURE__ */ new WeakMap();
+      markerMap = {};
+    }
+  };
+};
+var hideOthers = function(originalTarget, parentNode, markerName) {
+  if (markerName === void 0) {
+    markerName = "data-aria-hidden";
+  }
+  var targets = Array.from(Array.isArray(originalTarget) ? originalTarget : [originalTarget]);
+  var activeParentNode = parentNode || getDefaultParent(originalTarget);
+  if (!activeParentNode) {
+    return function() {
+      return null;
+    };
+  }
+  targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll("[aria-live]")));
+  return applyAttributeToOthers(targets, activeParentNode, markerName, "aria-hidden");
+};
 
 // src/components/PluginSettings/index.tsx
 var StartCenterEnd = z.union([
@@ -30850,10 +32659,10 @@ var PluginSettings = ({
   plugin: plugin2,
   savedSettings
 }) => {
-  const [errors, setErrors] = (0, import_react6.useState)();
+  const [errors, setErrors] = (0, import_react20.useState)();
   const potentialSettings = addNewKeyValues(savedSettings, defaultSettings);
   const potentialParsed = SettingsSchema.safeParse(potentialSettings);
-  const [form, setForm] = (0, import_react6.useState)(potentialParsed.data);
+  const [form, setForm] = (0, import_react20.useState)(potentialParsed.data);
   const updateForm = (key, value) => {
     console.log("updateForm: ", key, " ", value);
     setForm((prev) => ({
@@ -30861,7 +32670,7 @@ var PluginSettings = ({
       [key]: value
     }));
   };
-  (0, import_react6.useEffect)(() => {
+  (0, import_react20.useEffect)(() => {
     plugin2.onExternalSettingsChange = async () => {
       const potentialSettings2 = await plugin2.loadData();
       const preCopyForm = addNewKeyValues(
@@ -30893,7 +32702,7 @@ var PluginSettings = ({
       }
     };
   }, []);
-  (0, import_react6.useEffect)(() => {
+  (0, import_react20.useEffect)(() => {
     console.log("setForm called: ", form);
     const copyForm = addNewKeyValues(form, defaultSettings);
     const parsed = SettingsSchema.safeParse(copyForm);
@@ -30918,7 +32727,7 @@ var PluginSettings = ({
       );
     }
   }, [form]);
-  return /* @__PURE__ */ import_react6.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react6.default.createElement("h2", null, "Dataedit Settings"), /* @__PURE__ */ import_react6.default.createElement("div", { className: "pb-3" }, /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "Plugin repository:", " ", /* @__PURE__ */ import_react6.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "https://github.com/unxok/dataedit")), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "Dataview docs:", " ", /* @__PURE__ */ import_react6.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "https://blacksmithgu.github.io/obsidian-dataview/")), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex gap-2" }, /* @__PURE__ */ import_react6.default.createElement(BuyMeCoffee, null), /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react20.default.createElement("h2", null, "Dataedit Settings"), /* @__PURE__ */ import_react20.default.createElement("div", { className: "pb-3" }, /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "Plugin repository:", " ", /* @__PURE__ */ import_react20.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "https://github.com/unxok/dataedit")), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "Dataview docs:", " ", /* @__PURE__ */ import_react20.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "https://blacksmithgu.github.io/obsidian-dataview/")), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("div", { className: "flex gap-2" }, /* @__PURE__ */ import_react20.default.createElement(BuyMeCoffee, null), /* @__PURE__ */ import_react20.default.createElement(
     "button",
     {
       className: "text-modifier-error hover:bg-modifier-error-hover hover:text-normal",
@@ -30938,43 +32747,43 @@ var PluginSettings = ({
       }
     },
     "Reset to default settings"
-  ))), !potentialParsed.success && /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Invalid Settings!"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, errors?.map(([property, message]) => /* @__PURE__ */ import_react6.default.createElement("div", { key: property }, "Invalid setting ", /* @__PURE__ */ import_react6.default.createElement("code", null, property), ":", " ", message))), "The only way you should be able have invalid settings would be if you:", /* @__PURE__ */ import_react6.default.createElement("ul", null, /* @__PURE__ */ import_react6.default.createElement("li", null, "You manually changed the", " ", /* @__PURE__ */ import_react6.default.createElement("code", null, "data.json"), " file of this plugin"), /* @__PURE__ */ import_react6.default.createElement("li", null, "Another plugin changed this plugins settings incorrectly"), /* @__PURE__ */ import_react6.default.createElement("li", null, "There's a bug in this plugin causing an invalid setting value"))))), potentialParsed.success && /* @__PURE__ */ import_react6.default.createElement(import_react6.default.Fragment, null, /* @__PURE__ */ import_react6.default.createElement(
+  ))), !potentialParsed.success && /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Invalid Settings!"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react20.default.createElement(import_react20.default.Fragment, null, errors?.map(([property, message]) => /* @__PURE__ */ import_react20.default.createElement("div", { key: property }, "Invalid setting ", /* @__PURE__ */ import_react20.default.createElement("code", null, property), ":", " ", message))), "The only way you should be able have invalid settings would be if you:", /* @__PURE__ */ import_react20.default.createElement("ul", null, /* @__PURE__ */ import_react20.default.createElement("li", null, "You manually changed the", " ", /* @__PURE__ */ import_react20.default.createElement("code", null, "data.json"), " file of this plugin"), /* @__PURE__ */ import_react20.default.createElement("li", null, "Another plugin changed this plugins settings incorrectly"), /* @__PURE__ */ import_react20.default.createElement("li", null, "There's a bug in this plugin causing an invalid setting value"))))), potentialParsed.success && /* @__PURE__ */ import_react20.default.createElement(import_react20.default.Fragment, null, /* @__PURE__ */ import_react20.default.createElement(
     AutoSuggest,
     {
       value: form.autoSuggest,
       onChange: (b) => updateForm("autoSuggest", b)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     RenderMarkdown,
     {
       value: form.renderMarkdown,
       onChange: (b) => updateForm("renderMarkdown", b)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     ShowNumberButtons,
     {
       value: form.showNumberButtons,
       onChange: (b) => updateForm("showNumberButtons", b)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     ShowTypeIcons,
     {
       value: form.showTypeIcons,
       onChange: (b) => updateForm("showTypeIcons", b)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     EmptyValueDisplay,
     {
       value: form.emptyValueDisplay,
       onChange: (e) => updateForm("emptyValueDisplay", e.target.value)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     QueryLinksPropertyName,
     {
       value: form.queryLinksPropertyName,
       onChange: (e) => updateForm("queryLinksPropertyName", e.target.value)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     CssClassName,
     {
       app: plugin2.app,
@@ -30985,28 +32794,28 @@ var PluginSettings = ({
         form.cssClassName + " " + v
       )
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     VerticalAlignment,
     {
       app: plugin2.app,
       value: form.verticalAlignment,
       onChange: (e) => updateForm("verticalAlignment", e.target.value)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     HorizontalAlignment,
     {
       app: plugin2.app,
       value: form.horizontalAlignment,
       onChange: (e) => updateForm("horizontalAlignment", e.target.value)
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     AlignmentByType,
     {
       app: plugin2.app,
       value: form.alignmentByType,
       updateForm
     }
-  ), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react20.default.createElement(
     ColumnAliases,
     {
       app: plugin2.app,
@@ -31051,14 +32860,14 @@ var ConfirmationDialog = class extends import_obsidian4.Modal {
 var AutoSuggest = ({
   value,
   onChange
-}) => /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Auto suggest"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react6.default.createElement("div", null, "Automatically suggest values from the existing values used for that property."), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ import_react6.default.createElement("b", null, "Note:"), /* @__PURE__ */ import_react6.default.createElement("span", null, "this only works for text and multitext"), /* @__PURE__ */ import_react6.default.createElement(
+}) => /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Auto suggest"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react20.default.createElement("div", null, "Automatically suggest values from the existing values used for that property."), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ import_react20.default.createElement("b", null, "Note:"), /* @__PURE__ */ import_react20.default.createElement("span", null, "this only works for text and multitext"), /* @__PURE__ */ import_react20.default.createElement(
   "div",
   {
     className: "flex items-center hover:cursor-help",
     "aria-label": "Obsidian's properties natively only support auto suggest on text and multitext type properties. This plugin uses that same API to get suggestions."
   },
-  /* @__PURE__ */ import_react6.default.createElement(CircleHelp, { size: "1em", className: "text-accent" })
-)))), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+  /* @__PURE__ */ import_react20.default.createElement(CircleHelp, { size: "1em", className: "text-accent" })
+)))), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
   SettingToggle,
   {
     checked: value,
@@ -31068,14 +32877,14 @@ var AutoSuggest = ({
 var RenderMarkdown = ({
   value,
   onChange
-}) => /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Render markdown"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react6.default.createElement("div", null, "Render markdown syntax plain text to HTML when not editing"), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ import_react6.default.createElement("b", null, "Note:"), /* @__PURE__ */ import_react6.default.createElement("span", null, "This is ", /* @__PURE__ */ import_react6.default.createElement("i", null, "not"), " live preview markdown."), /* @__PURE__ */ import_react6.default.createElement(
+}) => /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Render markdown"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react20.default.createElement("div", null, "Render markdown syntax plain text to HTML when not editing"), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("div", { className: "flex items-center gap-1" }, /* @__PURE__ */ import_react20.default.createElement("b", null, "Note:"), /* @__PURE__ */ import_react20.default.createElement("span", null, "This is ", /* @__PURE__ */ import_react20.default.createElement("i", null, "not"), " live preview markdown."), /* @__PURE__ */ import_react20.default.createElement(
   "div",
   {
     className: "flex items-center hover:cursor-help",
     "aria-label": "I have almost figured out the best way to implement live preview markdown editing, but not yet!"
   },
-  /* @__PURE__ */ import_react6.default.createElement(CircleHelp, { size: "1em", className: "text-accent" })
-)), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("div", null, "Also, clicking links and tags will edit the cell currently rather than allowing you to follow navigation, unless the", " ", /* @__PURE__ */ import_react6.default.createElement("i", null, "only"), " thing in the cell is the link"))), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+  /* @__PURE__ */ import_react20.default.createElement(CircleHelp, { size: "1em", className: "text-accent" })
+)), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("div", null, "Also, clicking links and tags will edit the cell currently rather than allowing you to follow navigation, unless the", " ", /* @__PURE__ */ import_react20.default.createElement("i", null, "only"), " thing in the cell is the link"))), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
   SettingToggle,
   {
     checked: value,
@@ -31085,7 +32894,7 @@ var RenderMarkdown = ({
 var ShowNumberButtons = ({
   value,
   onChange
-}) => /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Number buttons"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "Show a minus, plus, and expression button below each input for a number type property")), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+}) => /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Number buttons"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "Show a minus, plus, and expression button below each input for a number type property")), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
   SettingToggle,
   {
     checked: value,
@@ -31095,7 +32904,7 @@ var ShowNumberButtons = ({
 var ShowTypeIcons = ({
   value,
   onChange
-}) => /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Type icons"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "Show an icon on each column header for the chosen type of that property")), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+}) => /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Type icons"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "Show an icon on each column header for the chosen type of that property")), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
   SettingToggle,
   {
     checked: value,
@@ -31106,12 +32915,12 @@ var EmptyValueDisplay = ({
   value,
   onChange
 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Empty value display"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "What to show when a property is unset, undefined, or null")), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement("input", { type: "text", value, onChange })));
+  return /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Empty value display"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "What to show when a property is unset, undefined, or null")), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement("input", { type: "text", value, onChange })));
 };
 var QueryLinksPropertyName = ({
   value,
   onChange
-}) => /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Query links property name"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react6.default.createElement("div", null, "The frontmatter property name for the property Dataedit tables will update with links from files returned in the query"), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("b", null, "Note:"), " If you have multiple dataedit blocks, this may be updated arbitrarily. To circumvent this, set a specific property name for each block's configuration"), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("div", null, /* @__PURE__ */ import_react6.default.createElement("b", null, "Don't want this? "), /* @__PURE__ */ import_react6.default.createElement("span", null, "Leave as blank")))), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+}) => /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Query links property name"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react20.default.createElement("div", null, "The frontmatter property name for the property Dataedit tables will update with links from files returned in the query"), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Note:"), " If you have multiple dataedit blocks, this may be updated arbitrarily. To circumvent this, set a specific property name for each block's configuration"), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Don't want this? "), /* @__PURE__ */ import_react20.default.createElement("span", null, "Leave as blank")))), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
   "input",
   {
     type: "text",
@@ -31127,7 +32936,7 @@ var CssClassName = ({
   onChange,
   onSelect
 }) => {
-  const measuredRef = (0, import_react6.useCallback)((node) => {
+  const measuredRef = (0, import_react20.useCallback)((node) => {
     if (node === null)
       return;
     new Suggest(
@@ -31143,7 +32952,7 @@ var CssClassName = ({
       onSelect
     );
   }, []);
-  return /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "CSS class name"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "Add additional CSS class names to the Dataedit HTML table element")), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "CSS class name"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "Add additional CSS class names to the Dataedit HTML table element")), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
     "input",
     {
       type: "text",
@@ -31160,13 +32969,13 @@ var ColumnAliases = ({
   value,
   updateForm
 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement(SettingRoot, { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Column aliases"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react6.default.createElement("span", null, "Setup aliases for frontmatter property names."), "\xA0", /* @__PURE__ */ import_react6.default.createElement("span", null, "Property names will be replaced by their aliases set here in the column headers of Dataedit tables."))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex w-full flex-col justify-end gap-3" }, value.map((arr, i) => /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(SettingRoot, { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Column aliases"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react20.default.createElement("span", null, "Setup aliases for frontmatter property names."), "\xA0", /* @__PURE__ */ import_react20.default.createElement("span", null, "Property names will be replaced by their aliases set here in the column headers of Dataedit tables."))), /* @__PURE__ */ import_react20.default.createElement("div", { className: "flex w-full flex-col justify-end gap-3" }, value.map((arr, i) => /* @__PURE__ */ import_react20.default.createElement(
     "div",
     {
       key: i + "-setting-control-columnAlias",
       className: "flex items-center justify-end gap-1"
     },
-    /* @__PURE__ */ import_react6.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react6.default.createElement(
+    /* @__PURE__ */ import_react20.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react20.default.createElement(
       "button",
       {
         className: "group border-none bg-transparent shadow-none",
@@ -31177,14 +32986,14 @@ var ColumnAliases = ({
           updateForm("columnAliases", newValue);
         }
       },
-      /* @__PURE__ */ import_react6.default.createElement(
+      /* @__PURE__ */ import_react20.default.createElement(
         X,
         {
           size: "1em",
           className: "text-faint group-hover:text-normal"
         }
       )
-    ), /* @__PURE__ */ import_react6.default.createElement(
+    ), /* @__PURE__ */ import_react20.default.createElement(
       PropertyNameInput,
       {
         app: app2,
@@ -31194,8 +33003,8 @@ var ColumnAliases = ({
         updateForm
       }
     )),
-    /* @__PURE__ */ import_react6.default.createElement(ArrowRight, { size: "1em" }),
-    /* @__PURE__ */ import_react6.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react6.default.createElement(
+    /* @__PURE__ */ import_react20.default.createElement(ArrowRight, { size: "1em" }),
+    /* @__PURE__ */ import_react20.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react20.default.createElement(
       PropertyValueInput,
       {
         key: i,
@@ -31207,7 +33016,7 @@ var ColumnAliases = ({
         updateForm
       }
     ))
-  ))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex w-full justify-end" }, /* @__PURE__ */ import_react6.default.createElement(
+  ))), /* @__PURE__ */ import_react20.default.createElement("div", { className: "flex w-full justify-end" }, /* @__PURE__ */ import_react20.default.createElement(
     "button",
     {
       className: "flex items-center",
@@ -31217,7 +33026,7 @@ var ColumnAliases = ({
       }
     },
     "Add new alias\xA0",
-    /* @__PURE__ */ import_react6.default.createElement(Plus, { size: "1em" })
+    /* @__PURE__ */ import_react20.default.createElement(Plus, { size: "1em" })
   )));
 };
 var PropertyNameInput = ({
@@ -31225,14 +33034,14 @@ var PropertyNameInput = ({
   aliasArr,
   property,
   updateForm,
-  index
+  index: index2
 }) => {
   const updateFormValue = (newPropName) => {
     const copyAliasArr = [...aliasArr];
-    copyAliasArr[index][0] = newPropName;
+    copyAliasArr[index2][0] = newPropName;
     updateForm("columnAliases", copyAliasArr);
   };
-  const measuredRef = (0, import_react6.useCallback)((node) => {
+  const measuredRef = (0, import_react20.useCallback)((node) => {
     if (node === null)
       return;
     new Suggest(
@@ -31248,7 +33057,7 @@ var PropertyNameInput = ({
       (v) => updateFormValue(v)
     );
   }, []);
-  return /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(
     "input",
     {
       type: "text",
@@ -31266,14 +33075,14 @@ var PropertyValueInput = ({
   property,
   value,
   updateForm,
-  index
+  index: index2
 }) => {
   const updateFormValue = (newValue) => {
     const copyAliasArr = [...aliasArr];
-    copyAliasArr[index][1] = newValue;
+    copyAliasArr[index2][1] = newValue;
     updateForm("columnAliases", copyAliasArr);
   };
-  return /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(
     "input",
     {
       tabIndex: 0,
@@ -31291,16 +33100,16 @@ var VerticalAlignment = ({
   value,
   onChange
 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Vertical alignment"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "Applies to all table cells")), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Vertical alignment"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "Applies to all table cells")), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
     "select",
     {
       className: "dropdown",
       value,
       onChange
     },
-    /* @__PURE__ */ import_react6.default.createElement("option", { value: "top" }, "top"),
-    /* @__PURE__ */ import_react6.default.createElement("option", { value: "middle" }, "middle"),
-    /* @__PURE__ */ import_react6.default.createElement("option", { value: "bottom" }, "bottom")
+    /* @__PURE__ */ import_react20.default.createElement("option", { value: "top" }, "top"),
+    /* @__PURE__ */ import_react20.default.createElement("option", { value: "middle" }, "middle"),
+    /* @__PURE__ */ import_react20.default.createElement("option", { value: "bottom" }, "bottom")
   )));
 };
 var AlignmentByType = ({
@@ -31308,7 +33117,7 @@ var AlignmentByType = ({
   value,
   updateForm
 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement(SettingRoot, { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, { className: "m-0 w-full" }, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Alignment by type"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react6.default.createElement("span", null, "Align table cells based on property type. Vertical alignment is the first dropdown and horizontal is the second."), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("br", null), /* @__PURE__ */ import_react6.default.createElement("span", null, "This will override the alignment set in the", " ", /* @__PURE__ */ import_react6.default.createElement("b", null, "Vertical alignment"), " and", " ", /* @__PURE__ */ import_react6.default.createElement("b", null, "Horizontal alignment"), " settings"))), /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex w-full flex-col justify-end gap-3" }, Object.keys(value).map((typeName, i) => /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(SettingRoot, { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, { className: "m-0 w-full" }, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Alignment by type"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react20.default.createElement("span", null, "Align table cells based on property type. Vertical alignment is the first dropdown and horizontal is the second."), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("br", null), /* @__PURE__ */ import_react20.default.createElement("span", null, "This will override the alignment set in the", " ", /* @__PURE__ */ import_react20.default.createElement("b", null, "Vertical alignment"), " and", " ", /* @__PURE__ */ import_react20.default.createElement("b", null, "Horizontal alignment"), " settings"))), /* @__PURE__ */ import_react20.default.createElement("div", { className: "flex w-full flex-col justify-end gap-3" }, Object.keys(value).map((typeName, i) => /* @__PURE__ */ import_react20.default.createElement(
     "div",
     {
       key: i + "-setting-control-alignmentByType",
@@ -31317,8 +33126,8 @@ var AlignmentByType = ({
         color: value[typeName].enabled ? "var(--text-normal)" : "var(--text-faint)"
       }
     },
-    /* @__PURE__ */ import_react6.default.createElement("span", null, typeName, ": "),
-    /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex justify-end gap-3" }, /* @__PURE__ */ import_react6.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react6.default.createElement(
+    /* @__PURE__ */ import_react20.default.createElement("span", null, typeName, ": "),
+    /* @__PURE__ */ import_react20.default.createElement("div", { className: "flex justify-end gap-3" }, /* @__PURE__ */ import_react20.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react20.default.createElement(
       "select",
       {
         name: "vertical",
@@ -31339,10 +33148,10 @@ var AlignmentByType = ({
           );
         }
       },
-      /* @__PURE__ */ import_react6.default.createElement("option", { value: "top" }, "top"),
-      /* @__PURE__ */ import_react6.default.createElement("option", { value: "middle" }, "middle"),
-      /* @__PURE__ */ import_react6.default.createElement("option", { value: "bottom" }, "bottom")
-    )), /* @__PURE__ */ import_react6.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react6.default.createElement(
+      /* @__PURE__ */ import_react20.default.createElement("option", { value: "top" }, "top"),
+      /* @__PURE__ */ import_react20.default.createElement("option", { value: "middle" }, "middle"),
+      /* @__PURE__ */ import_react20.default.createElement("option", { value: "bottom" }, "bottom")
+    )), /* @__PURE__ */ import_react20.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react20.default.createElement(
       "select",
       {
         name: "horizontal",
@@ -31363,10 +33172,10 @@ var AlignmentByType = ({
           );
         }
       },
-      /* @__PURE__ */ import_react6.default.createElement("option", { value: "start" }, "left"),
-      /* @__PURE__ */ import_react6.default.createElement("option", { value: "center" }, "center"),
-      /* @__PURE__ */ import_react6.default.createElement("option", { value: "end" }, "end")
-    )), /* @__PURE__ */ import_react6.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react6.default.createElement(
+      /* @__PURE__ */ import_react20.default.createElement("option", { value: "start" }, "left"),
+      /* @__PURE__ */ import_react20.default.createElement("option", { value: "center" }, "center"),
+      /* @__PURE__ */ import_react20.default.createElement("option", { value: "end" }, "end")
+    )), /* @__PURE__ */ import_react20.default.createElement(SettingControl, { className: "flex-none" }, /* @__PURE__ */ import_react20.default.createElement(
       "input",
       {
         type: "checkbox",
@@ -31394,16 +33203,16 @@ var HorizontalAlignment = ({
   value,
   onChange
 }) => {
-  return /* @__PURE__ */ import_react6.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react6.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react6.default.createElement(SettingName, null, "Horizontal alignment"), /* @__PURE__ */ import_react6.default.createElement(SettingDescription, null, "Applies to all table cells")), /* @__PURE__ */ import_react6.default.createElement(SettingControl, null, /* @__PURE__ */ import_react6.default.createElement(
+  return /* @__PURE__ */ import_react20.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react20.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react20.default.createElement(SettingName, null, "Horizontal alignment"), /* @__PURE__ */ import_react20.default.createElement(SettingDescription, null, "Applies to all table cells")), /* @__PURE__ */ import_react20.default.createElement(SettingControl, null, /* @__PURE__ */ import_react20.default.createElement(
     "select",
     {
       className: "dropdown",
       value,
       onChange
     },
-    /* @__PURE__ */ import_react6.default.createElement("option", { value: "start" }, "left"),
-    /* @__PURE__ */ import_react6.default.createElement("option", { value: "center" }, "center"),
-    /* @__PURE__ */ import_react6.default.createElement("option", { value: "end" }, "right")
+    /* @__PURE__ */ import_react20.default.createElement("option", { value: "start" }, "left"),
+    /* @__PURE__ */ import_react20.default.createElement("option", { value: "center" }, "center"),
+    /* @__PURE__ */ import_react20.default.createElement("option", { value: "end" }, "right")
   )));
 };
 
@@ -31417,7 +33226,7 @@ var DataEditSettingsTab = class extends import_obsidian5.PluginSettingTab {
   }
   display() {
     this.root.render(
-      /* @__PURE__ */ import_react7.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react7.default.createElement(
+      /* @__PURE__ */ import_react21.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react21.default.createElement(
         PluginSettings,
         {
           plugin: this.plugin,
@@ -31460,11 +33269,11 @@ var DataEditSettingsTab = class extends import_obsidian5.PluginSettingTab {
 
 // src/components/App.tsx
 var import_obsidian7 = require("obsidian");
-var import_react10 = __toESM(require_react());
+var import_react35 = __toESM(require_react());
 
 // src/components/Markdown/index.tsx
 var import_obsidian6 = require("obsidian");
-var import_react8 = __toESM(require_react());
+var import_react22 = __toESM(require_react());
 var Markdown = ({
   app: app2,
   filePath,
@@ -31473,8 +33282,8 @@ var Markdown = ({
   ...props2
 }) => {
   const component = new import_obsidian6.Component();
-  const ref = (0, import_react8.useRef)(null);
-  (0, import_react8.useEffect)(() => {
+  const ref = (0, import_react22.useRef)(null);
+  (0, import_react22.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.textContent = "";
@@ -31486,7 +33295,7 @@ var Markdown = ({
       component
     );
   }, [app2, filePath, plainText]);
-  return /* @__PURE__ */ import_react8.default.createElement(
+  return /* @__PURE__ */ import_react22.default.createElement(
     "div",
     {
       ref,
@@ -31533,10 +33342,10 @@ var createStoreImpl = (createState) => {
 var createStore = (createState) => createState ? createStoreImpl(createState) : createStoreImpl;
 
 // node_modules/zustand/esm/index.mjs
-var import_react9 = __toESM(require_react(), 1);
+var import_react23 = __toESM(require_react(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 var import_meta2 = {};
-var { useDebugValue } = import_react9.default;
+var { useDebugValue } = import_react23.default;
 var { useSyncExternalStoreWithSelector } = import_with_selector.default;
 var didWarnAboutEqualityFn = false;
 var identity = (arg) => arg;
@@ -31572,6 +33381,10 @@ var create = (createState) => createState ? createImpl(createState) : createImpl
 
 // src/lib/consts.ts
 var FILE = "file";
+
+// src/components/Inputs/index.tsx
+var import_react34 = __toESM(require_react());
+var import_dns = require("dns");
 
 // node_modules/luxon/src/errors.js
 var LuxonError = class extends Error {
@@ -32177,7 +33990,7 @@ var PolyNumberFormatter = class {
   constructor(intl, forceSimple, opts) {
     this.padTo = opts.padTo || 0;
     this.floor = opts.floor || false;
-    const { padTo, floor, ...otherOpts } = opts;
+    const { padTo, floor: floor2, ...otherOpts } = opts;
     if (!forceSimple || Object.keys(otherOpts).length > 0) {
       const intlOpts = { useGrouping: false, ...opts };
       if (opts.padTo > 0)
@@ -32462,8 +34275,8 @@ var FixedOffsetZone = class _FixedOffsetZone extends Zone {
    * @param {number} offset - The offset in minutes
    * @return {FixedOffsetZone}
    */
-  static instance(offset2) {
-    return offset2 === 0 ? _FixedOffsetZone.utcInstance : new _FixedOffsetZone(offset2);
+  static instance(offset4) {
+    return offset4 === 0 ? _FixedOffsetZone.utcInstance : new _FixedOffsetZone(offset4);
   }
   /**
    * Get an instance of FixedOffsetZone from a UTC offset string, like "UTC+6"
@@ -32482,9 +34295,9 @@ var FixedOffsetZone = class _FixedOffsetZone extends Zone {
     }
     return null;
   }
-  constructor(offset2) {
+  constructor(offset4) {
     super();
-    this.fixed = offset2;
+    this.fixed = offset4;
   }
   /** @override **/
   get type() {
@@ -32569,7 +34382,7 @@ var InvalidZone = class extends Zone {
 
 // node_modules/luxon/src/impl/zoneUtil.js
 function normalizeZone(input, defaultZone2) {
-  let offset2;
+  let offset4;
   if (isUndefined(input) || input === null) {
     return defaultZone2;
   } else if (input instanceof Zone) {
@@ -33101,8 +34914,8 @@ function normalizeObject(obj, normalizer) {
   }
   return normalized;
 }
-function formatOffset(offset2, format) {
-  const hours = Math.trunc(Math.abs(offset2 / 60)), minutes = Math.trunc(Math.abs(offset2 % 60)), sign = offset2 >= 0 ? "+" : "-";
+function formatOffset(offset4, format) {
+  const hours = Math.trunc(Math.abs(offset4 / 60)), minutes = Math.trunc(Math.abs(offset4 % 60)), sign = offset4 >= 0 ? "+" : "-";
   switch (format) {
     case "short":
       return `${sign}${padStart(hours, 2)}:${padStart(minutes, 2)}`;
@@ -33550,7 +35363,7 @@ function combineExtractors(...extractors) {
     [{}, null, 1]
   ).slice(0, 2);
 }
-function parse(s2, ...patterns) {
+function parse2(s2, ...patterns) {
   if (s2 == null) {
     return [null, null];
   }
@@ -33678,15 +35491,15 @@ function extractRFC2822(match2) {
     offHourStr,
     offMinuteStr
   ] = match2, result2 = fromStrings(weekdayStr, yearStr, monthStr, dayStr, hourStr, minuteStr, secondStr);
-  let offset2;
+  let offset4;
   if (obsOffset) {
-    offset2 = obsOffsets[obsOffset];
+    offset4 = obsOffsets[obsOffset];
   } else if (milOffset) {
-    offset2 = 0;
+    offset4 = 0;
   } else {
-    offset2 = signedOffset(offHourStr, offMinuteStr);
+    offset4 = signedOffset(offHourStr, offMinuteStr);
   }
-  return [result2, new FixedOffsetZone(offset2)];
+  return [result2, new FixedOffsetZone(offset4)];
 }
 function preprocessRFC2822(s2) {
   return s2.replace(/\([^()]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").trim();
@@ -33730,7 +35543,7 @@ var extractISOTimeAndOffset = combineExtractors(
   extractIANAZone
 );
 function parseISODate(s2) {
-  return parse(
+  return parse2(
     s2,
     [isoYmdWithTimeExtensionRegex, extractISOYmdTimeAndOffset],
     [isoWeekWithTimeExtensionRegex, extractISOWeekTimeAndOffset],
@@ -33739,10 +35552,10 @@ function parseISODate(s2) {
   );
 }
 function parseRFC2822Date(s2) {
-  return parse(preprocessRFC2822(s2), [rfc2822, extractRFC2822]);
+  return parse2(preprocessRFC2822(s2), [rfc2822, extractRFC2822]);
 }
 function parseHTTPDate(s2) {
-  return parse(
+  return parse2(
     s2,
     [rfc1123, extractRFC1123Or850],
     [rfc850, extractRFC1123Or850],
@@ -33750,11 +35563,11 @@ function parseHTTPDate(s2) {
   );
 }
 function parseISODuration(s2) {
-  return parse(s2, [isoDuration, extractISODuration]);
+  return parse2(s2, [isoDuration, extractISODuration]);
 }
 var extractISOTimeOnly = combineExtractors(extractISOTime);
 function parseISOTimeOnly(s2) {
-  return parse(s2, [isoTimeOnly, extractISOTimeOnly]);
+  return parse2(s2, [isoTimeOnly, extractISOTimeOnly]);
 }
 var sqlYmdWithTimeExtensionRegex = combineRegexes(sqlYmdRegex, sqlTimeExtensionRegex);
 var sqlTimeCombinedRegex = combineRegexes(sqlTimeRegex);
@@ -33764,7 +35577,7 @@ var extractISOTimeOffsetAndIANAZone = combineExtractors(
   extractIANAZone
 );
 function parseSQL(s2) {
-  return parse(
+  return parse2(
     s2,
     [sqlYmdWithTimeExtensionRegex, extractISOYmdTimeAndOffset],
     [sqlTimeCombinedRegex, extractISOTimeOffsetAndIANAZone]
@@ -35450,9 +37263,9 @@ function parseDigits(str) {
         value += hanidecChars.indexOf(str[i]);
       } else {
         for (const key in numberingSystemsUTF16) {
-          const [min, max] = numberingSystemsUTF16[key];
-          if (code >= min && code <= max) {
-            value += code - min;
+          const [min2, max2] = numberingSystemsUTF16[key];
+          if (code >= min2 && code <= max2) {
+            value += code - min2;
           }
         }
       }
@@ -35880,8 +37693,8 @@ function fixOffset(localTS, o, tz) {
   }
   return [localTS - Math.min(o2, o3) * 60 * 1e3, Math.max(o2, o3)];
 }
-function tsToObj(ts, offset2) {
-  ts += offset2 * 60 * 1e3;
+function tsToObj(ts, offset4) {
+  ts += offset4 * 60 * 1e3;
   const d = new Date(ts);
   return {
     year: d.getUTCFullYear(),
@@ -35893,8 +37706,8 @@ function tsToObj(ts, offset2) {
     millisecond: d.getUTCMilliseconds()
   };
 }
-function objToTS(obj, offset2, zone) {
-  return fixOffset(objToLocalTS(obj), offset2, zone);
+function objToTS(obj, offset4, zone) {
+  return fixOffset(objToLocalTS(obj), offset4, zone);
 }
 function adjustTime(inst, dur) {
   const oPre = inst.o, year = inst.c.year + Math.trunc(dur.years), month = inst.c.month + Math.trunc(dur.months) + Math.trunc(dur.quarters) * 3, c = {
@@ -36097,8 +37910,8 @@ function quickDT(obj, opts) {
   return new DateTime({ ts, zone, loc, o });
 }
 function diffRelative(start, end, opts) {
-  const round = isUndefined(opts.round) ? true : opts.round, format = (c, unit) => {
-    c = roundTo(c, round || opts.calendary ? 0 : 2, true);
+  const round2 = isUndefined(opts.round) ? true : opts.round, format = (c, unit) => {
+    c = roundTo(c, round2 || opts.calendary ? 0 : 2, true);
     const formatter = end.loc.clone(opts).relFormatter(opts);
     return formatter.format(c, unit);
   }, differ = (unit) => {
@@ -36949,8 +38762,8 @@ var DateTime = class _DateTime {
    * @param {Object} [opts={}] - options to pass to `setZone()`
    * @return {DateTime}
    */
-  toUTC(offset2 = 0, opts = {}) {
-    return this.setZone(FixedOffsetZone.instance(offset2), opts);
+  toUTC(offset4 = 0, opts = {}) {
+    return this.setZone(FixedOffsetZone.instance(offset4), opts);
   }
   /**
    * "Set" the DateTime's zone to the host's local zone. Returns a newly-constructed DateTime.
@@ -37794,46 +39607,2790 @@ function friendlyDateTime(dateTimeish) {
   }
 }
 
+// src/components/Inputs/ArrayInput/index.tsx
+var import_react24 = __toESM(require_react());
+var ArrayInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
+  const { plugin: plugin2 } = useBlock();
+  const updateProperty = async (itemIndex, newValue, allowFalsey) => {
+    const newArrayValue = [...propertyValue];
+    newArrayValue[itemIndex] = newValue;
+    const filtered = allowFalsey ? newArrayValue : newArrayValue.filter((v) => !!v);
+    await updateMetaData(propertyName, filtered, filePath, plugin2);
+  };
+  return /* @__PURE__ */ import_react24.default.createElement("ul", { className: "m-0 flex flex-col gap-1 p-0" }, propertyValue?.map((item, i) => /* @__PURE__ */ import_react24.default.createElement("li", { key: i, className: "flex" }, "- ", /* @__PURE__ */ import_react24.default.createElement(
+    ArrayInputItem,
+    {
+      ...props2,
+      itemValue: item,
+      itemIndex: i,
+      updateProperty
+    }
+  ))), /* @__PURE__ */ import_react24.default.createElement("li", null, /* @__PURE__ */ import_react24.default.createElement(
+    "div",
+    {
+      className: `clickable-icon w-fit ${isLocked2 && "cursor-not-allowed opacity-50"}`,
+      "aria-label": "New item",
+      onClick: async () => {
+        if (isLocked2)
+          return;
+        await updateProperty(propertyValue.length, "", true);
+      }
+    },
+    /* @__PURE__ */ import_react24.default.createElement(Plus, { className: "svg-icon" })
+  )));
+};
+var ArrayInputItem = (props2) => {
+  const { isLocked: isLocked2, itemValue, itemIndex, propertyType, updateProperty } = props2;
+  const { ctx: ctx2, plugin: plugin2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react24.useState)(false);
+  const plainText = tryToMarkdownLink(itemValue);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react24.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: propertyType === "tags" ? "#" + plainText : plainText,
+        className: "min-h-4 w-full [&_*]:my-0",
+        onClick: () => {
+          !isLocked2 && setIsEditing(true);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react24.default.createElement(
+    "input",
+    {
+      type: "text",
+      defaultValue: itemValue,
+      autoFocus: true,
+      onBlur: async (e) => {
+        await updateProperty(itemIndex, e.target.value);
+        setIsEditing(false);
+      }
+    }
+  );
+};
+
+// src/components/Inputs/BooleanInput/index.tsx
+var import_react25 = __toESM(require_react());
+var BooleanInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
+  const { plugin: plugin2 } = useBlock();
+  return /* @__PURE__ */ import_react25.default.createElement(
+    "input",
+    {
+      type: "checkbox",
+      disabled: !!isLocked2,
+      defaultChecked: !!propertyValue,
+      className: isLocked2 && "opacity-50",
+      onClick: (e) => {
+        updateMetaData(
+          propertyName,
+          e.currentTarget.checked,
+          filePath,
+          plugin2
+        );
+      }
+    }
+  );
+};
+
+// src/components/Inputs/DateTimeInput/index.tsx
+var import_react26 = __toESM(require_react());
+var DateTimeInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2, hasTime } = props2;
+  const { ctx: ctx2, plugin: plugin2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react26.useState)(false);
+  const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react26.useState)({
+    formattedDate: null,
+    inputDate: null
+  });
+  const locale = currentLocale();
+  const dvSettings = app.plugins.plugins?.dataview?.settings;
+  const defaultFormat = hasTime ? dvSettings.defaultDateTimeFormat : dvSettings.defaultDateFormat;
+  const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
+  const max2 = hasTime ? "9999-12-31T23:59" : "9999-12-31";
+  (0, import_react26.useEffect)(() => {
+    if (!DateTime.isDateTime(propertyValue)) {
+      setDateStrings({
+        formattedDate: null,
+        inputDate: null
+      });
+    }
+    if (DateTime.isDateTime(propertyValue)) {
+      const formattedDate2 = propertyValue.toLocal().toFormat(defaultFormat, { locale });
+      const inputDate2 = propertyValue.toLocal().toFormat(inputFormat);
+      setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
+    }
+  }, [propertyValue]);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react26.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: formattedDate ?? dvRenderNullAs,
+        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
+        onClick: () => {
+          !isLocked2 && setIsEditing(true);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react26.default.createElement(
+    "input",
+    {
+      type: hasTime ? "datetime-local" : "date",
+      defaultValue: inputDate,
+      max: max2,
+      autoFocus: true,
+      onBlur: async (e) => {
+        await updateMetaData(
+          propertyName,
+          e.target.value,
+          filePath,
+          plugin2
+        );
+        setIsEditing(false);
+      }
+    }
+  );
+};
+
+// src/components/Inputs/NumberInput/index.tsx
+var import_react27 = __toESM(require_react());
+var NumberInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
+  const { ctx: ctx2, plugin: plugin2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react27.useState)(false);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react27.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: propertyValue?.toString() ?? dvRenderNullAs,
+        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
+        onClick: () => {
+          !isLocked2 && setIsEditing(true);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react27.default.createElement(
+    "input",
+    {
+      type: "number",
+      defaultValue: propertyValue,
+      autoFocus: true,
+      onBlur: async (e) => {
+        const num = Number(e.target.value);
+        if (Number.isNaN(num))
+          return;
+        await updateMetaData(propertyName, num, filePath, plugin2);
+        setIsEditing(false);
+      }
+    }
+  );
+};
+
+// src/components/Inputs/StringInput/index.tsx
+var import_react33 = __toESM(require_react());
+
+// src/components/ui/Popover/index.tsx
+var import_react32 = __toESM(require_react());
+
+// node_modules/@radix-ui/react-popover/dist/index.mjs
+var import_react31 = __toESM(require_react(), 1);
+
+// node_modules/@radix-ui/react-popper/dist/index.mjs
+var import_react30 = __toESM(require_react(), 1);
+
+// node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
+var sides = ["top", "right", "bottom", "left"];
+var min = Math.min;
+var max = Math.max;
+var round = Math.round;
+var floor = Math.floor;
+var createCoords = (v) => ({
+  x: v,
+  y: v
+});
+var oppositeSideMap = {
+  left: "right",
+  right: "left",
+  bottom: "top",
+  top: "bottom"
+};
+var oppositeAlignmentMap = {
+  start: "end",
+  end: "start"
+};
+function clamp(start, value, end) {
+  return max(start, min(value, end));
+}
+function evaluate(value, param) {
+  return typeof value === "function" ? value(param) : value;
+}
+function getSide(placement) {
+  return placement.split("-")[0];
+}
+function getAlignment(placement) {
+  return placement.split("-")[1];
+}
+function getOppositeAxis(axis) {
+  return axis === "x" ? "y" : "x";
+}
+function getAxisLength(axis) {
+  return axis === "y" ? "height" : "width";
+}
+function getSideAxis(placement) {
+  return ["top", "bottom"].includes(getSide(placement)) ? "y" : "x";
+}
+function getAlignmentAxis(placement) {
+  return getOppositeAxis(getSideAxis(placement));
+}
+function getAlignmentSides(placement, rects, rtl) {
+  if (rtl === void 0) {
+    rtl = false;
+  }
+  const alignment = getAlignment(placement);
+  const alignmentAxis = getAlignmentAxis(placement);
+  const length = getAxisLength(alignmentAxis);
+  let mainAlignmentSide = alignmentAxis === "x" ? alignment === (rtl ? "end" : "start") ? "right" : "left" : alignment === "start" ? "bottom" : "top";
+  if (rects.reference[length] > rects.floating[length]) {
+    mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
+  }
+  return [mainAlignmentSide, getOppositePlacement(mainAlignmentSide)];
+}
+function getExpandedPlacements(placement) {
+  const oppositePlacement = getOppositePlacement(placement);
+  return [getOppositeAlignmentPlacement(placement), oppositePlacement, getOppositeAlignmentPlacement(oppositePlacement)];
+}
+function getOppositeAlignmentPlacement(placement) {
+  return placement.replace(/start|end/g, (alignment) => oppositeAlignmentMap[alignment]);
+}
+function getSideList(side, isStart, rtl) {
+  const lr = ["left", "right"];
+  const rl = ["right", "left"];
+  const tb = ["top", "bottom"];
+  const bt = ["bottom", "top"];
+  switch (side) {
+    case "top":
+    case "bottom":
+      if (rtl)
+        return isStart ? rl : lr;
+      return isStart ? lr : rl;
+    case "left":
+    case "right":
+      return isStart ? tb : bt;
+    default:
+      return [];
+  }
+}
+function getOppositeAxisPlacements(placement, flipAlignment, direction, rtl) {
+  const alignment = getAlignment(placement);
+  let list = getSideList(getSide(placement), direction === "start", rtl);
+  if (alignment) {
+    list = list.map((side) => side + "-" + alignment);
+    if (flipAlignment) {
+      list = list.concat(list.map(getOppositeAlignmentPlacement));
+    }
+  }
+  return list;
+}
+function getOppositePlacement(placement) {
+  return placement.replace(/left|right|bottom|top/g, (side) => oppositeSideMap[side]);
+}
+function expandPaddingObject(padding) {
+  return {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    ...padding
+  };
+}
+function getPaddingObject(padding) {
+  return typeof padding !== "number" ? expandPaddingObject(padding) : {
+    top: padding,
+    right: padding,
+    bottom: padding,
+    left: padding
+  };
+}
+function rectToClientRect(rect) {
+  const {
+    x,
+    y,
+    width,
+    height
+  } = rect;
+  return {
+    width,
+    height,
+    top: y,
+    left: x,
+    right: x + width,
+    bottom: y + height,
+    x,
+    y
+  };
+}
+
+// node_modules/@floating-ui/core/dist/floating-ui.core.mjs
+function computeCoordsFromPlacement(_ref, placement, rtl) {
+  let {
+    reference,
+    floating
+  } = _ref;
+  const sideAxis = getSideAxis(placement);
+  const alignmentAxis = getAlignmentAxis(placement);
+  const alignLength = getAxisLength(alignmentAxis);
+  const side = getSide(placement);
+  const isVertical = sideAxis === "y";
+  const commonX = reference.x + reference.width / 2 - floating.width / 2;
+  const commonY = reference.y + reference.height / 2 - floating.height / 2;
+  const commonAlign = reference[alignLength] / 2 - floating[alignLength] / 2;
+  let coords;
+  switch (side) {
+    case "top":
+      coords = {
+        x: commonX,
+        y: reference.y - floating.height
+      };
+      break;
+    case "bottom":
+      coords = {
+        x: commonX,
+        y: reference.y + reference.height
+      };
+      break;
+    case "right":
+      coords = {
+        x: reference.x + reference.width,
+        y: commonY
+      };
+      break;
+    case "left":
+      coords = {
+        x: reference.x - floating.width,
+        y: commonY
+      };
+      break;
+    default:
+      coords = {
+        x: reference.x,
+        y: reference.y
+      };
+  }
+  switch (getAlignment(placement)) {
+    case "start":
+      coords[alignmentAxis] -= commonAlign * (rtl && isVertical ? -1 : 1);
+      break;
+    case "end":
+      coords[alignmentAxis] += commonAlign * (rtl && isVertical ? -1 : 1);
+      break;
+  }
+  return coords;
+}
+var computePosition = async (reference, floating, config) => {
+  const {
+    placement = "bottom",
+    strategy = "absolute",
+    middleware = [],
+    platform: platform2
+  } = config;
+  const validMiddleware = middleware.filter(Boolean);
+  const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(floating));
+  let rects = await platform2.getElementRects({
+    reference,
+    floating,
+    strategy
+  });
+  let {
+    x,
+    y
+  } = computeCoordsFromPlacement(rects, placement, rtl);
+  let statefulPlacement = placement;
+  let middlewareData = {};
+  let resetCount = 0;
+  for (let i = 0; i < validMiddleware.length; i++) {
+    const {
+      name,
+      fn
+    } = validMiddleware[i];
+    const {
+      x: nextX,
+      y: nextY,
+      data: data2,
+      reset
+    } = await fn({
+      x,
+      y,
+      initialPlacement: placement,
+      placement: statefulPlacement,
+      strategy,
+      middlewareData,
+      rects,
+      platform: platform2,
+      elements: {
+        reference,
+        floating
+      }
+    });
+    x = nextX != null ? nextX : x;
+    y = nextY != null ? nextY : y;
+    middlewareData = {
+      ...middlewareData,
+      [name]: {
+        ...middlewareData[name],
+        ...data2
+      }
+    };
+    if (reset && resetCount <= 50) {
+      resetCount++;
+      if (typeof reset === "object") {
+        if (reset.placement) {
+          statefulPlacement = reset.placement;
+        }
+        if (reset.rects) {
+          rects = reset.rects === true ? await platform2.getElementRects({
+            reference,
+            floating,
+            strategy
+          }) : reset.rects;
+        }
+        ({
+          x,
+          y
+        } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
+      }
+      i = -1;
+    }
+  }
+  return {
+    x,
+    y,
+    placement: statefulPlacement,
+    strategy,
+    middlewareData
+  };
+};
+async function detectOverflow(state, options) {
+  var _await$platform$isEle;
+  if (options === void 0) {
+    options = {};
+  }
+  const {
+    x,
+    y,
+    platform: platform2,
+    rects,
+    elements,
+    strategy
+  } = state;
+  const {
+    boundary = "clippingAncestors",
+    rootBoundary = "viewport",
+    elementContext = "floating",
+    altBoundary = false,
+    padding = 0
+  } = evaluate(options, state);
+  const paddingObject = getPaddingObject(padding);
+  const altContext = elementContext === "floating" ? "reference" : "floating";
+  const element = elements[altBoundary ? altContext : elementContext];
+  const clippingClientRect = rectToClientRect(await platform2.getClippingRect({
+    element: ((_await$platform$isEle = await (platform2.isElement == null ? void 0 : platform2.isElement(element))) != null ? _await$platform$isEle : true) ? element : element.contextElement || await (platform2.getDocumentElement == null ? void 0 : platform2.getDocumentElement(elements.floating)),
+    boundary,
+    rootBoundary,
+    strategy
+  }));
+  const rect = elementContext === "floating" ? {
+    x,
+    y,
+    width: rects.floating.width,
+    height: rects.floating.height
+  } : rects.reference;
+  const offsetParent = await (platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(elements.floating));
+  const offsetScale = await (platform2.isElement == null ? void 0 : platform2.isElement(offsetParent)) ? await (platform2.getScale == null ? void 0 : platform2.getScale(offsetParent)) || {
+    x: 1,
+    y: 1
+  } : {
+    x: 1,
+    y: 1
+  };
+  const elementClientRect = rectToClientRect(platform2.convertOffsetParentRelativeRectToViewportRelativeRect ? await platform2.convertOffsetParentRelativeRectToViewportRelativeRect({
+    elements,
+    rect,
+    offsetParent,
+    strategy
+  }) : rect);
+  return {
+    top: (clippingClientRect.top - elementClientRect.top + paddingObject.top) / offsetScale.y,
+    bottom: (elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom) / offsetScale.y,
+    left: (clippingClientRect.left - elementClientRect.left + paddingObject.left) / offsetScale.x,
+    right: (elementClientRect.right - clippingClientRect.right + paddingObject.right) / offsetScale.x
+  };
+}
+var arrow = (options) => ({
+  name: "arrow",
+  options,
+  async fn(state) {
+    const {
+      x,
+      y,
+      placement,
+      rects,
+      platform: platform2,
+      elements,
+      middlewareData
+    } = state;
+    const {
+      element,
+      padding = 0
+    } = evaluate(options, state) || {};
+    if (element == null) {
+      return {};
+    }
+    const paddingObject = getPaddingObject(padding);
+    const coords = {
+      x,
+      y
+    };
+    const axis = getAlignmentAxis(placement);
+    const length = getAxisLength(axis);
+    const arrowDimensions = await platform2.getDimensions(element);
+    const isYAxis = axis === "y";
+    const minProp = isYAxis ? "top" : "left";
+    const maxProp = isYAxis ? "bottom" : "right";
+    const clientProp = isYAxis ? "clientHeight" : "clientWidth";
+    const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
+    const startDiff = coords[axis] - rects.reference[axis];
+    const arrowOffsetParent = await (platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(element));
+    let clientSize = arrowOffsetParent ? arrowOffsetParent[clientProp] : 0;
+    if (!clientSize || !await (platform2.isElement == null ? void 0 : platform2.isElement(arrowOffsetParent))) {
+      clientSize = elements.floating[clientProp] || rects.floating[length];
+    }
+    const centerToReference = endDiff / 2 - startDiff / 2;
+    const largestPossiblePadding = clientSize / 2 - arrowDimensions[length] / 2 - 1;
+    const minPadding = min(paddingObject[minProp], largestPossiblePadding);
+    const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
+    const min$1 = minPadding;
+    const max2 = clientSize - arrowDimensions[length] - maxPadding;
+    const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
+    const offset4 = clamp(min$1, center, max2);
+    const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset4 && rects.reference[length] / 2 - (center < min$1 ? minPadding : maxPadding) - arrowDimensions[length] / 2 < 0;
+    const alignmentOffset = shouldAddOffset ? center < min$1 ? center - min$1 : center - max2 : 0;
+    return {
+      [axis]: coords[axis] + alignmentOffset,
+      data: {
+        [axis]: offset4,
+        centerOffset: center - offset4 - alignmentOffset,
+        ...shouldAddOffset && {
+          alignmentOffset
+        }
+      },
+      reset: shouldAddOffset
+    };
+  }
+});
+var flip = function(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  return {
+    name: "flip",
+    options,
+    async fn(state) {
+      var _middlewareData$arrow, _middlewareData$flip;
+      const {
+        placement,
+        middlewareData,
+        rects,
+        initialPlacement,
+        platform: platform2,
+        elements
+      } = state;
+      const {
+        mainAxis: checkMainAxis = true,
+        crossAxis: checkCrossAxis = true,
+        fallbackPlacements: specifiedFallbackPlacements,
+        fallbackStrategy = "bestFit",
+        fallbackAxisSideDirection = "none",
+        flipAlignment = true,
+        ...detectOverflowOptions
+      } = evaluate(options, state);
+      if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
+        return {};
+      }
+      const side = getSide(placement);
+      const isBasePlacement = getSide(initialPlacement) === initialPlacement;
+      const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
+      const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [getOppositePlacement(initialPlacement)] : getExpandedPlacements(initialPlacement));
+      if (!specifiedFallbackPlacements && fallbackAxisSideDirection !== "none") {
+        fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
+      }
+      const placements2 = [initialPlacement, ...fallbackPlacements];
+      const overflow = await detectOverflow(state, detectOverflowOptions);
+      const overflows = [];
+      let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
+      if (checkMainAxis) {
+        overflows.push(overflow[side]);
+      }
+      if (checkCrossAxis) {
+        const sides2 = getAlignmentSides(placement, rects, rtl);
+        overflows.push(overflow[sides2[0]], overflow[sides2[1]]);
+      }
+      overflowsData = [...overflowsData, {
+        placement,
+        overflows
+      }];
+      if (!overflows.every((side2) => side2 <= 0)) {
+        var _middlewareData$flip2, _overflowsData$filter;
+        const nextIndex = (((_middlewareData$flip2 = middlewareData.flip) == null ? void 0 : _middlewareData$flip2.index) || 0) + 1;
+        const nextPlacement = placements2[nextIndex];
+        if (nextPlacement) {
+          return {
+            data: {
+              index: nextIndex,
+              overflows: overflowsData
+            },
+            reset: {
+              placement: nextPlacement
+            }
+          };
+        }
+        let resetPlacement = (_overflowsData$filter = overflowsData.filter((d) => d.overflows[0] <= 0).sort((a, b) => a.overflows[1] - b.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
+        if (!resetPlacement) {
+          switch (fallbackStrategy) {
+            case "bestFit": {
+              var _overflowsData$map$so;
+              const placement2 = (_overflowsData$map$so = overflowsData.map((d) => [d.placement, d.overflows.filter((overflow2) => overflow2 > 0).reduce((acc, overflow2) => acc + overflow2, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$map$so[0];
+              if (placement2) {
+                resetPlacement = placement2;
+              }
+              break;
+            }
+            case "initialPlacement":
+              resetPlacement = initialPlacement;
+              break;
+          }
+        }
+        if (placement !== resetPlacement) {
+          return {
+            reset: {
+              placement: resetPlacement
+            }
+          };
+        }
+      }
+      return {};
+    }
+  };
+};
+function getSideOffsets(overflow, rect) {
+  return {
+    top: overflow.top - rect.height,
+    right: overflow.right - rect.width,
+    bottom: overflow.bottom - rect.height,
+    left: overflow.left - rect.width
+  };
+}
+function isAnySideFullyClipped(overflow) {
+  return sides.some((side) => overflow[side] >= 0);
+}
+var hide = function(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  return {
+    name: "hide",
+    options,
+    async fn(state) {
+      const {
+        rects
+      } = state;
+      const {
+        strategy = "referenceHidden",
+        ...detectOverflowOptions
+      } = evaluate(options, state);
+      switch (strategy) {
+        case "referenceHidden": {
+          const overflow = await detectOverflow(state, {
+            ...detectOverflowOptions,
+            elementContext: "reference"
+          });
+          const offsets = getSideOffsets(overflow, rects.reference);
+          return {
+            data: {
+              referenceHiddenOffsets: offsets,
+              referenceHidden: isAnySideFullyClipped(offsets)
+            }
+          };
+        }
+        case "escaped": {
+          const overflow = await detectOverflow(state, {
+            ...detectOverflowOptions,
+            altBoundary: true
+          });
+          const offsets = getSideOffsets(overflow, rects.floating);
+          return {
+            data: {
+              escapedOffsets: offsets,
+              escaped: isAnySideFullyClipped(offsets)
+            }
+          };
+        }
+        default: {
+          return {};
+        }
+      }
+    }
+  };
+};
+async function convertValueToCoords(state, options) {
+  const {
+    placement,
+    platform: platform2,
+    elements
+  } = state;
+  const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
+  const side = getSide(placement);
+  const alignment = getAlignment(placement);
+  const isVertical = getSideAxis(placement) === "y";
+  const mainAxisMulti = ["left", "top"].includes(side) ? -1 : 1;
+  const crossAxisMulti = rtl && isVertical ? -1 : 1;
+  const rawValue = evaluate(options, state);
+  let {
+    mainAxis,
+    crossAxis,
+    alignmentAxis
+  } = typeof rawValue === "number" ? {
+    mainAxis: rawValue,
+    crossAxis: 0,
+    alignmentAxis: null
+  } : {
+    mainAxis: 0,
+    crossAxis: 0,
+    alignmentAxis: null,
+    ...rawValue
+  };
+  if (alignment && typeof alignmentAxis === "number") {
+    crossAxis = alignment === "end" ? alignmentAxis * -1 : alignmentAxis;
+  }
+  return isVertical ? {
+    x: crossAxis * crossAxisMulti,
+    y: mainAxis * mainAxisMulti
+  } : {
+    x: mainAxis * mainAxisMulti,
+    y: crossAxis * crossAxisMulti
+  };
+}
+var offset2 = function(options) {
+  if (options === void 0) {
+    options = 0;
+  }
+  return {
+    name: "offset",
+    options,
+    async fn(state) {
+      var _middlewareData$offse, _middlewareData$arrow;
+      const {
+        x,
+        y,
+        placement,
+        middlewareData
+      } = state;
+      const diffCoords = await convertValueToCoords(state, options);
+      if (placement === ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse.placement) && (_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
+        return {};
+      }
+      return {
+        x: x + diffCoords.x,
+        y: y + diffCoords.y,
+        data: {
+          ...diffCoords,
+          placement
+        }
+      };
+    }
+  };
+};
+var shift = function(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  return {
+    name: "shift",
+    options,
+    async fn(state) {
+      const {
+        x,
+        y,
+        placement
+      } = state;
+      const {
+        mainAxis: checkMainAxis = true,
+        crossAxis: checkCrossAxis = false,
+        limiter = {
+          fn: (_ref) => {
+            let {
+              x: x2,
+              y: y2
+            } = _ref;
+            return {
+              x: x2,
+              y: y2
+            };
+          }
+        },
+        ...detectOverflowOptions
+      } = evaluate(options, state);
+      const coords = {
+        x,
+        y
+      };
+      const overflow = await detectOverflow(state, detectOverflowOptions);
+      const crossAxis = getSideAxis(getSide(placement));
+      const mainAxis = getOppositeAxis(crossAxis);
+      let mainAxisCoord = coords[mainAxis];
+      let crossAxisCoord = coords[crossAxis];
+      if (checkMainAxis) {
+        const minSide = mainAxis === "y" ? "top" : "left";
+        const maxSide = mainAxis === "y" ? "bottom" : "right";
+        const min2 = mainAxisCoord + overflow[minSide];
+        const max2 = mainAxisCoord - overflow[maxSide];
+        mainAxisCoord = clamp(min2, mainAxisCoord, max2);
+      }
+      if (checkCrossAxis) {
+        const minSide = crossAxis === "y" ? "top" : "left";
+        const maxSide = crossAxis === "y" ? "bottom" : "right";
+        const min2 = crossAxisCoord + overflow[minSide];
+        const max2 = crossAxisCoord - overflow[maxSide];
+        crossAxisCoord = clamp(min2, crossAxisCoord, max2);
+      }
+      const limitedCoords = limiter.fn({
+        ...state,
+        [mainAxis]: mainAxisCoord,
+        [crossAxis]: crossAxisCoord
+      });
+      return {
+        ...limitedCoords,
+        data: {
+          x: limitedCoords.x - x,
+          y: limitedCoords.y - y
+        }
+      };
+    }
+  };
+};
+var limitShift = function(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  return {
+    options,
+    fn(state) {
+      const {
+        x,
+        y,
+        placement,
+        rects,
+        middlewareData
+      } = state;
+      const {
+        offset: offset4 = 0,
+        mainAxis: checkMainAxis = true,
+        crossAxis: checkCrossAxis = true
+      } = evaluate(options, state);
+      const coords = {
+        x,
+        y
+      };
+      const crossAxis = getSideAxis(placement);
+      const mainAxis = getOppositeAxis(crossAxis);
+      let mainAxisCoord = coords[mainAxis];
+      let crossAxisCoord = coords[crossAxis];
+      const rawOffset = evaluate(offset4, state);
+      const computedOffset = typeof rawOffset === "number" ? {
+        mainAxis: rawOffset,
+        crossAxis: 0
+      } : {
+        mainAxis: 0,
+        crossAxis: 0,
+        ...rawOffset
+      };
+      if (checkMainAxis) {
+        const len = mainAxis === "y" ? "height" : "width";
+        const limitMin = rects.reference[mainAxis] - rects.floating[len] + computedOffset.mainAxis;
+        const limitMax = rects.reference[mainAxis] + rects.reference[len] - computedOffset.mainAxis;
+        if (mainAxisCoord < limitMin) {
+          mainAxisCoord = limitMin;
+        } else if (mainAxisCoord > limitMax) {
+          mainAxisCoord = limitMax;
+        }
+      }
+      if (checkCrossAxis) {
+        var _middlewareData$offse, _middlewareData$offse2;
+        const len = mainAxis === "y" ? "width" : "height";
+        const isOriginSide = ["top", "left"].includes(getSide(placement));
+        const limitMin = rects.reference[crossAxis] - rects.floating[len] + (isOriginSide ? ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse[crossAxis]) || 0 : 0) + (isOriginSide ? 0 : computedOffset.crossAxis);
+        const limitMax = rects.reference[crossAxis] + rects.reference[len] + (isOriginSide ? 0 : ((_middlewareData$offse2 = middlewareData.offset) == null ? void 0 : _middlewareData$offse2[crossAxis]) || 0) - (isOriginSide ? computedOffset.crossAxis : 0);
+        if (crossAxisCoord < limitMin) {
+          crossAxisCoord = limitMin;
+        } else if (crossAxisCoord > limitMax) {
+          crossAxisCoord = limitMax;
+        }
+      }
+      return {
+        [mainAxis]: mainAxisCoord,
+        [crossAxis]: crossAxisCoord
+      };
+    }
+  };
+};
+var size = function(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  return {
+    name: "size",
+    options,
+    async fn(state) {
+      const {
+        placement,
+        rects,
+        platform: platform2,
+        elements
+      } = state;
+      const {
+        apply = () => {
+        },
+        ...detectOverflowOptions
+      } = evaluate(options, state);
+      const overflow = await detectOverflow(state, detectOverflowOptions);
+      const side = getSide(placement);
+      const alignment = getAlignment(placement);
+      const isYAxis = getSideAxis(placement) === "y";
+      const {
+        width,
+        height
+      } = rects.floating;
+      let heightSide;
+      let widthSide;
+      if (side === "top" || side === "bottom") {
+        heightSide = side;
+        widthSide = alignment === (await (platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating)) ? "start" : "end") ? "left" : "right";
+      } else {
+        widthSide = side;
+        heightSide = alignment === "end" ? "top" : "bottom";
+      }
+      const overflowAvailableHeight = height - overflow[heightSide];
+      const overflowAvailableWidth = width - overflow[widthSide];
+      const noShift = !state.middlewareData.shift;
+      let availableHeight = overflowAvailableHeight;
+      let availableWidth = overflowAvailableWidth;
+      if (isYAxis) {
+        const maximumClippingWidth = width - overflow.left - overflow.right;
+        availableWidth = alignment || noShift ? min(overflowAvailableWidth, maximumClippingWidth) : maximumClippingWidth;
+      } else {
+        const maximumClippingHeight = height - overflow.top - overflow.bottom;
+        availableHeight = alignment || noShift ? min(overflowAvailableHeight, maximumClippingHeight) : maximumClippingHeight;
+      }
+      if (noShift && !alignment) {
+        const xMin = max(overflow.left, 0);
+        const xMax = max(overflow.right, 0);
+        const yMin = max(overflow.top, 0);
+        const yMax = max(overflow.bottom, 0);
+        if (isYAxis) {
+          availableWidth = width - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max(overflow.left, overflow.right));
+        } else {
+          availableHeight = height - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max(overflow.top, overflow.bottom));
+        }
+      }
+      await apply({
+        ...state,
+        availableWidth,
+        availableHeight
+      });
+      const nextDimensions = await platform2.getDimensions(elements.floating);
+      if (width !== nextDimensions.width || height !== nextDimensions.height) {
+        return {
+          reset: {
+            rects: true
+          }
+        };
+      }
+      return {};
+    }
+  };
+};
+
+// node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
+function getNodeName(node) {
+  if (isNode(node)) {
+    return (node.nodeName || "").toLowerCase();
+  }
+  return "#document";
+}
+function getWindow(node) {
+  var _node$ownerDocument;
+  return (node == null || (_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
+}
+function getDocumentElement(node) {
+  var _ref;
+  return (_ref = (isNode(node) ? node.ownerDocument : node.document) || window.document) == null ? void 0 : _ref.documentElement;
+}
+function isNode(value) {
+  return value instanceof Node || value instanceof getWindow(value).Node;
+}
+function isElement(value) {
+  return value instanceof Element || value instanceof getWindow(value).Element;
+}
+function isHTMLElement(value) {
+  return value instanceof HTMLElement || value instanceof getWindow(value).HTMLElement;
+}
+function isShadowRoot(value) {
+  if (typeof ShadowRoot === "undefined") {
+    return false;
+  }
+  return value instanceof ShadowRoot || value instanceof getWindow(value).ShadowRoot;
+}
+function isOverflowElement(element) {
+  const {
+    overflow,
+    overflowX,
+    overflowY,
+    display
+  } = getComputedStyle2(element);
+  return /auto|scroll|overlay|hidden|clip/.test(overflow + overflowY + overflowX) && !["inline", "contents"].includes(display);
+}
+function isTableElement(element) {
+  return ["table", "td", "th"].includes(getNodeName(element));
+}
+function isContainingBlock(element) {
+  const webkit = isWebKit();
+  const css = getComputedStyle2(element);
+  return css.transform !== "none" || css.perspective !== "none" || (css.containerType ? css.containerType !== "normal" : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== "none" : false) || !webkit && (css.filter ? css.filter !== "none" : false) || ["transform", "perspective", "filter"].some((value) => (css.willChange || "").includes(value)) || ["paint", "layout", "strict", "content"].some((value) => (css.contain || "").includes(value));
+}
+function getContainingBlock(element) {
+  let currentNode = getParentNode(element);
+  while (isHTMLElement(currentNode) && !isLastTraversableNode(currentNode)) {
+    if (isContainingBlock(currentNode)) {
+      return currentNode;
+    }
+    currentNode = getParentNode(currentNode);
+  }
+  return null;
+}
+function isWebKit() {
+  if (typeof CSS === "undefined" || !CSS.supports)
+    return false;
+  return CSS.supports("-webkit-backdrop-filter", "none");
+}
+function isLastTraversableNode(node) {
+  return ["html", "body", "#document"].includes(getNodeName(node));
+}
+function getComputedStyle2(element) {
+  return getWindow(element).getComputedStyle(element);
+}
+function getNodeScroll(element) {
+  if (isElement(element)) {
+    return {
+      scrollLeft: element.scrollLeft,
+      scrollTop: element.scrollTop
+    };
+  }
+  return {
+    scrollLeft: element.pageXOffset,
+    scrollTop: element.pageYOffset
+  };
+}
+function getParentNode(node) {
+  if (getNodeName(node) === "html") {
+    return node;
+  }
+  const result2 = (
+    // Step into the shadow DOM of the parent of a slotted node.
+    node.assignedSlot || // DOM Element detected.
+    node.parentNode || // ShadowRoot detected.
+    isShadowRoot(node) && node.host || // Fallback.
+    getDocumentElement(node)
+  );
+  return isShadowRoot(result2) ? result2.host : result2;
+}
+function getNearestOverflowAncestor(node) {
+  const parentNode = getParentNode(node);
+  if (isLastTraversableNode(parentNode)) {
+    return node.ownerDocument ? node.ownerDocument.body : node.body;
+  }
+  if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
+    return parentNode;
+  }
+  return getNearestOverflowAncestor(parentNode);
+}
+function getOverflowAncestors(node, list, traverseIframes) {
+  var _node$ownerDocument2;
+  if (list === void 0) {
+    list = [];
+  }
+  if (traverseIframes === void 0) {
+    traverseIframes = true;
+  }
+  const scrollableAncestor = getNearestOverflowAncestor(node);
+  const isBody = scrollableAncestor === ((_node$ownerDocument2 = node.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
+  const win = getWindow(scrollableAncestor);
+  if (isBody) {
+    return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], win.frameElement && traverseIframes ? getOverflowAncestors(win.frameElement) : []);
+  }
+  return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, [], traverseIframes));
+}
+
+// node_modules/@floating-ui/dom/dist/floating-ui.dom.mjs
+function getCssDimensions(element) {
+  const css = getComputedStyle2(element);
+  let width = parseFloat(css.width) || 0;
+  let height = parseFloat(css.height) || 0;
+  const hasOffset = isHTMLElement(element);
+  const offsetWidth = hasOffset ? element.offsetWidth : width;
+  const offsetHeight = hasOffset ? element.offsetHeight : height;
+  const shouldFallback = round(width) !== offsetWidth || round(height) !== offsetHeight;
+  if (shouldFallback) {
+    width = offsetWidth;
+    height = offsetHeight;
+  }
+  return {
+    width,
+    height,
+    $: shouldFallback
+  };
+}
+function unwrapElement(element) {
+  return !isElement(element) ? element.contextElement : element;
+}
+function getScale(element) {
+  const domElement = unwrapElement(element);
+  if (!isHTMLElement(domElement)) {
+    return createCoords(1);
+  }
+  const rect = domElement.getBoundingClientRect();
+  const {
+    width,
+    height,
+    $
+  } = getCssDimensions(domElement);
+  let x = ($ ? round(rect.width) : rect.width) / width;
+  let y = ($ ? round(rect.height) : rect.height) / height;
+  if (!x || !Number.isFinite(x)) {
+    x = 1;
+  }
+  if (!y || !Number.isFinite(y)) {
+    y = 1;
+  }
+  return {
+    x,
+    y
+  };
+}
+var noOffsets = /* @__PURE__ */ createCoords(0);
+function getVisualOffsets(element) {
+  const win = getWindow(element);
+  if (!isWebKit() || !win.visualViewport) {
+    return noOffsets;
+  }
+  return {
+    x: win.visualViewport.offsetLeft,
+    y: win.visualViewport.offsetTop
+  };
+}
+function shouldAddVisualOffsets(element, isFixed, floatingOffsetParent) {
+  if (isFixed === void 0) {
+    isFixed = false;
+  }
+  if (!floatingOffsetParent || isFixed && floatingOffsetParent !== getWindow(element)) {
+    return false;
+  }
+  return isFixed;
+}
+function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetParent) {
+  if (includeScale === void 0) {
+    includeScale = false;
+  }
+  if (isFixedStrategy === void 0) {
+    isFixedStrategy = false;
+  }
+  const clientRect = element.getBoundingClientRect();
+  const domElement = unwrapElement(element);
+  let scale = createCoords(1);
+  if (includeScale) {
+    if (offsetParent) {
+      if (isElement(offsetParent)) {
+        scale = getScale(offsetParent);
+      }
+    } else {
+      scale = getScale(element);
+    }
+  }
+  const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
+  let x = (clientRect.left + visualOffsets.x) / scale.x;
+  let y = (clientRect.top + visualOffsets.y) / scale.y;
+  let width = clientRect.width / scale.x;
+  let height = clientRect.height / scale.y;
+  if (domElement) {
+    const win = getWindow(domElement);
+    const offsetWin = offsetParent && isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
+    let currentWin = win;
+    let currentIFrame = currentWin.frameElement;
+    while (currentIFrame && offsetParent && offsetWin !== currentWin) {
+      const iframeScale = getScale(currentIFrame);
+      const iframeRect = currentIFrame.getBoundingClientRect();
+      const css = getComputedStyle2(currentIFrame);
+      const left = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
+      const top = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
+      x *= iframeScale.x;
+      y *= iframeScale.y;
+      width *= iframeScale.x;
+      height *= iframeScale.y;
+      x += left;
+      y += top;
+      currentWin = getWindow(currentIFrame);
+      currentIFrame = currentWin.frameElement;
+    }
+  }
+  return rectToClientRect({
+    width,
+    height,
+    x,
+    y
+  });
+}
+var topLayerSelectors = [":popover-open", ":modal"];
+function isTopLayer(floating) {
+  return topLayerSelectors.some((selector) => {
+    try {
+      return floating.matches(selector);
+    } catch (e) {
+      return false;
+    }
+  });
+}
+function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
+  let {
+    elements,
+    rect,
+    offsetParent,
+    strategy
+  } = _ref;
+  const isFixed = strategy === "fixed";
+  const documentElement = getDocumentElement(offsetParent);
+  const topLayer = elements ? isTopLayer(elements.floating) : false;
+  if (offsetParent === documentElement || topLayer && isFixed) {
+    return rect;
+  }
+  let scroll = {
+    scrollLeft: 0,
+    scrollTop: 0
+  };
+  let scale = createCoords(1);
+  const offsets = createCoords(0);
+  const isOffsetParentAnElement = isHTMLElement(offsetParent);
+  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+    if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
+      scroll = getNodeScroll(offsetParent);
+    }
+    if (isHTMLElement(offsetParent)) {
+      const offsetRect = getBoundingClientRect(offsetParent);
+      scale = getScale(offsetParent);
+      offsets.x = offsetRect.x + offsetParent.clientLeft;
+      offsets.y = offsetRect.y + offsetParent.clientTop;
+    }
+  }
+  return {
+    width: rect.width * scale.x,
+    height: rect.height * scale.y,
+    x: rect.x * scale.x - scroll.scrollLeft * scale.x + offsets.x,
+    y: rect.y * scale.y - scroll.scrollTop * scale.y + offsets.y
+  };
+}
+function getClientRects(element) {
+  return Array.from(element.getClientRects());
+}
+function getWindowScrollBarX(element) {
+  return getBoundingClientRect(getDocumentElement(element)).left + getNodeScroll(element).scrollLeft;
+}
+function getDocumentRect(element) {
+  const html = getDocumentElement(element);
+  const scroll = getNodeScroll(element);
+  const body = element.ownerDocument.body;
+  const width = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
+  const height = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
+  let x = -scroll.scrollLeft + getWindowScrollBarX(element);
+  const y = -scroll.scrollTop;
+  if (getComputedStyle2(body).direction === "rtl") {
+    x += max(html.clientWidth, body.clientWidth) - width;
+  }
+  return {
+    width,
+    height,
+    x,
+    y
+  };
+}
+function getViewportRect(element, strategy) {
+  const win = getWindow(element);
+  const html = getDocumentElement(element);
+  const visualViewport = win.visualViewport;
+  let width = html.clientWidth;
+  let height = html.clientHeight;
+  let x = 0;
+  let y = 0;
+  if (visualViewport) {
+    width = visualViewport.width;
+    height = visualViewport.height;
+    const visualViewportBased = isWebKit();
+    if (!visualViewportBased || visualViewportBased && strategy === "fixed") {
+      x = visualViewport.offsetLeft;
+      y = visualViewport.offsetTop;
+    }
+  }
+  return {
+    width,
+    height,
+    x,
+    y
+  };
+}
+function getInnerBoundingClientRect(element, strategy) {
+  const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
+  const top = clientRect.top + element.clientTop;
+  const left = clientRect.left + element.clientLeft;
+  const scale = isHTMLElement(element) ? getScale(element) : createCoords(1);
+  const width = element.clientWidth * scale.x;
+  const height = element.clientHeight * scale.y;
+  const x = left * scale.x;
+  const y = top * scale.y;
+  return {
+    width,
+    height,
+    x,
+    y
+  };
+}
+function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
+  let rect;
+  if (clippingAncestor === "viewport") {
+    rect = getViewportRect(element, strategy);
+  } else if (clippingAncestor === "document") {
+    rect = getDocumentRect(getDocumentElement(element));
+  } else if (isElement(clippingAncestor)) {
+    rect = getInnerBoundingClientRect(clippingAncestor, strategy);
+  } else {
+    const visualOffsets = getVisualOffsets(element);
+    rect = {
+      ...clippingAncestor,
+      x: clippingAncestor.x - visualOffsets.x,
+      y: clippingAncestor.y - visualOffsets.y
+    };
+  }
+  return rectToClientRect(rect);
+}
+function hasFixedPositionAncestor(element, stopNode) {
+  const parentNode = getParentNode(element);
+  if (parentNode === stopNode || !isElement(parentNode) || isLastTraversableNode(parentNode)) {
+    return false;
+  }
+  return getComputedStyle2(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
+}
+function getClippingElementAncestors(element, cache) {
+  const cachedResult = cache.get(element);
+  if (cachedResult) {
+    return cachedResult;
+  }
+  let result2 = getOverflowAncestors(element, [], false).filter((el) => isElement(el) && getNodeName(el) !== "body");
+  let currentContainingBlockComputedStyle = null;
+  const elementIsFixed = getComputedStyle2(element).position === "fixed";
+  let currentNode = elementIsFixed ? getParentNode(element) : element;
+  while (isElement(currentNode) && !isLastTraversableNode(currentNode)) {
+    const computedStyle = getComputedStyle2(currentNode);
+    const currentNodeIsContaining = isContainingBlock(currentNode);
+    if (!currentNodeIsContaining && computedStyle.position === "fixed") {
+      currentContainingBlockComputedStyle = null;
+    }
+    const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && ["absolute", "fixed"].includes(currentContainingBlockComputedStyle.position) || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
+    if (shouldDropCurrentNode) {
+      result2 = result2.filter((ancestor) => ancestor !== currentNode);
+    } else {
+      currentContainingBlockComputedStyle = computedStyle;
+    }
+    currentNode = getParentNode(currentNode);
+  }
+  cache.set(element, result2);
+  return result2;
+}
+function getClippingRect(_ref) {
+  let {
+    element,
+    boundary,
+    rootBoundary,
+    strategy
+  } = _ref;
+  const elementClippingAncestors = boundary === "clippingAncestors" ? getClippingElementAncestors(element, this._c) : [].concat(boundary);
+  const clippingAncestors = [...elementClippingAncestors, rootBoundary];
+  const firstClippingAncestor = clippingAncestors[0];
+  const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
+    const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
+    accRect.top = max(rect.top, accRect.top);
+    accRect.right = min(rect.right, accRect.right);
+    accRect.bottom = min(rect.bottom, accRect.bottom);
+    accRect.left = max(rect.left, accRect.left);
+    return accRect;
+  }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
+  return {
+    width: clippingRect.right - clippingRect.left,
+    height: clippingRect.bottom - clippingRect.top,
+    x: clippingRect.left,
+    y: clippingRect.top
+  };
+}
+function getDimensions(element) {
+  const {
+    width,
+    height
+  } = getCssDimensions(element);
+  return {
+    width,
+    height
+  };
+}
+function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
+  const isOffsetParentAnElement = isHTMLElement(offsetParent);
+  const documentElement = getDocumentElement(offsetParent);
+  const isFixed = strategy === "fixed";
+  const rect = getBoundingClientRect(element, true, isFixed, offsetParent);
+  let scroll = {
+    scrollLeft: 0,
+    scrollTop: 0
+  };
+  const offsets = createCoords(0);
+  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+    if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
+      scroll = getNodeScroll(offsetParent);
+    }
+    if (isOffsetParentAnElement) {
+      const offsetRect = getBoundingClientRect(offsetParent, true, isFixed, offsetParent);
+      offsets.x = offsetRect.x + offsetParent.clientLeft;
+      offsets.y = offsetRect.y + offsetParent.clientTop;
+    } else if (documentElement) {
+      offsets.x = getWindowScrollBarX(documentElement);
+    }
+  }
+  const x = rect.left + scroll.scrollLeft - offsets.x;
+  const y = rect.top + scroll.scrollTop - offsets.y;
+  return {
+    x,
+    y,
+    width: rect.width,
+    height: rect.height
+  };
+}
+function getTrueOffsetParent(element, polyfill) {
+  if (!isHTMLElement(element) || getComputedStyle2(element).position === "fixed") {
+    return null;
+  }
+  if (polyfill) {
+    return polyfill(element);
+  }
+  return element.offsetParent;
+}
+function getOffsetParent(element, polyfill) {
+  const window2 = getWindow(element);
+  if (!isHTMLElement(element) || isTopLayer(element)) {
+    return window2;
+  }
+  let offsetParent = getTrueOffsetParent(element, polyfill);
+  while (offsetParent && isTableElement(offsetParent) && getComputedStyle2(offsetParent).position === "static") {
+    offsetParent = getTrueOffsetParent(offsetParent, polyfill);
+  }
+  if (offsetParent && (getNodeName(offsetParent) === "html" || getNodeName(offsetParent) === "body" && getComputedStyle2(offsetParent).position === "static" && !isContainingBlock(offsetParent))) {
+    return window2;
+  }
+  return offsetParent || getContainingBlock(element) || window2;
+}
+var getElementRects = async function(data2) {
+  const getOffsetParentFn = this.getOffsetParent || getOffsetParent;
+  const getDimensionsFn = this.getDimensions;
+  const floatingDimensions = await getDimensionsFn(data2.floating);
+  return {
+    reference: getRectRelativeToOffsetParent(data2.reference, await getOffsetParentFn(data2.floating), data2.strategy),
+    floating: {
+      x: 0,
+      y: 0,
+      width: floatingDimensions.width,
+      height: floatingDimensions.height
+    }
+  };
+};
+function isRTL(element) {
+  return getComputedStyle2(element).direction === "rtl";
+}
+var platform = {
+  convertOffsetParentRelativeRectToViewportRelativeRect,
+  getDocumentElement,
+  getClippingRect,
+  getOffsetParent,
+  getElementRects,
+  getClientRects,
+  getDimensions,
+  getScale,
+  isElement,
+  isRTL
+};
+function observeMove(element, onMove) {
+  let io = null;
+  let timeoutId;
+  const root = getDocumentElement(element);
+  function cleanup() {
+    var _io;
+    clearTimeout(timeoutId);
+    (_io = io) == null || _io.disconnect();
+    io = null;
+  }
+  function refresh(skip, threshold) {
+    if (skip === void 0) {
+      skip = false;
+    }
+    if (threshold === void 0) {
+      threshold = 1;
+    }
+    cleanup();
+    const {
+      left,
+      top,
+      width,
+      height
+    } = element.getBoundingClientRect();
+    if (!skip) {
+      onMove();
+    }
+    if (!width || !height) {
+      return;
+    }
+    const insetTop = floor(top);
+    const insetRight = floor(root.clientWidth - (left + width));
+    const insetBottom = floor(root.clientHeight - (top + height));
+    const insetLeft = floor(left);
+    const rootMargin = -insetTop + "px " + -insetRight + "px " + -insetBottom + "px " + -insetLeft + "px";
+    const options = {
+      rootMargin,
+      threshold: max(0, min(1, threshold)) || 1
+    };
+    let isFirstUpdate = true;
+    function handleObserve(entries) {
+      const ratio = entries[0].intersectionRatio;
+      if (ratio !== threshold) {
+        if (!isFirstUpdate) {
+          return refresh();
+        }
+        if (!ratio) {
+          timeoutId = setTimeout(() => {
+            refresh(false, 1e-7);
+          }, 1e3);
+        } else {
+          refresh(false, ratio);
+        }
+      }
+      isFirstUpdate = false;
+    }
+    try {
+      io = new IntersectionObserver(handleObserve, {
+        ...options,
+        // Handle <iframe>s
+        root: root.ownerDocument
+      });
+    } catch (e) {
+      io = new IntersectionObserver(handleObserve, options);
+    }
+    io.observe(element);
+  }
+  refresh(true);
+  return cleanup;
+}
+function autoUpdate(reference, floating, update, options) {
+  if (options === void 0) {
+    options = {};
+  }
+  const {
+    ancestorScroll = true,
+    ancestorResize = true,
+    elementResize = typeof ResizeObserver === "function",
+    layoutShift = typeof IntersectionObserver === "function",
+    animationFrame = false
+  } = options;
+  const referenceEl = unwrapElement(reference);
+  const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...getOverflowAncestors(floating)] : [];
+  ancestors.forEach((ancestor) => {
+    ancestorScroll && ancestor.addEventListener("scroll", update, {
+      passive: true
+    });
+    ancestorResize && ancestor.addEventListener("resize", update);
+  });
+  const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update) : null;
+  let reobserveFrame = -1;
+  let resizeObserver = null;
+  if (elementResize) {
+    resizeObserver = new ResizeObserver((_ref) => {
+      let [firstEntry] = _ref;
+      if (firstEntry && firstEntry.target === referenceEl && resizeObserver) {
+        resizeObserver.unobserve(floating);
+        cancelAnimationFrame(reobserveFrame);
+        reobserveFrame = requestAnimationFrame(() => {
+          var _resizeObserver;
+          (_resizeObserver = resizeObserver) == null || _resizeObserver.observe(floating);
+        });
+      }
+      update();
+    });
+    if (referenceEl && !animationFrame) {
+      resizeObserver.observe(referenceEl);
+    }
+    resizeObserver.observe(floating);
+  }
+  let frameId;
+  let prevRefRect = animationFrame ? getBoundingClientRect(reference) : null;
+  if (animationFrame) {
+    frameLoop();
+  }
+  function frameLoop() {
+    const nextRefRect = getBoundingClientRect(reference);
+    if (prevRefRect && (nextRefRect.x !== prevRefRect.x || nextRefRect.y !== prevRefRect.y || nextRefRect.width !== prevRefRect.width || nextRefRect.height !== prevRefRect.height)) {
+      update();
+    }
+    prevRefRect = nextRefRect;
+    frameId = requestAnimationFrame(frameLoop);
+  }
+  update();
+  return () => {
+    var _resizeObserver2;
+    ancestors.forEach((ancestor) => {
+      ancestorScroll && ancestor.removeEventListener("scroll", update);
+      ancestorResize && ancestor.removeEventListener("resize", update);
+    });
+    cleanupIo == null || cleanupIo();
+    (_resizeObserver2 = resizeObserver) == null || _resizeObserver2.disconnect();
+    resizeObserver = null;
+    if (animationFrame) {
+      cancelAnimationFrame(frameId);
+    }
+  };
+}
+var offset3 = offset2;
+var shift2 = shift;
+var flip2 = flip;
+var size2 = size;
+var hide2 = hide;
+var arrow2 = arrow;
+var limitShift2 = limitShift;
+var computePosition2 = (reference, floating, options) => {
+  const cache = /* @__PURE__ */ new Map();
+  const mergedOptions = {
+    platform,
+    ...options
+  };
+  const platformWithCache = {
+    ...mergedOptions.platform,
+    _c: cache
+  };
+  return computePosition(reference, floating, {
+    ...mergedOptions,
+    platform: platformWithCache
+  });
+};
+
+// node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
+var React19 = __toESM(require_react(), 1);
+var import_react28 = __toESM(require_react(), 1);
+var ReactDOM = __toESM(require_react_dom(), 1);
+var arrow3 = (options) => {
+  function isRef(value) {
+    return {}.hasOwnProperty.call(value, "current");
+  }
+  return {
+    name: "arrow",
+    options,
+    fn(state) {
+      const {
+        element,
+        padding
+      } = typeof options === "function" ? options(state) : options;
+      if (element && isRef(element)) {
+        if (element.current != null) {
+          return arrow2({
+            element: element.current,
+            padding
+          }).fn(state);
+        }
+        return {};
+      }
+      if (element) {
+        return arrow2({
+          element,
+          padding
+        }).fn(state);
+      }
+      return {};
+    }
+  };
+};
+var index = typeof document !== "undefined" ? import_react28.useLayoutEffect : import_react28.useEffect;
+function deepEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+  if (typeof a !== typeof b) {
+    return false;
+  }
+  if (typeof a === "function" && a.toString() === b.toString()) {
+    return true;
+  }
+  let length;
+  let i;
+  let keys;
+  if (a && b && typeof a === "object") {
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length !== b.length)
+        return false;
+      for (i = length; i-- !== 0; ) {
+        if (!deepEqual(a[i], b[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+    keys = Object.keys(a);
+    length = keys.length;
+    if (length !== Object.keys(b).length) {
+      return false;
+    }
+    for (i = length; i-- !== 0; ) {
+      if (!{}.hasOwnProperty.call(b, keys[i])) {
+        return false;
+      }
+    }
+    for (i = length; i-- !== 0; ) {
+      const key = keys[i];
+      if (key === "_owner" && a.$$typeof) {
+        continue;
+      }
+      if (!deepEqual(a[key], b[key])) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return a !== a && b !== b;
+}
+function getDPR(element) {
+  if (typeof window === "undefined") {
+    return 1;
+  }
+  const win = element.ownerDocument.defaultView || window;
+  return win.devicePixelRatio || 1;
+}
+function roundByDPR(element, value) {
+  const dpr = getDPR(element);
+  return Math.round(value * dpr) / dpr;
+}
+function useLatestRef(value) {
+  const ref = React19.useRef(value);
+  index(() => {
+    ref.current = value;
+  });
+  return ref;
+}
+function useFloating(options) {
+  if (options === void 0) {
+    options = {};
+  }
+  const {
+    placement = "bottom",
+    strategy = "absolute",
+    middleware = [],
+    platform: platform2,
+    elements: {
+      reference: externalReference,
+      floating: externalFloating
+    } = {},
+    transform = true,
+    whileElementsMounted,
+    open
+  } = options;
+  const [data2, setData] = React19.useState({
+    x: 0,
+    y: 0,
+    strategy,
+    placement,
+    middlewareData: {},
+    isPositioned: false
+  });
+  const [latestMiddleware, setLatestMiddleware] = React19.useState(middleware);
+  if (!deepEqual(latestMiddleware, middleware)) {
+    setLatestMiddleware(middleware);
+  }
+  const [_reference, _setReference] = React19.useState(null);
+  const [_floating, _setFloating] = React19.useState(null);
+  const setReference = React19.useCallback((node) => {
+    if (node !== referenceRef.current) {
+      referenceRef.current = node;
+      _setReference(node);
+    }
+  }, []);
+  const setFloating = React19.useCallback((node) => {
+    if (node !== floatingRef.current) {
+      floatingRef.current = node;
+      _setFloating(node);
+    }
+  }, []);
+  const referenceEl = externalReference || _reference;
+  const floatingEl = externalFloating || _floating;
+  const referenceRef = React19.useRef(null);
+  const floatingRef = React19.useRef(null);
+  const dataRef = React19.useRef(data2);
+  const hasWhileElementsMounted = whileElementsMounted != null;
+  const whileElementsMountedRef = useLatestRef(whileElementsMounted);
+  const platformRef = useLatestRef(platform2);
+  const update = React19.useCallback(() => {
+    if (!referenceRef.current || !floatingRef.current) {
+      return;
+    }
+    const config = {
+      placement,
+      strategy,
+      middleware: latestMiddleware
+    };
+    if (platformRef.current) {
+      config.platform = platformRef.current;
+    }
+    computePosition2(referenceRef.current, floatingRef.current, config).then((data3) => {
+      const fullData = {
+        ...data3,
+        isPositioned: true
+      };
+      if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
+        dataRef.current = fullData;
+        ReactDOM.flushSync(() => {
+          setData(fullData);
+        });
+      }
+    });
+  }, [latestMiddleware, placement, strategy, platformRef]);
+  index(() => {
+    if (open === false && dataRef.current.isPositioned) {
+      dataRef.current.isPositioned = false;
+      setData((data3) => ({
+        ...data3,
+        isPositioned: false
+      }));
+    }
+  }, [open]);
+  const isMountedRef = React19.useRef(false);
+  index(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+  index(() => {
+    if (referenceEl)
+      referenceRef.current = referenceEl;
+    if (floatingEl)
+      floatingRef.current = floatingEl;
+    if (referenceEl && floatingEl) {
+      if (whileElementsMountedRef.current) {
+        return whileElementsMountedRef.current(referenceEl, floatingEl, update);
+      }
+      update();
+    }
+  }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
+  const refs = React19.useMemo(() => ({
+    reference: referenceRef,
+    floating: floatingRef,
+    setReference,
+    setFloating
+  }), [setReference, setFloating]);
+  const elements = React19.useMemo(() => ({
+    reference: referenceEl,
+    floating: floatingEl
+  }), [referenceEl, floatingEl]);
+  const floatingStyles = React19.useMemo(() => {
+    const initialStyles = {
+      position: strategy,
+      left: 0,
+      top: 0
+    };
+    if (!elements.floating) {
+      return initialStyles;
+    }
+    const x = roundByDPR(elements.floating, data2.x);
+    const y = roundByDPR(elements.floating, data2.y);
+    if (transform) {
+      return {
+        ...initialStyles,
+        transform: "translate(" + x + "px, " + y + "px)",
+        ...getDPR(elements.floating) >= 1.5 && {
+          willChange: "transform"
+        }
+      };
+    }
+    return {
+      position: strategy,
+      left: x,
+      top: y
+    };
+  }, [strategy, transform, elements.floating, data2.x, data2.y]);
+  return React19.useMemo(() => ({
+    ...data2,
+    update,
+    refs,
+    elements,
+    floatingStyles
+  }), [data2, update, refs, elements, floatingStyles]);
+}
+
+// node_modules/@radix-ui/react-use-size/dist/index.mjs
+var import_react29 = __toESM(require_react(), 1);
+function $db6c3485150b8e66$export$1ab7ae714698c4b8(element) {
+  const [size3, setSize] = (0, import_react29.useState)(void 0);
+  $9f79659886946c16$export$e5c5a5f917a5871c(() => {
+    if (element) {
+      setSize({
+        width: element.offsetWidth,
+        height: element.offsetHeight
+      });
+      const resizeObserver = new ResizeObserver((entries) => {
+        if (!Array.isArray(entries))
+          return;
+        if (!entries.length)
+          return;
+        const entry = entries[0];
+        let width;
+        let height;
+        if ("borderBoxSize" in entry) {
+          const borderSizeEntry = entry["borderBoxSize"];
+          const borderSize = Array.isArray(borderSizeEntry) ? borderSizeEntry[0] : borderSizeEntry;
+          width = borderSize["inlineSize"];
+          height = borderSize["blockSize"];
+        } else {
+          width = element.offsetWidth;
+          height = element.offsetHeight;
+        }
+        setSize({
+          width,
+          height
+        });
+      });
+      resizeObserver.observe(element, {
+        box: "border-box"
+      });
+      return () => resizeObserver.unobserve(element);
+    } else
+      setSize(void 0);
+  }, [
+    element
+  ]);
+  return size3;
+}
+
+// node_modules/@radix-ui/react-popper/dist/index.mjs
+var $cf1ac5d9fe0e8206$var$POPPER_NAME = "Popper";
+var [$cf1ac5d9fe0e8206$var$createPopperContext, $cf1ac5d9fe0e8206$export$722aac194ae923] = $c512c27ab02ef895$export$50c7b4e9d9f19c1($cf1ac5d9fe0e8206$var$POPPER_NAME);
+var [$cf1ac5d9fe0e8206$var$PopperProvider, $cf1ac5d9fe0e8206$var$usePopperContext] = $cf1ac5d9fe0e8206$var$createPopperContext($cf1ac5d9fe0e8206$var$POPPER_NAME);
+var $cf1ac5d9fe0e8206$export$badac9ada3a0bdf9 = (props2) => {
+  const { __scopePopper, children } = props2;
+  const [anchor, setAnchor] = (0, import_react30.useState)(null);
+  return /* @__PURE__ */ (0, import_react30.createElement)($cf1ac5d9fe0e8206$var$PopperProvider, {
+    scope: __scopePopper,
+    anchor,
+    onAnchorChange: setAnchor
+  }, children);
+};
+var $cf1ac5d9fe0e8206$var$ANCHOR_NAME = "PopperAnchor";
+var $cf1ac5d9fe0e8206$export$ecd4e1ccab6ed6d = /* @__PURE__ */ (0, import_react30.forwardRef)((props2, forwardedRef) => {
+  const { __scopePopper, virtualRef, ...anchorProps } = props2;
+  const context = $cf1ac5d9fe0e8206$var$usePopperContext($cf1ac5d9fe0e8206$var$ANCHOR_NAME, __scopePopper);
+  const ref = (0, import_react30.useRef)(null);
+  const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, ref);
+  (0, import_react30.useEffect)(() => {
+    context.onAnchorChange((virtualRef === null || virtualRef === void 0 ? void 0 : virtualRef.current) || ref.current);
+  });
+  return virtualRef ? null : /* @__PURE__ */ (0, import_react30.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, anchorProps, {
+    ref: composedRefs
+  }));
+});
+var $cf1ac5d9fe0e8206$var$CONTENT_NAME = "PopperContent";
+var [$cf1ac5d9fe0e8206$var$PopperContentProvider, $cf1ac5d9fe0e8206$var$useContentContext] = $cf1ac5d9fe0e8206$var$createPopperContext($cf1ac5d9fe0e8206$var$CONTENT_NAME);
+var $cf1ac5d9fe0e8206$export$bc4ae5855d3c4fc = /* @__PURE__ */ (0, import_react30.forwardRef)((props2, forwardedRef) => {
+  var _arrowSize$width, _arrowSize$height, _middlewareData$arrow, _middlewareData$arrow2, _middlewareData$arrow3, _middlewareData$trans, _middlewareData$trans2, _middlewareData$hide;
+  const { __scopePopper, side = "bottom", sideOffset = 0, align = "center", alignOffset = 0, arrowPadding = 0, avoidCollisions = true, collisionBoundary = [], collisionPadding: collisionPaddingProp = 0, sticky = "partial", hideWhenDetached = false, updatePositionStrategy = "optimized", onPlaced, ...contentProps } = props2;
+  const context = $cf1ac5d9fe0e8206$var$usePopperContext($cf1ac5d9fe0e8206$var$CONTENT_NAME, __scopePopper);
+  const [content, setContent] = (0, import_react30.useState)(null);
+  const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
+    forwardedRef,
+    (node) => setContent(node)
+  );
+  const [arrow4, setArrow] = (0, import_react30.useState)(null);
+  const arrowSize = $db6c3485150b8e66$export$1ab7ae714698c4b8(arrow4);
+  const arrowWidth = (_arrowSize$width = arrowSize === null || arrowSize === void 0 ? void 0 : arrowSize.width) !== null && _arrowSize$width !== void 0 ? _arrowSize$width : 0;
+  const arrowHeight = (_arrowSize$height = arrowSize === null || arrowSize === void 0 ? void 0 : arrowSize.height) !== null && _arrowSize$height !== void 0 ? _arrowSize$height : 0;
+  const desiredPlacement = side + (align !== "center" ? "-" + align : "");
+  const collisionPadding = typeof collisionPaddingProp === "number" ? collisionPaddingProp : {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    ...collisionPaddingProp
+  };
+  const boundary = Array.isArray(collisionBoundary) ? collisionBoundary : [
+    collisionBoundary
+  ];
+  const hasExplicitBoundaries = boundary.length > 0;
+  const detectOverflowOptions = {
+    padding: collisionPadding,
+    boundary: boundary.filter($cf1ac5d9fe0e8206$var$isNotNull),
+    // with `strategy: 'fixed'`, this is the only way to get it to respect boundaries
+    altBoundary: hasExplicitBoundaries
+  };
+  const { refs, floatingStyles, placement, isPositioned, middlewareData } = useFloating({
+    // default to `fixed` strategy so users don't have to pick and we also avoid focus scroll issues
+    strategy: "fixed",
+    placement: desiredPlacement,
+    whileElementsMounted: (...args) => {
+      const cleanup = autoUpdate(...args, {
+        animationFrame: updatePositionStrategy === "always"
+      });
+      return cleanup;
+    },
+    elements: {
+      reference: context.anchor
+    },
+    middleware: [
+      offset3({
+        mainAxis: sideOffset + arrowHeight,
+        alignmentAxis: alignOffset
+      }),
+      avoidCollisions && shift2({
+        mainAxis: true,
+        crossAxis: false,
+        limiter: sticky === "partial" ? limitShift2() : void 0,
+        ...detectOverflowOptions
+      }),
+      avoidCollisions && flip2({
+        ...detectOverflowOptions
+      }),
+      size2({
+        ...detectOverflowOptions,
+        apply: ({ elements, rects, availableWidth, availableHeight }) => {
+          const { width: anchorWidth, height: anchorHeight } = rects.reference;
+          const contentStyle = elements.floating.style;
+          contentStyle.setProperty("--radix-popper-available-width", `${availableWidth}px`);
+          contentStyle.setProperty("--radix-popper-available-height", `${availableHeight}px`);
+          contentStyle.setProperty("--radix-popper-anchor-width", `${anchorWidth}px`);
+          contentStyle.setProperty("--radix-popper-anchor-height", `${anchorHeight}px`);
+        }
+      }),
+      arrow4 && arrow3({
+        element: arrow4,
+        padding: arrowPadding
+      }),
+      $cf1ac5d9fe0e8206$var$transformOrigin({
+        arrowWidth,
+        arrowHeight
+      }),
+      hideWhenDetached && hide2({
+        strategy: "referenceHidden",
+        ...detectOverflowOptions
+      })
+    ]
+  });
+  const [placedSide, placedAlign] = $cf1ac5d9fe0e8206$var$getSideAndAlignFromPlacement(placement);
+  const handlePlaced = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onPlaced);
+  $9f79659886946c16$export$e5c5a5f917a5871c(() => {
+    if (isPositioned)
+      handlePlaced === null || handlePlaced === void 0 || handlePlaced();
+  }, [
+    isPositioned,
+    handlePlaced
+  ]);
+  const arrowX = (_middlewareData$arrow = middlewareData.arrow) === null || _middlewareData$arrow === void 0 ? void 0 : _middlewareData$arrow.x;
+  const arrowY = (_middlewareData$arrow2 = middlewareData.arrow) === null || _middlewareData$arrow2 === void 0 ? void 0 : _middlewareData$arrow2.y;
+  const cannotCenterArrow = ((_middlewareData$arrow3 = middlewareData.arrow) === null || _middlewareData$arrow3 === void 0 ? void 0 : _middlewareData$arrow3.centerOffset) !== 0;
+  const [contentZIndex, setContentZIndex] = (0, import_react30.useState)();
+  $9f79659886946c16$export$e5c5a5f917a5871c(() => {
+    if (content)
+      setContentZIndex(window.getComputedStyle(content).zIndex);
+  }, [
+    content
+  ]);
+  return /* @__PURE__ */ (0, import_react30.createElement)("div", {
+    ref: refs.setFloating,
+    "data-radix-popper-content-wrapper": "",
+    style: {
+      ...floatingStyles,
+      transform: isPositioned ? floatingStyles.transform : "translate(0, -200%)",
+      // keep off the page when measuring
+      minWidth: "max-content",
+      zIndex: contentZIndex,
+      ["--radix-popper-transform-origin"]: [
+        (_middlewareData$trans = middlewareData.transformOrigin) === null || _middlewareData$trans === void 0 ? void 0 : _middlewareData$trans.x,
+        (_middlewareData$trans2 = middlewareData.transformOrigin) === null || _middlewareData$trans2 === void 0 ? void 0 : _middlewareData$trans2.y
+      ].join(" ")
+    },
+    dir: props2.dir
+  }, /* @__PURE__ */ (0, import_react30.createElement)($cf1ac5d9fe0e8206$var$PopperContentProvider, {
+    scope: __scopePopper,
+    placedSide,
+    onArrowChange: setArrow,
+    arrowX,
+    arrowY,
+    shouldHideArrow: cannotCenterArrow
+  }, /* @__PURE__ */ (0, import_react30.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
+    "data-side": placedSide,
+    "data-align": placedAlign
+  }, contentProps, {
+    ref: composedRefs,
+    style: {
+      ...contentProps.style,
+      // if the PopperContent hasn't been placed yet (not all measurements done)
+      // we prevent animations so that users's animation don't kick in too early referring wrong sides
+      animation: !isPositioned ? "none" : void 0,
+      // hide the content if using the hide middleware and should be hidden
+      opacity: (_middlewareData$hide = middlewareData.hide) !== null && _middlewareData$hide !== void 0 && _middlewareData$hide.referenceHidden ? 0 : void 0
+    }
+  }))));
+});
+function $cf1ac5d9fe0e8206$var$isNotNull(value) {
+  return value !== null;
+}
+var $cf1ac5d9fe0e8206$var$transformOrigin = (options) => ({
+  name: "transformOrigin",
+  options,
+  fn(data2) {
+    var _middlewareData$arrow4, _middlewareData$arrow5, _middlewareData$arrow6, _middlewareData$arrow7, _middlewareData$arrow8;
+    const { placement, rects, middlewareData } = data2;
+    const cannotCenterArrow = ((_middlewareData$arrow4 = middlewareData.arrow) === null || _middlewareData$arrow4 === void 0 ? void 0 : _middlewareData$arrow4.centerOffset) !== 0;
+    const isArrowHidden = cannotCenterArrow;
+    const arrowWidth = isArrowHidden ? 0 : options.arrowWidth;
+    const arrowHeight = isArrowHidden ? 0 : options.arrowHeight;
+    const [placedSide, placedAlign] = $cf1ac5d9fe0e8206$var$getSideAndAlignFromPlacement(placement);
+    const noArrowAlign = {
+      start: "0%",
+      center: "50%",
+      end: "100%"
+    }[placedAlign];
+    const arrowXCenter = ((_middlewareData$arrow5 = (_middlewareData$arrow6 = middlewareData.arrow) === null || _middlewareData$arrow6 === void 0 ? void 0 : _middlewareData$arrow6.x) !== null && _middlewareData$arrow5 !== void 0 ? _middlewareData$arrow5 : 0) + arrowWidth / 2;
+    const arrowYCenter = ((_middlewareData$arrow7 = (_middlewareData$arrow8 = middlewareData.arrow) === null || _middlewareData$arrow8 === void 0 ? void 0 : _middlewareData$arrow8.y) !== null && _middlewareData$arrow7 !== void 0 ? _middlewareData$arrow7 : 0) + arrowHeight / 2;
+    let x = "";
+    let y = "";
+    if (placedSide === "bottom") {
+      x = isArrowHidden ? noArrowAlign : `${arrowXCenter}px`;
+      y = `${-arrowHeight}px`;
+    } else if (placedSide === "top") {
+      x = isArrowHidden ? noArrowAlign : `${arrowXCenter}px`;
+      y = `${rects.floating.height + arrowHeight}px`;
+    } else if (placedSide === "right") {
+      x = `${-arrowHeight}px`;
+      y = isArrowHidden ? noArrowAlign : `${arrowYCenter}px`;
+    } else if (placedSide === "left") {
+      x = `${rects.floating.width + arrowHeight}px`;
+      y = isArrowHidden ? noArrowAlign : `${arrowYCenter}px`;
+    }
+    return {
+      data: {
+        x,
+        y
+      }
+    };
+  }
+});
+function $cf1ac5d9fe0e8206$var$getSideAndAlignFromPlacement(placement) {
+  const [side, align = "center"] = placement.split("-");
+  return [
+    side,
+    align
+  ];
+}
+var $cf1ac5d9fe0e8206$export$be92b6f5f03c0fe9 = $cf1ac5d9fe0e8206$export$badac9ada3a0bdf9;
+var $cf1ac5d9fe0e8206$export$b688253958b8dfe7 = $cf1ac5d9fe0e8206$export$ecd4e1ccab6ed6d;
+var $cf1ac5d9fe0e8206$export$7c6e2c02157bb7d2 = $cf1ac5d9fe0e8206$export$bc4ae5855d3c4fc;
+
+// node_modules/@radix-ui/react-popover/dist/index.mjs
+var $cb5cc270b50c6fcd$var$POPOVER_NAME = "Popover";
+var [$cb5cc270b50c6fcd$var$createPopoverContext, $cb5cc270b50c6fcd$export$c8393c9e73286932] = $c512c27ab02ef895$export$50c7b4e9d9f19c1($cb5cc270b50c6fcd$var$POPOVER_NAME, [
+  $cf1ac5d9fe0e8206$export$722aac194ae923
+]);
+var $cb5cc270b50c6fcd$var$usePopperScope = $cf1ac5d9fe0e8206$export$722aac194ae923();
+var [$cb5cc270b50c6fcd$var$PopoverProvider, $cb5cc270b50c6fcd$var$usePopoverContext] = $cb5cc270b50c6fcd$var$createPopoverContext($cb5cc270b50c6fcd$var$POPOVER_NAME);
+var $cb5cc270b50c6fcd$export$5b6b19405a83ff9d = (props2) => {
+  const { __scopePopover, children, open: openProp, defaultOpen, onOpenChange, modal = false } = props2;
+  const popperScope = $cb5cc270b50c6fcd$var$usePopperScope(__scopePopover);
+  const triggerRef = (0, import_react31.useRef)(null);
+  const [hasCustomAnchor, setHasCustomAnchor] = (0, import_react31.useState)(false);
+  const [open = false, setOpen] = $71cd76cc60e0454e$export$6f32135080cb4c3({
+    prop: openProp,
+    defaultProp: defaultOpen,
+    onChange: onOpenChange
+  });
+  return /* @__PURE__ */ (0, import_react31.createElement)($cf1ac5d9fe0e8206$export$be92b6f5f03c0fe9, popperScope, /* @__PURE__ */ (0, import_react31.createElement)($cb5cc270b50c6fcd$var$PopoverProvider, {
+    scope: __scopePopover,
+    contentId: $1746a345f3d73bb7$export$f680877a34711e37(),
+    triggerRef,
+    open,
+    onOpenChange: setOpen,
+    onOpenToggle: (0, import_react31.useCallback)(
+      () => setOpen(
+        (prevOpen) => !prevOpen
+      ),
+      [
+        setOpen
+      ]
+    ),
+    hasCustomAnchor,
+    onCustomAnchorAdd: (0, import_react31.useCallback)(
+      () => setHasCustomAnchor(true),
+      []
+    ),
+    onCustomAnchorRemove: (0, import_react31.useCallback)(
+      () => setHasCustomAnchor(false),
+      []
+    ),
+    modal
+  }, children));
+};
+var $cb5cc270b50c6fcd$var$TRIGGER_NAME = "PopoverTrigger";
+var $cb5cc270b50c6fcd$export$7dacb05d26466c3 = /* @__PURE__ */ (0, import_react31.forwardRef)((props2, forwardedRef) => {
+  const { __scopePopover, ...triggerProps } = props2;
+  const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$TRIGGER_NAME, __scopePopover);
+  const popperScope = $cb5cc270b50c6fcd$var$usePopperScope(__scopePopover);
+  const composedTriggerRef = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, context.triggerRef);
+  const trigger = /* @__PURE__ */ (0, import_react31.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.button, _extends({
+    type: "button",
+    "aria-haspopup": "dialog",
+    "aria-expanded": context.open,
+    "aria-controls": context.contentId,
+    "data-state": $cb5cc270b50c6fcd$var$getState(context.open)
+  }, triggerProps, {
+    ref: composedTriggerRef,
+    onClick: $e42e1063c40fb3ef$export$b9ecd428b558ff10(props2.onClick, context.onOpenToggle)
+  }));
+  return context.hasCustomAnchor ? trigger : /* @__PURE__ */ (0, import_react31.createElement)($cf1ac5d9fe0e8206$export$b688253958b8dfe7, _extends({
+    asChild: true
+  }, popperScope), trigger);
+});
+var $cb5cc270b50c6fcd$var$PORTAL_NAME = "PopoverPortal";
+var [$cb5cc270b50c6fcd$var$PortalProvider, $cb5cc270b50c6fcd$var$usePortalContext] = $cb5cc270b50c6fcd$var$createPopoverContext($cb5cc270b50c6fcd$var$PORTAL_NAME, {
+  forceMount: void 0
+});
+var $cb5cc270b50c6fcd$export$dd679ffb4362d2d4 = (props2) => {
+  const { __scopePopover, forceMount, children, container } = props2;
+  const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$PORTAL_NAME, __scopePopover);
+  return /* @__PURE__ */ (0, import_react31.createElement)($cb5cc270b50c6fcd$var$PortalProvider, {
+    scope: __scopePopover,
+    forceMount
+  }, /* @__PURE__ */ (0, import_react31.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+    present: forceMount || context.open
+  }, /* @__PURE__ */ (0, import_react31.createElement)($f1701beae083dbae$export$602eac185826482c, {
+    asChild: true,
+    container
+  }, children)));
+};
+var $cb5cc270b50c6fcd$var$CONTENT_NAME = "PopoverContent";
+var $cb5cc270b50c6fcd$export$d7e1f420b25549ff = /* @__PURE__ */ (0, import_react31.forwardRef)((props2, forwardedRef) => {
+  const portalContext = $cb5cc270b50c6fcd$var$usePortalContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
+  const { forceMount = portalContext.forceMount, ...contentProps } = props2;
+  const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
+  return /* @__PURE__ */ (0, import_react31.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+    present: forceMount || context.open
+  }, context.modal ? /* @__PURE__ */ (0, import_react31.createElement)($cb5cc270b50c6fcd$var$PopoverContentModal, _extends({}, contentProps, {
+    ref: forwardedRef
+  })) : /* @__PURE__ */ (0, import_react31.createElement)($cb5cc270b50c6fcd$var$PopoverContentNonModal, _extends({}, contentProps, {
+    ref: forwardedRef
+  })));
+});
+var $cb5cc270b50c6fcd$var$PopoverContentModal = /* @__PURE__ */ (0, import_react31.forwardRef)((props2, forwardedRef) => {
+  const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
+  const contentRef = (0, import_react31.useRef)(null);
+  const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, contentRef);
+  const isRightClickOutsideRef = (0, import_react31.useRef)(false);
+  (0, import_react31.useEffect)(() => {
+    const content = contentRef.current;
+    if (content)
+      return hideOthers(content);
+  }, []);
+  return /* @__PURE__ */ (0, import_react31.createElement)(Combination_default, {
+    as: $5e63c961fc1ce211$export$8c6ed5c666ac1360,
+    allowPinchZoom: true
+  }, /* @__PURE__ */ (0, import_react31.createElement)($cb5cc270b50c6fcd$var$PopoverContentImpl, _extends({}, props2, {
+    ref: composedRefs,
+    trapFocus: context.open,
+    disableOutsidePointerEvents: true,
+    onCloseAutoFocus: $e42e1063c40fb3ef$export$b9ecd428b558ff10(props2.onCloseAutoFocus, (event) => {
+      var _context$triggerRef$c;
+      event.preventDefault();
+      if (!isRightClickOutsideRef.current)
+        (_context$triggerRef$c = context.triggerRef.current) === null || _context$triggerRef$c === void 0 || _context$triggerRef$c.focus();
+    }),
+    onPointerDownOutside: $e42e1063c40fb3ef$export$b9ecd428b558ff10(props2.onPointerDownOutside, (event) => {
+      const originalEvent = event.detail.originalEvent;
+      const ctrlLeftClick = originalEvent.button === 0 && originalEvent.ctrlKey === true;
+      const isRightClick = originalEvent.button === 2 || ctrlLeftClick;
+      isRightClickOutsideRef.current = isRightClick;
+    }, {
+      checkForDefaultPrevented: false
+    }),
+    onFocusOutside: $e42e1063c40fb3ef$export$b9ecd428b558ff10(
+      props2.onFocusOutside,
+      (event) => event.preventDefault(),
+      {
+        checkForDefaultPrevented: false
+      }
+    )
+  })));
+});
+var $cb5cc270b50c6fcd$var$PopoverContentNonModal = /* @__PURE__ */ (0, import_react31.forwardRef)((props2, forwardedRef) => {
+  const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
+  const hasInteractedOutsideRef = (0, import_react31.useRef)(false);
+  const hasPointerDownOutsideRef = (0, import_react31.useRef)(false);
+  return /* @__PURE__ */ (0, import_react31.createElement)($cb5cc270b50c6fcd$var$PopoverContentImpl, _extends({}, props2, {
+    ref: forwardedRef,
+    trapFocus: false,
+    disableOutsidePointerEvents: false,
+    onCloseAutoFocus: (event) => {
+      var _props$onCloseAutoFoc;
+      (_props$onCloseAutoFoc = props2.onCloseAutoFocus) === null || _props$onCloseAutoFoc === void 0 || _props$onCloseAutoFoc.call(props2, event);
+      if (!event.defaultPrevented) {
+        var _context$triggerRef$c2;
+        if (!hasInteractedOutsideRef.current)
+          (_context$triggerRef$c2 = context.triggerRef.current) === null || _context$triggerRef$c2 === void 0 || _context$triggerRef$c2.focus();
+        event.preventDefault();
+      }
+      hasInteractedOutsideRef.current = false;
+      hasPointerDownOutsideRef.current = false;
+    },
+    onInteractOutside: (event) => {
+      var _props$onInteractOuts, _context$triggerRef$c3;
+      (_props$onInteractOuts = props2.onInteractOutside) === null || _props$onInteractOuts === void 0 || _props$onInteractOuts.call(props2, event);
+      if (!event.defaultPrevented) {
+        hasInteractedOutsideRef.current = true;
+        if (event.detail.originalEvent.type === "pointerdown")
+          hasPointerDownOutsideRef.current = true;
+      }
+      const target = event.target;
+      const targetIsTrigger = (_context$triggerRef$c3 = context.triggerRef.current) === null || _context$triggerRef$c3 === void 0 ? void 0 : _context$triggerRef$c3.contains(target);
+      if (targetIsTrigger)
+        event.preventDefault();
+      if (event.detail.originalEvent.type === "focusin" && hasPointerDownOutsideRef.current)
+        event.preventDefault();
+    }
+  }));
+});
+var $cb5cc270b50c6fcd$var$PopoverContentImpl = /* @__PURE__ */ (0, import_react31.forwardRef)((props2, forwardedRef) => {
+  const { __scopePopover, trapFocus, onOpenAutoFocus, onCloseAutoFocus, disableOutsidePointerEvents, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, ...contentProps } = props2;
+  const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, __scopePopover);
+  const popperScope = $cb5cc270b50c6fcd$var$usePopperScope(__scopePopover);
+  $3db38b7d1fb3fe6a$export$b7ece24a22aeda8c();
+  return /* @__PURE__ */ (0, import_react31.createElement)($d3863c46a17e8a28$export$20e40289641fbbb6, {
+    asChild: true,
+    loop: true,
+    trapped: trapFocus,
+    onMountAutoFocus: onOpenAutoFocus,
+    onUnmountAutoFocus: onCloseAutoFocus
+  }, /* @__PURE__ */ (0, import_react31.createElement)($5cb92bef7577960e$export$177fb62ff3ec1f22, {
+    asChild: true,
+    disableOutsidePointerEvents,
+    onInteractOutside,
+    onEscapeKeyDown,
+    onPointerDownOutside,
+    onFocusOutside,
+    onDismiss: () => context.onOpenChange(false)
+  }, /* @__PURE__ */ (0, import_react31.createElement)($cf1ac5d9fe0e8206$export$7c6e2c02157bb7d2, _extends({
+    "data-state": $cb5cc270b50c6fcd$var$getState(context.open),
+    role: "dialog",
+    id: context.contentId
+  }, popperScope, contentProps, {
+    ref: forwardedRef,
+    style: {
+      ...contentProps.style,
+      "--radix-popover-content-transform-origin": "var(--radix-popper-transform-origin)",
+      "--radix-popover-content-available-width": "var(--radix-popper-available-width)",
+      "--radix-popover-content-available-height": "var(--radix-popper-available-height)",
+      "--radix-popover-trigger-width": "var(--radix-popper-anchor-width)",
+      "--radix-popover-trigger-height": "var(--radix-popper-anchor-height)"
+    }
+  }))));
+});
+function $cb5cc270b50c6fcd$var$getState(open) {
+  return open ? "open" : "closed";
+}
+var $cb5cc270b50c6fcd$export$be92b6f5f03c0fe9 = $cb5cc270b50c6fcd$export$5b6b19405a83ff9d;
+var $cb5cc270b50c6fcd$export$41fb9f06171c75f4 = $cb5cc270b50c6fcd$export$7dacb05d26466c3;
+var $cb5cc270b50c6fcd$export$602eac185826482c = $cb5cc270b50c6fcd$export$dd679ffb4362d2d4;
+var $cb5cc270b50c6fcd$export$7c6e2c02157bb7d2 = $cb5cc270b50c6fcd$export$d7e1f420b25549ff;
+
+// src/components/ui/Popover/index.tsx
+var Popover = $cb5cc270b50c6fcd$export$be92b6f5f03c0fe9;
+var PopoverTrigger = $cb5cc270b50c6fcd$export$41fb9f06171c75f4;
+var PopoverContent = import_react32.default.forwardRef(({ className, align = "center", sideOffset = 4, ...props2 }, ref) => /* @__PURE__ */ import_react32.default.createElement($cb5cc270b50c6fcd$export$602eac185826482c, null, /* @__PURE__ */ import_react32.default.createElement(
+  $cb5cc270b50c6fcd$export$7c6e2c02157bb7d2,
+  {
+    ref,
+    align,
+    sideOffset,
+    className: cn("suggestion-container", className),
+    ...props2
+  }
+)));
+PopoverContent.displayName = $cb5cc270b50c6fcd$export$7c6e2c02157bb7d2.displayName;
+var Suggester = ({
+  children,
+  query: query2,
+  renderSuggestions,
+  open,
+  onMouseEnter,
+  onMouseLeave,
+  onSelect
+}) => {
+  const [selected, setSelected] = (0, import_react32.useState)({});
+  const suggestions = renderSuggestions(query2);
+  const selectNext = () => {
+    setSelected((prev) => {
+      if (prev.index === void 0 || prev.index + 1 >= suggestions.length) {
+        return { text: suggestions[0], index: 0 };
+      }
+      return {
+        text: suggestions[prev.index + 1],
+        index: prev.index + 1
+      };
+    });
+  };
+  const selectPrev = () => {
+    setSelected((prev) => {
+      if (prev.index === void 0 || prev.index - 1 < 0) {
+        const i = suggestions.length - 1;
+        return { text: suggestions[i], index: i };
+      }
+      return {
+        text: suggestions[prev.index - 1],
+        index: prev.index - 1
+      };
+    });
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      return selectNext();
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      return selectPrev();
+    }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      return setSelected({ text: void 0, index: void 0 });
+    }
+  };
+  (0, import_react32.useEffect)(() => {
+    onSelect(selected.text, selected.index);
+  }, [selected]);
+  (0, import_react32.useEffect)(() => {
+    window.addEventListener("keydown", handleKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
+  return /* @__PURE__ */ import_react32.default.createElement(Popover, { open }, /* @__PURE__ */ import_react32.default.createElement(PopoverTrigger, { asChild: true }, children), /* @__PURE__ */ import_react32.default.createElement(
+    PopoverContent,
+    {
+      className: "twcss",
+      onOpenAutoFocus: (e) => e.preventDefault()
+    },
+    renderSuggestions(query2)?.map((v, i) => /* @__PURE__ */ import_react32.default.createElement("div", { key: i, className: "suggestion" }, /* @__PURE__ */ import_react32.default.createElement(
+      "div",
+      {
+        className: `suggestion-item ${selected.index === i ? "is-selected" : ""}`
+      },
+      /* @__PURE__ */ import_react32.default.createElement(
+        "span",
+        {
+          className: "suggestion-highlight",
+          onMouseEnter: (e) => {
+            onMouseEnter(
+              e.currentTarget.textContent,
+              i
+            );
+            setSelected({
+              text: e.currentTarget.textContent,
+              index: i
+            });
+          },
+          onMouseLeave: (e) => {
+            onMouseLeave(
+              e.currentTarget.textContent,
+              i
+            );
+            setSelected({
+              text: void 0,
+              index: void 0
+            });
+          }
+        },
+        v
+      )
+    ))),
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "prompt-instructions flex-nowrap text-nowrap" }, /* @__PURE__ */ import_react32.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react32.default.createElement("span", { className: "prompt-instruction-command" }, "Type [["), /* @__PURE__ */ import_react32.default.createElement("span", null, "to link note")), /* @__PURE__ */ import_react32.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react32.default.createElement("span", { className: "prompt-instruction-command" }, "esc"), /* @__PURE__ */ import_react32.default.createElement("span", null, "to dismiss")))
+  ));
+};
+
+// src/components/Inputs/StringInput/index.tsx
+var StringInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
+  const { ctx: ctx2, plugin: plugin2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react33.useState)(false);
+  const [isSuggestShown, setIsSuggestShown] = (0, import_react33.useState)(false);
+  const [selectedSuggestion, setSelectedSuggestion] = (0, import_react33.useState)();
+  const [query2, setQuery] = (0, import_react33.useState)(propertyValue);
+  const onKeyDown = (e) => {
+    if (e.key === "Escape") {
+      console.log("esc");
+      setIsSuggestShown(false);
+    }
+  };
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react33.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: propertyValue ?? dvRenderNullAs,
+        className: "h-full min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset]",
+        onClick: () => {
+          if (!isLocked2) {
+            setIsEditing(true);
+            setIsSuggestShown(true);
+          }
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react33.default.createElement(
+    Suggester,
+    {
+      open: isSuggestShown,
+      query: query2,
+      renderSuggestions: (q) => {
+        const suggestions = (
+          // @ts-ignore
+          app.metadataCache.getFrontmatterPropertyValuesForKey(
+            propertyName
+          )
+        );
+        if (!suggestions || suggestions?.length === 0)
+          return;
+        return suggestions.filter((s2) => s2.startsWith(q));
+      },
+      onMouseEnter: (text) => {
+        setSelectedSuggestion(text);
+      },
+      onMouseLeave: () => setSelectedSuggestion(null),
+      onSelect: (text) => {
+        console.log("selected: ", text);
+        setSelectedSuggestion(text);
+      }
+    },
+    /* @__PURE__ */ import_react33.default.createElement(
+      "input",
+      {
+        type: "text",
+        defaultValue: propertyValue,
+        autoFocus: true,
+        onKeyDown,
+        onChange: (e) => setQuery(e.target.value),
+        onBlur: async (e) => {
+          await updateMetaData(
+            propertyName,
+            selectedSuggestion ?? e.target.value,
+            filePath,
+            plugin2
+          );
+          setIsEditing(false);
+          setIsSuggestShown(false);
+        }
+      }
+    )
+  );
+};
+
+// src/components/Inputs/index.tsx
+var InputSwitch = (props2) => {
+  const { plugin: plugin2, ctx: ctx2 } = useBlock();
+  const { propertyValue, propertyType } = props2;
+  if (props2.propertyType === import_dns.FILE) {
+    return /* @__PURE__ */ import_react34.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: propertyValue,
+        className: "[&_*]:my-0"
+      }
+    );
+  }
+  if (!propertyValue) {
+    console.log(
+      "got propertyType: ",
+      propertyType,
+      "for prop: ",
+      propertyValue
+    );
+    switch (propertyType) {
+      case "aliases":
+      case "text":
+      case "object": {
+        return /* @__PURE__ */ import_react34.default.createElement(StringInput, { ...props2 });
+      }
+      case "checkbox": {
+        return /* @__PURE__ */ import_react34.default.createElement(BooleanInput, { ...props2 });
+      }
+      case "date": {
+        return /* @__PURE__ */ import_react34.default.createElement(
+          DateTimeInput,
+          {
+            hasTime: false,
+            ...props2
+          }
+        );
+      }
+      case "datetime": {
+        return /* @__PURE__ */ import_react34.default.createElement(
+          DateTimeInput,
+          {
+            hasTime: true,
+            ...props2
+          }
+        );
+      }
+      case "multitext": {
+        return /* @__PURE__ */ import_react34.default.createElement(
+          ArrayInput,
+          {
+            ...props2
+          }
+        );
+      }
+      case "number": {
+        return /* @__PURE__ */ import_react34.default.createElement(NumberInput, { ...props2 });
+      }
+      case "tags": {
+        return /* @__PURE__ */ import_react34.default.createElement(
+          ArrayInput,
+          {
+            ...props2
+          }
+        );
+      }
+      default: {
+        return /* @__PURE__ */ import_react34.default.createElement(StringInput, { ...props2 });
+      }
+    }
+  }
+  console.log(
+    "property type: ",
+    typeof propertyValue,
+    "for: ",
+    propertyValue
+  );
+  switch (typeof propertyValue) {
+    case "string":
+      return /* @__PURE__ */ import_react34.default.createElement(StringInput, { ...props2 });
+    case "number":
+      return /* @__PURE__ */ import_react34.default.createElement(NumberInput, { ...props2 });
+    case "object":
+      if (Array.isArray(propertyValue)) {
+        return /* @__PURE__ */ import_react34.default.createElement(
+          ArrayInput,
+          {
+            ...props2
+          }
+        );
+      }
+      if (DateTime.isDateTime(propertyValue)) {
+        const hasTime = isDateWithTime(propertyValue);
+        return /* @__PURE__ */ import_react34.default.createElement(
+          DateTimeInput,
+          {
+            hasTime,
+            ...props2
+          }
+        );
+      }
+      return /* @__PURE__ */ import_react34.default.createElement("div", null, "[Object object]");
+    case "boolean":
+      return /* @__PURE__ */ import_react34.default.createElement(BooleanInput, { ...props2 });
+    default:
+      return /* @__PURE__ */ import_react34.default.createElement(
+        Markdown,
+        {
+          app: plugin2.app,
+          filePath: ctx2.sourcePath,
+          plainText: propertyValue ?? "null",
+          className: "h-full min-h-4 w-full break-keep [&_*]:my-0"
+        }
+      );
+  }
+};
+
 // src/components/App.tsx
 var PropertyIcon = ({
   propertyType
 }) => {
   switch (propertyType) {
     case "aliases": {
-      return /* @__PURE__ */ import_react10.default.createElement(Forward, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Forward, { style: iconStyle });
     }
     case "checkbox": {
-      return /* @__PURE__ */ import_react10.default.createElement(SquareCheckBig, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(SquareCheckBig, { style: iconStyle });
     }
     case "date": {
-      return /* @__PURE__ */ import_react10.default.createElement(Calendar, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Calendar, { style: iconStyle });
     }
     case "datetime": {
-      return /* @__PURE__ */ import_react10.default.createElement(Clock, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Clock, { style: iconStyle });
     }
     case "multitext": {
-      return /* @__PURE__ */ import_react10.default.createElement(List, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(List, { style: iconStyle });
     }
     case "number": {
-      return /* @__PURE__ */ import_react10.default.createElement(Binary, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Binary, { style: iconStyle });
     }
     case "tags": {
-      return /* @__PURE__ */ import_react10.default.createElement(Tags, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Tags, { style: iconStyle });
     }
     case "text": {
-      return /* @__PURE__ */ import_react10.default.createElement(Text, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Text, { style: iconStyle });
     }
     case "file": {
-      return /* @__PURE__ */ import_react10.default.createElement(File, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(File, { style: iconStyle });
     }
     case "inline": {
-      return /* @__PURE__ */ import_react10.default.createElement(ScanText, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(ScanText, { style: iconStyle });
     }
     case "object": {
-      return /* @__PURE__ */ import_react10.default.createElement(Braces, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Braces, { style: iconStyle });
     }
     default: {
-      return /* @__PURE__ */ import_react10.default.createElement(Text, { style: iconStyle });
+      return /* @__PURE__ */ import_react35.default.createElement(Text, { style: iconStyle });
     }
   }
 };
@@ -37885,15 +42442,15 @@ var useBlock = create()((set) => ({
 }));
 var App6 = (props) => {
   const { data, getSectionInfo, settings, plugin, ctx } = props;
-  const [queryResults, setQueryResults] = (0, import_react10.useState)();
-  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react10.useState)(-1);
-  const [dvErr, setDvErr] = (0, import_react10.useState)();
+  const [queryResults, setQueryResults] = (0, import_react35.useState)();
+  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react35.useState)(-1);
+  const [dvErr, setDvErr] = (0, import_react35.useState)();
   const { setBlockState } = useBlock();
-  const [isLocked, setIsLocked] = (0, import_react10.useState)(false);
-  const [currentPage, setCurrentPage] = (0, import_react10.useState)(1);
-  const [rowsPerPage, setRowsPerPage] = (0, import_react10.useState)(2);
-  const startIndex = (currentPage - 1) * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
+  const [isLocked, setIsLocked] = (0, import_react35.useState)(false);
+  const [currentPage, setCurrentPage] = (0, import_react35.useState)(1);
+  const [rowsPerPage, setRowsPerPage] = (0, import_react35.useState)(Infinity);
+  const startIndex = rowsPerPage === Infinity ? 0 : (currentPage - 1) * rowsPerPage;
+  const endIndex = rowsPerPage === Infinity ? queryResults?.values?.length : startIndex + rowsPerPage;
   const currentRows = queryResults?.values?.slice(startIndex, endIndex);
   const reg = new RegExp(/\n^---$\n/gm);
   const { blockId, query: preQuery } = getBlockId(data);
@@ -37923,7 +42480,7 @@ var App6 = (props) => {
     }
     safeSetQueryResults(qr.value);
   };
-  (0, import_react10.useEffect)(() => {
+  (0, import_react35.useEffect)(() => {
     setBlockState((prev) => ({
       ...prev,
       data,
@@ -37959,16 +42516,16 @@ var App6 = (props) => {
       );
     };
   }, []);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react35.useEffect)(() => {
     console.log("queryResults changed: ", queryResults);
     if (!queryResults)
       return;
     setFileHeaderIndex(findFileHeaderIndex(queryResults.headers));
   }, [queryResults]);
   if (!queryResults || fileHeaderIndex === -1) {
-    return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react10.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react10.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
+    return /* @__PURE__ */ import_react35.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react35.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react35.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react35.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react35.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react35.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
   }
-  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react10.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react10.default.createElement("thead", null, false, /* @__PURE__ */ import_react10.default.createElement("tr", null, false, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react35.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react35.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react35.default.createElement("thead", null, false, /* @__PURE__ */ import_react35.default.createElement("tr", null, false, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react35.default.createElement(
     Th,
     {
       key: i + "table-header",
@@ -37976,7 +42533,7 @@ var App6 = (props) => {
       hideFileLink,
       propertyName: h
     }
-  )))), /* @__PURE__ */ import_react10.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react10.default.createElement("tr", { key: i + "-table-body-row" }, false, r2?.map((d, k) => /* @__PURE__ */ import_react10.default.createElement(
+  )))), /* @__PURE__ */ import_react35.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react35.default.createElement("tr", { key: i + "-table-body-row" }, false, r2?.map((d, k) => /* @__PURE__ */ import_react35.default.createElement(
     Td,
     {
       key: k + "table-data",
@@ -37987,33 +42544,21 @@ var App6 = (props) => {
       filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path,
       isLocked
     }
-  )))))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react10.default.createElement(
-    Pagination,
+  )))))), /* @__PURE__ */ import_react35.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react35.default.createElement(
+    PaginationNav,
     {
       totalRows: queryResults.values.length,
       rowsPerPage,
       currentPage,
       setCurrentPage
     }
-  ), /* @__PURE__ */ import_react10.default.createElement(
-    "input",
+  ), /* @__PURE__ */ import_react35.default.createElement(
+    PaginationSize,
     {
-      type: "number",
-      step: 1,
-      min: 0,
-      defaultValue: rowsPerPage,
-      "aria-label": "Page size",
-      placeholder: "no limit",
-      className: "w-8",
-      onBlur: (e) => setRowsPerPage((prev) => {
-        const num = Number(e.target.value);
-        if (!num || Number.isNaN(num)) {
-          return prev;
-        }
-        return num;
-      })
+      rowsPerPage,
+      setRowsPerPage
     }
-  ), /* @__PURE__ */ import_react10.default.createElement(SettingsGear, { blockId }), /* @__PURE__ */ import_react10.default.createElement(
+  ), /* @__PURE__ */ import_react35.default.createElement(SettingsGear, { blockId }), /* @__PURE__ */ import_react35.default.createElement(
     LockToggle,
     {
       isLocked,
@@ -38021,13 +42566,44 @@ var App6 = (props) => {
     }
   )));
 };
-var Pagination = ({
+var PaginationSize = ({
+  rowsPerPage: rowsPerPage2,
+  setRowsPerPage: setRowsPerPage2
+}) => {
+  const [isEditing, setIsEditing] = (0, import_react35.useState)(false);
+  if (!isEditing)
+    return /* @__PURE__ */ import_react35.default.createElement("div", { className: "clickable-icon", onClick: () => setIsEditing(true) }, rowsPerPage2, " per page");
+  return /* @__PURE__ */ import_react35.default.createElement(
+    "input",
+    {
+      type: "number",
+      autoFocus: true,
+      step: 1,
+      min: 0,
+      defaultValue: rowsPerPage2,
+      "aria-label": "Page size",
+      placeholder: "no limit",
+      className: "w-8",
+      onBlur: (e) => {
+        setRowsPerPage2((prev) => {
+          const num = Number(e.target.value);
+          if (!num || Number.isNaN(num)) {
+            return Infinity;
+          }
+          return num;
+        });
+        setIsEditing(false);
+      }
+    }
+  );
+};
+var PaginationNav = ({
   totalRows,
   rowsPerPage: rowsPerPage2,
   currentPage: currentPage2,
   setCurrentPage: setCurrentPage2
 }) => {
-  const totalPages = Math.ceil(totalRows / rowsPerPage2);
+  const totalPages = rowsPerPage2 === Infinity ? 1 : Math.ceil(totalRows / rowsPerPage2);
   const goPrev = () => {
     if (currentPage2 > 1) {
       setCurrentPage2((prev) => prev - 1);
@@ -38048,21 +42624,21 @@ var Pagination = ({
       setCurrentPage2(totalPages);
     }
   };
-  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-center" }, /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goFirst, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronFirst, { className: "svg-icon" })), /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goPrev, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronLeft, { className: "svg-icon" })), /* @__PURE__ */ import_react10.default.createElement("span", { className: "px-1" }, `${currentPage2} of ${totalPages}`), /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goNext, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronRight, { className: "svg-icon" })), /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goLast, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronLast, { className: "svg-icon" })));
+  return /* @__PURE__ */ import_react35.default.createElement("div", { className: "flex items-center justify-center" }, /* @__PURE__ */ import_react35.default.createElement("div", { onClick: goFirst, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react35.default.createElement(ChevronFirst, { className: "svg-icon" })), /* @__PURE__ */ import_react35.default.createElement("div", { onClick: goPrev, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react35.default.createElement(ChevronLeft, { className: "svg-icon" })), /* @__PURE__ */ import_react35.default.createElement("span", { className: "px-1" }, `${currentPage2} of ${totalPages}`), /* @__PURE__ */ import_react35.default.createElement("div", { onClick: goNext, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react35.default.createElement(ChevronRight, { className: "svg-icon" })), /* @__PURE__ */ import_react35.default.createElement("div", { onClick: goLast, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react35.default.createElement(ChevronLast, { className: "svg-icon" })));
 };
 var LockToggle = ({
   isLocked: isLocked2,
   toggleLock
 }) => {
   const Icon = isLocked2 ? Lock : LockOpen;
-  return /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react35.default.createElement(
     "div",
     {
       onClick: () => toggleLock(),
       "aria-label": "Lock editing",
       className: "clickable-icon side-dock-ribbon-action"
     },
-    /* @__PURE__ */ import_react10.default.createElement(
+    /* @__PURE__ */ import_react35.default.createElement(
       Icon,
       {
         className: `svg-icon lucide-lock ${!isLocked2 ? "text-muted opacity-50" : "text-inherit opacity-100"}`
@@ -38071,7 +42647,7 @@ var LockToggle = ({
   );
 };
 var SettingsGear = ({ blockId: blockId2 }) => {
-  return /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react35.default.createElement(
     "div",
     {
       "aria-label": blockId2 ? `id: ${blockId2}` : `First specify an id to configure settings
@@ -38081,7 +42657,7 @@ FROM buzz
 ID my-id`,
       className: "clickable-icon side-dock-ribbon-action"
     },
-    /* @__PURE__ */ import_react10.default.createElement(Settings, { className: "svg-icon lucide-settings" })
+    /* @__PURE__ */ import_react35.default.createElement(Settings, { className: "svg-icon lucide-settings" })
   );
 };
 var Th = ({
@@ -38096,20 +42672,20 @@ var Th = ({
   const propertyType = prePropertyType ?? "inline";
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react35.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react35.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react35.default.createElement(
     Markdown,
     {
       app: plugin2.app,
       filePath: ctx2.sourcePath,
       plainText: propertyName
     }
-  ), "\xA0", /* @__PURE__ */ import_react10.default.createElement(
+  ), "\xA0", /* @__PURE__ */ import_react35.default.createElement(
     "div",
     {
       "aria-label": propertyType,
       className: "flex items-center justify-center"
     },
-    /* @__PURE__ */ import_react10.default.createElement(PropertyIcon, { propertyType })
+    /* @__PURE__ */ import_react35.default.createElement(PropertyIcon, { propertyType })
   )));
 };
 var Td = (props2) => {
@@ -38127,7 +42703,7 @@ var Td = (props2) => {
   const propValue = tryToMarkdownLink(propertyValue);
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react10.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full" }, /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react35.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react35.default.createElement("div", { className: "flex h-full w-full" }, /* @__PURE__ */ import_react35.default.createElement(
     InputSwitch,
     {
       ...props2,
@@ -38136,392 +42712,6 @@ var Td = (props2) => {
       propertyType
     }
   )));
-};
-var InputSwitch = (props2) => {
-  const { plugin: plugin2, ctx: ctx2 } = useBlock();
-  const { propertyValue, propertyType } = props2;
-  if (props2.propertyType === FILE) {
-    return /* @__PURE__ */ import_react10.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: propertyValue,
-        className: "[&_*]:my-0"
-      }
-    );
-  }
-  if (!propertyValue) {
-    console.log(
-      "got propertyType: ",
-      propertyType,
-      "for prop: ",
-      propertyValue
-    );
-    switch (propertyType) {
-      case "aliases":
-      case "text":
-      case "object": {
-        return /* @__PURE__ */ import_react10.default.createElement(StringInput, { ...props2 });
-      }
-      case "checkbox": {
-        return /* @__PURE__ */ import_react10.default.createElement(BooleanInput, { ...props2 });
-      }
-      case "date": {
-        return /* @__PURE__ */ import_react10.default.createElement(
-          DateTimeInput,
-          {
-            hasTime: false,
-            ...props2
-          }
-        );
-      }
-      case "datetime": {
-        return /* @__PURE__ */ import_react10.default.createElement(
-          DateTimeInput,
-          {
-            hasTime: true,
-            ...props2
-          }
-        );
-      }
-      case "multitext": {
-        return /* @__PURE__ */ import_react10.default.createElement(
-          ArrayInput,
-          {
-            ...props2
-          }
-        );
-      }
-      case "number": {
-        return /* @__PURE__ */ import_react10.default.createElement(NumberInput, { ...props2 });
-      }
-      case "tags": {
-        return /* @__PURE__ */ import_react10.default.createElement(
-          ArrayInput,
-          {
-            ...props2
-          }
-        );
-      }
-      default: {
-        return /* @__PURE__ */ import_react10.default.createElement(StringInput, { ...props2 });
-      }
-    }
-  }
-  console.log(
-    "property type: ",
-    typeof propertyValue,
-    "for: ",
-    propertyValue
-  );
-  switch (typeof propertyValue) {
-    case "string":
-      return /* @__PURE__ */ import_react10.default.createElement(StringInput, { ...props2 });
-    case "number":
-      return /* @__PURE__ */ import_react10.default.createElement(NumberInput, { ...props2 });
-    case "object":
-      if (Array.isArray(propertyValue)) {
-        return /* @__PURE__ */ import_react10.default.createElement(
-          ArrayInput,
-          {
-            ...props2
-          }
-        );
-      }
-      if (DateTime.isDateTime(propertyValue)) {
-        const hasTime = isDateWithTime(propertyValue);
-        return /* @__PURE__ */ import_react10.default.createElement(
-          DateTimeInput,
-          {
-            hasTime,
-            ...props2
-          }
-        );
-      }
-      return /* @__PURE__ */ import_react10.default.createElement("div", null, "[Object object]");
-    case "boolean":
-      return /* @__PURE__ */ import_react10.default.createElement(BooleanInput, { ...props2 });
-    default:
-      return /* @__PURE__ */ import_react10.default.createElement(
-        Markdown,
-        {
-          app: plugin2.app,
-          filePath: ctx2.sourcePath,
-          plainText: propertyValue ?? "null",
-          className: "h-full min-h-4 w-full break-keep [&_*]:my-0"
-        }
-      );
-  }
-};
-var StringInput = (props2) => {
-  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react10.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: propertyValue ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset]",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react10.default.createElement(
-    "input",
-    {
-      type: "text",
-      defaultValue: propertyValue,
-      autoFocus: true,
-      onBlur: async (e) => {
-        await updateMetaData(
-          propertyName,
-          e.target.value,
-          filePath,
-          plugin2
-        );
-        setIsEditing(false);
-      }
-    }
-  );
-};
-var NumberInput = (props2) => {
-  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react10.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: propertyValue?.toString() ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react10.default.createElement(
-    "input",
-    {
-      type: "number",
-      defaultValue: propertyValue,
-      autoFocus: true,
-      onBlur: async (e) => {
-        const num = Number(e.target.value);
-        if (Number.isNaN(num))
-          return;
-        await updateMetaData(propertyName, num, filePath, plugin2);
-        setIsEditing(false);
-      }
-    }
-  );
-};
-var ArrayInput = (props2) => {
-  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
-  const { plugin: plugin2 } = useBlock();
-  const updateProperty = async (itemIndex, newValue, allowFalsey) => {
-    const newArrayValue = [...propertyValue];
-    newArrayValue[itemIndex] = newValue;
-    const filtered = allowFalsey ? newArrayValue : newArrayValue.filter((v) => !!v);
-    await updateMetaData(propertyName, filtered, filePath, plugin2);
-  };
-  return /* @__PURE__ */ import_react10.default.createElement("ul", { className: "m-0 flex flex-col gap-1 p-0" }, propertyValue?.map((item, i) => /* @__PURE__ */ import_react10.default.createElement("li", { key: i, className: "flex" }, "- ", /* @__PURE__ */ import_react10.default.createElement(
-    ArrayInputItem,
-    {
-      ...props2,
-      itemValue: item,
-      itemIndex: i,
-      updateProperty
-    }
-  ))), /* @__PURE__ */ import_react10.default.createElement("li", null, /* @__PURE__ */ import_react10.default.createElement(
-    "div",
-    {
-      className: `clickable-icon w-fit ${isLocked2 && "cursor-not-allowed opacity-50"}`,
-      "aria-label": "New item",
-      onClick: async () => {
-        if (isLocked2)
-          return;
-        await updateProperty(propertyValue.length, "", true);
-      }
-    },
-    /* @__PURE__ */ import_react10.default.createElement(Plus, { className: "svg-icon" })
-  )));
-};
-var ArrayInputItem = (props2) => {
-  const { isLocked: isLocked2, itemValue, itemIndex, propertyType, updateProperty } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
-  const plainText = tryToMarkdownLink(itemValue);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react10.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: propertyType === "tags" ? "#" + plainText : plainText,
-        className: "min-h-4 w-full [&_*]:my-0",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react10.default.createElement(
-    "input",
-    {
-      type: "text",
-      defaultValue: itemValue,
-      autoFocus: true,
-      onBlur: async (e) => {
-        await updateProperty(itemIndex, e.target.value);
-        setIsEditing(false);
-      }
-    }
-  );
-};
-var BooleanInput = (props2) => {
-  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
-  const { plugin: plugin2 } = useBlock();
-  return /* @__PURE__ */ import_react10.default.createElement(
-    "input",
-    {
-      type: "checkbox",
-      disabled: !!isLocked2,
-      defaultChecked: !!propertyValue,
-      className: isLocked2 && "opacity-50",
-      onClick: (e) => {
-        updateMetaData(
-          propertyName,
-          e.currentTarget.checked,
-          filePath,
-          plugin2
-        );
-      }
-    }
-  );
-};
-var DateInput = (props2) => {
-  const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
-  const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react10.useState)({
-    formattedDate: null,
-    inputDate: null
-  });
-  const locale = currentLocale();
-  const { defaultDateFormat } = app.plugins.plugins?.dataview?.settings;
-  (0, import_react10.useEffect)(() => {
-    if (!DateTime.isDateTime(propertyValue)) {
-      setDateStrings({
-        formattedDate: null,
-        inputDate: null
-      });
-    }
-    if (DateTime.isDateTime(propertyValue)) {
-      const formattedDate2 = propertyValue.toLocal().toFormat(defaultDateFormat, { locale });
-      const inputDate2 = propertyValue.toLocal().toFormat("yyyy-MM-dd");
-      setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
-    }
-  }, [propertyValue]);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react10.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: formattedDate ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react10.default.createElement(
-    "input",
-    {
-      type: "date",
-      max: "9999-12-31",
-      defaultValue: inputDate,
-      autoFocus: true,
-      onBlur: async (e) => {
-        await updateMetaData(
-          propertyName,
-          e.target.value,
-          filePath,
-          plugin2
-        );
-        setIsEditing(false);
-      }
-    }
-  );
-};
-var DateTimeInput = (props2) => {
-  const { propertyName, propertyValue, filePath, isLocked: isLocked2, hasTime } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
-  const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react10.useState)({
-    formattedDate: null,
-    inputDate: null
-  });
-  const locale = currentLocale();
-  const dvSettings = app.plugins.plugins?.dataview?.settings;
-  const defaultFormat = hasTime ? dvSettings.defaultDateTimeFormat : dvSettings.defaultDateFormat;
-  const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
-  const max = hasTime ? "9999-12-31T23:59" : "9999-12-31";
-  (0, import_react10.useEffect)(() => {
-    if (!DateTime.isDateTime(propertyValue)) {
-      setDateStrings({
-        formattedDate: null,
-        inputDate: null
-      });
-    }
-    if (DateTime.isDateTime(propertyValue)) {
-      const formattedDate2 = propertyValue.toLocal().toFormat(defaultFormat, { locale });
-      const inputDate2 = propertyValue.toLocal().toFormat(inputFormat);
-      setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
-    }
-  }, [propertyValue]);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react10.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: formattedDate ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react10.default.createElement(
-    "input",
-    {
-      type: hasTime ? "datetime-local" : "date",
-      defaultValue: inputDate,
-      max,
-      autoFocus: true,
-      onBlur: async (e) => {
-        await updateMetaData(
-          propertyName,
-          e.target.value,
-          filePath,
-          plugin2
-        );
-        setIsEditing(false);
-      }
-    }
-  );
 };
 
 // src/main.tsx
@@ -38557,7 +42747,7 @@ var DataEdit2 = class extends import_obsidian8.Plugin {
       const root = (0, import_client3.createRoot)(e);
       root.render(
         // <React.StrictMode>
-        /* @__PURE__ */ import_react11.default.createElement(
+        /* @__PURE__ */ import_react36.default.createElement(
           App6,
           {
             data: s2,

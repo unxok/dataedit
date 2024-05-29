@@ -8,10 +8,10 @@ json:
   key: asdlff
 multitext:
   - asdffff
-  - asdfdfd
 num: 4566
 aliases:
   - asdeeffe
+  - anotheralias
 dotnotation: "123"
 category: cat1
 tags:
@@ -22,7 +22,7 @@ date: 5550-11-06
 datetime: 2302-06-19T02:08
 embed: "![[demo.gif|demo.gif]]"
 ---
- 
+ [[]]
 
 ![[demo.gif]]
 
@@ -67,7 +67,7 @@ func('world')
 
 
 ```dataedit
-TABLE embed, date, datetime, bool, tags, multitext, json.key, obj.key, test as testAlias, text, num
+TABLE test, date, datetime, bool, tags, multitext, json.key, obj.key, test as testAlias, text, num
 ```
 
 

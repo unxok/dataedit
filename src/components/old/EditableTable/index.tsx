@@ -11,12 +11,12 @@ import {
 	getPropertyType,
 	iconStyle,
 	tryToMarkdownLink,
-} from "../../lib/utils";
+} from "../../../lib/utils";
 import {
 	CommonEditableProps,
 	QueryResults,
 	UpdateMetaData,
-} from "../../lib/types";
+} from "../../../lib/types";
 import { PropertyIcon } from "../../components/PropertyIcon";
 import { Error } from "../Error";
 import { File, Settings as SettingsIcon } from "lucide-react";
@@ -35,7 +35,7 @@ import {
 	Settings,
 	SettingsSchema,
 	defaultSettings,
-} from "../PluginSettings";
+} from "../../PluginSettings";
 
 export const EditableTable = ({
 	data,

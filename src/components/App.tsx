@@ -50,6 +50,7 @@ import { ClassValue } from "clsx";
 import { create } from "zustand";
 import { FILE } from "@/lib/consts";
 import { DateTime } from "luxon";
+import { InputSwitch } from "./Inputs";
 // import { NumberInput } from "./Inputs";
 
 type ObsdianPropertyType =
@@ -184,9 +185,13 @@ export const App = (props: {
 	const { setBlockState } = useBlock();
 	const [isLocked, setIsLocked] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(2);
-	const startIndex = (currentPage - 1) * rowsPerPage;
-	const endIndex = startIndex + rowsPerPage;
+	const [rowsPerPage, setRowsPerPage] = useState(Infinity);
+	const startIndex =
+		rowsPerPage === Infinity ? 0 : (currentPage - 1) * rowsPerPage;
+	const endIndex =
+		rowsPerPage === Infinity
+			? queryResults?.values?.length
+			: startIndex + rowsPerPage;
 	const currentRows = queryResults?.values?.slice(startIndex, endIndex);
 
 	const reg = new RegExp(/\n^---$\n/gm);
@@ -347,29 +352,15 @@ export const App = (props: {
 				</tbody>
 			</table>
 			<div className="flex w-full flex-row items-center p-2">
-				<Pagination
+				<PaginationNav
 					totalRows={queryResults.values.length}
 					rowsPerPage={rowsPerPage}
 					currentPage={currentPage}
 					setCurrentPage={setCurrentPage}
 				/>
-				<input
-					type="number"
-					step={1}
-					min={0}
-					defaultValue={rowsPerPage}
-					aria-label="Page size"
-					placeholder="no limit"
-					className="w-8"
-					onBlur={(e) =>
-						setRowsPerPage((prev) => {
-							const num = Number(e.target.value);
-							if (!num || Number.isNaN(num)) {
-								return prev;
-							}
-							return num;
-						})
-					}
+				<PaginationSize
+					rowsPerPage={rowsPerPage}
+					setRowsPerPage={setRowsPerPage}
 				/>
 				<SettingsGear blockId={blockId} />
 				<LockToggle
@@ -381,7 +372,47 @@ export const App = (props: {
 	);
 };
 
-const Pagination = ({
+const PaginationSize = ({
+	rowsPerPage,
+	setRowsPerPage,
+}: {
+	rowsPerPage: number;
+	setRowsPerPage: (value: React.SetStateAction<number>) => void;
+}) => {
+	const [isEditing, setIsEditing] = useState(false);
+
+	if (!isEditing)
+		return (
+			<div className="clickable-icon" onClick={() => setIsEditing(true)}>
+				{rowsPerPage} per page
+			</div>
+		);
+
+	return (
+		<input
+			type="number"
+			autoFocus
+			step={1}
+			min={0}
+			defaultValue={rowsPerPage}
+			aria-label="Page size"
+			placeholder="no limit"
+			className="w-8"
+			onBlur={(e) => {
+				setRowsPerPage((prev) => {
+					const num = Number(e.target.value);
+					if (!num || Number.isNaN(num)) {
+						return Infinity;
+					}
+					return num;
+				});
+				setIsEditing(false);
+			}}
+		/>
+	);
+};
+
+const PaginationNav = ({
 	totalRows,
 	rowsPerPage,
 	currentPage,
@@ -392,7 +423,8 @@ const Pagination = ({
 	currentPage: number;
 	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-	const totalPages = Math.ceil(totalRows / rowsPerPage);
+	const totalPages =
+		rowsPerPage === Infinity ? 1 : Math.ceil(totalRows / rowsPerPage);
 
 	const goPrev = () => {
 		if (currentPage > 1) {
@@ -515,7 +547,7 @@ const Th = ({
 	);
 };
 
-type TdProps<T> = {
+export type TdProps<T> = {
 	propertyName: string;
 	propertyValue: T;
 	className?: ClassValue;
@@ -557,473 +589,71 @@ const Td = (props: TdProps<unknown>) => {
 			</div>
 		</td>
 	);
-
-	// return (
-	// 	<td className={cn(className)}>
-	// 		<div className="flex h-full w-full">
-	// 			{propertyType === "text" || isFileProp ? (
-	// 				<TextInput {...props} propertyName={propName}>
-	// 					{content}
-	// 				</TextInput>
-	// 			) : isFileProp ? (
-	// 				<Markdown
-	// 					app={plugin.app}
-	// 					filePath={ctx.sourcePath}
-	// 					plainText={children}
-	// 				/>
-	// 			) : (
-	// 				<div>{content}</div>
-	// 			)}
-	// 		</div>
-	// 	</td>
-	// );
 };
 
-type InputSwitchProps<T> = {
-	propertyType: string;
-} & TdProps<T>;
-const InputSwitch = (props: InputSwitchProps<unknown>) => {
-	const { plugin, ctx } = useBlock();
-	const { propertyValue, propertyType } = props;
-	if (props.propertyType === FILE) {
-		return (
-			<Markdown
-				app={plugin.app}
-				filePath={ctx.sourcePath}
-				plainText={propertyValue as string}
-				className="[&_*]:my-0"
-			/>
-		);
-	}
+// const DateInput = (props: InputSwitchProps<DateTime>) => {
+// 	const { propertyName, propertyValue, filePath, isLocked } = props;
+// 	const { ctx, plugin } = useBlock();
+// 	const [isEditing, setIsEditing] = useState(false);
+// 	const [{ formattedDate, inputDate }, setDateStrings] = useState({
+// 		formattedDate: null,
+// 		inputDate: null,
+// 	});
+// 	const locale = currentLocale();
+// 	// @ts-ignore
+// 	const { defaultDateFormat } = app.plugins.plugins?.dataview?.settings;
 
-	// TODO if value is falsey, use property type to render input
-	// it CANNOT be inline if it is falsey
-	if (!propertyValue) {
-		console.log(
-			"got propertyType: ",
-			propertyType,
-			"for prop: ",
-			propertyValue,
-		);
-		switch (propertyType) {
-			case "aliases":
-			case "text":
-			case "object": {
-				return <StringInput {...(props as InputSwitchProps<string>)} />;
-			}
-			case "checkbox": {
-				return (
-					<BooleanInput {...(props as InputSwitchProps<boolean>)} />
-				);
-			}
-			case "date": {
-				return (
-					<DateTimeInput
-						hasTime={false}
-						{...(props as InputSwitchProps<DateTime>)}
-					/>
-				);
-			}
-			case "datetime": {
-				return (
-					<DateTimeInput
-						hasTime={true}
-						{...(props as InputSwitchProps<DateTime>)}
-					/>
-				);
-			}
-			case "multitext": {
-				return (
-					<ArrayInput
-						{...(props as InputSwitchProps<(string | number)[]>)}
-					/>
-				);
-			}
-			case "number": {
-				return <NumberInput {...(props as InputSwitchProps<number>)} />;
-			}
-			case "tags": {
-				return (
-					<ArrayInput
-						{...(props as InputSwitchProps<(string | number)[]>)}
-					/>
-				);
-			}
-			default: {
-				return <StringInput {...(props as InputSwitchProps<string>)} />;
-			}
-		}
-	}
+// 	useEffect(() => {
+// 		if (!DateTime.isDateTime(propertyValue)) {
+// 			setDateStrings({
+// 				formattedDate: null,
+// 				inputDate: null,
+// 			});
+// 		}
+// 		if (DateTime.isDateTime(propertyValue)) {
+// 			const formattedDate = propertyValue
+// 				.toLocal()
+// 				.toFormat(defaultDateFormat, { locale });
+// 			const inputDate = propertyValue.toLocal().toFormat("yyyy-MM-dd");
+// 			setDateStrings({ formattedDate, inputDate });
+// 		}
+// 	}, [propertyValue]);
 
-	// Dataview will sometimes parse property values to a different type than what is defined in the metadataTypeManager
-	// As well, inline fields won't have a type and frontmatter objects will be considered the default of text
-	// So the type of input to render is determined from the value's actual type instead of the property type itself
-	console.log(
-		"property type: ",
-		typeof propertyValue,
-		"for: ",
-		propertyValue,
-	);
-	switch (typeof propertyValue) {
-		case "string":
-			return <StringInput {...(props as InputSwitchProps<string>)} />;
-		case "number":
-			return <NumberInput {...(props as InputSwitchProps<number>)} />;
-		case "object":
-			if (Array.isArray(propertyValue)) {
-				return (
-					<ArrayInput
-						{...(props as InputSwitchProps<(string | number)[]>)}
-					/>
-				);
-			}
+// 	// useEffect(
+// 	// 	() => console.log("inputDateString: ", inputDateString),
+// 	// 	[inputDateString],
+// 	// );
 
-			if (DateTime.isDateTime(propertyValue)) {
-				const hasTime = isDateWithTime(propertyValue);
-				return (
-					<DateTimeInput
-						hasTime={hasTime}
-						{...(props as InputSwitchProps<DateTime>)}
-					/>
-				);
-			}
-			return <div>{"[Object object]"}</div>;
+// 	if (!isEditing || isLocked) {
+// 		return (
+// 			<Markdown
+// 				app={plugin.app}
+// 				filePath={ctx.sourcePath}
+// 				plainText={formattedDate ?? dvRenderNullAs}
+// 				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+// 				onClick={() => {
+// 					!isLocked && setIsEditing(true);
+// 				}}
+// 			/>
+// 		);
+// 	}
 
-		case "boolean":
-			return <BooleanInput {...(props as InputSwitchProps<boolean>)} />;
-		default:
-			return (
-				<Markdown
-					app={plugin.app}
-					filePath={ctx.sourcePath}
-					plainText={(propertyValue as string) ?? "null"}
-					className="h-full min-h-4 w-full break-keep [&_*]:my-0"
-				/>
-			);
-	}
-};
+// 	return (
+// 		<input
+// 			type="date"
+// 			max={"9999-12-31"}
+// 			defaultValue={inputDate}
+// 			autoFocus
+// 			onBlur={async (e) => {
+// 				await updateMetaData(
+// 					propertyName,
+// 					e.target.value,
+// 					filePath,
+// 					plugin,
+// 				);
 
-const StringInput = (props: InputSwitchProps<string>) => {
-	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { ctx, plugin } = useBlock();
-	const [isEditing, setIsEditing] = useState(false);
-
-	if (!isEditing || isLocked) {
-		return (
-			<Markdown
-				app={plugin.app}
-				filePath={ctx.sourcePath}
-				plainText={propertyValue ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset]"
-				onClick={() => {
-					!isLocked && setIsEditing(true);
-				}}
-			/>
-		);
-	}
-
-	return (
-		<input
-			type="text"
-			defaultValue={propertyValue}
-			autoFocus
-			onBlur={async (e) => {
-				// console.log(e.target.value);
-				await updateMetaData(
-					propertyName,
-					e.target.value,
-					filePath,
-					plugin,
-				);
-				setIsEditing(false);
-			}}
-		/>
-	);
-};
-
-const NumberInput = (props: InputSwitchProps<number>) => {
-	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { ctx, plugin } = useBlock();
-	const [isEditing, setIsEditing] = useState(false);
-
-	if (!isEditing || isLocked) {
-		return (
-			<Markdown
-				app={plugin.app}
-				filePath={ctx.sourcePath}
-				plainText={propertyValue?.toString() ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
-				onClick={() => {
-					!isLocked && setIsEditing(true);
-				}}
-			/>
-		);
-	}
-
-	return (
-		<input
-			type="number"
-			defaultValue={propertyValue}
-			autoFocus
-			onBlur={async (e) => {
-				const num = Number(e.target.value);
-				if (Number.isNaN(num)) return;
-				await updateMetaData(propertyName, num, filePath, plugin);
-				setIsEditing(false);
-			}}
-		/>
-	);
-};
-
-const ArrayInput = (props: InputSwitchProps<(string | number)[]>) => {
-	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { plugin } = useBlock();
-
-	const updateProperty = async (
-		itemIndex: number,
-		newValue: string | number,
-		allowFalsey?: boolean,
-	) => {
-		const newArrayValue = [...propertyValue];
-		newArrayValue[itemIndex] = newValue;
-		const filtered = allowFalsey
-			? newArrayValue
-			: newArrayValue.filter((v) => !!v);
-		await updateMetaData(propertyName, filtered, filePath, plugin);
-	};
-
-	return (
-		<ul className="m-0 flex flex-col gap-1 p-0">
-			{propertyValue?.map((item, i) => (
-				<li key={i} className="flex">
-					{"- "}
-					<ArrayInputItem
-						{...props}
-						itemValue={item}
-						itemIndex={i}
-						updateProperty={updateProperty}
-					/>
-				</li>
-			))}
-			<li>
-				<div
-					className={`clickable-icon w-fit ${isLocked && "cursor-not-allowed opacity-50"}`}
-					aria-label="New item"
-					onClick={async () => {
-						if (isLocked) return;
-						await updateProperty(propertyValue.length, "", true);
-					}}
-				>
-					<Plus className="svg-icon" />
-				</div>
-			</li>
-		</ul>
-	);
-};
-
-const ArrayInputItem = (
-	props: InputSwitchProps<(string | number)[]> & {
-		itemValue: string | number;
-		itemIndex: number;
-		updateProperty: (
-			itemIndex: number,
-			newValue: string | number,
-		) => Promise<void>;
-	},
-) => {
-	const { isLocked, itemValue, itemIndex, propertyType, updateProperty } =
-		props;
-	const { ctx, plugin } = useBlock();
-	const [isEditing, setIsEditing] = useState(false);
-	const plainText = tryToMarkdownLink(itemValue);
-
-	if (!isEditing || isLocked) {
-		return (
-			<Markdown
-				app={plugin.app}
-				filePath={ctx.sourcePath}
-				plainText={
-					propertyType === "tags" ? "#" + plainText : plainText
-				}
-				className="min-h-4 w-full [&_*]:my-0"
-				onClick={() => {
-					!isLocked && setIsEditing(true);
-				}}
-			/>
-		);
-	}
-
-	return (
-		<input
-			type="text"
-			defaultValue={itemValue}
-			autoFocus
-			onBlur={async (e) => {
-				// console.log(e.target.value);
-				await updateProperty(itemIndex, e.target.value);
-				setIsEditing(false);
-			}}
-		/>
-	);
-};
-
-const BooleanInput = (props: InputSwitchProps<boolean>) => {
-	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { plugin } = useBlock();
-
-	return (
-		<input
-			type="checkbox"
-			disabled={!!isLocked}
-			defaultChecked={!!propertyValue}
-			className={isLocked && "opacity-50"}
-			onClick={(e) => {
-				updateMetaData(
-					propertyName,
-					e.currentTarget.checked,
-					filePath,
-					plugin,
-				);
-			}}
-		/>
-	);
-};
-
-const DateInput = (props: InputSwitchProps<DateTime>) => {
-	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { ctx, plugin } = useBlock();
-	const [isEditing, setIsEditing] = useState(false);
-	const [{ formattedDate, inputDate }, setDateStrings] = useState({
-		formattedDate: null,
-		inputDate: null,
-	});
-	const locale = currentLocale();
-	// @ts-ignore
-	const { defaultDateFormat } = app.plugins.plugins?.dataview?.settings;
-
-	useEffect(() => {
-		if (!DateTime.isDateTime(propertyValue)) {
-			setDateStrings({
-				formattedDate: null,
-				inputDate: null,
-			});
-		}
-		if (DateTime.isDateTime(propertyValue)) {
-			const formattedDate = propertyValue
-				.toLocal()
-				.toFormat(defaultDateFormat, { locale });
-			const inputDate = propertyValue.toLocal().toFormat("yyyy-MM-dd");
-			setDateStrings({ formattedDate, inputDate });
-		}
-	}, [propertyValue]);
-
-	// useEffect(
-	// 	() => console.log("inputDateString: ", inputDateString),
-	// 	[inputDateString],
-	// );
-
-	if (!isEditing || isLocked) {
-		return (
-			<Markdown
-				app={plugin.app}
-				filePath={ctx.sourcePath}
-				plainText={formattedDate ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
-				onClick={() => {
-					!isLocked && setIsEditing(true);
-				}}
-			/>
-		);
-	}
-
-	return (
-		<input
-			type="date"
-			max={"9999-12-31"}
-			defaultValue={inputDate}
-			autoFocus
-			onBlur={async (e) => {
-				await updateMetaData(
-					propertyName,
-					e.target.value,
-					filePath,
-					plugin,
-				);
-
-				setIsEditing(false);
-			}}
-		/>
-	);
-};
-
-const DateTimeInput = (
-	props: InputSwitchProps<DateTime> & { hasTime: boolean },
-) => {
-	const { propertyName, propertyValue, filePath, isLocked, hasTime } = props;
-	const { ctx, plugin } = useBlock();
-	const [isEditing, setIsEditing] = useState(false);
-	const [{ formattedDate, inputDate }, setDateStrings] = useState({
-		formattedDate: null,
-		inputDate: null,
-	});
-	const locale = currentLocale();
-	const dvSettings: {
-		defaultDateTimeFormat: string;
-		defaultDateFormat: string;
-		// @ts-ignore
-	} = app.plugins.plugins?.dataview?.settings;
-	const defaultFormat = hasTime
-		? dvSettings.defaultDateTimeFormat
-		: dvSettings.defaultDateFormat;
-	const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
-	const max = hasTime ? "9999-12-31T23:59" : "9999-12-31";
-
-	useEffect(() => {
-		if (!DateTime.isDateTime(propertyValue)) {
-			setDateStrings({
-				formattedDate: null,
-				inputDate: null,
-			});
-		}
-		if (DateTime.isDateTime(propertyValue)) {
-			const formattedDate = propertyValue
-				.toLocal()
-				.toFormat(defaultFormat, { locale });
-			const inputDate = propertyValue.toLocal().toFormat(inputFormat);
-			setDateStrings({ formattedDate, inputDate });
-		}
-	}, [propertyValue]);
-
-	if (!isEditing || isLocked) {
-		return (
-			<Markdown
-				app={plugin.app}
-				filePath={ctx.sourcePath}
-				plainText={formattedDate ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
-				onClick={() => {
-					!isLocked && setIsEditing(true);
-				}}
-			/>
-		);
-	}
-
-	return (
-		<input
-			type={hasTime ? "datetime-local" : "date"}
-			defaultValue={inputDate}
-			max={max}
-			autoFocus
-			onBlur={async (e) => {
-				await updateMetaData(
-					propertyName,
-					e.target.value,
-					filePath,
-					plugin,
-				);
-
-				setIsEditing(false);
-			}}
-		/>
-	);
-};
+// 				setIsEditing(false);
+// 			}}
+// 		/>
+// 	);
+// };

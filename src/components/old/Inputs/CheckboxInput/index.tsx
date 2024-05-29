@@ -1,5 +1,5 @@
 import React from "react";
-import { CommonEditableProps, QueryResults } from "../../../lib/types";
+import { CommonEditableProps, QueryResults } from "../../../../lib/types";
 import { getPropertyType } from "@/lib/utils";
 
 export const CheckboxInput = ({
