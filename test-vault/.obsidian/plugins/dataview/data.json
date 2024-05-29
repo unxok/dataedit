@@ -8,7 +8,7 @@
   "warnOnEmptyResult": true,
   "refreshEnabled": true,
   "refreshInterval": 2500,
-  "defaultDateFormat": "MMMM dd, yyyy",
+  "defaultDateFormat": "MMMM dd, yyyy 'test'",
   "defaultDateTimeFormat": "h:mm a - MMMM dd, yyyy",
   "maxRecursiveRenderDepth": 4,
   "tableIdColumnName": "File",

@@ -5,11 +5,15 @@ import {
 	stringifyYaml,
 } from "obsidian";
 import { Settings } from "./PluginSettings";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import DataEdit, { loadDependencies } from "@/main";
 import {
 	checkForInlineField,
 	cn,
+	currentLocale,
+	dv,
+	dvRenderNullAs,
+	getColAliasObj,
 	getPropertyType,
 	iconStyle,
 	iterateStringKeys,
@@ -34,10 +38,12 @@ import {
 	Sparkle,
 	ScanText,
 	Braces,
+	Plus,
 } from "lucide-react";
 import { ClassValue } from "clsx";
 import { create } from "zustand";
 import { FILE } from "@/lib/consts";
+import { DateTime } from "luxon";
 // import { NumberInput } from "./Inputs";
 
 type ObsdianPropertyType =
@@ -93,23 +99,6 @@ const PropertyIcon = ({
 			return <Text style={iconStyle} />;
 		}
 	}
-};
-
-const getColAliasObj = (text: string) => {
-	const regex = new RegExp(/(\S+)\s+AS\s+"?([^\s,"]+)"?,?/gim);
-	const matches = text.match(regex);
-	console.log("matches: ", matches);
-	if (!matches) return {};
-	return matches.reduce((acc, cur) => {
-		const match = regex.exec(cur);
-		console.log("match: ", match);
-		if (!match) return acc;
-		const [_, property, alias] = match;
-		return {
-			...acc,
-			[alias]: property,
-		};
-	}, {});
 };
 
 const ensureFileLink = (query: string) => {
@@ -408,20 +397,19 @@ const Th = ({
 	);
 };
 
-type TdProps = {
+type TdProps<T> = {
 	propertyName: string;
-	propertyValue: string;
+	propertyValue: T;
 	className?: ClassValue;
 	hideFileLink: boolean;
 	filePath: string;
 	isLocked: boolean;
 };
-const Td = (props: TdProps) => {
+const Td = (props: TdProps<unknown>) => {
 	const { propertyValue, propertyName, className, hideFileLink, filePath } =
 		props;
 	const { ctx, plugin, aliasObj } = useBlock();
 	const propName = aliasObj[propertyName] ?? propertyName;
-	console.log(aliasObj);
 	// TODO check for different prop name set in dataview settings?
 	const isFileProp =
 		propName.toLowerCase() === FILE || propName === "file.link";
@@ -473,7 +461,10 @@ const Td = (props: TdProps) => {
 	// );
 };
 
-const InputSwitch = (props: TdProps & { propertyType: string }) => {
+type InputSwitchProps<T> = {
+	propertyType: string;
+} & TdProps<T>;
+const InputSwitch = (props: InputSwitchProps<unknown>) => {
 	const { plugin, ctx } = useBlock();
 	const { propertyValue, propertyType } = props;
 	if (props.propertyType === FILE) {
@@ -481,127 +472,107 @@ const InputSwitch = (props: TdProps & { propertyType: string }) => {
 			<Markdown
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={propertyValue}
+				plainText={propertyValue as string}
 				className="[&_*]:my-0"
 			/>
 		);
 	}
 
-	console.log("got propertyName: ", props.propertyName);
-
 	// TODO if value is falsey, use property type to render input
 	// it CANNOT be inline if it is falsey
 	if (!propertyValue) {
-		return;
-		// switch (propertyType) {
-		// 	case "aliases":
-		// 	case "text":
-		//  case "object": {
-		// 		return <Forward style={iconStyle} />;
-		// 	}
-		// 	case "checkbox": {
-		// 		return <CheckSquare style={iconStyle} />;
-		// 	}
-		// 	case "date": {
-		// 		return <Calendar style={iconStyle} />;
-		// 	}
-		// 	case "datetime": {
-		// 		return <Clock style={iconStyle} />;
-		// 	}
-		// 	case "multitext": {
-		// 		return <List style={iconStyle} />;
-		// 	}
-		// 	case "number": {
-		// 		return <Binary style={iconStyle} />;
-		// 	}
-		// 	case "tags": {
-		// 		return <Tags style={iconStyle} />;
-		// 	}
-		// 	default: {
-		// 		return <Text style={iconStyle} />;
-		// 	}
-		// }
+		console.log(
+			"got propertyType: ",
+			propertyType,
+			"for prop: ",
+			propertyValue,
+		);
+		switch (propertyType) {
+			case "aliases":
+			case "text":
+			case "object": {
+				return <StringInput {...(props as InputSwitchProps<string>)} />;
+			}
+			case "checkbox": {
+				return (
+					<BooleanInput {...(props as InputSwitchProps<boolean>)} />
+				);
+			}
+			case "date": {
+				return <DateInput {...(props as InputSwitchProps<DateTime>)} />;
+			}
+			case "datetime": {
+				return <div></div>;
+			}
+			case "multitext": {
+				return (
+					<ArrayInput
+						{...(props as InputSwitchProps<(string | number)[]>)}
+					/>
+				);
+			}
+			case "number": {
+				return <NumberInput {...(props as InputSwitchProps<number>)} />;
+			}
+			case "tags": {
+				return (
+					<ArrayInput
+						{...(props as InputSwitchProps<(string | number)[]>)}
+					/>
+				);
+			}
+			default: {
+				return <StringInput {...(props as InputSwitchProps<string>)} />;
+			}
+		}
 	}
 
 	// Dataview will sometimes parse property values to a different type than what is defined in the metadataTypeManager
 	// As well, inline fields won't have a type and frontmatter objects will be considered the default of text
 	// So the type of input to render is determined from the value's actual type instead of the property type itself
+	console.log(
+		"property type: ",
+		typeof propertyValue,
+		"for: ",
+		propertyValue,
+	);
 	switch (typeof propertyValue) {
 		case "string":
-			return <StringInput {...props} />;
+			return <StringInput {...(props as InputSwitchProps<string>)} />;
 		case "number":
-			return <NumberInput {...props} />;
+			return <NumberInput {...(props as InputSwitchProps<number>)} />;
 		case "object":
 			// TODO typescript being dumb or me?
-			return Array.isArray(propertyValue as string) ? (
-				<div>{(propertyValue as string[]).join(", ")}</div>
-			) : (
-				<div>{propertyValue}</div>
-			);
+			if (Array.isArray(propertyValue)) {
+				return (
+					<ArrayInput
+						{...(props as InputSwitchProps<(string | number)[]>)}
+					/>
+				);
+			}
+			// @ts-ignore
+			if (propertyValue?.isLuxonDateTime) {
+				return <DateInput {...(props as InputSwitchProps<DateTime>)} />;
+			}
+			return <div>{"[Object object]"}</div>;
+
+		case "boolean":
+			return <BooleanInput {...(props as InputSwitchProps<boolean>)} />;
 		default:
-			return <div>{propertyValue}</div>;
+			return (
+				<Markdown
+					app={plugin.app}
+					filePath={ctx.sourcePath}
+					plainText={(propertyValue as string) ?? "null"}
+					className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+				/>
+			);
 	}
 };
 
-// const TextInput2 = (props: TdProps) => {
-// 	const {
-// 		children,
-// 		propertyName,
-// 		className,
-// 		hideFileLink,
-// 		filePath,
-// 		isLocked,
-// 	} = props;
-// 	const { ctx, plugin, aliasObj } = useBlock();
-// 	const [isEditing, setIsEditing] = useState(false);
-
-// 	if (!isEditing || isLocked || true) {
-// 		return (
-// 			<Markdown
-// 				app={plugin.app}
-// 				filePath={ctx.sourcePath}
-// 				plainText={children}
-// 				className="h-fit w-fit [&_*]:my-0"
-// 				// onClick={() => {
-// 				// 	console.log("clicked");
-// 				// 	!isLocked && setIsEditing(true);
-// 				// }}
-// 				onBlur={async (e) => {
-// 					console.log(e.target.textContent);
-// 					await updateMetaData(
-// 						propertyName,
-// 						e.target.textContent,
-// 						filePath,
-// 						plugin,
-// 					);
-// 					setIsEditing(false);
-// 				}}
-// 			/>
-// 		);
-// 	}
-
-// 	// return (
-// 	// 	<div
-// 	// 		contentEditable
-// 	// 		onBlur={async (e) => {
-// 	// 			console.log(e.target.textContent);
-// 	// 			await updateMetaData(
-// 	// 				propertyName,
-// 	// 				e.target.textContent,
-// 	// 				filePath,
-// 	// 				plugin,
-// 	// 			);
-// 	// 			setIsEditing(false);
-// 	// 		}}
-// 	// 	>
-// 	// 		{children}
-// 	// 	</div>
-// 	// );
-// };
-
-const StringInput = (props: TdProps) => {
+const StringInput = (props: InputSwitchProps<string>) => {
 	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { ctx, plugin, aliasObj } = useBlock();
+	const { ctx, plugin } = useBlock();
 	const [isEditing, setIsEditing] = useState(false);
 
 	if (!isEditing || isLocked) {
@@ -609,8 +580,8 @@ const StringInput = (props: TdProps) => {
 			<Markdown
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={propertyValue}
-				className="h-full w-full [&_*]:my-0"
+				plainText={propertyValue ?? dvRenderNullAs}
+				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
 				onClick={() => {
 					!isLocked && setIsEditing(true);
 				}}
@@ -624,7 +595,7 @@ const StringInput = (props: TdProps) => {
 			defaultValue={propertyValue}
 			autoFocus
 			onBlur={async (e) => {
-				console.log(e.target.value);
+				// console.log(e.target.value);
 				await updateMetaData(
 					propertyName,
 					e.target.value,
@@ -637,21 +608,22 @@ const StringInput = (props: TdProps) => {
 	);
 };
 
-const NumberInput = (props: TdProps) => {
+const NumberInput = (props: InputSwitchProps<number>) => {
 	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { plugin } = useBlock();
+	const { ctx, plugin } = useBlock();
 	const [isEditing, setIsEditing] = useState(false);
 
 	if (!isEditing || isLocked) {
 		return (
-			<div
-				className="h-full w-full"
+			<Markdown
+				app={plugin.app}
+				filePath={ctx.sourcePath}
+				plainText={propertyValue?.toString() ?? dvRenderNullAs}
+				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
 				onClick={() => {
 					!isLocked && setIsEditing(true);
 				}}
-			>
-				{propertyValue}
-			</div>
+			/>
 		);
 	}
 
@@ -664,6 +636,185 @@ const NumberInput = (props: TdProps) => {
 				const num = Number(e.target.value);
 				if (Number.isNaN(num)) return;
 				await updateMetaData(propertyName, num, filePath, plugin);
+				setIsEditing(false);
+			}}
+		/>
+	);
+};
+
+const ArrayInput = (props: InputSwitchProps<(string | number)[]>) => {
+	const { propertyName, propertyValue, filePath, isLocked } = props;
+	const { plugin } = useBlock();
+
+	const updateProperty = async (
+		itemIndex: number,
+		newValue: string | number,
+		allowFalsey?: boolean,
+	) => {
+		const newArrayValue = [...propertyValue];
+		newArrayValue[itemIndex] = newValue;
+		const filtered = allowFalsey
+			? newArrayValue
+			: newArrayValue.filter((v) => !!v);
+		await updateMetaData(propertyName, filtered, filePath, plugin);
+	};
+
+	return (
+		<ul className="m-0 flex flex-col gap-1 p-0">
+			{propertyValue?.map((item, i) => (
+				<li key={i} className="flex">
+					{"- "}
+					<ArrayInputItem
+						{...props}
+						itemValue={item}
+						itemIndex={i}
+						updateProperty={updateProperty}
+					/>
+				</li>
+			))}
+			<li>
+				<div
+					className={`clickable-icon w-fit ${isLocked && "cursor-not-allowed opacity-50"}`}
+					aria-label="New item"
+					onClick={async () => {
+						if (isLocked) return;
+						await updateProperty(propertyValue.length, "", true);
+					}}
+				>
+					<Plus className="svg-icon" />
+				</div>
+			</li>
+		</ul>
+	);
+};
+
+const ArrayInputItem = (
+	props: InputSwitchProps<(string | number)[]> & {
+		itemValue: string | number;
+		itemIndex: number;
+		updateProperty: (
+			itemIndex: number,
+			newValue: string | number,
+		) => Promise<void>;
+	},
+) => {
+	const { isLocked, itemValue, itemIndex, propertyType, updateProperty } =
+		props;
+	const { ctx, plugin } = useBlock();
+	const [isEditing, setIsEditing] = useState(false);
+	const plainText = tryToMarkdownLink(itemValue);
+
+	if (!isEditing || isLocked) {
+		return (
+			<Markdown
+				app={plugin.app}
+				filePath={ctx.sourcePath}
+				plainText={
+					propertyType === "tags" ? "#" + plainText : plainText
+				}
+				className="min-h-4 w-full [&_*]:my-0"
+				onClick={() => {
+					!isLocked && setIsEditing(true);
+				}}
+			/>
+		);
+	}
+
+	return (
+		<input
+			type="text"
+			defaultValue={itemValue}
+			autoFocus
+			onBlur={async (e) => {
+				// console.log(e.target.value);
+				await updateProperty(itemIndex, e.target.value);
+				setIsEditing(false);
+			}}
+		/>
+	);
+};
+
+const BooleanInput = (props: InputSwitchProps<boolean>) => {
+	const { propertyName, propertyValue, filePath, isLocked } = props;
+	const { plugin } = useBlock();
+
+	return (
+		<input
+			type="checkbox"
+			disabled={!!isLocked}
+			defaultChecked={!!propertyValue}
+			className={isLocked && "opacity-50"}
+			onClick={(e) => {
+				updateMetaData(
+					propertyName,
+					e.currentTarget.checked,
+					filePath,
+					plugin,
+				);
+			}}
+		/>
+	);
+};
+
+const DateInput = (props: InputSwitchProps<DateTime>) => {
+	const { propertyName, propertyValue, filePath, isLocked } = props;
+	const { ctx, plugin } = useBlock();
+	const [isEditing, setIsEditing] = useState(false);
+	const [dateString, setDateString] = useState<string>(null);
+	const [inputDateString, setInputDateString] = useState<string>("");
+	const locale = currentLocale();
+
+	useEffect(() => {
+		if (!DateTime.isDateTime(propertyValue)) {
+			console.log("not datetime");
+
+			setDateString(null);
+			setInputDateString(null);
+		}
+		if (DateTime.isDateTime(propertyValue)) {
+			setDateString(
+				propertyValue.toLocal().toFormat(
+					// @ts-ignore
+					app.plugins.plugins?.dataview?.settings?.defaultDateFormat,
+					{ locale },
+				),
+			);
+			setInputDateString(propertyValue.toLocal().toFormat("yyyy-MM-dd"));
+		}
+	}, [propertyValue]);
+
+	useEffect(
+		() => console.log("inputDateString: ", inputDateString),
+		[inputDateString],
+	);
+
+	if (!isEditing || isLocked) {
+		return (
+			<Markdown
+				app={plugin.app}
+				filePath={ctx.sourcePath}
+				plainText={dateString ?? dvRenderNullAs}
+				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+				onClick={() => {
+					!isLocked && setIsEditing(true);
+				}}
+			/>
+		);
+	}
+
+	return (
+		<input
+			type="date"
+			defaultValue={inputDateString}
+			autoFocus
+			onBlur={async (e) => {
+				await updateMetaData(
+					propertyName,
+					e.target.value,
+					filePath,
+					plugin,
+				);
+
 				setIsEditing(false);
 			}}
 		/>

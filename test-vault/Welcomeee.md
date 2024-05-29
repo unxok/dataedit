@@ -7,13 +7,19 @@ obj:
 json:
   key: asdlff
 multitext:
-  - asdf
+  - asdffff
   - asdfdfd
 num: 4566
 aliases:
   - asdeeffe
 dotnotation: "123"
 category: cat1
+tags:
+  - onemoretagg
+  - test
+bool: true
+date: 2001-02-02
+datetime: 2354-02-06T00:25:00
 ---
  
 
@@ -58,7 +64,7 @@ func('world')
 
 
 ```dataedit
-TABLE inlineProp as "inli'n'e", multitext, json.key, obj.key, test as testAlias, text, num
+TABLE date, bool, tags, multitext, json.key, obj.key, test as testAlias, text, num
 ```
 
 

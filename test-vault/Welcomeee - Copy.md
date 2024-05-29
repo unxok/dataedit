@@ -3,11 +3,11 @@ test: sdf
 text: asdfasdf
 multitext:
   - asdf
-  - asdfdfd
 num: 456
 aliases:
   - asdeeffe
 category: cat1
+bool: true
 ---
 
 

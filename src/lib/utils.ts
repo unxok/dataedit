@@ -58,11 +58,9 @@ export const getColAliasObj: (text: string) => Record<string, string> = (
 ) => {
 	const regex = new RegExp(/(\S+)\s+AS\s+"?([^\s,"]+)"?,?/gim);
 	const matches = text.match(regex);
-	console.log("matches: ", matches);
 	if (!matches) return {};
 	return matches.reduce((acc, cur) => {
 		const match = regex.exec(cur);
-		console.log("match: ", match);
 		if (!match) return acc;
 		const [_, property, alias] = match;
 		return {
@@ -332,4 +330,15 @@ export const updateMetaData = async (
 		return (frontmatter = stringifyYaml(frontmatterObj));
 	});
 	// await updateDataeditLinks();
+};
+
+// @ts-ignore
+export const dv = app.plugins.plugins?.dataview?.api;
+
+// TODO make this a setting
+export const dvRenderNullAs = "\\-";
+
+export const currentLocale = () => {
+	if (typeof window === "undefined") return "en-US";
+	return window.navigator.language;
 };

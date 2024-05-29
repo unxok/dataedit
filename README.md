@@ -263,14 +263,21 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
 -   [x] Nested property support
     -   If you use YAML objects in frontmatter, that will update correctly
 -   [ ] Grouped results support?
--           - This might not make sense...
+-                   - This might not make sense...
 -   [x] Inline property support
+-   [x] Date/Datetime properties now render according to relevant Dataview settings
 -   [ ] Block toolbar
     -   You can now choose items to show in a toolbar near your Dataedit block for quick access to common settings and tools for Dataedit
 -   [ ] Settings overhaul
     -   [ ] Block config
         -   Previously, Dataedit would write block configs directly to their own block in your markdown note. I disliked this approach. Instead, you just add `ID some-id` as the last line of your query and click the button like normal to change block config. This config is saved to Dataedit's settings file. This makes block id's reusable across different Dataedit blocks so you can easily reuse settings.
         -   [ ] Lock editing- Allows links and tags to be clickable
+        -   [ ] Export current results
+            -   [ ] csv
+            -   [ ] markdown
+            -   [ ] custom delim
+        -   [ ] Lists
+            -   [ ] List style type (enter text. pro tip use Iconize)
         -   [ ] Render markdown or plaintext
         -   [ ] Alignment- vertical and horizontal
             -   [ ] Whole table

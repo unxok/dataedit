@@ -31,6 +31,7 @@ export const Markdown = ({
 			component,
 		);
 	}, [app, filePath, plainText]);
+
 	return (
 		<div
 			ref={ref}

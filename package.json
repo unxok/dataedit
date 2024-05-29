@@ -19,6 +19,7 @@
 	"author": "Unxok",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/luxon": "^3.4.2",
 		"@types/node": "^20.5.8",
 		"@types/react": "^18.2.21",
 		"@types/react-dom": "^18.2.7",
@@ -49,6 +50,7 @@
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.372.0",
+		"luxon": "^3.4.4",
 		"monkey-around": "^3.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

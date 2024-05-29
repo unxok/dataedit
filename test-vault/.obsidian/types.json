@@ -13,6 +13,7 @@
     "number": "number",
     "checkboxtest": "checkbox",
     "multitext": "multitext",
-    "obj": "text"
+    "obj": "text",
+    "bool": "checkbox"
   }
 }
