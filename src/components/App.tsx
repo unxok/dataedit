@@ -18,6 +18,7 @@ import {
 	iconStyle,
 	isDateWithTime,
 	iterateStringKeys,
+	numberToBase26Letters,
 	tryToMarkdownLink,
 	updateMetaData,
 } from "@/lib/utils";
@@ -40,6 +41,10 @@ import {
 	ScanText,
 	Braces,
 	Plus,
+	ChevronLeft,
+	ChevronRight,
+	ChevronLast,
+	ChevronFirst,
 } from "lucide-react";
 import { ClassValue } from "clsx";
 import { create } from "zustand";
@@ -178,6 +183,11 @@ export const App = (props: {
 	const [dvErr, setDvErr] = useState<string>();
 	const { setBlockState } = useBlock();
 	const [isLocked, setIsLocked] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [rowsPerPage, setRowsPerPage] = useState(2);
+	const startIndex = (currentPage - 1) * rowsPerPage;
+	const endIndex = startIndex + rowsPerPage;
+	const currentRows = queryResults?.values?.slice(startIndex, endIndex);
 
 	const reg = new RegExp(/\n^---$\n/gm);
 	const { blockId, query: preQuery } = getBlockId(data);
@@ -275,9 +285,28 @@ export const App = (props: {
 	}
 	return (
 		<div className="twcss" style={{ overflowX: "scroll" }}>
-			<table className="dataedit">
+			{/* height 1px allows divs to be 100% of the td -_- */}
+			<table className="dataedit h-[1px]">
 				<thead>
+					{false && (
+						<tr>
+							{queryResults?.headers?.map((_, i) => (
+								<th className="!bg-secondary">
+									<div className="flex items-center justify-center">
+										{numberToBase26Letters(i)}
+									</div>
+								</th>
+							))}
+						</tr>
+					)}
 					<tr>
+						{false && (
+							<th className="w-fit min-w-0 !bg-secondary">
+								<div className="flex h-full w-full items-center justify-center">
+									1
+								</div>
+							</th>
+						)}
 						{queryResults?.headers?.map((h, i) => (
 							<Th
 								key={i + "table-header"}
@@ -289,8 +318,15 @@ export const App = (props: {
 					</tr>
 				</thead>
 				<tbody>
-					{queryResults?.values?.map((r, i) => (
+					{currentRows?.map((r, i) => (
 						<tr key={i + "-table-body-row"}>
+							{false && (
+								<td className="w-fit min-w-0 bg-secondary">
+									<div className="my-auto flex h-full w-full items-center justify-center">
+										{i + 2}
+									</div>
+								</td>
+							)}
 							{r?.map((d, k) => (
 								<Td
 									key={k + "table-data"}
@@ -299,8 +335,9 @@ export const App = (props: {
 									className=""
 									hideFileLink={hideFileLink}
 									filePath={
-										queryResults.values[i][fileHeaderIndex]
-											?.path
+										queryResults.values[startIndex + i][
+											fileHeaderIndex
+										]?.path
 									}
 									isLocked={isLocked}
 								/>
@@ -310,11 +347,91 @@ export const App = (props: {
 				</tbody>
 			</table>
 			<div className="flex w-full flex-row items-center p-2">
+				<Pagination
+					totalRows={queryResults.values.length}
+					rowsPerPage={rowsPerPage}
+					currentPage={currentPage}
+					setCurrentPage={setCurrentPage}
+				/>
+				<input
+					type="number"
+					step={1}
+					min={0}
+					defaultValue={rowsPerPage}
+					aria-label="Page size"
+					placeholder="no limit"
+					className="w-8"
+					onBlur={(e) =>
+						setRowsPerPage((prev) => {
+							const num = Number(e.target.value);
+							if (!num || Number.isNaN(num)) {
+								return prev;
+							}
+							return num;
+						})
+					}
+				/>
 				<SettingsGear blockId={blockId} />
 				<LockToggle
 					isLocked={isLocked}
 					toggleLock={() => setIsLocked((b) => !b)}
 				/>
+			</div>
+		</div>
+	);
+};
+
+const Pagination = ({
+	totalRows,
+	rowsPerPage,
+	currentPage,
+	setCurrentPage,
+}: {
+	totalRows: number;
+	rowsPerPage: number;
+	currentPage: number;
+	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}) => {
+	const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+	const goPrev = () => {
+		if (currentPage > 1) {
+			setCurrentPage((prev) => prev - 1);
+		}
+	};
+
+	const goFirst = () => {
+		if (currentPage > 1) {
+			setCurrentPage(1);
+		}
+	};
+
+	const goNext = () => {
+		if (currentPage < totalPages) {
+			setCurrentPage((prev) => prev + 1);
+		}
+	};
+
+	const goLast = () => {
+		if (currentPage < totalPages) {
+			setCurrentPage(totalPages);
+		}
+	};
+
+	return (
+		<div className="flex items-center justify-center">
+			<div onClick={goFirst} className="clickable-icon w-fit">
+				<ChevronFirst className="svg-icon" />
+			</div>
+			<div onClick={goPrev} className="clickable-icon w-fit">
+				<ChevronLeft className="svg-icon" />
+			</div>
+			<span className="px-1">{`${currentPage} of ${totalPages}`}</span>
+			<div onClick={goNext} className="clickable-icon w-fit">
+				<ChevronRight className="svg-icon" />
+			</div>
+			<div onClick={goLast} className="clickable-icon w-fit">
+				<ChevronLast className="svg-icon" />
 			</div>
 		</div>
 	);

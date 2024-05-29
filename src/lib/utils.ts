@@ -356,3 +356,49 @@ export const isDateWithTime = (dt: DateTime) => {
 	}
 	return true;
 };
+
+/**
+ * Turns a string of letters into numbers
+ * @param str base 26 number represented as a string
+ * ---
+ * Credits: [KyleMit (stackoverflow)](https://stackoverflow.com/a/29040784)
+ * ```js
+ * const testCases = ["A","B","C","Z","AA","AB","BY"];
+ * const converted = testCases.map(base26LettersToNumber);
+ * // [1,2,3,26,27,28,77]
+ * ```
+ */
+export const base26LettersToNumber = (str: string) => {
+	const start = 96;
+	return [...str.toLowerCase()].reduce((acc, char, i) => {
+		const val = char.charCodeAt(0) - start;
+		const pow = Math.pow(26, str.length - i - 1);
+		return acc + val * pow;
+	}, 0);
+};
+
+/**
+ * Turns a number into a base 26 number represented as a string
+ * @param num The number to convert
+ * ---
+ * Credits: Chatgpt-4o)
+ * ```js
+ * const testCases = [1,2,3,26,27,28,77];
+ * const converted = testCases.map(numberToBase26Letters);
+ * // ["A","B","C","Z","AA","AB","BY"]
+ * ```
+ */
+export const numberToBase26Letters = (num: number) => {
+	const start = 96; // 'a' is 97 in ASCII, so start is 96 to make 'a' as 1
+	let result = "";
+
+	while (num > 0) {
+		const remainder = num % 26 || 26;
+		result = (
+			String.fromCharCode(start + remainder) + result
+		).toUpperCase();
+		num = (num - remainder) / 26;
+	}
+
+	return result;
+};

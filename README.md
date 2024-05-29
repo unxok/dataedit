@@ -263,7 +263,7 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
 -   [x] Nested property support
     -   If you use YAML objects in frontmatter, that will update correctly
 -   [ ] ~~Grouped results support?~~
--                       - This might not make sense...
+-                         - This might not make sense...
 -   [x] Inline property support
 -   [x] Date/Datetime properties now render according to relevant Dataview settings
 -   [x] Image embeds
@@ -286,6 +286,11 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
             -   [ ] Columns
             -   [ ] Rows
             -   [ ] What to do in conflicts?
+        -   [ ] Resize
+            -   [ ] all columns
+            -   [ ] all rows
+            -   [ ] specific column
+            -   [ ] specific row
         -   [ ] Show icons
             -   [ ] Add examples for using the Iconize plugin to do custom icons
         -   [ ] Show number buttons

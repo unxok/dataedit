@@ -30572,6 +30572,28 @@ var Calendar = createLucideIcon("Calendar", [
   ["path", { d: "M3 10h18", key: "8toen8" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/chevron-first.js
+var ChevronFirst = createLucideIcon("ChevronFirst", [
+  ["path", { d: "m17 18-6-6 6-6", key: "1yerx2" }],
+  ["path", { d: "M7 6v12", key: "1p53r6" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/chevron-last.js
+var ChevronLast = createLucideIcon("ChevronLast", [
+  ["path", { d: "m7 18 6-6-6-6", key: "lwmzdw" }],
+  ["path", { d: "M17 6v12", key: "1o0aio" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/chevron-left.js
+var ChevronLeft = createLucideIcon("ChevronLeft", [
+  ["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/chevron-right.js
+var ChevronRight = createLucideIcon("ChevronRight", [
+  ["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/circle-help.js
 var CircleHelp = createLucideIcon("CircleHelp", [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
@@ -35458,13 +35480,13 @@ function fixListRegex(s2) {
 function stripInsensitivities(s2) {
   return s2.replace(/\./g, "").replace(spaceOrNBSPRegExp, " ").toLowerCase();
 }
-function oneOf(strings, startIndex) {
+function oneOf(strings, startIndex2) {
   if (strings === null) {
     return null;
   } else {
     return {
       regex: RegExp(strings.map(fixListRegex).join("|")),
-      deser: ([s2]) => strings.findIndex((i) => stripInsensitivities(s2) === stripInsensitivities(i)) + startIndex
+      deser: ([s2]) => strings.findIndex((i) => stripInsensitivities(s2) === stripInsensitivities(i)) + startIndex2
     };
   }
 }
@@ -37868,6 +37890,11 @@ var App6 = (props) => {
   const [dvErr, setDvErr] = (0, import_react10.useState)();
   const { setBlockState } = useBlock();
   const [isLocked, setIsLocked] = (0, import_react10.useState)(false);
+  const [currentPage, setCurrentPage] = (0, import_react10.useState)(1);
+  const [rowsPerPage, setRowsPerPage] = (0, import_react10.useState)(2);
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const currentRows = queryResults?.values?.slice(startIndex, endIndex);
   const reg = new RegExp(/\n^---$\n/gm);
   const { blockId, query: preQuery } = getBlockId(data);
   const { query, hideFileLink } = ensureFileLink(preQuery);
@@ -37941,15 +37968,15 @@ var App6 = (props) => {
   if (!queryResults || fileHeaderIndex === -1) {
     return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react10.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react10.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react10.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
   }
-  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react10.default.createElement("table", { className: "dataedit" }, /* @__PURE__ */ import_react10.default.createElement("thead", null, /* @__PURE__ */ import_react10.default.createElement("tr", null, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react10.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react10.default.createElement("thead", null, false, /* @__PURE__ */ import_react10.default.createElement("tr", null, false, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react10.default.createElement(
     Th,
     {
       key: i + "table-header",
-      className: "w-full",
+      className: "",
       hideFileLink,
       propertyName: h
     }
-  )))), /* @__PURE__ */ import_react10.default.createElement("tbody", null, queryResults?.values?.map((r2, i) => /* @__PURE__ */ import_react10.default.createElement("tr", { key: i + "-table-body-row" }, r2?.map((d, k) => /* @__PURE__ */ import_react10.default.createElement(
+  )))), /* @__PURE__ */ import_react10.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react10.default.createElement("tr", { key: i + "-table-body-row" }, false, r2?.map((d, k) => /* @__PURE__ */ import_react10.default.createElement(
     Td,
     {
       key: k + "table-data",
@@ -37957,16 +37984,71 @@ var App6 = (props) => {
       propertyValue: d,
       className: "",
       hideFileLink,
-      filePath: queryResults.values[i][fileHeaderIndex]?.path,
+      filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path,
       isLocked
     }
-  )))))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react10.default.createElement(SettingsGear, { blockId }), /* @__PURE__ */ import_react10.default.createElement(
+  )))))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react10.default.createElement(
+    Pagination,
+    {
+      totalRows: queryResults.values.length,
+      rowsPerPage,
+      currentPage,
+      setCurrentPage
+    }
+  ), /* @__PURE__ */ import_react10.default.createElement(
+    "input",
+    {
+      type: "number",
+      step: 1,
+      min: 0,
+      defaultValue: rowsPerPage,
+      "aria-label": "Page size",
+      placeholder: "no limit",
+      className: "w-8",
+      onBlur: (e) => setRowsPerPage((prev) => {
+        const num = Number(e.target.value);
+        if (!num || Number.isNaN(num)) {
+          return prev;
+        }
+        return num;
+      })
+    }
+  ), /* @__PURE__ */ import_react10.default.createElement(SettingsGear, { blockId }), /* @__PURE__ */ import_react10.default.createElement(
     LockToggle,
     {
       isLocked,
       toggleLock: () => setIsLocked((b) => !b)
     }
   )));
+};
+var Pagination = ({
+  totalRows,
+  rowsPerPage: rowsPerPage2,
+  currentPage: currentPage2,
+  setCurrentPage: setCurrentPage2
+}) => {
+  const totalPages = Math.ceil(totalRows / rowsPerPage2);
+  const goPrev = () => {
+    if (currentPage2 > 1) {
+      setCurrentPage2((prev) => prev - 1);
+    }
+  };
+  const goFirst = () => {
+    if (currentPage2 > 1) {
+      setCurrentPage2(1);
+    }
+  };
+  const goNext = () => {
+    if (currentPage2 < totalPages) {
+      setCurrentPage2((prev) => prev + 1);
+    }
+  };
+  const goLast = () => {
+    if (currentPage2 < totalPages) {
+      setCurrentPage2(totalPages);
+    }
+  };
+  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex items-center justify-center" }, /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goFirst, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronFirst, { className: "svg-icon" })), /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goPrev, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronLeft, { className: "svg-icon" })), /* @__PURE__ */ import_react10.default.createElement("span", { className: "px-1" }, `${currentPage2} of ${totalPages}`), /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goNext, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronRight, { className: "svg-icon" })), /* @__PURE__ */ import_react10.default.createElement("div", { onClick: goLast, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react10.default.createElement(ChevronLast, { className: "svg-icon" })));
 };
 var LockToggle = ({
   isLocked: isLocked2,
@@ -38014,7 +38096,7 @@ var Th = ({
   const propertyType = prePropertyType ?? "inline";
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement(
     Markdown,
     {
       app: plugin2.app,
@@ -38028,7 +38110,7 @@ var Th = ({
       className: "flex items-center justify-center"
     },
     /* @__PURE__ */ import_react10.default.createElement(PropertyIcon, { propertyType })
-  )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "h-full bg-white" }, "\xA0")));
+  )));
 };
 var Td = (props2) => {
   const { propertyValue, propertyName, className, hideFileLink: hideFileLink2, filePath } = props2;
@@ -38624,6 +38706,38 @@ lucide-react/dist/esm/icons/braces.js:
    *)
 
 lucide-react/dist/esm/icons/calendar.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevron-first.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevron-last.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevron-left.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevron-right.js:
   (**
    * @license lucide-react v0.372.0 - ISC
    *
