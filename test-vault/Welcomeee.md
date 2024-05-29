@@ -18,10 +18,13 @@ tags:
   - onemoretagg
   - test
 bool: true
-date: 2001-02-02
-datetime: 2354-02-06T00:25:00
+date: 5550-11-06
+datetime: 2302-06-19T02:08
+embed: "![[demo.gif|demo.gif]]"
 ---
  
+
+![[demo.gif]]
 
 inlineProp:: 551
 
@@ -64,7 +67,7 @@ func('world')
 
 
 ```dataedit
-TABLE date, bool, tags, multitext, json.key, obj.key, test as testAlias, text, num
+TABLE embed, date, datetime, bool, tags, multitext, json.key, obj.key, test as testAlias, text, num
 ```
 
 

@@ -26497,6 +26497,13 @@ var currentLocale = () => {
     return "en-US";
   return window.navigator.language;
 };
+var isDateWithTime = (dt) => {
+  const { second, minute, hour } = dt;
+  if (second === 0 && minute === 0 && hour === 0) {
+    return false;
+  }
+  return true;
+};
 
 // src/components/Setting/index.tsx
 var SettingRoot = ({
@@ -37938,7 +37945,7 @@ var App6 = (props) => {
     Th,
     {
       key: i + "table-header",
-      className: "py-3",
+      className: "w-full",
       hideFileLink,
       propertyName: h
     }
@@ -37948,7 +37955,7 @@ var App6 = (props) => {
       key: k + "table-data",
       propertyName: queryResults.headers[k],
       propertyValue: d,
-      className: "py-3",
+      className: "",
       hideFileLink,
       filePath: queryResults.values[i][fileHeaderIndex]?.path,
       isLocked
@@ -38007,7 +38014,7 @@ var Th = ({
   const propertyType = prePropertyType ?? "inline";
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react10.default.createElement(
     Markdown,
     {
       app: plugin2.app,
@@ -38021,7 +38028,7 @@ var Th = ({
       className: "flex items-center justify-center"
     },
     /* @__PURE__ */ import_react10.default.createElement(PropertyIcon, { propertyType })
-  )));
+  )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "h-full bg-white" }, "\xA0")));
 };
 var Td = (props2) => {
   const { propertyValue, propertyName, className, hideFileLink: hideFileLink2, filePath } = props2;
@@ -38079,10 +38086,22 @@ var InputSwitch = (props2) => {
         return /* @__PURE__ */ import_react10.default.createElement(BooleanInput, { ...props2 });
       }
       case "date": {
-        return /* @__PURE__ */ import_react10.default.createElement(DateInput, { ...props2 });
+        return /* @__PURE__ */ import_react10.default.createElement(
+          DateTimeInput,
+          {
+            hasTime: false,
+            ...props2
+          }
+        );
       }
       case "datetime": {
-        return /* @__PURE__ */ import_react10.default.createElement("div", null);
+        return /* @__PURE__ */ import_react10.default.createElement(
+          DateTimeInput,
+          {
+            hasTime: true,
+            ...props2
+          }
+        );
       }
       case "multitext": {
         return /* @__PURE__ */ import_react10.default.createElement(
@@ -38128,8 +38147,15 @@ var InputSwitch = (props2) => {
           }
         );
       }
-      if (propertyValue?.isLuxonDateTime) {
-        return /* @__PURE__ */ import_react10.default.createElement(DateInput, { ...props2 });
+      if (DateTime.isDateTime(propertyValue)) {
+        const hasTime = isDateWithTime(propertyValue);
+        return /* @__PURE__ */ import_react10.default.createElement(
+          DateTimeInput,
+          {
+            hasTime,
+            ...props2
+          }
+        );
       }
       return /* @__PURE__ */ import_react10.default.createElement("div", null, "[Object object]");
     case "boolean":
@@ -38157,7 +38183,7 @@ var StringInput = (props2) => {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
         plainText: propertyValue ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
+        className: "h-full min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset]",
         onClick: () => {
           !isLocked2 && setIsEditing(true);
         }
@@ -38304,37 +38330,32 @@ var DateInput = (props2) => {
   const { propertyName, propertyValue, filePath, isLocked: isLocked2 } = props2;
   const { ctx: ctx2, plugin: plugin2 } = useBlock();
   const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
-  const [dateString, setDateString] = (0, import_react10.useState)(null);
-  const [inputDateString, setInputDateString] = (0, import_react10.useState)("");
+  const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react10.useState)({
+    formattedDate: null,
+    inputDate: null
+  });
   const locale = currentLocale();
+  const { defaultDateFormat } = app.plugins.plugins?.dataview?.settings;
   (0, import_react10.useEffect)(() => {
     if (!DateTime.isDateTime(propertyValue)) {
-      console.log("not datetime");
-      setDateString(null);
-      setInputDateString(null);
+      setDateStrings({
+        formattedDate: null,
+        inputDate: null
+      });
     }
     if (DateTime.isDateTime(propertyValue)) {
-      setDateString(
-        propertyValue.toLocal().toFormat(
-          // @ts-ignore
-          app.plugins.plugins?.dataview?.settings?.defaultDateFormat,
-          { locale }
-        )
-      );
-      setInputDateString(propertyValue.toLocal().toFormat("yyyy-MM-dd"));
+      const formattedDate2 = propertyValue.toLocal().toFormat(defaultDateFormat, { locale });
+      const inputDate2 = propertyValue.toLocal().toFormat("yyyy-MM-dd");
+      setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
     }
   }, [propertyValue]);
-  (0, import_react10.useEffect)(
-    () => console.log("inputDateString: ", inputDateString),
-    [inputDateString]
-  );
   if (!isEditing || isLocked2) {
     return /* @__PURE__ */ import_react10.default.createElement(
       Markdown,
       {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: dateString ?? dvRenderNullAs,
+        plainText: formattedDate ?? dvRenderNullAs,
         className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
         onClick: () => {
           !isLocked2 && setIsEditing(true);
@@ -38346,7 +38367,67 @@ var DateInput = (props2) => {
     "input",
     {
       type: "date",
-      defaultValue: inputDateString,
+      max: "9999-12-31",
+      defaultValue: inputDate,
+      autoFocus: true,
+      onBlur: async (e) => {
+        await updateMetaData(
+          propertyName,
+          e.target.value,
+          filePath,
+          plugin2
+        );
+        setIsEditing(false);
+      }
+    }
+  );
+};
+var DateTimeInput = (props2) => {
+  const { propertyName, propertyValue, filePath, isLocked: isLocked2, hasTime } = props2;
+  const { ctx: ctx2, plugin: plugin2 } = useBlock();
+  const [isEditing, setIsEditing] = (0, import_react10.useState)(false);
+  const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react10.useState)({
+    formattedDate: null,
+    inputDate: null
+  });
+  const locale = currentLocale();
+  const dvSettings = app.plugins.plugins?.dataview?.settings;
+  const defaultFormat = hasTime ? dvSettings.defaultDateTimeFormat : dvSettings.defaultDateFormat;
+  const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
+  const max = hasTime ? "9999-12-31T23:59" : "9999-12-31";
+  (0, import_react10.useEffect)(() => {
+    if (!DateTime.isDateTime(propertyValue)) {
+      setDateStrings({
+        formattedDate: null,
+        inputDate: null
+      });
+    }
+    if (DateTime.isDateTime(propertyValue)) {
+      const formattedDate2 = propertyValue.toLocal().toFormat(defaultFormat, { locale });
+      const inputDate2 = propertyValue.toLocal().toFormat(inputFormat);
+      setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
+    }
+  }, [propertyValue]);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react10.default.createElement(
+      Markdown,
+      {
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: formattedDate ?? dvRenderNullAs,
+        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
+        onClick: () => {
+          !isLocked2 && setIsEditing(true);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react10.default.createElement(
+    "input",
+    {
+      type: hasTime ? "datetime-local" : "date",
+      defaultValue: inputDate,
+      max,
       autoFocus: true,
       onBlur: async (e) => {
         await updateMetaData(

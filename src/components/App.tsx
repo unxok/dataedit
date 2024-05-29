@@ -16,6 +16,7 @@ import {
 	getColAliasObj,
 	getPropertyType,
 	iconStyle,
+	isDateWithTime,
 	iterateStringKeys,
 	tryToMarkdownLink,
 	updateMetaData,
@@ -280,7 +281,7 @@ export const App = (props: {
 						{queryResults?.headers?.map((h, i) => (
 							<Th
 								key={i + "table-header"}
-								className="py-3"
+								className=""
 								hideFileLink={hideFileLink}
 								propertyName={h}
 							/>
@@ -295,7 +296,7 @@ export const App = (props: {
 									key={k + "table-data"}
 									propertyName={queryResults.headers[k]}
 									propertyValue={d}
-									className="py-3"
+									className=""
 									hideFileLink={hideFileLink}
 									filePath={
 										queryResults.values[i][fileHeaderIndex]
@@ -499,10 +500,20 @@ const InputSwitch = (props: InputSwitchProps<unknown>) => {
 				);
 			}
 			case "date": {
-				return <DateInput {...(props as InputSwitchProps<DateTime>)} />;
+				return (
+					<DateTimeInput
+						hasTime={false}
+						{...(props as InputSwitchProps<DateTime>)}
+					/>
+				);
 			}
 			case "datetime": {
-				return <div></div>;
+				return (
+					<DateTimeInput
+						hasTime={true}
+						{...(props as InputSwitchProps<DateTime>)}
+					/>
+				);
 			}
 			case "multitext": {
 				return (
@@ -542,7 +553,6 @@ const InputSwitch = (props: InputSwitchProps<unknown>) => {
 		case "number":
 			return <NumberInput {...(props as InputSwitchProps<number>)} />;
 		case "object":
-			// TODO typescript being dumb or me?
 			if (Array.isArray(propertyValue)) {
 				return (
 					<ArrayInput
@@ -550,9 +560,15 @@ const InputSwitch = (props: InputSwitchProps<unknown>) => {
 					/>
 				);
 			}
-			// @ts-ignore
-			if (propertyValue?.isLuxonDateTime) {
-				return <DateInput {...(props as InputSwitchProps<DateTime>)} />;
+
+			if (DateTime.isDateTime(propertyValue)) {
+				const hasTime = isDateWithTime(propertyValue);
+				return (
+					<DateTimeInput
+						hasTime={hasTime}
+						{...(props as InputSwitchProps<DateTime>)}
+					/>
+				);
 			}
 			return <div>{"[Object object]"}</div>;
 
@@ -581,7 +597,7 @@ const StringInput = (props: InputSwitchProps<string>) => {
 				app={plugin.app}
 				filePath={ctx.sourcePath}
 				plainText={propertyValue ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+				className="h-full min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset]"
 				onClick={() => {
 					!isLocked && setIsEditing(true);
 				}}
@@ -760,40 +776,41 @@ const DateInput = (props: InputSwitchProps<DateTime>) => {
 	const { propertyName, propertyValue, filePath, isLocked } = props;
 	const { ctx, plugin } = useBlock();
 	const [isEditing, setIsEditing] = useState(false);
-	const [dateString, setDateString] = useState<string>(null);
-	const [inputDateString, setInputDateString] = useState<string>("");
+	const [{ formattedDate, inputDate }, setDateStrings] = useState({
+		formattedDate: null,
+		inputDate: null,
+	});
 	const locale = currentLocale();
+	// @ts-ignore
+	const { defaultDateFormat } = app.plugins.plugins?.dataview?.settings;
 
 	useEffect(() => {
 		if (!DateTime.isDateTime(propertyValue)) {
-			console.log("not datetime");
-
-			setDateString(null);
-			setInputDateString(null);
+			setDateStrings({
+				formattedDate: null,
+				inputDate: null,
+			});
 		}
 		if (DateTime.isDateTime(propertyValue)) {
-			setDateString(
-				propertyValue.toLocal().toFormat(
-					// @ts-ignore
-					app.plugins.plugins?.dataview?.settings?.defaultDateFormat,
-					{ locale },
-				),
-			);
-			setInputDateString(propertyValue.toLocal().toFormat("yyyy-MM-dd"));
+			const formattedDate = propertyValue
+				.toLocal()
+				.toFormat(defaultDateFormat, { locale });
+			const inputDate = propertyValue.toLocal().toFormat("yyyy-MM-dd");
+			setDateStrings({ formattedDate, inputDate });
 		}
 	}, [propertyValue]);
 
-	useEffect(
-		() => console.log("inputDateString: ", inputDateString),
-		[inputDateString],
-	);
+	// useEffect(
+	// 	() => console.log("inputDateString: ", inputDateString),
+	// 	[inputDateString],
+	// );
 
 	if (!isEditing || isLocked) {
 		return (
 			<Markdown
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={dateString ?? dvRenderNullAs}
+				plainText={formattedDate ?? dvRenderNullAs}
 				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
 				onClick={() => {
 					!isLocked && setIsEditing(true);
@@ -805,7 +822,80 @@ const DateInput = (props: InputSwitchProps<DateTime>) => {
 	return (
 		<input
 			type="date"
-			defaultValue={inputDateString}
+			max={"9999-12-31"}
+			defaultValue={inputDate}
+			autoFocus
+			onBlur={async (e) => {
+				await updateMetaData(
+					propertyName,
+					e.target.value,
+					filePath,
+					plugin,
+				);
+
+				setIsEditing(false);
+			}}
+		/>
+	);
+};
+
+const DateTimeInput = (
+	props: InputSwitchProps<DateTime> & { hasTime: boolean },
+) => {
+	const { propertyName, propertyValue, filePath, isLocked, hasTime } = props;
+	const { ctx, plugin } = useBlock();
+	const [isEditing, setIsEditing] = useState(false);
+	const [{ formattedDate, inputDate }, setDateStrings] = useState({
+		formattedDate: null,
+		inputDate: null,
+	});
+	const locale = currentLocale();
+	const dvSettings: {
+		defaultDateTimeFormat: string;
+		defaultDateFormat: string;
+		// @ts-ignore
+	} = app.plugins.plugins?.dataview?.settings;
+	const defaultFormat = hasTime
+		? dvSettings.defaultDateTimeFormat
+		: dvSettings.defaultDateFormat;
+	const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
+	const max = hasTime ? "9999-12-31T23:59" : "9999-12-31";
+
+	useEffect(() => {
+		if (!DateTime.isDateTime(propertyValue)) {
+			setDateStrings({
+				formattedDate: null,
+				inputDate: null,
+			});
+		}
+		if (DateTime.isDateTime(propertyValue)) {
+			const formattedDate = propertyValue
+				.toLocal()
+				.toFormat(defaultFormat, { locale });
+			const inputDate = propertyValue.toLocal().toFormat(inputFormat);
+			setDateStrings({ formattedDate, inputDate });
+		}
+	}, [propertyValue]);
+
+	if (!isEditing || isLocked) {
+		return (
+			<Markdown
+				app={plugin.app}
+				filePath={ctx.sourcePath}
+				plainText={formattedDate ?? dvRenderNullAs}
+				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+				onClick={() => {
+					!isLocked && setIsEditing(true);
+				}}
+			/>
+		);
+	}
+
+	return (
+		<input
+			type={hasTime ? "datetime-local" : "date"}
+			defaultValue={inputDate}
+			max={max}
 			autoFocus
 			onBlur={async (e) => {
 				await updateMetaData(

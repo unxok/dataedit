@@ -262,10 +262,11 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
 -   [x] You can now do 'TABLE WITHOUT ID...' _without_ including `file.link`
 -   [x] Nested property support
     -   If you use YAML objects in frontmatter, that will update correctly
--   [ ] Grouped results support?
--                   - This might not make sense...
+-   [ ] ~~Grouped results support?~~
+-                       - This might not make sense...
 -   [x] Inline property support
 -   [x] Date/Datetime properties now render according to relevant Dataview settings
+-   [x] Image embeds
 -   [ ] Block toolbar
     -   You can now choose items to show in a toolbar near your Dataedit block for quick access to common settings and tools for Dataedit
 -   [ ] Settings overhaul
@@ -279,6 +280,7 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
         -   [ ] Lists
             -   [ ] List style type (enter text. pro tip use Iconize)
         -   [ ] Render markdown or plaintext
+        -   [ ] Allow embed img to grow to natural size
         -   [ ] Alignment- vertical and horizontal
             -   [ ] Whole table
             -   [ ] Columns

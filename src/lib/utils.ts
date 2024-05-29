@@ -1,5 +1,6 @@
 import DataEdit from "@/main";
 import { clsx, type ClassValue } from "clsx";
+import { DateTime } from "luxon";
 import { TFile, stringifyYaml } from "obsidian";
 import { twMerge } from "tailwind-merge";
 
@@ -341,4 +342,17 @@ export const dvRenderNullAs = "\\-";
 export const currentLocale = () => {
 	if (typeof window === "undefined") return "en-US";
 	return window.navigator.language;
+};
+
+/**
+ * Checks if a Luxon DateTime has a significant time value
+ * @param dt Luxon DateTime
+ * @returns True if time is significant, false if not
+ */
+export const isDateWithTime = (dt: DateTime) => {
+	const { second, minute, hour } = dt;
+	if (second === 0 && minute === 0 && hour === 0) {
+		return false;
+	}
+	return true;
 };
