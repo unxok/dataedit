@@ -1,6 +1,6 @@
 import React from "react";
 import { TdProps, useBlock } from "../App";
-import { isDateWithTime } from "@/lib/utils";
+import { isDateWithTime, tryToMarkdownLink } from "@/lib/utils";
 import { FILE } from "dns";
 import { DateTime } from "luxon";
 import { Markdown } from "../Markdown";
@@ -116,6 +116,16 @@ export const InputSwitch = (props: InputSwitchProps<unknown>) => {
 					<DateTimeInput
 						hasTime={hasTime}
 						{...(props as InputSwitchProps<DateTime>)}
+					/>
+				);
+			}
+
+			const potentialMarkdownLink = tryToMarkdownLink(propertyValue);
+			if (typeof potentialMarkdownLink === "string") {
+				return (
+					<StringInput
+						{...(props as InputSwitchProps<string>)}
+						propertyValue={potentialMarkdownLink}
 					/>
 				);
 			}

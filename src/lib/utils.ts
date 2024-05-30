@@ -95,10 +95,9 @@ export const checkIsTag = (str: string) => {
 
 export const checkIsLink = (val: any) => {
 	if (!val) return false;
-	if (val.hasOwnProperty("type")) {
-		return val.type === "file";
+	if (typeof val === "object") {
+		return typeof val?.markdown === "function";
 	}
-	return false;
 };
 
 export const tryToMarkdownLink = (val: any) => {

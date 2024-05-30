@@ -26360,10 +26360,9 @@ var iconStyle = {
 var checkIsLink = (val) => {
   if (!val)
     return false;
-  if (val.hasOwnProperty("type")) {
-    return val.type === "file";
+  if (typeof val === "object") {
+    return typeof val?.markdown === "function";
   }
-  return false;
 };
 var tryToMarkdownLink = (val) => {
   if (checkIsLink(val)) {
@@ -42056,94 +42055,161 @@ PopoverContent.displayName = $cb5cc270b50c6fcd$export$7c6e2c02157bb7d2.displayNa
 var Suggester = ({
   children,
   query: query2,
-  renderSuggestions,
   open,
-  onMouseEnter,
-  onMouseLeave,
-  onSelect
+  onSelect,
+  getSuggestions
 }) => {
-  const [selected, setSelected] = (0, import_react32.useState)({});
-  const suggestions = renderSuggestions(query2);
-  const selectNext = () => {
-    setSelected((prev) => {
-      if (prev.index === void 0 || prev.index + 1 >= suggestions.length) {
-        return { text: suggestions[0], index: 0 };
-      }
-      return {
-        text: suggestions[prev.index + 1],
-        index: prev.index + 1
-      };
+  const [selected, setSelected] = (0, import_react32.useState)();
+  const { plugin: plugin2 } = useBlock();
+  const getLinkSuggestions = (q) => {
+    const hashTagIndex = q.indexOf("#");
+    if (hashTagIndex !== -1) {
+      const potentialFile = plugin2.app.vault.getFileByPath(
+        q.slice(2, hashTagIndex) + ".md"
+      );
+      if (!potentialFile)
+        return [""];
+      const headers = plugin2.app.metadataCache.getFileCache(potentialFile);
+      return headers?.headings?.length > 0 ? headers.headings : [""];
+    }
+    const files = (
+      // @ts-ignore
+      app.metadataCache.getLinkSuggestions()
+    );
+    return files.filter((v) => {
+      if (!v?.path)
+        return false;
+      return v.path.includes(q.slice(2));
     });
   };
-  const selectPrev = () => {
+  const suggestions = query2.startsWith("[[") ? getLinkSuggestions(query2) : getSuggestions(query2);
+  const selectNext = (suggestionArr) => {
     setSelected((prev) => {
-      if (prev.index === void 0 || prev.index - 1 < 0) {
-        const i = suggestions.length - 1;
-        return { text: suggestions[i], index: i };
+      if (prev === void 0 || prev + 1 >= suggestionArr.length) {
+        console.log("sug len: ", suggestionArr.length);
+        console.log("next 0 ", prev);
+        return 0;
       }
-      return {
-        text: suggestions[prev.index - 1],
-        index: prev.index - 1
-      };
+      console.log("next + 1");
+      return prev + 1;
     });
   };
-  const handleKeyPress = (e) => {
+  const selectPrev = (suggestionArr) => {
+    setSelected((prev) => {
+      if (prev === void 0 || prev - 1 < 0) {
+        console.log("sug len: ", suggestionArr.length);
+        console.log("prev len - 1 ", prev);
+        return suggestionArr.length - 1;
+      }
+      console.log("prev - 1");
+      return prev - 1;
+    });
+  };
+  const handleKeyPress = (e, suggestionArr) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      return selectNext();
+      return selectNext(suggestionArr);
     }
     if (e.key === "ArrowUp") {
       e.preventDefault();
-      return selectPrev();
+      return selectPrev(suggestionArr);
     }
     if (e.key === "Escape") {
       e.preventDefault();
-      return setSelected({ text: void 0, index: void 0 });
+      return setSelected(void 0);
     }
   };
   (0, import_react32.useEffect)(() => {
-    onSelect(selected.text, selected.index);
-  }, [selected]);
+    if (selected !== void 0) {
+      const selectedSuggestion = suggestions[selected];
+      if (typeof selectedSuggestion === "string") {
+        return onSelect(selectedSuggestion, selected);
+      }
+      if (selectedSuggestion.hasOwnProperty("path")) {
+        return onSelect(
+          "[[" + selectedSuggestion.path + "]]",
+          selected
+        );
+      }
+      return onSelect(
+        query2 + selectedSuggestion.heading + "]]",
+        selected
+      );
+    }
+    onSelect();
+  }, [selected, query2]);
   (0, import_react32.useEffect)(() => {
-    window.addEventListener("keydown", handleKeyPress);
+    const handler = (e) => handleKeyPress(e, suggestions);
+    window.addEventListener("keydown", handler);
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener("keydown", handler);
     };
-  }, []);
+  }, [suggestions]);
+  if (query2.startsWith("[[")) {
+    return /* @__PURE__ */ import_react32.default.createElement(Popover, { open }, /* @__PURE__ */ import_react32.default.createElement(PopoverTrigger, { asChild: true }, children), /* @__PURE__ */ import_react32.default.createElement(
+      PopoverContent,
+      {
+        className: "twcss",
+        onOpenAutoFocus: (e) => e.preventDefault(),
+        align: "start",
+        avoidCollisions: true
+      },
+      /* @__PURE__ */ import_react32.default.createElement("div", { className: "suggestion" }, suggestions?.map((v, i) => /* @__PURE__ */ import_react32.default.createElement(
+        "div",
+        {
+          key: i,
+          className: `suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`
+        },
+        /* @__PURE__ */ import_react32.default.createElement(
+          "div",
+          {
+            className: "suggestion-content",
+            onMouseEnter: (e) => {
+              setSelected(i);
+            },
+            onMouseLeave: (e) => {
+              setSelected(void 0);
+            }
+          },
+          /* @__PURE__ */ import_react32.default.createElement("div", { className: "suggestion-title" }, v?.path ? v.path : v?.heading ? v.heading : "No matches found"),
+          /* @__PURE__ */ import_react32.default.createElement("div", { className: "suggestion-note" }, v?.alias)
+        ),
+        /* @__PURE__ */ import_react32.default.createElement("div", { className: "suggestion-aux" }, /* @__PURE__ */ import_react32.default.createElement(
+          "span",
+          {
+            className: "suggestion-flair",
+            "aria-label": "Alias"
+          },
+          v?.alias && /* @__PURE__ */ import_react32.default.createElement(Forward, { className: "svg-icon lucide-forward" }),
+          v?.level && /* @__PURE__ */ import_react32.default.createElement("span", { className: "suggestion-flair" }, "H", v.level)
+        ))
+      ))),
+      /* @__PURE__ */ import_react32.default.createElement("div", { className: "prompt-instructions flex-nowrap text-nowrap" }, /* @__PURE__ */ import_react32.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react32.default.createElement("span", { className: "prompt-instruction-command" }, "Type #"), /* @__PURE__ */ import_react32.default.createElement("span", null, "to link heading")), /* @__PURE__ */ import_react32.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react32.default.createElement("span", { className: "prompt-instruction-command" }, "Type ^"), /* @__PURE__ */ import_react32.default.createElement("span", null, "to link blocks")), /* @__PURE__ */ import_react32.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react32.default.createElement("span", { className: "prompt-instruction-command" }, "Type |"), /* @__PURE__ */ import_react32.default.createElement("span", null, "to change display text")))
+    ));
+  }
   return /* @__PURE__ */ import_react32.default.createElement(Popover, { open }, /* @__PURE__ */ import_react32.default.createElement(PopoverTrigger, { asChild: true }, children), /* @__PURE__ */ import_react32.default.createElement(
     PopoverContent,
     {
       className: "twcss",
-      onOpenAutoFocus: (e) => e.preventDefault()
+      onOpenAutoFocus: (e) => e.preventDefault(),
+      align: "start",
+      avoidCollisions: true
     },
-    renderSuggestions(query2)?.map((v, i) => /* @__PURE__ */ import_react32.default.createElement("div", { key: i, className: "suggestion" }, /* @__PURE__ */ import_react32.default.createElement(
+    /* @__PURE__ */ import_react32.default.createElement("div", { className: "suggestion" }, suggestions?.map((v, i) => /* @__PURE__ */ import_react32.default.createElement(
       "div",
       {
-        className: `suggestion-item ${selected.index === i ? "is-selected" : ""}`
+        key: i,
+        className: `suggestion-item ${selected === i ? "is-selected" : ""}`
       },
       /* @__PURE__ */ import_react32.default.createElement(
         "span",
         {
           className: "suggestion-highlight",
           onMouseEnter: (e) => {
-            onMouseEnter(
-              e.currentTarget.textContent,
-              i
-            );
-            setSelected({
-              text: e.currentTarget.textContent,
-              index: i
-            });
+            setSelected(i);
           },
           onMouseLeave: (e) => {
-            onMouseLeave(
-              e.currentTarget.textContent,
-              i
-            );
-            setSelected({
-              text: void 0,
-              index: void 0
-            });
+            setSelected(void 0);
           }
         },
         v
@@ -42161,12 +42227,38 @@ var StringInput = (props2) => {
   const [isSuggestShown, setIsSuggestShown] = (0, import_react33.useState)(false);
   const [selectedSuggestion, setSelectedSuggestion] = (0, import_react33.useState)();
   const [query2, setQuery] = (0, import_react33.useState)(propertyValue);
-  const onKeyDown = (e) => {
-    if (e.key === "Escape") {
+  const onBlur = async (value) => {
+    await updateMetaData(
+      propertyName,
+      selectedSuggestion ?? value,
+      filePath,
+      plugin2
+    );
+    setIsEditing(false);
+    setIsSuggestShown(false);
+  };
+  const onKeyDown = async (key, value) => {
+    if (key === "Escape") {
       console.log("esc");
       setIsSuggestShown(false);
     }
+    if (key === "Enter") {
+      await onBlur(value);
+    }
   };
+  const getSuggestions = (q) => {
+    const suggestions = (
+      // @ts-ignore
+      app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
+    );
+    if (!suggestions || suggestions?.length === 0)
+      return;
+    return suggestions.filter((s2) => s2.includes(q));
+  };
+  (0, import_react33.useEffect)(
+    () => console.log("selected: ", selectedSuggestion),
+    [selectedSuggestion]
+  );
   if (!isEditing || isLocked2) {
     return /* @__PURE__ */ import_react33.default.createElement(
       Markdown,
@@ -42189,25 +42281,11 @@ var StringInput = (props2) => {
     {
       open: isSuggestShown,
       query: query2,
-      renderSuggestions: (q) => {
-        const suggestions = (
-          // @ts-ignore
-          app.metadataCache.getFrontmatterPropertyValuesForKey(
-            propertyName
-          )
-        );
-        if (!suggestions || suggestions?.length === 0)
-          return;
-        return suggestions.filter((s2) => s2.startsWith(q));
-      },
-      onMouseEnter: (text) => {
-        setSelectedSuggestion(text);
-      },
-      onMouseLeave: () => setSelectedSuggestion(null),
       onSelect: (text) => {
         console.log("selected: ", text);
         setSelectedSuggestion(text);
-      }
+      },
+      getSuggestions
     },
     /* @__PURE__ */ import_react33.default.createElement(
       "input",
@@ -42215,18 +42293,9 @@ var StringInput = (props2) => {
         type: "text",
         defaultValue: propertyValue,
         autoFocus: true,
-        onKeyDown,
+        onKeyDown: (e) => onKeyDown(e.key, e.currentTarget.value),
         onChange: (e) => setQuery(e.target.value),
-        onBlur: async (e) => {
-          await updateMetaData(
-            propertyName,
-            selectedSuggestion ?? e.target.value,
-            filePath,
-            plugin2
-          );
-          setIsEditing(false);
-          setIsSuggestShown(false);
-        }
+        onBlur: (e) => onBlur(selectedSuggestion ?? e.target.value)
       }
     )
   );
@@ -42332,6 +42401,16 @@ var InputSwitch = (props2) => {
           {
             hasTime,
             ...props2
+          }
+        );
+      }
+      const potentialMarkdownLink = tryToMarkdownLink(propertyValue);
+      if (typeof potentialMarkdownLink === "string") {
+        return /* @__PURE__ */ import_react34.default.createElement(
+          StringInput,
+          {
+            ...props2,
+            propertyValue: potentialMarkdownLink
           }
         );
       }

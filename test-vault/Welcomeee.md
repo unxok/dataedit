@@ -13,7 +13,7 @@ aliases:
   - asdeeffe
   - anotheralias
 dotnotation: "123"
-category: cat1
+category: 
 tags:
   - onemoretagg
   - test
@@ -22,7 +22,7 @@ date: 5550-11-06
 datetime: 2302-06-19T02:08
 embed: "![[demo.gif|demo.gif]]"
 ---
- [[]]
+[[]]
 
 ![[demo.gif]]
 
@@ -62,7 +62,7 @@ func('world')
 # h2
 - a list
 - asdf
-
+[[Welcomeee#]]
 
 
 

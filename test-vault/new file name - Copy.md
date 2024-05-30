@@ -1,5 +1,5 @@
 ---
-test: "#another value"
+test: ""
 date: 1970-01-01
 number: -4
 datetime: 2023-02-25T18:06

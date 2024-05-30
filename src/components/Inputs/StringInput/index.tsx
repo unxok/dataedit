@@ -14,6 +14,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 	Suggester,
+	LinkSuggester,
 } from "@/components/ui/Popover";
 
 export const StringInput = (props: InputSwitchProps<string>) => {
@@ -24,12 +25,41 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 	const [selectedSuggestion, setSelectedSuggestion] = useState<string>();
 	const [query, setQuery] = useState(propertyValue);
 
-	const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Escape") {
+	const onBlur = async (value: string) => {
+		// console.log(e.target.value);
+
+		await updateMetaData(
+			propertyName,
+			selectedSuggestion ?? value,
+			filePath,
+			plugin,
+		);
+		setIsEditing(false);
+		setIsSuggestShown(false);
+	};
+
+	const onKeyDown = async (key: string, value: string) => {
+		if (key === "Escape") {
 			console.log("esc");
 			setIsSuggestShown(false);
 		}
+		if (key === "Enter") {
+			await onBlur(value);
+		}
 	};
+
+	const getSuggestions = (q) => {
+		const suggestions: string[] =
+			// @ts-ignore
+			app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName);
+		if (!suggestions || suggestions?.length === 0) return;
+		return suggestions.filter((s) => s.includes(q));
+	};
+
+	useEffect(
+		() => console.log("selected: ", selectedSuggestion),
+		[selectedSuggestion],
+	);
 
 	if (!isEditing || isLocked) {
 		return (
@@ -52,38 +82,19 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 		<Suggester
 			open={isSuggestShown}
 			query={query}
-			renderSuggestions={(q) => {
-				const suggestions: string[] =
-					// @ts-ignore
-					app.metadataCache.getFrontmatterPropertyValuesForKey(
-						propertyName,
-					);
-				if (!suggestions || suggestions?.length === 0) return;
-				return suggestions.filter((s) => s.startsWith(q));
-			}}
 			onSelect={(text) => {
 				console.log("selected: ", text);
 				setSelectedSuggestion(text);
 			}}
+			getSuggestions={getSuggestions}
 		>
 			<input
 				type="text"
 				defaultValue={propertyValue}
 				autoFocus
-				onKeyDown={onKeyDown}
+				onKeyDown={(e) => onKeyDown(e.key, e.currentTarget.value)}
 				onChange={(e) => setQuery(e.target.value)}
-				onBlur={async (e) => {
-					// console.log(e.target.value);
-
-					await updateMetaData(
-						propertyName,
-						selectedSuggestion ?? e.target.value,
-						filePath,
-						plugin,
-					);
-					setIsEditing(false);
-					setIsSuggestShown(false);
-				}}
+				onBlur={(e) => onBlur(selectedSuggestion ?? e.target.value)}
 			/>
 		</Suggester>
 	);
