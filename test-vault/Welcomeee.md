@@ -73,8 +73,11 @@ TODO Add keydown for enter and escape for all inputs
 - [ ] datetime
 - [ ] boolean
 
-```dataedit
-TABLE test, date, datetime, bool, tags, multitext, json.key, obj.key, test as testAlias, text, num
+```dataviewjs
+dv.span("```dataedit\n" + 
+"TABLE test, date, bool\n" +
+"```"
+)
 ```
 
 
