@@ -1,5 +1,6 @@
 [
   "hot-reload",
   "dataedit",
-  "dataview"
+  "dataview",
+  "better-word-count"
 ]

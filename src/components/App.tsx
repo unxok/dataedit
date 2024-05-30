@@ -45,12 +45,14 @@ import {
 	ChevronRight,
 	ChevronLast,
 	ChevronFirst,
+	CircleX,
 } from "lucide-react";
 import { ClassValue } from "clsx";
 import { create } from "zustand";
 import { FILE } from "@/lib/consts";
 import { DateTime } from "luxon";
 import { InputSwitch } from "./Inputs";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 // import { NumberInput } from "./Inputs";
 
 type ObsdianPropertyType =
@@ -290,84 +292,125 @@ export const App = (props: {
 	}
 	return (
 		<div className="twcss" style={{ overflowX: "scroll" }}>
-			{/* height 1px allows divs to be 100% of the td -_- */}
-			<table className="dataedit h-[1px]">
-				<thead>
-					{false && (
+			<ErrorBoundary FallbackComponent={Fallback}>
+				{/* height 1px allows divs to be 100% of the td -_- */}
+				<table className="dataedit h-[1px]">
+					<thead>
+						{false && (
+							<tr>
+								{queryResults?.headers?.map((_, i) => (
+									<th className="!bg-secondary">
+										<div className="flex items-center justify-center">
+											{numberToBase26Letters(i)}
+										</div>
+									</th>
+								))}
+							</tr>
+						)}
 						<tr>
-							{queryResults?.headers?.map((_, i) => (
-								<th className="!bg-secondary">
-									<div className="flex items-center justify-center">
-										{numberToBase26Letters(i)}
+							{false && (
+								<th className="w-fit min-w-0 !bg-secondary">
+									<div className="flex h-full w-full items-center justify-center">
+										1
 									</div>
 								</th>
-							))}
-						</tr>
-					)}
-					<tr>
-						{false && (
-							<th className="w-fit min-w-0 !bg-secondary">
-								<div className="flex h-full w-full items-center justify-center">
-									1
-								</div>
-							</th>
-						)}
-						{queryResults?.headers?.map((h, i) => (
-							<Th
-								key={i + "table-header"}
-								className=""
-								hideFileLink={hideFileLink}
-								propertyName={h}
-							/>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					{currentRows?.map((r, i) => (
-						<tr key={i + "-table-body-row"}>
-							{false && (
-								<td className="w-fit min-w-0 bg-secondary">
-									<div className="my-auto flex h-full w-full items-center justify-center">
-										{i + 2}
-									</div>
-								</td>
 							)}
-							{r?.map((d, k) => (
-								<Td
-									key={k + "table-data"}
-									propertyName={queryResults.headers[k]}
-									propertyValue={d}
+							{queryResults?.headers?.map((h, i) => (
+								<Th
+									key={i + "table-header"}
 									className=""
 									hideFileLink={hideFileLink}
-									filePath={
-										queryResults.values[startIndex + i][
-											fileHeaderIndex
-										]?.path
-									}
-									isLocked={isLocked}
+									propertyName={h}
 								/>
 							))}
 						</tr>
-					))}
-				</tbody>
-			</table>
-			<div className="flex w-full flex-row items-center p-2">
-				<PaginationNav
-					totalRows={queryResults.values.length}
-					rowsPerPage={rowsPerPage}
-					currentPage={currentPage}
-					setCurrentPage={setCurrentPage}
-				/>
-				<PaginationSize
-					rowsPerPage={rowsPerPage}
-					setRowsPerPage={setRowsPerPage}
-				/>
-				<SettingsGear blockId={blockId} />
-				<LockToggle
-					isLocked={isLocked}
-					toggleLock={() => setIsLocked((b) => !b)}
-				/>
-			</div>
+					</thead>
+					<tbody>
+						{currentRows?.map((r, i) => (
+							<tr key={i + "-table-body-row"}>
+								{false && (
+									<td className="w-fit min-w-0 bg-secondary">
+										<div className="my-auto flex h-full w-full items-center justify-center">
+											{i + 2}
+										</div>
+									</td>
+								)}
+								{r?.map((d, k) => (
+									<Td
+										key={k + "table-data"}
+										propertyName={queryResults.headers[k]}
+										propertyValue={d}
+										className=""
+										hideFileLink={hideFileLink}
+										filePath={
+											queryResults.values[startIndex + i][
+												fileHeaderIndex
+											]?.path
+										}
+										isLocked={isLocked}
+									/>
+								))}
+							</tr>
+						))}
+					</tbody>
+				</table>
+				<div className="flex w-full flex-row items-center p-2">
+					<PaginationNav
+						totalRows={queryResults.values.length}
+						rowsPerPage={rowsPerPage}
+						currentPage={currentPage}
+						setCurrentPage={setCurrentPage}
+					/>
+					<PaginationSize
+						rowsPerPage={rowsPerPage}
+						setRowsPerPage={setRowsPerPage}
+					/>
+					<SettingsGear blockId={blockId} />
+					<LockToggle
+						isLocked={isLocked}
+						toggleLock={() => setIsLocked((b) => !b)}
+					/>
+				</div>
+			</ErrorBoundary>
+		</div>
+	);
+};
+
+const Fallback = ({ error }: FallbackProps) => {
+	console.error("Fallback got error: ", error);
+	const e = error as Error;
+	return (
+		<div className="border-[1px] border-dashed border-error p-3">
+			<h2 className="text-error">
+				Dataedit Error <CircleX className="svg-icon" />
+			</h2>
+			<p>
+				<i>It's not you, it's me</i>
+				{"\uff08>\ufe4f<\uff09"}
+			</p>
+			<p>Sorry about that!</p>
+			<p>
+				If you'd like this to get fixed, please check the{" "}
+				<a href="https://github.com/unxok/dataedit/issues">
+					known issues
+					<span className="external-link" />
+				</a>
+				. If there's no open issue yet, please open one and provide the
+				info below as well as the steps to reproduce the issue
+			</p>
+			<details>
+				<summary className="hover:cursor-pointer hover:underline">
+					Show error details
+				</summary>
+				<h3>Error message</h3>
+				<pre>
+					<code>{e?.message}</code>
+				</pre>
+				<h3>Error stack</h3>
+				<pre>
+					<code>{e?.stack}</code>
+				</pre>
+			</details>
 		</div>
 	);
 };
@@ -396,17 +439,32 @@ const PaginationSize = ({
 			min={0}
 			defaultValue={rowsPerPage}
 			aria-label="Page size"
-			placeholder="no limit"
+			placeholder="∞"
 			className="w-8"
 			onBlur={(e) => {
 				setRowsPerPage((prev) => {
-					const num = Number(e.target.value);
+					const num = Math.floor(Number(e.target.value));
 					if (!num || Number.isNaN(num)) {
 						return Infinity;
 					}
 					return num;
 				});
 				setIsEditing(false);
+			}}
+			onKeyDown={(e) => {
+				if (e.key === "Enter") {
+					setRowsPerPage((prev) => {
+						const num = Math.floor(Number(e.currentTarget.value));
+						if (!num || Number.isNaN(num)) {
+							return Infinity;
+						}
+						return num;
+					});
+					setIsEditing(false);
+				}
+				if (e.key === "Escape") {
+					setIsEditing(false);
+				}
 			}}
 		/>
 	);
@@ -423,6 +481,7 @@ const PaginationNav = ({
 	currentPage: number;
 	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
+	const [isEditing, setIsEditing] = useState(false);
 	const totalPages =
 		rowsPerPage === Infinity ? 1 : Math.ceil(totalRows / rowsPerPage);
 
@@ -458,7 +517,60 @@ const PaginationNav = ({
 			<div onClick={goPrev} className="clickable-icon w-fit">
 				<ChevronLeft className="svg-icon" />
 			</div>
-			<span className="px-1">{`${currentPage} of ${totalPages}`}</span>
+			<span className="px-1">
+				{!isEditing && (
+					<span
+						aria-label="Enter page number"
+						className="hover:cursor-pointer hover:underline"
+						onClick={() => setIsEditing(true)}
+					>
+						{currentPage}
+					</span>
+				)}
+				{isEditing && (
+					<input
+						type="number"
+						defaultValue={currentPage}
+						autoFocus
+						step={1}
+						className="w-8"
+						onBlur={(e) => {
+							const newPage = Math.floor(Number(e.target.value));
+							if (Number.isNaN(newPage) || newPage < 1) {
+								setCurrentPage(1);
+								return setIsEditing(false);
+							}
+							if (newPage > totalPages) {
+								setCurrentPage(totalPages);
+								return setIsEditing(false);
+							}
+							setCurrentPage(newPage);
+							setIsEditing(false);
+						}}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								const newPage = Math.floor(
+									Number(e.currentTarget.value),
+								);
+								if (Number.isNaN(newPage) || newPage < 1) {
+									setCurrentPage(1);
+									return setIsEditing(false);
+								}
+								if (newPage > totalPages) {
+									setCurrentPage(totalPages);
+									return setIsEditing(false);
+								}
+								setCurrentPage(newPage);
+								setIsEditing(false);
+							}
+							if (e.key === "Escape") {
+								setIsEditing(false);
+							}
+						}}
+					/>
+				)}
+				<span> of {totalPages}</span>
+			</span>
 			<div onClick={goNext} className="clickable-icon w-fit">
 				<ChevronRight className="svg-icon" />
 			</div>

@@ -1,5 +1,5 @@
 ---
-test: sdf
+test: "[[Welcomeee^"
 text: asdfasdf
 multitext:
   - asdf

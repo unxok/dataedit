@@ -12,7 +12,7 @@ export const BooleanInput = (props: InputSwitchProps<boolean>) => {
 			type="checkbox"
 			disabled={!!isLocked}
 			defaultChecked={!!propertyValue}
-			className={isLocked && "opacity-50"}
+			className={isLocked ? "opacity-50" : ""}
 			onClick={(e) => {
 				updateMetaData(
 					propertyName,

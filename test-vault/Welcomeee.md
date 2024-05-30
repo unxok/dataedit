@@ -22,7 +22,7 @@ date: 5550-11-06
 datetime: 2302-06-19T02:08
 embed: "![[demo.gif|demo.gif]]"
 ---
-[[]]
+
 
 ![[demo.gif]]
 
@@ -30,11 +30,11 @@ inlineProp:: 551
 
 ## Editing inline fields
 An inline field can be of two types:
-1. Entire line
+1. Entire line ^f3abc4
 	- Regex: `/^\S+::[ ]*\S+/gm`
 2. Wrapped with `()` or `[]`
 	- Regex: `/[\[\(]([^\n\r\(\[]*)::[ ]*([^\)\]\n\r]*)[\]\)]/gm`
-In both cases, they can either be a string or an array.
+In both cases, they can either be a string or an array. ^c42732
 - if an array, that means that the field is declared multiple times in a file
 
 
@@ -42,7 +42,7 @@ To find inline fields:
 1. Given a line, trimmed of whitespace
 2. Parse every line for a line or wrapped inline field
 3. Get key and value
-	- split on `/::(.+)` and trim
+	- split on `/::(.+)` and trim ^29f7b6
 4. add to an array
 To edit a field:
 - If value from dataview was an array
@@ -62,16 +62,23 @@ func('world')
 # h2
 - a list
 - asdf
-[[Welcomeee#]]
+[[Welcomeee#^f3abc4]]
 
+[external](https://example.com)
 
+TODO Add keydown for enter and escape for all inputs
+- [ ] string
+- [ ] number
+- [ ] array
+- [ ] datetime
+- [ ] boolean
 
 ```dataedit
 TABLE test, date, datetime, bool, tags, multitext, json.key, obj.key, test as testAlias, text, num
 ```
 
 
-
+[[Welcomeee^]]
 
 
 

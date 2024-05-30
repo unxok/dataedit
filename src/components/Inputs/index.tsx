@@ -31,12 +31,12 @@ export const InputSwitch = (props: InputSwitchProps<unknown>) => {
 	// TODO if value is falsey, use property type to render input
 	// it CANNOT be inline if it is falsey
 	if (!propertyValue) {
-		console.log(
-			"got propertyType: ",
-			propertyType,
-			"for prop: ",
-			propertyValue,
-		);
+		// console.log(
+		// 	"got propertyType: ",
+		// 	propertyType,
+		// 	"for prop: ",
+		// 	propertyValue,
+		// );
 		switch (propertyType) {
 			case "aliases":
 			case "text":
@@ -90,12 +90,6 @@ export const InputSwitch = (props: InputSwitchProps<unknown>) => {
 	// Dataview will sometimes parse property values to a different type than what is defined in the metadataTypeManager
 	// As well, inline fields won't have a type and frontmatter objects will be considered the default of text
 	// So the type of input to render is determined from the value's actual type instead of the property type itself
-	console.log(
-		"property type: ",
-		typeof propertyValue,
-		"for: ",
-		propertyValue,
-	);
 	switch (typeof propertyValue) {
 		case "string":
 			return <StringInput {...(props as InputSwitchProps<string>)} />;

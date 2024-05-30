@@ -2,8 +2,16 @@ import React, { useEffect, useState } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { cn } from "@/lib/utils";
 import { useBlock } from "@/components/App";
-import { HeadingCache, TFile } from "obsidian";
+import {
+	BlockCache,
+	HeadingCache,
+	MetadataCache,
+	Plugin,
+	SectionCache,
+	TFile,
+} from "obsidian";
 import { Forward } from "lucide-react";
+import { boolean } from "zod";
 
 const Popover = PopoverPrimitive.Root;
 
@@ -44,6 +52,137 @@ type LinkSuggestion = {
 	alias?: string;
 };
 
+const BASE = "base";
+const HEADER = "header";
+const SECTION = "section";
+type WikiLinkType = typeof BASE | typeof HEADER | typeof SECTION;
+type GetWikiLinkDetails = (fileName: string) => {
+	charIndex: number;
+	linkType: WikiLinkType;
+};
+const getWikiLinkDetails: GetWikiLinkDetails = (fileName) => {
+	const hashTagIndex = fileName.indexOf("#");
+	const hatIndex = fileName.indexOf("^");
+	if (hashTagIndex + hatIndex === -2)
+		return {
+			charIndex: -1,
+			linkType: BASE,
+		};
+	const charIndex = hashTagIndex > -1 ? hashTagIndex : hatIndex;
+	return {
+		charIndex,
+		linkType: charIndex === hashTagIndex ? HEADER : SECTION,
+	};
+};
+
+const getItems = (
+	query: string,
+	charIndex: number,
+	linkType: WikiLinkType,
+	plugin: Plugin,
+) => {
+	const mc = app.metadataCache as MetadataCache & {
+		getLinkSuggestions: () => LinkSuggestion[];
+	};
+	if (linkType === BASE) {
+		return mc.getLinkSuggestions() as LinkSuggestion[];
+	}
+	const potentialFile = plugin.app.vault.getFileByPath(
+		query.slice(2, charIndex) + ".md",
+	);
+	if (!potentialFile) {
+		return;
+	}
+	const { headings, sections } =
+		plugin.app.metadataCache.getFileCache(potentialFile);
+	return linkType === HEADER ? headings : sections;
+};
+
+type ToModifiedSectionCache = (
+	filePath: string,
+	sections: SectionCache[],
+	plugin: Plugin,
+) => Promise<ModifiedSectionCache[]>;
+const toModifiedSectionCache: ToModifiedSectionCache = async (
+	filePath,
+	sections,
+	plugin,
+) => {
+	const file = plugin.app.vault.getFileByPath(filePath + ".md");
+	// Your filepath should be valid since you used it to get `sections` param
+	if (!file)
+		throw new Error(
+			"Tried reading sections but couldn't get file from filepath: " +
+				filePath +
+				".md",
+		);
+	const content = await plugin.app.vault.cachedRead(file);
+	return sections.map((s) => {
+		const start = s.position.start.offset;
+		const end = s.position.end.offset;
+		return {
+			...s,
+			section: content.slice(start, end),
+		};
+	});
+};
+
+type ModifiedSectionCache = SectionCache & {
+	section: string;
+};
+
+type GetFilterProps = (
+	| {
+			linkType: typeof BASE;
+			linkObj: LinkSuggestion;
+	  }
+	| {
+			linkType: typeof HEADER;
+			linkObj: HeadingCache;
+	  }
+	| {
+			linkType: typeof SECTION;
+			linkObj: ModifiedSectionCache;
+	  }
+) & {
+	query: string;
+};
+
+const linkFilter = async ({ linkObj, linkType, query }: GetFilterProps) => {
+	const qu = query.toUpperCase();
+	if (linkType === BASE) {
+		return (v: LinkSuggestion) => {
+			if (!v?.path) return false;
+			return v.path.toUpperCase().includes(qu.slice(2));
+		};
+	}
+	if (linkType === HEADER) {
+		const { heading, level } = linkObj;
+		const isMatchLevel = qu === "H" + level.toString();
+		const isMatchName = heading.toUpperCase().includes(qu);
+		return isMatchLevel || isMatchName;
+	}
+	if (linkType === SECTION) {
+		const { section, type, id } = linkObj;
+		const isSectionMatch = section.toUpperCase().includes(qu);
+		const isTypeMatch = type.toUpperCase().includes(qu);
+		// const isIdMatch = id.toUpperCase().includes(qu);
+		return isSectionMatch || isTypeMatch;
+	}
+	throw new Error(
+		"Invalid linkType.\nExpected `typeof BASE` or `typeof HEADER` or `typeof SECTION`\nGot: " +
+			linkType,
+	);
+};
+
+/*
+	TODO Sections
+	Apparently sections and blocks are more distinct than I thought and I am confused.
+	The first step is changing from sections to blocks because the named blocks are in the fileCache and they contain a position just like sections
+	The bigger issue is I don't know how obsidian gets suggestions for non-named blocks. 
+	As well, if you click one of the unnamed suggestions, it seems to modify the file and give it a random id
+	- This means I'll have to add this has a side effect for when an unnamed block is selected and will have to pass that generated id back to the components parent in onSelect
+*/
 export const Suggester = ({
 	children,
 	query,
@@ -53,63 +192,69 @@ export const Suggester = ({
 }: SuggesterProps) => {
 	const [selected, setSelected] = useState<number>();
 	const { plugin } = useBlock();
-	const getLinkSuggestions = (q: string) => {
-		const hashTagIndex = q.indexOf("#");
-		if (hashTagIndex !== -1) {
-			const potentialFile = plugin.app.vault.getFileByPath(
-				q.slice(2, hashTagIndex) + ".md",
+	const [keydownHandler, setKeydownHandler] = useState<any>();
+	const getLinkSuggestions = async (q: string) => {
+		const { charIndex, linkType } = getWikiLinkDetails(q);
+		let items = getItems(q, charIndex, linkType, plugin);
+		console.log("items: ", items);
+		if (linkType === SECTION && items?.length > 0) {
+			items = await toModifiedSectionCache(
+				q.slice(2, charIndex),
+				items as SectionCache[],
+				plugin,
 			);
-			if (!potentialFile) return [""];
-			const headers =
-				plugin.app.metadataCache.getFileCache(potentialFile);
-			return headers?.headings?.length > 0 ? headers.headings : [""];
 		}
-
-		const files: LinkSuggestion[] =
-			// @ts-ignore
-			app.metadataCache.getLinkSuggestions();
-
-		return files.filter((v) => {
-			if (!v?.path) return false;
-			return v.path.includes(q.slice(2));
-		});
+		// TODO I thought I did the types right but idk
+		const filtered = items?.filter((item) =>
+			linkFilter({
+				linkObj: item,
+				linkType: linkType,
+				query: q,
+			} as GetFilterProps),
+		) as LinkSuggestion[] | HeadingCache[] | ModifiedSectionCache[];
+		return filtered;
 	};
-	const suggestions = query.startsWith("[[")
-		? getLinkSuggestions(query)
-		: getSuggestions(query);
+	const [suggestions, setSuggestions] = useState<
+		string[] | LinkSuggestion[] | HeadingCache[] | ModifiedSectionCache[]
+	>();
 
 	const selectNext = (
-		suggestionArr: HeadingCache[] | LinkSuggestion[] | string[],
+		suggestionArr:
+			| string[]
+			| LinkSuggestion[]
+			| HeadingCache[]
+			| ModifiedSectionCache[],
 	) => {
 		setSelected((prev) => {
 			if (prev === undefined || prev + 1 >= suggestionArr.length) {
-				console.log("sug len: ", suggestionArr.length);
-				console.log("next 0 ", prev);
 				return 0;
 			}
-			console.log("next + 1");
 			return prev + 1;
 		});
 	};
 
 	const selectPrev = (
-		suggestionArr: HeadingCache[] | LinkSuggestion[] | string[],
+		suggestionArr:
+			| string[]
+			| LinkSuggestion[]
+			| HeadingCache[]
+			| ModifiedSectionCache[],
 	) => {
 		setSelected((prev) => {
 			if (prev === undefined || prev - 1 < 0) {
-				console.log("sug len: ", suggestionArr.length);
-
-				console.log("prev len - 1 ", prev);
 				return suggestionArr.length - 1;
 			}
-			console.log("prev - 1");
 			return prev - 1;
 		});
 	};
 
 	const handleKeyPress = (
 		e: KeyboardEvent,
-		suggestionArr: HeadingCache[] | LinkSuggestion[] | string[],
+		suggestionArr:
+			| string[]
+			| LinkSuggestion[]
+			| HeadingCache[]
+			| ModifiedSectionCache[],
 	) => {
 		if (e.key === "ArrowDown") {
 			e.preventDefault();
@@ -126,16 +271,29 @@ export const Suggester = ({
 	};
 
 	useEffect(() => {
+		if (!query || !query?.startsWith("[[")) {
+			setSuggestions(() => getSuggestions(query));
+			return;
+		}
+		(async () => {
+			const s = await getLinkSuggestions(query);
+			setSuggestions(s);
+		})();
+	}, [query]);
+
+	useEffect(() => {
 		if (selected !== undefined) {
 			const selectedSuggestion = suggestions[selected];
 			if (typeof selectedSuggestion === "string") {
-				return onSelect(selectedSuggestion, selected);
+				onSelect(selectedSuggestion, selected);
+				return;
 			}
 			if (selectedSuggestion.hasOwnProperty("path")) {
-				return onSelect(
+				onSelect(
 					"[[" + (selectedSuggestion as LinkSuggestion).path + "]]",
 					selected,
 				);
+				return;
 			}
 			return onSelect(
 				query + (selectedSuggestion as HeadingCache).heading + "]]",
@@ -146,15 +304,19 @@ export const Suggester = ({
 	}, [selected, query]);
 
 	useEffect(() => {
+		console.log("suggestions: ", suggestions);
+		if (keydownHandler) {
+			window.removeEventListener("keydown", keydownHandler);
+		}
 		const handler = (e: KeyboardEvent) => handleKeyPress(e, suggestions);
+		setKeydownHandler(() => handler);
 		window.addEventListener("keydown", handler);
-
 		return () => {
 			window.removeEventListener("keydown", handler);
 		};
 	}, [suggestions]);
 
-	if (query.startsWith("[[")) {
+	if (typeof suggestions?.[0] === "object") {
 		return (
 			<Popover open={open}>
 				<PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -165,53 +327,19 @@ export const Suggester = ({
 					avoidCollisions={true}
 				>
 					<div className="suggestion">
-						{(
-							suggestions as unknown as
-								| LinkSuggestion[]
-								| HeadingCache[]
-						)?.map((v, i) => (
-							<div
-								key={i}
-								className={`suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`}
-							>
-								<div
-									className="suggestion-content"
-									onMouseEnter={(e) => {
-										setSelected(i);
-									}}
-									onMouseLeave={(e) => {
-										setSelected(undefined);
-										// onSelect(e.currentTarget.textContent);
-									}}
-								>
-									<div className="suggestion-title">
-										{v?.path
-											? v.path
-											: v?.heading
-												? v.heading
-												: "No matches found"}
-									</div>
-									<div className="suggestion-note">
-										{v?.alias}
-									</div>
-								</div>
-								<div className="suggestion-aux">
-									<span
-										className="suggestion-flair"
-										aria-label="Alias"
-									>
-										{v?.alias && (
-											<Forward className="svg-icon lucide-forward" />
-										)}
-										{v?.level && (
-											<span className="suggestion-flair">
-												H{v.level}
-											</span>
-										)}
-									</span>
-								</div>
-							</div>
-						))}
+						{!suggestions && <NoSuggestions />}
+						{suggestions && (
+							<LinkSuggestions
+								suggestions={
+									suggestions as unknown as
+										| LinkSuggestion[]
+										| HeadingCache[]
+										| ModifiedSectionCache[]
+								}
+								selected={selected}
+								setSelected={setSelected}
+							/>
+						)}
 					</div>
 					<div className="prompt-instructions flex-nowrap text-nowrap">
 						<div className="prompt-instruction">
@@ -255,10 +383,10 @@ export const Suggester = ({
 						>
 							<span
 								className="suggestion-highlight"
-								onMouseEnter={(e) => {
+								onMouseEnter={() => {
 									setSelected(i);
 								}}
-								onMouseLeave={(e) => {
+								onMouseLeave={() => {
 									setSelected(undefined);
 									// onSelect(e.currentTarget.textContent);
 								}}
@@ -285,152 +413,226 @@ export const Suggester = ({
 	);
 };
 
-export const LinkSuggester = ({
-	children,
-	query,
-	// getSuggestions,
-	open,
-	onSelect,
-}: {
-	children: React.ReactNode;
-	query: string;
-	// getSuggestions: (query: string) => string[] | undefined;
-	open: boolean;
-	onSelect: (text: string, index: number) => void;
-	// onOpenChange: (b: boolean) => boolean;
-}) => {
-	const [selected, setSelected] = useState<number>();
+const NoSuggestions = () => (
+	<div className={`suggestion-item mod-complex`}>
+		<div className="suggestion-content">
+			<div className="suggestion-title">No matches found</div>
+		</div>
+	</div>
+);
 
-	type LinkSuggestion = {
-		file: TFile;
-		path: string;
-		alias?: string;
-	};
-	const getSuggestions = (q: string) => {
-		const files: LinkSuggestion[] =
-			// @ts-ignore
-			app.metadataCache.getLinkSuggestions();
-
-		console.log("files: ", files);
-		return files.filter((v) => {
-			if (!v?.path) return false;
-			return true;
-			// return v.path.includes(q.slice(2));
-		});
-	};
-	const suggestions = getSuggestions(query);
-
-	const selectNext = () => {
-		setSelected((prev) => {
-			if (prev === undefined || prev + 1 >= suggestions.length) {
-				return 0;
-			}
-			return prev + 1;
-		});
-	};
-
-	const selectPrev = () => {
-		setSelected((prev) => {
-			if (prev === undefined || prev - 1 < 0) {
-				return suggestions.length - 1;
-			}
-			return prev - 1;
-		});
-	};
-
-	const handleKeyPress = (e: KeyboardEvent) => {
-		if (e.key === "ArrowDown") {
-			e.preventDefault();
-			return selectNext();
-		}
-		if (e.key === "ArrowUp") {
-			e.preventDefault();
-			return selectPrev();
-		}
-		if (e.key === "Escape") {
-			e.preventDefault();
-			return setSelected(undefined);
-		}
-	};
-
-	useEffect(() => {
-		if (selected) {
-			onSelect(suggestions[selected]?.path, selected);
-		}
-	}, [selected]);
-
-	useEffect(() => {
-		window.addEventListener("keydown", handleKeyPress);
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyPress);
-		};
-	}, []);
-
-	return (
-		<Popover open={open}>
-			<PopoverTrigger asChild>{children}</PopoverTrigger>
-			<PopoverContent
-				className="twcss"
-				onOpenAutoFocus={(e) => e.preventDefault()}
-				align="start"
-				avoidCollisions={true}
-			>
-				<div className="suggestion">
-					{suggestions?.map((v, i) => (
-						<div
-							key={i}
-							className={`suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`}
-						>
-							<div
-								className="suggestion-content"
-								onMouseEnter={(e) => {
-									setSelected(i);
-								}}
-								onMouseLeave={(e) => {
-									setSelected(undefined);
-									// onSelect(e.currentTarget.textContent);
-								}}
-							>
-								<div className="suggestion-title">{v.path}</div>
-								<div className="suggestion-note">
-									{v?.alias}
-								</div>
-							</div>
-							<div className="suggestion-aux">
-								<span
-									className="suggestion-flair"
-									aria-label="Alias"
-								>
-									{v?.alias && (
-										<Forward className="svg-icon lucide-forward" />
-									)}
-								</span>
-							</div>
-						</div>
-					))}
-				</div>
-				<div className="prompt-instructions flex-nowrap text-nowrap">
-					<div className="prompt-instruction">
-						<span className="prompt-instruction-command">
-							Type #
-						</span>
-						<span>to link heading</span>
-					</div>
-					<div className="prompt-instruction">
-						<span className="prompt-instruction-command">
-							Type ^
-						</span>
-						<span>to link blocks</span>
-					</div>
-					<div className="prompt-instruction">
-						<span className="prompt-instruction-command">
-							Type |
-						</span>
-						<span>to change display text</span>
-					</div>
-				</div>
-			</PopoverContent>
-		</Popover>
-	);
+type LinkSuggestionProps = {
+	suggestions: LinkSuggestion[] | HeadingCache[] | ModifiedSectionCache[];
+	selected: number;
+	setSelected: (value: React.SetStateAction<number>) => void;
 };
+
+const LinkSuggestions = ({
+	suggestions,
+	selected,
+	setSelected,
+}: LinkSuggestionProps) => (
+	<>
+		{suggestions.map(
+			(
+				v: LinkSuggestion | HeadingCache | ModifiedSectionCache,
+				i: number,
+			) => (
+				<div
+					key={i}
+					className={`suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`}
+				>
+					<div
+						className="suggestion-content"
+						onMouseEnter={(e) => {
+							setSelected(i);
+						}}
+						onMouseLeave={(e) => {
+							setSelected(undefined);
+							// onSelect(e.currentTarget.textContent);
+						}}
+					>
+						<div className="suggestion-title">
+							{typeof v !== "object" && "No matches found"}
+							{v?.hasOwnProperty("path") &&
+								(v as LinkSuggestion).path}
+							{v?.hasOwnProperty("section") &&
+								(v as ModifiedSectionCache).section}
+							{v?.hasOwnProperty("heading") &&
+								(v as HeadingCache).heading}
+						</div>
+						<div className="suggestion-note">
+							{v?.hasOwnProperty("alias")
+								? (v as LinkSuggestion)?.alias
+								: v?.hasOwnProperty("id")
+									? (v as ModifiedSectionCache).id
+									: ""}
+						</div>
+					</div>
+					<div className="suggestion-aux">
+						<span className="suggestion-flair" aria-label="Alias">
+							{v?.hasOwnProperty("alias") && (
+								<Forward className="svg-icon lucide-forward" />
+							)}
+							{v?.hasOwnProperty("level") && (
+								<>H{(v as HeadingCache).level}</>
+							)}
+							{v?.hasOwnProperty("type") &&
+								(v as ModifiedSectionCache).type}
+						</span>
+					</div>
+				</div>
+			),
+		)}
+	</>
+);
+
+// export const LinkSuggester = ({
+// 	children,
+// 	query,
+// 	// getSuggestions,
+// 	open,
+// 	onSelect,
+// }: {
+// 	children: React.ReactNode;
+// 	query: string;
+// 	// getSuggestions: (query: string) => string[] | undefined;
+// 	open: boolean;
+// 	onSelect: (text: string, index: number) => void;
+// 	// onOpenChange: (b: boolean) => boolean;
+// }) => {
+// 	const [selected, setSelected] = useState<number>();
+
+// 	type LinkSuggestion = {
+// 		file: TFile;
+// 		path: string;
+// 		alias?: string;
+// 	};
+// 	const getSuggestions = (q: string) => {
+// 		const files: LinkSuggestion[] =
+// 			// @ts-ignore
+// 			app.metadataCache.getLinkSuggestions();
+
+// 		console.log("files: ", files);
+// 		return files.filter((v) => {
+// 			if (!v?.path) return false;
+// 			return true;
+// 			// return v.path.includes(q.slice(2));
+// 		});
+// 	};
+// 	const suggestions = getSuggestions(query);
+
+// 	const selectNext = () => {
+// 		setSelected((prev) => {
+// 			if (prev === undefined || prev + 1 >= suggestions.length) {
+// 				return 0;
+// 			}
+// 			return prev + 1;
+// 		});
+// 	};
+
+// 	const selectPrev = () => {
+// 		setSelected((prev) => {
+// 			if (prev === undefined || prev - 1 < 0) {
+// 				return suggestions.length - 1;
+// 			}
+// 			return prev - 1;
+// 		});
+// 	};
+
+// 	const handleKeyPress = (e: KeyboardEvent) => {
+// 		if (e.key === "ArrowDown") {
+// 			e.preventDefault();
+// 			return selectNext();
+// 		}
+// 		if (e.key === "ArrowUp") {
+// 			e.preventDefault();
+// 			return selectPrev();
+// 		}
+// 		if (e.key === "Escape") {
+// 			e.preventDefault();
+// 			return setSelected(undefined);
+// 		}
+// 	};
+
+// 	useEffect(() => {
+// 		if (selected) {
+// 			onSelect(suggestions[selected]?.path, selected);
+// 		}
+// 	}, [selected]);
+
+// 	useEffect(() => {
+// 		window.addEventListener("keydown", handleKeyPress);
+
+// 		return () => {
+// 			window.removeEventListener("keydown", handleKeyPress);
+// 		};
+// 	}, []);
+
+// 	return (
+// 		<Popover open={open}>
+// 			<PopoverTrigger asChild>{children}</PopoverTrigger>
+// 			<PopoverContent
+// 				className="twcss"
+// 				onOpenAutoFocus={(e) => e.preventDefault()}
+// 				align="start"
+// 				avoidCollisions={true}
+// 			>
+// 				<div className="suggestion">
+// 					{suggestions?.map((v, i) => (
+// 						<div
+// 							key={i}
+// 							className={`suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`}
+// 						>
+// 							<div
+// 								className="suggestion-content"
+// 								onMouseEnter={(e) => {
+// 									setSelected(i);
+// 								}}
+// 								onMouseLeave={(e) => {
+// 									setSelected(undefined);
+// 									// onSelect(e.currentTarget.textContent);
+// 								}}
+// 							>
+// 								<div className="suggestion-title">{v.path}</div>
+// 								<div className="suggestion-note">
+// 									{v?.alias}
+// 								</div>
+// 							</div>
+// 							<div className="suggestion-aux">
+// 								<span
+// 									className="suggestion-flair"
+// 									aria-label="Alias"
+// 								>
+// 									{v?.alias && (
+// 										<Forward className="svg-icon lucide-forward" />
+// 									)}
+// 								</span>
+// 							</div>
+// 						</div>
+// 					))}
+// 				</div>
+// 				<div className="prompt-instructions flex-nowrap text-nowrap">
+// 					<div className="prompt-instruction">
+// 						<span className="prompt-instruction-command">
+// 							Type #
+// 						</span>
+// 						<span>to link heading</span>
+// 					</div>
+// 					<div className="prompt-instruction">
+// 						<span className="prompt-instruction-command">
+// 							Type ^
+// 						</span>
+// 						<span>to link blocks</span>
+// 					</div>
+// 					<div className="prompt-instruction">
+// 						<span className="prompt-instruction-command">
+// 							Type |
+// 						</span>
+// 						<span>to change display text</span>
+// 					</div>
+// 				</div>
+// 			</PopoverContent>
+// 		</Popover>
+// 	);
+// };

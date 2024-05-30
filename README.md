@@ -262,11 +262,18 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
 -   [x] You can now do 'TABLE WITHOUT ID...' _without_ including `file.link`
 -   [x] Nested property support
     -   If you use YAML objects in frontmatter, that will update correctly
--   [ ] ~~Grouped results support?~~
--                         - This might not make sense...
+-   [x] ~~Grouped results support?~~ This might not make sense...
 -   [x] Inline property support
 -   [x] Date/Datetime properties now render according to relevant Dataview settings
 -   [x] Image embeds
+-   [x] Pagination
+-   [ ] Better autocomplete
+    -   [x] Existing property values
+    -   [x] keyboard controls
+    -   [x] file links
+    -   [x] heading links
+    -   [ ] block links
+        -   [ ] This is more difficult than I thought; may not make it in 0.1.0
 -   [ ] Block toolbar
     -   You can now choose items to show in a toolbar near your Dataedit block for quick access to common settings and tools for Dataedit
 -   [ ] Settings overhaul
@@ -279,6 +286,9 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
             -   [ ] custom delim
         -   [ ] Lists
             -   [ ] List style type (enter text. pro tip use Iconize)
+            -   [ ] Orientation
+                -   [ ] Vertical
+                -   [ ] Horizontal
         -   [ ] Render markdown or plaintext
         -   [ ] Allow embed img to grow to natural size
         -   [ ] Alignment- vertical and horizontal
@@ -296,6 +306,8 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
         -   [ ] Show number buttons
         -   [ ] Show autocomplete
         -   [ ] pagination
+        -   [ ] query links- off by default
+            -   [ ] Check if another config in the same file uses the property a user tries setting this block's config to (and reject if so)
         -   [ ] inline property support?
             -   I may not make this a toggle because I found a cheap way to check if a property is inline before doing the work of reading and modifying the entire contents of a note
         -   [ ] Configurable column value presets?
