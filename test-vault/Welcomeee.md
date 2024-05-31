@@ -66,6 +66,10 @@ func('world')
 
 [external](https://example.com)
 
+
+
+
+
 TODO Add keydown for enter and escape for all inputs
 - [ ] string
 - [ ] number
@@ -73,18 +77,18 @@ TODO Add keydown for enter and escape for all inputs
 - [ ] datetime
 - [ ] boolean
 
-```dataviewjs
-dv.span("```dataedit\n" + 
-"TABLE test, date, bool\n" +
-"```"
-)
+```dataedit
+TABLE test, num, boool
+ID stylish-perception
 ```
 
 
 [[Welcomeee^]]
 
 
-
+```dataedit
+TABLE test, num
+```
 
 | asldkfj | asldfkjl                |
 | ------- | ----------------------- |

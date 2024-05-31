@@ -2,7 +2,7 @@ import React from "react";
 import { App, PluginSettingTab, Setting } from "obsidian";
 import DataEdit from "@/main";
 import { Root, createRoot } from "react-dom/client";
-import { PluginSettings, Settings } from "@/components/PluginSettings";
+import { Settings } from "@/components/PluginSettings";
 
 export class DataEditSettingsTab extends PluginSettingTab {
 	plugin: DataEdit;
@@ -18,10 +18,11 @@ export class DataEditSettingsTab extends PluginSettingTab {
 	display(): void {
 		this.root.render(
 			<div className="twcss">
-				<PluginSettings
+				UNDER CONSTRUCTION
+				{/* <PluginSettings
 					plugin={this.plugin}
 					savedSettings={this.plugin.settings as Settings}
-				/>
+				/> */}
 			</div>,
 		);
 	}

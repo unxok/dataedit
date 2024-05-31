@@ -1,9 +1,9 @@
-import { useBlock } from "@/components/App";
 import { Markdown } from "@/components/Markdown";
 import { currentLocale, dvRenderNullAs, updateMetaData } from "@/lib/utils";
 import { DateTime } from "luxon";
 import React, { useEffect, useState } from "react";
 import { InputSwitchProps } from "..";
+import { useBlock } from "@/components/BlockProvider";
 
 export const DateTimeInput = (
 	props: InputSwitchProps<DateTime> & { hasTime: boolean },

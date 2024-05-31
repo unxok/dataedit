@@ -1,8 +1,8 @@
-import { useBlock } from "@/components/App";
 import { Markdown } from "@/components/Markdown";
 import { dvRenderNullAs, updateMetaData } from "@/lib/utils";
 import React, { useState } from "react";
 import { InputSwitchProps } from "..";
+import { useBlock } from "@/components/BlockProvider";
 
 export const NumberInput = (props: InputSwitchProps<number>) => {
 	const { propertyName, propertyValue, filePath, isLocked } = props;

@@ -8,22 +8,27 @@ import React, {
 import { Markdown } from "@/components/Markdown";
 import { InputSwitchProps } from "..";
 import { dvRenderNullAs, updateMetaData } from "@/lib/utils";
-import { useBlock } from "@/components/App";
+import { getBlockId } from "@/components/App";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 	Suggester,
-	LinkSuggester,
 } from "@/components/ui/Popover";
+import { usePluginSettings } from "@/stores/global";
+import { useBlock } from "@/components/BlockProvider";
 
 export const StringInput = (props: InputSwitchProps<string>) => {
 	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { ctx, plugin } = useBlock();
+	const { ctx, plugin, blockId } = useBlock();
 	const [isEditing, setIsEditing] = useState(false);
 	const [isSuggestShown, setIsSuggestShown] = useState(false);
 	const [selectedSuggestion, setSelectedSuggestion] = useState<string>();
 	const [query, setQuery] = useState(propertyValue);
+	const { getBlockConfig } = usePluginSettings();
+	const { showAutoComplete } = getBlockConfig(blockId);
+	// console.log("blockId: ", blockId);
+	// console.log("showAutoComplete: ", showAutoComplete);
 
 	const onBlur = async (value: string) => {
 		// console.log(e.target.value);
@@ -40,7 +45,7 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 
 	const onKeyDown = async (key: string, value: string) => {
 		if (key === "Escape") {
-			console.log("esc");
+			// console.log("esc");
 			setIsSuggestShown(false);
 		}
 		if (key === "Enter") {
@@ -56,10 +61,10 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 		return suggestions.filter((s) => s.includes(q));
 	};
 
-	useEffect(
-		() => console.log("selected: ", selectedSuggestion),
-		[selectedSuggestion],
-	);
+	// useEffect(
+	// 	() => console.log("selected: ", selectedSuggestion),
+	// 	[selectedSuggestion],
+	// );
 
 	if (!isEditing || isLocked) {
 		return (
@@ -83,10 +88,12 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 			open={isSuggestShown}
 			query={query}
 			onSelect={(text) => {
-				console.log("selected: ", text);
+				// console.log("selected: ", text);
 				setSelectedSuggestion(text);
 			}}
 			getSuggestions={getSuggestions}
+			plugin={plugin}
+			disabled={!showAutoComplete}
 		>
 			<input
 				type="text"

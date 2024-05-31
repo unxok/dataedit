@@ -1,7 +1,7 @@
-import { useBlock } from "@/components/App";
 import { updateMetaData } from "@/lib/utils";
 import React from "react";
 import { InputSwitchProps } from "..";
+import { useBlock } from "@/components/BlockProvider";
 
 export const BooleanInput = (props: InputSwitchProps<boolean>) => {
 	const { propertyName, propertyValue, filePath, isLocked } = props;

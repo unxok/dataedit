@@ -9,8 +9,13 @@ import {
 	Settings,
 	SettingsSchema,
 	defaultSettings,
+	BlockConfigSchema,
+	defaultDefaultBlockConfig,
+	PluginSettingsSchema,
+	defaultPluginSettings,
 } from "./components/PluginSettings";
 import { addNewKeyValues } from "./lib/utils";
+import { z } from "zod";
 
 /**
  * Loads the dependencies (plugins) that your plugin requires
@@ -28,7 +33,7 @@ export const loadDependencies = async () => {
 };
 
 export default class DataEdit extends Plugin {
-	settings: Settings;
+	settings: z.infer<typeof PluginSettingsSchema>;
 
 	async onExternalSettingsChange() {
 		console.log("settings were changed");
@@ -36,7 +41,7 @@ export default class DataEdit extends Plugin {
 	}
 
 	async onload(): Promise<void> {
-		this.settings = await this.loadData();
+		await this.loadSettings();
 		this.addSettingTab(new DataEditSettingsTab(this.app, this));
 
 		this.registerCodeBlock();
@@ -62,7 +67,7 @@ export default class DataEdit extends Plugin {
 				<App
 					data={s}
 					getSectionInfo={() => ctx.getSectionInfo(e)}
-					settings={this.settings}
+					// settings={this.settings}
 					// app={this.app}
 					plugin={this}
 					ctx={ctx}
@@ -72,19 +77,34 @@ export default class DataEdit extends Plugin {
 		});
 	}
 
-	async updateSettings(newSettings: Settings) {
+	async updateSettings(newSettings: z.infer<typeof PluginSettingsSchema>) {
 		await this.saveData(newSettings);
 		this.settings = newSettings;
+		console.log("settings updated: ", newSettings);
+		return newSettings;
+	}
+
+	async updateBlockConfig(id: string, s: z.infer<typeof BlockConfigSchema>) {
+		const copySettings = { ...this.settings };
+		copySettings.blockConfigs[id] = s;
+		await this.updateSettings(copySettings);
+		return copySettings;
 	}
 
 	async loadSettings() {
-		const savedSettings = await this.loadData();
-		const potentialSettings = addNewKeyValues(
+		const savedSettings: z.infer<typeof PluginSettingsSchema> =
+			await this.loadData();
+		const modifiedSavedSettings: typeof savedSettings = addNewKeyValues(
 			savedSettings,
-			defaultSettings,
+			defaultPluginSettings,
 		);
-		const potentialParsed = SettingsSchema.safeParse(potentialSettings);
-		if (!potentialParsed.success) new Notice("Invalid settings detected");
-		this.saveData(potentialParsed.data);
+		const parsed = PluginSettingsSchema.safeParse(modifiedSavedSettings);
+		console.log(parsed);
+		if (!parsed.success) {
+			new Notice("Invalid settings detected. Reverting to default");
+			return await this.updateSettings(defaultPluginSettings);
+		}
+		this.settings = modifiedSavedSettings;
+		return modifiedSavedSettings;
 	}
 }

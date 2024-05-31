@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { cn } from "@/lib/utils";
-import { useBlock } from "@/components/App";
 import {
 	BlockCache,
 	HeadingCache,
@@ -44,6 +43,8 @@ type SuggesterProps = {
 	open: boolean;
 	onSelect: (text?: string, index?: number) => void;
 	getSuggestions: (query: string) => string[];
+	plugin: Plugin;
+	disabled?: boolean;
 };
 
 type LinkSuggestion = {
@@ -189,9 +190,14 @@ export const Suggester = ({
 	open,
 	onSelect,
 	getSuggestions,
+	plugin,
+	disabled,
 }: SuggesterProps) => {
+	if (disabled) {
+		console.log("I am disabled");
+		return <>{children}</>;
+	}
 	const [selected, setSelected] = useState<number>();
-	const { plugin } = useBlock();
 	const [keydownHandler, setKeydownHandler] = useState<any>();
 	const getLinkSuggestions = async (q: string) => {
 		const { charIndex, linkType } = getWikiLinkDetails(q);

@@ -1,49 +1,204 @@
 {
-  "autoSuggest": true,
-  "renderMarkdown": true,
-  "showNumberButtons": true,
-  "showTypeIcons": true,
-  "emptyValueDisplay": "\\-",
-  "queryLinksPropertyName": "dataedit-links",
-  "cssClassName": "aaaa",
-  "columnAliases": [
-    [
-      "thisColumn",
-      "showThisAlias"
-    ]
-  ],
-  "verticalAlignment": "top",
-  "horizontalAlignment": "start",
-  "alignmentByType": {
-    "text": {
-      "vertical": "top",
-      "horizontal": "start",
-      "enabled": false
+  "allowJs": false,
+  "blockConfigs": {
+    "default": {
+      "filePath": "",
+      "lockEditing": false,
+      "listItemPrefix": "-",
+      "listVertical": true,
+      "renderMarkdown": true,
+      "showTypeIcons": true,
+      "showAutoComplete": true,
+      "pageSize": 0,
+      "currentPage": 1,
+      "queryLinkPropertyName": "",
+      "allowImageFullSize": false,
+      "verticalAlignment": "top",
+      "horizontalAlignment": "start",
+      "alignmentByType": {
+        "text": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "list": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "number": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "checkbox": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "date": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "datetime": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        }
+      },
+      "columnWidths": [],
+      "columnPresets": []
     },
-    "list": {
-      "vertical": "top",
-      "horizontal": "start",
-      "enabled": false
+    "myid": {
+      "filePath": "Welcomeee.md",
+      "lockEditing": false,
+      "listItemPrefix": "-",
+      "listVertical": true,
+      "renderMarkdown": true,
+      "showTypeIcons": true,
+      "showAutoComplete": false,
+      "pageSize": 0,
+      "currentPage": 1,
+      "queryLinkPropertyName": "",
+      "allowImageFullSize": false,
+      "verticalAlignment": "top",
+      "horizontalAlignment": "start",
+      "alignmentByType": {
+        "text": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "list": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "number": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "checkbox": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "date": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "datetime": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        }
+      },
+      "columnWidths": [],
+      "columnPresets": [],
+      "id": "myid"
     },
-    "number": {
-      "vertical": "top",
-      "horizontal": "start",
-      "enabled": false
+    "myid2": {
+      "filePath": "Welcomeee.md",
+      "lockEditing": false,
+      "listItemPrefix": "-",
+      "listVertical": true,
+      "renderMarkdown": true,
+      "showTypeIcons": true,
+      "showAutoComplete": true,
+      "pageSize": 0,
+      "currentPage": 1,
+      "queryLinkPropertyName": "",
+      "allowImageFullSize": false,
+      "verticalAlignment": "top",
+      "horizontalAlignment": "start",
+      "alignmentByType": {
+        "text": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "list": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "number": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "checkbox": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "date": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "datetime": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        }
+      },
+      "columnWidths": [],
+      "columnPresets": [],
+      "id": "myid2"
     },
-    "checkbox": {
-      "vertical": "top",
-      "horizontal": "start",
-      "enabled": false
-    },
-    "date": {
-      "vertical": "top",
-      "horizontal": "start",
-      "enabled": false
-    },
-    "datetime": {
-      "vertical": "top",
-      "horizontal": "start",
-      "enabled": false
+    "stylish-perception": {
+      "filePath": "Welcomeee.md",
+      "lockEditing": false,
+      "listItemPrefix": "-",
+      "listVertical": true,
+      "renderMarkdown": true,
+      "showTypeIcons": true,
+      "showAutoComplete": false,
+      "pageSize": 3,
+      "currentPage": 2,
+      "queryLinkPropertyName": "",
+      "allowImageFullSize": false,
+      "verticalAlignment": "top",
+      "horizontalAlignment": "start",
+      "alignmentByType": {
+        "text": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "list": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "number": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "checkbox": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "date": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        },
+        "datetime": {
+          "vertical": "top",
+          "horizontal": "start",
+          "enabled": false
+        }
+      },
+      "columnWidths": [],
+      "columnPresets": [],
+      "id": "stylish-perception"
     }
   }
 }

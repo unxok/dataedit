@@ -93,32 +93,6 @@ const SettingToggle = ({
 	);
 };
 
-// const SettingInput = forwardRef<HTMLInputElement>(
-// 	(
-// 		{
-// 			value,
-// 			placeholder,
-// 			onChange,
-// 		}: {
-// 			value: string;
-// 			placeholder?: string;
-// 			onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-// 		},
-// 		ref,
-// 	) => {
-// 		return (
-// 			<input
-// 				ref={ref}
-// 				type="text"
-// 				placeholder={placeholder}
-// 				value={value}
-// 				onChange={onChange}
-// 				tabIndex={0}
-// 			/>
-// 		);
-// 	},
-// );
-
 export {
 	SettingRoot,
 	SettingInfo,

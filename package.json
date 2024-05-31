@@ -51,6 +51,7 @@
 		"clsx": "^2.1.1",
 		"lucide-react": "^0.372.0",
 		"luxon": "^3.4.4",
+		"minifaker": "^1.34.1",
 		"monkey-around": "^3.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

@@ -1,5 +1,4 @@
 import React from "react";
-import { TdProps, useBlock } from "../App";
 import { isDateWithTime, tryToMarkdownLink } from "@/lib/utils";
 import { FILE } from "dns";
 import { DateTime } from "luxon";
@@ -9,6 +8,8 @@ import { BooleanInput } from "./BooleanInput";
 import { DateTimeInput } from "./DateTimeInput";
 import { NumberInput } from "./NumberInput";
 import { StringInput } from "./StringInput";
+import { useBlock } from "../BlockProvider";
+import { TdProps } from "../App";
 
 export type InputSwitchProps<T> = {
 	propertyType: string;
