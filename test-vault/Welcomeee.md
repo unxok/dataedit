@@ -67,7 +67,10 @@ func('world')
 [external](https://example.com)
 
 
-
+TODO next
+- [ ] Add rest of settings to block config modal
+- [ ] Create other toolbar items for other settings if applicable
+- [ ] Create customizable toolbar
 
 
 TODO Add keydown for enter and escape for all inputs
