@@ -9,9 +9,8 @@ import {
 	BlockConfig,
 	BlockConfigSchema,
 	PluginSettingsSchema,
-	Settings,
 } from "./PluginSettings";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import DataEdit, { loadDependencies } from "@/main";
 import {
 	checkForInlineField,
@@ -19,6 +18,7 @@ import {
 	currentLocale,
 	dv,
 	dvRenderNullAs,
+	getAlignItemsClass,
 	getColAliasObj,
 	getPropertyType,
 	iconStyle,
@@ -55,7 +55,7 @@ import {
 } from "lucide-react";
 import { ClassValue } from "clsx";
 import { create } from "zustand";
-import { FILE } from "@/lib/consts";
+import { FILE, ITEMS, JUSTIFY } from "@/lib/consts";
 import { DateTime } from "luxon";
 import { InputSwitch } from "./Inputs";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
@@ -351,7 +351,8 @@ export const App = (props: {
 
 	if (!settings) return;
 
-	const { pageSize, currentPage } = getBlockConfig(blockId);
+	const { pageSize, currentPage, showColAndRowLabels } =
+		getBlockConfig(blockId);
 	const startIndex = pageSize < 1 ? 0 : (currentPage - 1) * pageSize;
 	const endIndex =
 		pageSize < 1 ? queryResults?.values?.length : startIndex + pageSize;
@@ -389,21 +390,25 @@ export const App = (props: {
 					{/* height 1px allows divs to be 100% of the td -_- */}
 					<table className="dataedit h-[1px]">
 						<thead>
-							{false && (
+							{showColAndRowLabels && (
 								<tr>
+									<th className="!bg-secondary" />
 									{queryResults?.headers?.map((_, i) => (
-										<th className="!bg-secondary">
-											<div className="flex items-center justify-center">
-												{numberToBase26Letters(i)}
+										<th
+											key={i + "-table-header-col-label"}
+											className="!bg-secondary"
+										>
+											<div className="flex items-center justify-center font-normal">
+												{numberToBase26Letters(i + 1)}
 											</div>
 										</th>
 									))}
 								</tr>
 							)}
 							<tr>
-								{false && (
+								{showColAndRowLabels && (
 									<th className="w-fit min-w-0 !bg-secondary">
-										<div className="flex h-full w-full items-center justify-center">
+										<div className="flex h-full w-full items-center justify-center font-normal">
 											1
 										</div>
 									</th>
@@ -421,7 +426,7 @@ export const App = (props: {
 						<tbody>
 							{currentRows?.map((r, i) => (
 								<tr key={i + "-table-body-row"}>
-									{false && (
+									{showColAndRowLabels && (
 										<td className="w-fit min-w-0 bg-secondary">
 											<div className="my-auto flex h-full w-full items-center justify-center">
 												{i + 2}
@@ -768,7 +773,9 @@ const Th = ({
 	className?: ClassValue;
 	hideFileLink: boolean;
 }) => {
-	const { ctx, plugin, aliasObj } = useBlock();
+	const { ctx, plugin, aliasObj, blockId } = useBlock();
+	const { getBlockConfig } = usePluginSettings();
+	const { showTypeIcons } = getBlockConfig(blockId);
 	const propName = aliasObj[propertyName] ?? propertyName;
 	// TODO check for different prop name set in dataview settings?
 	const isFileProp =
@@ -789,7 +796,9 @@ const Th = ({
 					aria-label={propertyType}
 					className="flex items-center justify-center"
 				>
-					<PropertyIcon propertyType={propertyType} />
+					{showTypeIcons && (
+						<PropertyIcon propertyType={propertyType} />
+					)}
 				</div>
 			</div>
 		</th>
@@ -807,7 +816,9 @@ export type TdProps<T> = {
 const Td = (props: TdProps<unknown>) => {
 	const { propertyValue, propertyName, className, hideFileLink, filePath } =
 		props;
-	const { ctx, plugin, aliasObj } = useBlock();
+	const { plugin, aliasObj, blockId } = useBlock();
+	const { getBlockConfig } = usePluginSettings();
+	const { verticalAlignment } = getBlockConfig(blockId);
 	const propName = aliasObj[propertyName] ?? propertyName;
 	// TODO check for different prop name set in dataview settings?
 	const isFileProp =
@@ -828,7 +839,9 @@ const Td = (props: TdProps<unknown>) => {
 
 	return (
 		<td className={cn(className)}>
-			<div className="flex h-full w-full">
+			<div
+				className={`flex h-full w-full ${getAlignItemsClass(verticalAlignment)}`}
+			>
 				<InputSwitch
 					{...props}
 					propertyName={propName}

@@ -1,15 +1,23 @@
 import { Markdown } from "@/components/Markdown";
-import { currentLocale, dvRenderNullAs, updateMetaData } from "@/lib/utils";
+import {
+	currentLocale,
+	dvRenderNullAs,
+	getJustifyContentClass,
+	updateMetaData,
+} from "@/lib/utils";
 import { DateTime } from "luxon";
 import React, { useEffect, useState } from "react";
 import { InputSwitchProps } from "..";
 import { useBlock } from "@/components/BlockProvider";
+import { usePluginSettings } from "@/stores/global";
 
 export const DateTimeInput = (
 	props: InputSwitchProps<DateTime> & { hasTime: boolean },
 ) => {
 	const { propertyName, propertyValue, filePath, isLocked, hasTime } = props;
-	const { ctx, plugin } = useBlock();
+	const { ctx, plugin, blockId } = useBlock();
+	const { getBlockConfig } = usePluginSettings();
+	const { horizontalAlignment, renderMarkdown } = getBlockConfig(blockId);
 	const [isEditing, setIsEditing] = useState(false);
 	const [{ formattedDate, inputDate }, setDateStrings] = useState({
 		formattedDate: null,
@@ -46,10 +54,14 @@ export const DateTimeInput = (
 	if (!isEditing || isLocked) {
 		return (
 			<Markdown
+				disabled={!renderMarkdown}
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={formattedDate ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+				plainText={formattedDate || dvRenderNullAs}
+				className={
+					"flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " +
+					getJustifyContentClass(horizontalAlignment)
+				}
 				onClick={() => {
 					!isLocked && setIsEditing(true);
 				}}

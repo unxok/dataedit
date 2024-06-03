@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState18(initialState2) {
+        function useState17(initialState2) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState2);
         }
@@ -1104,7 +1104,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect16(create2, deps) {
+        function useEffect15(create2, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create2, deps);
         }
@@ -1887,7 +1887,7 @@ var require_react_development = __commonJS({
         exports.useContext = useContext3;
         exports.useDebugValue = useDebugValue2;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect16;
+        exports.useEffect = useEffect15;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
@@ -1895,7 +1895,7 @@ var require_react_development = __commonJS({
         exports.useMemo = useMemo4;
         exports.useReducer = useReducer;
         exports.useRef = useRef10;
-        exports.useState = useState18;
+        exports.useState = useState17;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -2391,9 +2391,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React25 = require_react();
+        var React24 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React25.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React24.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -3998,7 +3998,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props2.value == null) {
               if (typeof props2.children === "object" && props2.children !== null) {
-                React25.Children.forEach(props2.children, function(child) {
+                React24.Children.forEach(props2.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -23570,8 +23570,8 @@ var require_use_sync_external_store_shim_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React25 = require_react();
-        var ReactSharedInternals = React25.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var React24 = require_react();
+        var ReactSharedInternals = React24.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function error(format) {
           {
             {
@@ -23601,13 +23601,13 @@ var require_use_sync_external_store_shim_development = __commonJS({
           return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y;
         }
         var objectIs = typeof Object.is === "function" ? Object.is : is;
-        var useState18 = React25.useState, useEffect16 = React25.useEffect, useLayoutEffect3 = React25.useLayoutEffect, useDebugValue2 = React25.useDebugValue;
+        var useState17 = React24.useState, useEffect15 = React24.useEffect, useLayoutEffect3 = React24.useLayoutEffect, useDebugValue2 = React24.useDebugValue;
         var didWarnOld18Alpha = false;
         var didWarnUncachedGetSnapshot = false;
         function useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
           {
             if (!didWarnOld18Alpha) {
-              if (React25.startTransition !== void 0) {
+              if (React24.startTransition !== void 0) {
                 didWarnOld18Alpha = true;
                 error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
               }
@@ -23623,7 +23623,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
               }
             }
           }
-          var _useState = useState18({
+          var _useState = useState17({
             inst: {
               value,
               getSnapshot
@@ -23638,7 +23638,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
               });
             }
           }, [subscribe, value, getSnapshot]);
-          useEffect16(function() {
+          useEffect15(function() {
             if (checkIfSnapshotChanged(inst)) {
               forceUpdate({
                 inst
@@ -23672,7 +23672,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
         var canUseDOM = !!(typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined");
         var isServerEnvironment = !canUseDOM;
         var shim = isServerEnvironment ? useSyncExternalStore$1 : useSyncExternalStore;
-        var useSyncExternalStore$2 = React25.useSyncExternalStore !== void 0 ? React25.useSyncExternalStore : shim;
+        var useSyncExternalStore$2 = React24.useSyncExternalStore !== void 0 ? React24.useSyncExternalStore : shim;
         exports.useSyncExternalStore = useSyncExternalStore$2;
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
@@ -23704,14 +23704,14 @@ var require_with_selector_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React25 = require_react();
+        var React24 = require_react();
         var shim = require_shim();
         function is(x, y) {
           return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y;
         }
         var objectIs = typeof Object.is === "function" ? Object.is : is;
         var useSyncExternalStore = shim.useSyncExternalStore;
-        var useRef10 = React25.useRef, useEffect16 = React25.useEffect, useMemo4 = React25.useMemo, useDebugValue2 = React25.useDebugValue;
+        var useRef10 = React24.useRef, useEffect15 = React24.useEffect, useMemo4 = React24.useMemo, useDebugValue2 = React24.useDebugValue;
         function useSyncExternalStoreWithSelector2(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
           var instRef = useRef10(null);
           var inst;
@@ -23768,7 +23768,7 @@ var require_with_selector_development = __commonJS({
             return [getSnapshotWithSelector, getServerSnapshotWithSelector];
           }, [getSnapshot, getServerSnapshot, selector, isEqual]), getSelection = _useMemo[0], getServerSelection = _useMemo[1];
           var value = useSyncExternalStore(subscribe, getSelection, getServerSelection);
-          useEffect16(function() {
+          useEffect15(function() {
             inst.hasValue = true;
             inst.value = value;
           }, [value]);
@@ -23803,8 +23803,8 @@ __export(main_exports, {
   loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian8 = require("obsidian");
-var import_react38 = __toESM(require_react());
+var import_obsidian7 = require("obsidian");
+var import_react37 = __toESM(require_react());
 var import_client3 = __toESM(require_client());
 
 // src/settings-tab.tsx
@@ -23856,10 +23856,10 @@ var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
 };
 
 // src/components/App.tsx
-var import_obsidian7 = require("obsidian");
+var import_obsidian6 = require("obsidian");
 
 // src/components/PluginSettings/index.tsx
-var import_react23 = __toESM(require_react());
+var import_react22 = __toESM(require_react());
 
 // src/components/Setting/index.tsx
 var import_react2 = __toESM(require_react());
@@ -26370,6 +26370,42 @@ function getDefaultConfig() {
 }
 var twMerge = /* @__PURE__ */ createTailwindMerge(getDefaultConfig);
 
+// src/lib/consts.ts
+var FILE = "file";
+var LIST_STYLE_TYPES = [
+  "circle",
+  "disc",
+  "square",
+  "armenian",
+  "cjk - ideographic",
+  "decimal",
+  "decimal - leading - zero",
+  "georgian",
+  "hebrew",
+  "hiragana",
+  "hiragana - iroha",
+  "katakana",
+  "katakana - iroha",
+  "lower - alpha",
+  "lower - greek",
+  "lower - latin",
+  "lower - roman",
+  "upper - alpha",
+  "upper - latin",
+  "upper - roman",
+  "none"
+];
+var JUSTIFY = {
+  START: "justify-start",
+  CENTER: "justify-center",
+  END: "justify-end"
+};
+var ITEMS = {
+  START: "items-start",
+  CENTER: "items-center",
+  END: "items-end"
+};
+
 // src/lib/utils.ts
 function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -26540,6 +26576,36 @@ var isDateWithTime = (dt) => {
   }
   return true;
 };
+var numberToBase26Letters = (num) => {
+  const start = 96;
+  let result2 = "";
+  while (num > 0) {
+    const remainder = num % 26 || 26;
+    result2 = (String.fromCharCode(start + remainder) + result2).toUpperCase();
+    num = (num - remainder) / 26;
+  }
+  return result2;
+};
+var getJustifyContentClass = (horizontalAlignment) => {
+  let justifyContent = JUSTIFY.START;
+  if (horizontalAlignment === "center") {
+    justifyContent = JUSTIFY.CENTER;
+  }
+  if (horizontalAlignment === "end") {
+    justifyContent = JUSTIFY.END;
+  }
+  return justifyContent;
+};
+var getAlignItemsClass = (verticalAlignment) => {
+  let alignItems = ITEMS.START;
+  if (verticalAlignment === "center") {
+    alignItems = ITEMS.CENTER;
+  }
+  if (verticalAlignment === "end") {
+    alignItems = ITEMS.END;
+  }
+  return alignItems;
+};
 
 // src/components/Setting/index.tsx
 var SettingRoot = ({
@@ -26596,7 +26662,7 @@ var SettingToggle = ({
 };
 
 // src/components/PluginSettings/index.tsx
-var import_obsidian5 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 
 // node_modules/zod/lib/index.mjs
 var util;
@@ -30744,13 +30810,9 @@ var Text = createLucideIcon("Text", [
   ["path", { d: "M15.1 18H3", key: "1nb16a" }]
 ]);
 
-// src/hooks/useSuggest.tsx
-var import_obsidian3 = require("obsidian");
-var import_react4 = __toESM(require_react());
-
 // src/components/Dialog/index.tsx
-var import_obsidian4 = require("obsidian");
-var import_react20 = __toESM(require_react());
+var import_obsidian3 = require("obsidian");
+var import_react19 = __toESM(require_react());
 var import_client2 = __toESM(require_client());
 
 // node_modules/@babel/runtime/helpers/esm/extends.js
@@ -30770,7 +30832,7 @@ function _extends() {
 }
 
 // node_modules/@radix-ui/react-dialog/dist/index.mjs
-var import_react19 = __toESM(require_react(), 1);
+var import_react18 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/primitive/dist/index.mjs
 function $e42e1063c40fb3ef$export$b9ecd428b558ff10(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
@@ -30782,7 +30844,7 @@ function $e42e1063c40fb3ef$export$b9ecd428b558ff10(originalEventHandler, ourEven
 }
 
 // node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-var import_react5 = __toESM(require_react(), 1);
+var import_react4 = __toESM(require_react(), 1);
 function $6ed0406888f73fc4$var$setRef(ref, value) {
   if (typeof ref === "function")
     ref(value);
@@ -30795,25 +30857,25 @@ function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
   );
 }
 function $6ed0406888f73fc4$export$c7b2cbe3552a0d05(...refs) {
-  return (0, import_react5.useCallback)($6ed0406888f73fc4$export$43e446d32b3d21af(...refs), refs);
+  return (0, import_react4.useCallback)($6ed0406888f73fc4$export$43e446d32b3d21af(...refs), refs);
 }
 
 // node_modules/@radix-ui/react-context/dist/index.mjs
-var import_react6 = __toESM(require_react(), 1);
+var import_react5 = __toESM(require_react(), 1);
 function $c512c27ab02ef895$export$fd42f52fd3ae1109(rootComponentName, defaultContext) {
-  const Context = /* @__PURE__ */ (0, import_react6.createContext)(defaultContext);
+  const Context = /* @__PURE__ */ (0, import_react5.createContext)(defaultContext);
   function Provider(props2) {
     const { children, ...context } = props2;
-    const value = (0, import_react6.useMemo)(
+    const value = (0, import_react5.useMemo)(
       () => context,
       Object.values(context)
     );
-    return /* @__PURE__ */ (0, import_react6.createElement)(Context.Provider, {
+    return /* @__PURE__ */ (0, import_react5.createElement)(Context.Provider, {
       value
     }, children);
   }
   function useContext3(consumerName) {
-    const context = (0, import_react6.useContext)(Context);
+    const context = (0, import_react5.useContext)(Context);
     if (context)
       return context;
     if (defaultContext !== void 0)
@@ -30829,7 +30891,7 @@ function $c512c27ab02ef895$export$fd42f52fd3ae1109(rootComponentName, defaultCon
 function $c512c27ab02ef895$export$50c7b4e9d9f19c1(scopeName, createContextScopeDeps = []) {
   let defaultContexts = [];
   function $c512c27ab02ef895$export$fd42f52fd3ae11092(rootComponentName, defaultContext) {
-    const BaseContext = /* @__PURE__ */ (0, import_react6.createContext)(defaultContext);
+    const BaseContext = /* @__PURE__ */ (0, import_react5.createContext)(defaultContext);
     const index2 = defaultContexts.length;
     defaultContexts = [
       ...defaultContexts,
@@ -30838,17 +30900,17 @@ function $c512c27ab02ef895$export$50c7b4e9d9f19c1(scopeName, createContextScopeD
     function Provider(props2) {
       const { scope, children, ...context } = props2;
       const Context = (scope === null || scope === void 0 ? void 0 : scope[scopeName][index2]) || BaseContext;
-      const value = (0, import_react6.useMemo)(
+      const value = (0, import_react5.useMemo)(
         () => context,
         Object.values(context)
       );
-      return /* @__PURE__ */ (0, import_react6.createElement)(Context.Provider, {
+      return /* @__PURE__ */ (0, import_react5.createElement)(Context.Provider, {
         value
       }, children);
     }
     function useContext3(consumerName, scope) {
       const Context = (scope === null || scope === void 0 ? void 0 : scope[scopeName][index2]) || BaseContext;
-      const context = (0, import_react6.useContext)(Context);
+      const context = (0, import_react5.useContext)(Context);
       if (context)
         return context;
       if (defaultContext !== void 0)
@@ -30863,11 +30925,11 @@ function $c512c27ab02ef895$export$50c7b4e9d9f19c1(scopeName, createContextScopeD
   }
   const createScope = () => {
     const scopeContexts = defaultContexts.map((defaultContext) => {
-      return /* @__PURE__ */ (0, import_react6.createContext)(defaultContext);
+      return /* @__PURE__ */ (0, import_react5.createContext)(defaultContext);
     });
     return function useScope(scope) {
       const contexts = (scope === null || scope === void 0 ? void 0 : scope[scopeName]) || scopeContexts;
-      return (0, import_react6.useMemo)(
+      return (0, import_react5.useMemo)(
         () => ({
           [`__scope${scopeName}`]: {
             ...scope,
@@ -30907,7 +30969,7 @@ function $c512c27ab02ef895$var$composeContextScopes(...scopes) {
           ...currentScope
         };
       }, {});
-      return (0, import_react6.useMemo)(
+      return (0, import_react5.useMemo)(
         () => ({
           [`__scope${baseScope.scopeName}`]: nextScopes1
         }),
@@ -30925,8 +30987,8 @@ function $c512c27ab02ef895$var$composeContextScopes(...scopes) {
 var $2AODx$react = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
-var import_react7 = __toESM(require_react(), 1);
-var $9f79659886946c16$export$e5c5a5f917a5871c = Boolean(globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) ? import_react7.useLayoutEffect : () => {
+var import_react6 = __toESM(require_react(), 1);
+var $9f79659886946c16$export$e5c5a5f917a5871c = Boolean(globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) ? import_react6.useLayoutEffect : () => {
 };
 
 // node_modules/@radix-ui/react-id/dist/index.mjs
@@ -30946,16 +31008,16 @@ function $1746a345f3d73bb7$export$f680877a34711e37(deterministicId) {
 }
 
 // node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
-var import_react9 = __toESM(require_react(), 1);
+var import_react8 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
-var import_react8 = __toESM(require_react(), 1);
+var import_react7 = __toESM(require_react(), 1);
 function $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(callback) {
-  const callbackRef = (0, import_react8.useRef)(callback);
-  (0, import_react8.useEffect)(() => {
+  const callbackRef = (0, import_react7.useRef)(callback);
+  (0, import_react7.useEffect)(() => {
     callbackRef.current = callback;
   });
-  return (0, import_react8.useMemo)(
+  return (0, import_react7.useMemo)(
     () => (...args) => {
       var _callbackRef$current;
       return (_callbackRef$current = callbackRef.current) === null || _callbackRef$current === void 0 ? void 0 : _callbackRef$current.call(callbackRef, ...args);
@@ -30974,7 +31036,7 @@ function $71cd76cc60e0454e$export$6f32135080cb4c3({ prop, defaultProp, onChange 
   const isControlled = prop !== void 0;
   const value1 = isControlled ? prop : uncontrolledProp;
   const handleChange = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onChange);
-  const setValue = (0, import_react9.useCallback)((nextValue) => {
+  const setValue = (0, import_react8.useCallback)((nextValue) => {
     if (isControlled) {
       const setter = nextValue;
       const value = typeof nextValue === "function" ? setter(prop) : nextValue;
@@ -30994,11 +31056,11 @@ function $71cd76cc60e0454e$export$6f32135080cb4c3({ prop, defaultProp, onChange 
   ];
 }
 function $71cd76cc60e0454e$var$useUncontrolledState({ defaultProp, onChange }) {
-  const uncontrolledState = (0, import_react9.useState)(defaultProp);
+  const uncontrolledState = (0, import_react8.useState)(defaultProp);
   const [value] = uncontrolledState;
-  const prevValueRef = (0, import_react9.useRef)(value);
+  const prevValueRef = (0, import_react8.useRef)(value);
   const handleChange = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onChange);
-  (0, import_react9.useEffect)(() => {
+  (0, import_react8.useEffect)(() => {
     if (prevValueRef.current !== value) {
       handleChange(value);
       prevValueRef.current = value;
@@ -31012,52 +31074,52 @@ function $71cd76cc60e0454e$var$useUncontrolledState({ defaultProp, onChange }) {
 }
 
 // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
-var import_react13 = __toESM(require_react(), 1);
+var import_react12 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-primitive/dist/index.mjs
-var import_react11 = __toESM(require_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
 var import_react_dom = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var import_react10 = __toESM(require_react(), 1);
-var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react10.forwardRef)((props2, forwardedRef) => {
+var import_react9 = __toESM(require_react(), 1);
+var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react9.forwardRef)((props2, forwardedRef) => {
   const { children, ...slotProps } = props2;
-  const childrenArray = import_react10.Children.toArray(children);
+  const childrenArray = import_react9.Children.toArray(children);
   const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
   if (slottable) {
     const newElement = slottable.props.children;
     const newChildren = childrenArray.map((child) => {
       if (child === slottable) {
-        if (import_react10.Children.count(newElement) > 1)
-          return import_react10.Children.only(null);
-        return /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? newElement.props.children : null;
+        if (import_react9.Children.count(newElement) > 1)
+          return import_react9.Children.only(null);
+        return /* @__PURE__ */ (0, import_react9.isValidElement)(newElement) ? newElement.props.children : null;
       } else
         return child;
     });
-    return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+    return /* @__PURE__ */ (0, import_react9.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
       ref: forwardedRef
-    }), /* @__PURE__ */ (0, import_react10.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react10.cloneElement)(newElement, void 0, newChildren) : null);
+    }), /* @__PURE__ */ (0, import_react9.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react9.cloneElement)(newElement, void 0, newChildren) : null);
   }
-  return /* @__PURE__ */ (0, import_react10.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+  return /* @__PURE__ */ (0, import_react9.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
     ref: forwardedRef
   }), children);
 });
 $5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
-var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react10.forwardRef)((props2, forwardedRef) => {
+var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react9.forwardRef)((props2, forwardedRef) => {
   const { children, ...slotProps } = props2;
-  if (/* @__PURE__ */ (0, import_react10.isValidElement)(children))
-    return /* @__PURE__ */ (0, import_react10.cloneElement)(children, {
+  if (/* @__PURE__ */ (0, import_react9.isValidElement)(children))
+    return /* @__PURE__ */ (0, import_react9.cloneElement)(children, {
       ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
       ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
     });
-  return import_react10.Children.count(children) > 1 ? import_react10.Children.only(null) : null;
+  return import_react9.Children.count(children) > 1 ? import_react9.Children.only(null) : null;
 });
 $5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
 var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
-  return /* @__PURE__ */ (0, import_react10.createElement)(import_react10.Fragment, null, children);
+  return /* @__PURE__ */ (0, import_react9.createElement)(import_react9.Fragment, null, children);
 };
 function $5e63c961fc1ce211$var$isSlottable(child) {
-  return /* @__PURE__ */ (0, import_react10.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
+  return /* @__PURE__ */ (0, import_react9.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
 }
 function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
   const overrideProps = {
@@ -31112,13 +31174,13 @@ var $8927f6f2acc4f386$var$NODES = [
   "ul"
 ];
 var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
-  const Node2 = /* @__PURE__ */ (0, import_react11.forwardRef)((props2, forwardedRef) => {
+  const Node2 = /* @__PURE__ */ (0, import_react10.forwardRef)((props2, forwardedRef) => {
     const { asChild, ...primitiveProps } = props2;
     const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
-    (0, import_react11.useEffect)(() => {
+    (0, import_react10.useEffect)(() => {
       window[Symbol.for("radix-ui")] = true;
     }, []);
-    return /* @__PURE__ */ (0, import_react11.createElement)(Comp, _extends({}, primitiveProps, {
+    return /* @__PURE__ */ (0, import_react10.createElement)(Comp, _extends({}, primitiveProps, {
       ref: forwardedRef
     }));
   });
@@ -31136,10 +31198,10 @@ function $8927f6f2acc4f386$export$6d1a0317bde7de7f(target, event) {
 }
 
 // node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs
-var import_react12 = __toESM(require_react(), 1);
+var import_react11 = __toESM(require_react(), 1);
 function $addc16e1bbe58fd0$export$3a72a57244d6e765(onEscapeKeyDownProp, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
   const onEscapeKeyDown = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onEscapeKeyDownProp);
-  (0, import_react12.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape")
         onEscapeKeyDown(event);
@@ -31157,18 +31219,18 @@ var $5cb92bef7577960e$var$CONTEXT_UPDATE = "dismissableLayer.update";
 var $5cb92bef7577960e$var$POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
 var $5cb92bef7577960e$var$FOCUS_OUTSIDE = "dismissableLayer.focusOutside";
 var $5cb92bef7577960e$var$originalBodyPointerEvents;
-var $5cb92bef7577960e$var$DismissableLayerContext = /* @__PURE__ */ (0, import_react13.createContext)({
+var $5cb92bef7577960e$var$DismissableLayerContext = /* @__PURE__ */ (0, import_react12.createContext)({
   layers: /* @__PURE__ */ new Set(),
   layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
   branches: /* @__PURE__ */ new Set()
 });
-var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react13.forwardRef)((props2, forwardedRef) => {
+var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react12.forwardRef)((props2, forwardedRef) => {
   var _node$ownerDocument;
   const { disableOutsidePointerEvents = false, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, onDismiss, ...layerProps } = props2;
-  const context = (0, import_react13.useContext)($5cb92bef7577960e$var$DismissableLayerContext);
-  const [node1, setNode] = (0, import_react13.useState)(null);
+  const context = (0, import_react12.useContext)($5cb92bef7577960e$var$DismissableLayerContext);
+  const [node1, setNode] = (0, import_react12.useState)(null);
   const ownerDocument = (_node$ownerDocument = node1 === null || node1 === void 0 ? void 0 : node1.ownerDocument) !== null && _node$ownerDocument !== void 0 ? _node$ownerDocument : globalThis === null || globalThis === void 0 ? void 0 : globalThis.document;
-  const [, force] = (0, import_react13.useState)({});
+  const [, force] = (0, import_react12.useState)({});
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
     forwardedRef,
     (node) => setNode(node)
@@ -31219,7 +31281,7 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
       onDismiss();
     }
   }, ownerDocument);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     if (!node1)
       return;
     if (disableOutsidePointerEvents) {
@@ -31241,7 +31303,7 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
     disableOutsidePointerEvents,
     context
   ]);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     return () => {
       if (!node1)
         return;
@@ -31253,12 +31315,12 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
     node1,
     context
   ]);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     const handleUpdate = () => force({});
     document.addEventListener($5cb92bef7577960e$var$CONTEXT_UPDATE, handleUpdate);
     return () => document.removeEventListener($5cb92bef7577960e$var$CONTEXT_UPDATE, handleUpdate);
   }, []);
-  return /* @__PURE__ */ (0, import_react13.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, layerProps, {
+  return /* @__PURE__ */ (0, import_react12.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, layerProps, {
     ref: composedRefs,
     style: {
       pointerEvents: isBodyPointerEventsDisabled ? isPointerEventsEnabled ? "auto" : "none" : void 0,
@@ -31271,10 +31333,10 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
 });
 function $5cb92bef7577960e$var$usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
   const handlePointerDownOutside = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onPointerDownOutside);
-  const isPointerInsideReactTreeRef = (0, import_react13.useRef)(false);
-  const handleClickRef = (0, import_react13.useRef)(() => {
+  const isPointerInsideReactTreeRef = (0, import_react12.useRef)(false);
+  const handleClickRef = (0, import_react12.useRef)(() => {
   });
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     const handlePointerDown = (event) => {
       if (event.target && !isPointerInsideReactTreeRef.current) {
         let handleAndDispatchPointerDownOutsideEvent = function() {
@@ -31316,8 +31378,8 @@ function $5cb92bef7577960e$var$usePointerDownOutside(onPointerDownOutside, owner
 }
 function $5cb92bef7577960e$var$useFocusOutside(onFocusOutside, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
   const handleFocusOutside = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onFocusOutside);
-  const isFocusInsideReactTreeRef = (0, import_react13.useRef)(false);
-  (0, import_react13.useEffect)(() => {
+  const isFocusInsideReactTreeRef = (0, import_react12.useRef)(false);
+  (0, import_react12.useEffect)(() => {
     const handleFocus = (event) => {
       if (event.target && !isFocusInsideReactTreeRef.current) {
         const eventDetail = {
@@ -31361,24 +31423,24 @@ function $5cb92bef7577960e$var$handleAndDispatchCustomEvent(name2, handler, deta
 }
 
 // node_modules/@radix-ui/react-focus-scope/dist/index.mjs
-var import_react14 = __toESM(require_react(), 1);
+var import_react13 = __toESM(require_react(), 1);
 var $d3863c46a17e8a28$var$AUTOFOCUS_ON_MOUNT = "focusScope.autoFocusOnMount";
 var $d3863c46a17e8a28$var$AUTOFOCUS_ON_UNMOUNT = "focusScope.autoFocusOnUnmount";
 var $d3863c46a17e8a28$var$EVENT_OPTIONS = {
   bubbles: false,
   cancelable: true
 };
-var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react14.forwardRef)((props2, forwardedRef) => {
+var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react13.forwardRef)((props2, forwardedRef) => {
   const { loop = false, trapped = false, onMountAutoFocus: onMountAutoFocusProp, onUnmountAutoFocus: onUnmountAutoFocusProp, ...scopeProps } = props2;
-  const [container1, setContainer] = (0, import_react14.useState)(null);
+  const [container1, setContainer] = (0, import_react13.useState)(null);
   const onMountAutoFocus = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onMountAutoFocusProp);
   const onUnmountAutoFocus = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onUnmountAutoFocusProp);
-  const lastFocusedElementRef = (0, import_react14.useRef)(null);
+  const lastFocusedElementRef = (0, import_react13.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
     forwardedRef,
     (node) => setContainer(node)
   );
-  const focusScope = (0, import_react14.useRef)({
+  const focusScope = (0, import_react13.useRef)({
     paused: false,
     pause() {
       this.paused = true;
@@ -31387,7 +31449,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
       this.paused = false;
     }
   }).current;
-  (0, import_react14.useEffect)(() => {
+  (0, import_react13.useEffect)(() => {
     if (trapped) {
       let handleFocusIn = function(event) {
         if (focusScope.paused || !container1)
@@ -31436,7 +31498,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
     container1,
     focusScope.paused
   ]);
-  (0, import_react14.useEffect)(() => {
+  (0, import_react13.useEffect)(() => {
     if (container1) {
       $d3863c46a17e8a28$var$focusScopesStack.add(focusScope);
       const previouslyFocusedElement = document.activeElement;
@@ -31474,7 +31536,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
     onUnmountAutoFocus,
     focusScope
   ]);
-  const handleKeyDown = (0, import_react14.useCallback)((event) => {
+  const handleKeyDown = (0, import_react13.useCallback)((event) => {
     if (!loop && !trapped)
       return;
     if (focusScope.paused)
@@ -31509,7 +31571,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
     trapped,
     focusScope.paused
   ]);
-  return /* @__PURE__ */ (0, import_react14.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
+  return /* @__PURE__ */ (0, import_react13.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
     tabIndex: -1
   }, scopeProps, {
     ref: composedRefs,
@@ -31616,21 +31678,21 @@ function $d3863c46a17e8a28$var$removeLinks(items) {
 }
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var import_react15 = __toESM(require_react(), 1);
+var import_react14 = __toESM(require_react(), 1);
 var import_react_dom2 = __toESM(require_react_dom(), 1);
-var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react15.forwardRef)((props2, forwardedRef) => {
+var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react14.forwardRef)((props2, forwardedRef) => {
   var _globalThis$document;
   const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props2;
-  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react15.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
+  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react14.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
     ref: forwardedRef
   })), container) : null;
 });
 
 // node_modules/@radix-ui/react-presence/dist/index.mjs
-var import_react16 = __toESM(require_react(), 1);
+var import_react15 = __toESM(require_react(), 1);
 var import_react_dom3 = __toESM(require_react_dom(), 1);
 function $fe963b355347cc68$export$3e6543de14f8614f(initialState2, machine) {
-  return (0, import_react16.useReducer)((state2, event) => {
+  return (0, import_react15.useReducer)((state2, event) => {
     const nextState = machine[state2][event];
     return nextState !== null && nextState !== void 0 ? nextState : state2;
   }, initialState2);
@@ -31640,19 +31702,19 @@ var $921a889cee6df7e8$export$99c2b779aa4e8b8b = (props2) => {
   const presence = $921a889cee6df7e8$var$usePresence(present);
   const child = typeof children === "function" ? children({
     present: presence.isPresent
-  }) : import_react16.Children.only(children);
+  }) : import_react15.Children.only(children);
   const ref = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(presence.ref, child.ref);
   const forceMount = typeof children === "function";
-  return forceMount || presence.isPresent ? /* @__PURE__ */ (0, import_react16.cloneElement)(child, {
+  return forceMount || presence.isPresent ? /* @__PURE__ */ (0, import_react15.cloneElement)(child, {
     ref
   }) : null;
 };
 $921a889cee6df7e8$export$99c2b779aa4e8b8b.displayName = "Presence";
 function $921a889cee6df7e8$var$usePresence(present) {
-  const [node1, setNode] = (0, import_react16.useState)();
-  const stylesRef = (0, import_react16.useRef)({});
-  const prevPresentRef = (0, import_react16.useRef)(present);
-  const prevAnimationNameRef = (0, import_react16.useRef)("none");
+  const [node1, setNode] = (0, import_react15.useState)();
+  const stylesRef = (0, import_react15.useRef)({});
+  const prevPresentRef = (0, import_react15.useRef)(present);
+  const prevAnimationNameRef = (0, import_react15.useRef)("none");
   const initialState2 = present ? "mounted" : "unmounted";
   const [state2, send] = $fe963b355347cc68$export$3e6543de14f8614f(initialState2, {
     mounted: {
@@ -31667,7 +31729,7 @@ function $921a889cee6df7e8$var$usePresence(present) {
       MOUNT: "mounted"
     }
   });
-  (0, import_react16.useEffect)(() => {
+  (0, import_react15.useEffect)(() => {
     const currentAnimationName = $921a889cee6df7e8$var$getAnimationName(stylesRef.current);
     prevAnimationNameRef.current = state2 === "mounted" ? currentAnimationName : "none";
   }, [
@@ -31730,7 +31792,7 @@ function $921a889cee6df7e8$var$usePresence(present) {
       "mounted",
       "unmountSuspended"
     ].includes(state2),
-    ref: (0, import_react16.useCallback)((node) => {
+    ref: (0, import_react15.useCallback)((node) => {
       if (node)
         stylesRef.current = getComputedStyle(node);
       setNode(node);
@@ -31742,10 +31804,10 @@ function $921a889cee6df7e8$var$getAnimationName(styles) {
 }
 
 // node_modules/@radix-ui/react-focus-guards/dist/index.mjs
-var import_react17 = __toESM(require_react(), 1);
+var import_react16 = __toESM(require_react(), 1);
 var $3db38b7d1fb3fe6a$var$count = 0;
 function $3db38b7d1fb3fe6a$export$b7ece24a22aeda8c() {
-  (0, import_react17.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     var _edgeGuards$, _edgeGuards$2;
     const edgeGuards = document.querySelectorAll("[data-radix-focus-guard]");
     document.body.insertAdjacentElement("afterbegin", (_edgeGuards$ = edgeGuards[0]) !== null && _edgeGuards$ !== void 0 ? _edgeGuards$ : $3db38b7d1fb3fe6a$var$createFocusGuard());
@@ -31806,10 +31868,10 @@ function __spreadArray(to, from, pack) {
 }
 
 // node_modules/react-remove-scroll/dist/es2015/Combination.js
-var React10 = __toESM(require_react());
+var React9 = __toESM(require_react());
 
 // node_modules/react-remove-scroll/dist/es2015/UI.js
-var React6 = __toESM(require_react());
+var React5 = __toESM(require_react());
 
 // node_modules/react-remove-scroll-bar/dist/es2015/constants.js
 var zeroRightClassName = "right-scroll-bar-position";
@@ -31828,9 +31890,9 @@ function assignRef(ref, value) {
 }
 
 // node_modules/use-callback-ref/dist/es2015/useRef.js
-var import_react18 = __toESM(require_react());
+var import_react17 = __toESM(require_react());
 function useCallbackRef(initialValue, callback) {
-  var ref = (0, import_react18.useState)(function() {
+  var ref = (0, import_react17.useState)(function() {
     return {
       // value
       value: initialValue,
@@ -31856,8 +31918,8 @@ function useCallbackRef(initialValue, callback) {
 }
 
 // node_modules/use-callback-ref/dist/es2015/useMergeRef.js
-var React4 = __toESM(require_react());
-var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React4.useLayoutEffect : React4.useEffect;
+var React3 = __toESM(require_react());
+var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React3.useLayoutEffect : React3.useEffect;
 var currentValues = /* @__PURE__ */ new WeakMap();
 function useMergeRefs(refs, defaultValue) {
   var callbackRef = useCallbackRef(defaultValue || null, function(newValue) {
@@ -31974,7 +32036,7 @@ function createSidecarMedium(options) {
 }
 
 // node_modules/use-sidecar/dist/es2015/exports.js
-var React5 = __toESM(require_react());
+var React4 = __toESM(require_react());
 var SideCar = function(_a) {
   var sideCar = _a.sideCar, rest = __rest(_a, ["sideCar"]);
   if (!sideCar) {
@@ -31984,7 +32046,7 @@ var SideCar = function(_a) {
   if (!Target) {
     throw new Error("Sidecar medium not found");
   }
-  return React5.createElement(Target, __assign({}, rest));
+  return React4.createElement(Target, __assign({}, rest));
 };
 SideCar.isSideCarExport = true;
 function exportSidecar(medium, exported) {
@@ -31999,9 +32061,9 @@ var effectCar = createSidecarMedium();
 var nothing = function() {
   return;
 };
-var RemoveScroll = React6.forwardRef(function(props2, parentRef) {
-  var ref = React6.useRef(null);
-  var _a = React6.useState({
+var RemoveScroll = React5.forwardRef(function(props2, parentRef) {
+  var ref = React5.useRef(null);
+  var _a = React5.useState({
     onScrollCapture: nothing,
     onWheelCapture: nothing,
     onTouchMoveCapture: nothing
@@ -32010,11 +32072,11 @@ var RemoveScroll = React6.forwardRef(function(props2, parentRef) {
   var SideCar2 = sideCar;
   var containerRef = useMergeRefs([ref, parentRef]);
   var containerProps = __assign(__assign({}, rest), callbacks);
-  return React6.createElement(
-    React6.Fragment,
+  return React5.createElement(
+    React5.Fragment,
     null,
-    enabled && React6.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref }),
-    forwardProps ? React6.cloneElement(React6.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React6.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
+    enabled && React5.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref }),
+    forwardProps ? React5.cloneElement(React5.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React5.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
   );
 });
 RemoveScroll.defaultProps = {
@@ -32028,13 +32090,13 @@ RemoveScroll.classNames = {
 };
 
 // node_modules/react-remove-scroll/dist/es2015/SideEffect.js
-var React9 = __toESM(require_react());
-
-// node_modules/react-remove-scroll-bar/dist/es2015/component.js
 var React8 = __toESM(require_react());
 
-// node_modules/react-style-singleton/dist/es2015/hook.js
+// node_modules/react-remove-scroll-bar/dist/es2015/component.js
 var React7 = __toESM(require_react());
+
+// node_modules/react-style-singleton/dist/es2015/hook.js
+var React6 = __toESM(require_react());
 
 // node_modules/get-nonce/dist/es2015/index.js
 var currentNonce;
@@ -32098,7 +32160,7 @@ var stylesheetSingleton = function() {
 var styleHookSingleton = function() {
   var sheet = stylesheetSingleton();
   return function(styles, isDynamic) {
-    React7.useEffect(function() {
+    React6.useEffect(function() {
       sheet.add(styles);
       return function() {
         sheet.remove();
@@ -32172,7 +32234,7 @@ var getCurrentUseCounter = function() {
   return isFinite(counter) ? counter : 0;
 };
 var useLockAttribute = function() {
-  React8.useEffect(function() {
+  React7.useEffect(function() {
     document.body.setAttribute(lockAttribute, (getCurrentUseCounter() + 1).toString());
     return function() {
       var newCounter = getCurrentUseCounter() - 1;
@@ -32187,10 +32249,10 @@ var useLockAttribute = function() {
 var RemoveScrollBar = function(_a) {
   var noRelative = _a.noRelative, noImportant = _a.noImportant, _b = _a.gapMode, gapMode = _b === void 0 ? "margin" : _b;
   useLockAttribute();
-  var gap = React8.useMemo(function() {
+  var gap = React7.useMemo(function() {
     return getGapWidth(gapMode);
   }, [gapMode]);
-  return React8.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
+  return React7.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
 };
 
 // node_modules/react-remove-scroll/dist/es2015/aggresiveCapture.js
@@ -32323,18 +32385,18 @@ var generateStyle = function(id) {
 var idCounter = 0;
 var lockStack = [];
 function RemoveScrollSideCar(props2) {
-  var shouldPreventQueue = React9.useRef([]);
-  var touchStartRef = React9.useRef([0, 0]);
-  var activeAxis = React9.useRef();
-  var id = React9.useState(idCounter++)[0];
-  var Style2 = React9.useState(function() {
+  var shouldPreventQueue = React8.useRef([]);
+  var touchStartRef = React8.useRef([0, 0]);
+  var activeAxis = React8.useRef();
+  var id = React8.useState(idCounter++)[0];
+  var Style2 = React8.useState(function() {
     return styleSingleton();
   })[0];
-  var lastProps = React9.useRef(props2);
-  React9.useEffect(function() {
+  var lastProps = React8.useRef(props2);
+  React8.useEffect(function() {
     lastProps.current = props2;
   }, [props2]);
-  React9.useEffect(function() {
+  React8.useEffect(function() {
     if (props2.inert) {
       document.body.classList.add("block-interactivity-".concat(id));
       var allow_1 = __spreadArray([props2.lockRef.current], (props2.shards || []).map(extractRef), true).filter(Boolean);
@@ -32350,7 +32412,7 @@ function RemoveScrollSideCar(props2) {
     }
     return;
   }, [props2.inert, props2.lockRef.current, props2.shards]);
-  var shouldCancelEvent = React9.useCallback(function(event, parent) {
+  var shouldCancelEvent = React8.useCallback(function(event, parent) {
     if ("touches" in event && event.touches.length === 2) {
       return !lastProps.current.allowPinchZoom;
     }
@@ -32386,7 +32448,7 @@ function RemoveScrollSideCar(props2) {
     var cancelingAxis = activeAxis.current || currentAxis;
     return handleScroll(cancelingAxis, parent, event, cancelingAxis === "h" ? deltaX : deltaY, true);
   }, []);
-  var shouldPrevent = React9.useCallback(function(_event) {
+  var shouldPrevent = React8.useCallback(function(_event) {
     var event = _event;
     if (!lockStack.length || lockStack[lockStack.length - 1] !== Style2) {
       return;
@@ -32413,7 +32475,7 @@ function RemoveScrollSideCar(props2) {
       }
     }
   }, []);
-  var shouldCancel = React9.useCallback(function(name2, delta, target, should) {
+  var shouldCancel = React8.useCallback(function(name2, delta, target, should) {
     var event = { name: name2, delta, target, should };
     shouldPreventQueue.current.push(event);
     setTimeout(function() {
@@ -32422,17 +32484,17 @@ function RemoveScrollSideCar(props2) {
       });
     }, 1);
   }, []);
-  var scrollTouchStart = React9.useCallback(function(event) {
+  var scrollTouchStart = React8.useCallback(function(event) {
     touchStartRef.current = getTouchXY(event);
     activeAxis.current = void 0;
   }, []);
-  var scrollWheel = React9.useCallback(function(event) {
+  var scrollWheel = React8.useCallback(function(event) {
     shouldCancel(event.type, getDeltaXY(event), event.target, shouldCancelEvent(event, props2.lockRef.current));
   }, []);
-  var scrollTouchMove = React9.useCallback(function(event) {
+  var scrollTouchMove = React8.useCallback(function(event) {
     shouldCancel(event.type, getTouchXY(event), event.target, shouldCancelEvent(event, props2.lockRef.current));
   }, []);
-  React9.useEffect(function() {
+  React8.useEffect(function() {
     lockStack.push(Style2);
     props2.setCallbacks({
       onScrollCapture: scrollWheel,
@@ -32452,11 +32514,11 @@ function RemoveScrollSideCar(props2) {
     };
   }, []);
   var removeScrollBar = props2.removeScrollBar, inert = props2.inert;
-  return React9.createElement(
-    React9.Fragment,
+  return React8.createElement(
+    React8.Fragment,
     null,
-    inert ? React9.createElement(Style2, { styles: generateStyle(id) }) : null,
-    removeScrollBar ? React9.createElement(RemoveScrollBar, { gapMode: "margin" }) : null
+    inert ? React8.createElement(Style2, { styles: generateStyle(id) }) : null,
+    removeScrollBar ? React8.createElement(RemoveScrollBar, { gapMode: "margin" }) : null
   );
 }
 
@@ -32464,8 +32526,8 @@ function RemoveScrollSideCar(props2) {
 var sidecar_default = exportSidecar(effectCar, RemoveScrollSideCar);
 
 // node_modules/react-remove-scroll/dist/es2015/Combination.js
-var ReactRemoveScroll = React10.forwardRef(function(props2, ref) {
-  return React10.createElement(RemoveScroll, __assign({}, props2, { ref, sideCar: sidecar_default }));
+var ReactRemoveScroll = React9.forwardRef(function(props2, ref) {
+  return React9.createElement(RemoveScroll, __assign({}, props2, { ref, sideCar: sidecar_default }));
 });
 ReactRemoveScroll.classNames = RemoveScroll.classNames;
 var Combination_default = ReactRemoveScroll;
@@ -32597,14 +32659,14 @@ var [$5d3850c4d0b4e6c7$var$createDialogContext, $5d3850c4d0b4e6c7$export$cc70277
 var [$5d3850c4d0b4e6c7$var$DialogProvider, $5d3850c4d0b4e6c7$var$useDialogContext] = $5d3850c4d0b4e6c7$var$createDialogContext($5d3850c4d0b4e6c7$var$DIALOG_NAME);
 var $5d3850c4d0b4e6c7$export$3ddf2d174ce01153 = (props2) => {
   const { __scopeDialog, children, open: openProp, defaultOpen, onOpenChange, modal = true } = props2;
-  const triggerRef = (0, import_react19.useRef)(null);
-  const contentRef = (0, import_react19.useRef)(null);
+  const triggerRef = (0, import_react18.useRef)(null);
+  const contentRef = (0, import_react18.useRef)(null);
   const [open = false, setOpen] = $71cd76cc60e0454e$export$6f32135080cb4c3({
     prop: openProp,
     defaultProp: defaultOpen,
     onChange: onOpenChange
   });
-  return /* @__PURE__ */ (0, import_react19.createElement)($5d3850c4d0b4e6c7$var$DialogProvider, {
+  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogProvider, {
     scope: __scopeDialog,
     triggerRef,
     contentRef,
@@ -32613,7 +32675,7 @@ var $5d3850c4d0b4e6c7$export$3ddf2d174ce01153 = (props2) => {
     descriptionId: $1746a345f3d73bb7$export$f680877a34711e37(),
     open,
     onOpenChange: setOpen,
-    onOpenToggle: (0, import_react19.useCallback)(
+    onOpenToggle: (0, import_react18.useCallback)(
       () => setOpen(
         (prevOpen) => !prevOpen
       ),
@@ -32631,43 +32693,43 @@ var [$5d3850c4d0b4e6c7$var$PortalProvider, $5d3850c4d0b4e6c7$var$usePortalContex
 var $5d3850c4d0b4e6c7$export$dad7c95542bacce0 = (props2) => {
   const { __scopeDialog, forceMount, children, container } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$PORTAL_NAME, __scopeDialog);
-  return /* @__PURE__ */ (0, import_react19.createElement)($5d3850c4d0b4e6c7$var$PortalProvider, {
+  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$PortalProvider, {
     scope: __scopeDialog,
     forceMount
-  }, import_react19.Children.map(
+  }, import_react18.Children.map(
     children,
-    (child) => /* @__PURE__ */ (0, import_react19.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+    (child) => /* @__PURE__ */ (0, import_react18.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
       present: forceMount || context.open
-    }, /* @__PURE__ */ (0, import_react19.createElement)($f1701beae083dbae$export$602eac185826482c, {
+    }, /* @__PURE__ */ (0, import_react18.createElement)($f1701beae083dbae$export$602eac185826482c, {
       asChild: true,
       container
     }, child))
   ));
 };
 var $5d3850c4d0b4e6c7$var$OVERLAY_NAME = "DialogOverlay";
-var $5d3850c4d0b4e6c7$export$bd1d06c79be19e17 = /* @__PURE__ */ (0, import_react19.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$export$bd1d06c79be19e17 = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
   const portalContext = $5d3850c4d0b4e6c7$var$usePortalContext($5d3850c4d0b4e6c7$var$OVERLAY_NAME, props2.__scopeDialog);
   const { forceMount = portalContext.forceMount, ...overlayProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$OVERLAY_NAME, props2.__scopeDialog);
-  return context.modal ? /* @__PURE__ */ (0, import_react19.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+  return context.modal ? /* @__PURE__ */ (0, import_react18.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
     present: forceMount || context.open
-  }, /* @__PURE__ */ (0, import_react19.createElement)($5d3850c4d0b4e6c7$var$DialogOverlayImpl, _extends({}, overlayProps, {
+  }, /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogOverlayImpl, _extends({}, overlayProps, {
     ref: forwardedRef
   }))) : null;
 });
-var $5d3850c4d0b4e6c7$var$DialogOverlayImpl = /* @__PURE__ */ (0, import_react19.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogOverlayImpl = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
   const { __scopeDialog, ...overlayProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$OVERLAY_NAME, __scopeDialog);
   return (
     // Make sure `Content` is scrollable even when it doesn't live inside `RemoveScroll`
     // ie. when `Overlay` and `Content` are siblings
-    /* @__PURE__ */ (0, import_react19.createElement)(Combination_default, {
+    /* @__PURE__ */ (0, import_react18.createElement)(Combination_default, {
       as: $5e63c961fc1ce211$export$8c6ed5c666ac1360,
       allowPinchZoom: true,
       shards: [
         context.contentRef
       ]
-    }, /* @__PURE__ */ (0, import_react19.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
+    }, /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
       "data-state": $5d3850c4d0b4e6c7$var$getState(context.open)
     }, overlayProps, {
       ref: forwardedRef,
@@ -32679,28 +32741,28 @@ var $5d3850c4d0b4e6c7$var$DialogOverlayImpl = /* @__PURE__ */ (0, import_react19
   );
 });
 var $5d3850c4d0b4e6c7$var$CONTENT_NAME = "DialogContent";
-var $5d3850c4d0b4e6c7$export$b6d9565de1e068cf = /* @__PURE__ */ (0, import_react19.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$export$b6d9565de1e068cf = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
   const portalContext = $5d3850c4d0b4e6c7$var$usePortalContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
   const { forceMount = portalContext.forceMount, ...contentProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
-  return /* @__PURE__ */ (0, import_react19.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+  return /* @__PURE__ */ (0, import_react18.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
     present: forceMount || context.open
-  }, context.modal ? /* @__PURE__ */ (0, import_react19.createElement)($5d3850c4d0b4e6c7$var$DialogContentModal, _extends({}, contentProps, {
+  }, context.modal ? /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentModal, _extends({}, contentProps, {
     ref: forwardedRef
-  })) : /* @__PURE__ */ (0, import_react19.createElement)($5d3850c4d0b4e6c7$var$DialogContentNonModal, _extends({}, contentProps, {
+  })) : /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentNonModal, _extends({}, contentProps, {
     ref: forwardedRef
   })));
 });
-var $5d3850c4d0b4e6c7$var$DialogContentModal = /* @__PURE__ */ (0, import_react19.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogContentModal = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
-  const contentRef = (0, import_react19.useRef)(null);
+  const contentRef = (0, import_react18.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, context.contentRef, contentRef);
-  (0, import_react19.useEffect)(() => {
+  (0, import_react18.useEffect)(() => {
     const content = contentRef.current;
     if (content)
       return hideOthers(content);
   }, []);
-  return /* @__PURE__ */ (0, import_react19.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
+  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
     ref: composedRefs,
     trapFocus: context.open,
     disableOutsidePointerEvents: true,
@@ -32722,11 +32784,11 @@ var $5d3850c4d0b4e6c7$var$DialogContentModal = /* @__PURE__ */ (0, import_react1
     )
   }));
 });
-var $5d3850c4d0b4e6c7$var$DialogContentNonModal = /* @__PURE__ */ (0, import_react19.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogContentNonModal = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
-  const hasInteractedOutsideRef = (0, import_react19.useRef)(false);
-  const hasPointerDownOutsideRef = (0, import_react19.useRef)(false);
-  return /* @__PURE__ */ (0, import_react19.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
+  const hasInteractedOutsideRef = (0, import_react18.useRef)(false);
+  const hasPointerDownOutsideRef = (0, import_react18.useRef)(false);
+  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
     ref: forwardedRef,
     trapFocus: false,
     disableOutsidePointerEvents: false,
@@ -32759,19 +32821,19 @@ var $5d3850c4d0b4e6c7$var$DialogContentNonModal = /* @__PURE__ */ (0, import_rea
     }
   }));
 });
-var $5d3850c4d0b4e6c7$var$DialogContentImpl = /* @__PURE__ */ (0, import_react19.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogContentImpl = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
   const { __scopeDialog, trapFocus, onOpenAutoFocus, onCloseAutoFocus, ...contentProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, __scopeDialog);
-  const contentRef = (0, import_react19.useRef)(null);
+  const contentRef = (0, import_react18.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, contentRef);
   $3db38b7d1fb3fe6a$export$b7ece24a22aeda8c();
-  return /* @__PURE__ */ (0, import_react19.createElement)(import_react19.Fragment, null, /* @__PURE__ */ (0, import_react19.createElement)($d3863c46a17e8a28$export$20e40289641fbbb6, {
+  return /* @__PURE__ */ (0, import_react18.createElement)(import_react18.Fragment, null, /* @__PURE__ */ (0, import_react18.createElement)($d3863c46a17e8a28$export$20e40289641fbbb6, {
     asChild: true,
     loop: true,
     trapped: trapFocus,
     onMountAutoFocus: onOpenAutoFocus,
     onUnmountAutoFocus: onCloseAutoFocus
-  }, /* @__PURE__ */ (0, import_react19.createElement)($5cb92bef7577960e$export$177fb62ff3ec1f22, _extends({
+  }, /* @__PURE__ */ (0, import_react18.createElement)($5cb92bef7577960e$export$177fb62ff3ec1f22, _extends({
     role: "dialog",
     id: context.contentId,
     "aria-describedby": context.descriptionId,
@@ -32798,7 +32860,7 @@ var $5d3850c4d0b4e6c7$export$c6fdb837b070b4ff = $5d3850c4d0b4e6c7$export$bd1d06c
 var $5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2 = $5d3850c4d0b4e6c7$export$b6d9565de1e068cf;
 
 // src/components/Dialog/index.tsx
-var DialogRoot = (props2) => /* @__PURE__ */ import_react20.default.createElement(
+var DialogRoot = (props2) => /* @__PURE__ */ import_react19.default.createElement(
   $5d3850c4d0b4e6c7$export$be92b6f5f03c0fe9,
   {
     defaultOpen: props2.defaultOpen,
@@ -32806,9 +32868,9 @@ var DialogRoot = (props2) => /* @__PURE__ */ import_react20.default.createElemen
     onOpenChange: props2.onOpenChange,
     modal: true
   },
-  /* @__PURE__ */ import_react20.default.createElement($5d3850c4d0b4e6c7$export$602eac185826482c, null, /* @__PURE__ */ import_react20.default.createElement("div", { className: "twcss modal-container" }, /* @__PURE__ */ import_react20.default.createElement($5d3850c4d0b4e6c7$export$c6fdb837b070b4ff, { className: "modal-bg" }), props2.children))
+  /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$602eac185826482c, null, /* @__PURE__ */ import_react19.default.createElement("div", { className: "twcss modal-container" }, /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$c6fdb837b070b4ff, { className: "modal-bg" }), props2.children))
 );
-var DialogContent = (props2) => /* @__PURE__ */ import_react20.default.createElement($5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2, { ...props2, className: cn("modal", props2.className) }, props2.children);
+var DialogContent = (props2) => /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2, { ...props2, className: cn("modal", props2.className) }, props2.children);
 
 // node_modules/zustand/esm/vanilla.mjs
 var import_meta = {};
@@ -32844,10 +32906,10 @@ var createStoreImpl = (createState) => {
 var createStore = (createState) => createState ? createStoreImpl(createState) : createStoreImpl;
 
 // node_modules/zustand/esm/index.mjs
-var import_react21 = __toESM(require_react(), 1);
+var import_react20 = __toESM(require_react(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 var import_meta2 = {};
-var { useDebugValue } = import_react21.default;
+var { useDebugValue } = import_react20.default;
 var { useSyncExternalStoreWithSelector } = import_with_selector.default;
 var didWarnAboutEqualityFn = false;
 var identity = (arg) => arg;
@@ -32920,11 +32982,11 @@ var usePluginSettings = create()((set, get) => ({
 }));
 
 // src/components/BlockProvider/index.tsx
-var import_react22 = __toESM(require_react());
-var BlockProviderContext = (0, import_react22.createContext)({});
-var BlockProvider = ({ children, ...props2 }) => /* @__PURE__ */ import_react22.default.createElement(BlockProviderContext.Provider, { value: { ...props2 } }, children);
+var import_react21 = __toESM(require_react());
+var BlockProviderContext = (0, import_react21.createContext)({});
+var BlockProvider = ({ children, ...props2 }) => /* @__PURE__ */ import_react21.default.createElement(BlockProviderContext.Provider, { value: { ...props2 } }, children);
 var useBlock = () => {
-  const context = (0, import_react22.useContext)(BlockProviderContext);
+  const context = (0, import_react21.useContext)(BlockProviderContext);
   if (!context)
     throw new Error("useBlock must be used within BlockProvider");
   return context;
@@ -32954,11 +33016,12 @@ var BlockConfigSchema2 = z.object({
   renderMarkdown: z.boolean(),
   showTypeIcons: z.boolean(),
   showAutoComplete: z.boolean(),
+  showColAndRowLabels: z.boolean(),
   pageSize: z.number(),
   currentPage: z.number(),
   queryLinkPropertyName: z.string(),
   allowImageFullSize: z.boolean(),
-  verticalAlignment: TopMiddleBottom,
+  verticalAlignment: StartCenterEnd,
   horizontalAlignment: StartCenterEnd,
   alignmentByType: z.object({
     text: Alignment,
@@ -32974,16 +33037,17 @@ var BlockConfigSchema2 = z.object({
 var defaultDefaultBlockConfig = {
   filePath: "",
   lockEditing: false,
-  listItemPrefix: "-",
+  listItemPrefix: "disc",
   listVertical: true,
   renderMarkdown: true,
   showTypeIcons: true,
   showAutoComplete: true,
+  showColAndRowLabels: false,
   pageSize: 0,
   currentPage: 1,
   queryLinkPropertyName: "",
   allowImageFullSize: false,
-  verticalAlignment: "top",
+  verticalAlignment: "start",
   horizontalAlignment: "start",
   alignmentByType: {
     text: {
@@ -33030,26 +33094,6 @@ var defaultPluginSettings = {
     default: defaultDefaultBlockConfig
   }
 };
-var SettingsSchema = z.object({
-  autoSuggest: z.boolean(),
-  renderMarkdown: z.boolean(),
-  showNumberButtons: z.boolean(),
-  showTypeIcons: z.boolean(),
-  emptyValueDisplay: z.string(),
-  queryLinksPropertyName: z.string(),
-  cssClassName: z.string(),
-  columnAliases: z.array(z.array(z.string(), z.string())),
-  verticalAlignment: TopMiddleBottom,
-  horizontalAlignment: StartCenterEnd,
-  alignmentByType: z.object({
-    text: Alignment,
-    list: Alignment,
-    number: Alignment,
-    checkbox: Alignment,
-    date: Alignment,
-    datetime: Alignment
-  })
-});
 var BlockConfig = ({
   id,
   filePath: filePath2,
@@ -33067,51 +33111,191 @@ var BlockConfig = ({
   const defaultForm = existingConfig ?? defaultDefaultBlockConfig;
   if (defaultForm.filePath) {
     if (defaultForm.filePath !== filePath2) {
-      new import_obsidian5.Notice(
+      new import_obsidian4.Notice(
         "Error: duplicate id found, please change it and try again"
       );
       return;
     }
   }
-  const [form, setForm] = (0, import_react23.useState)({ ...defaultForm, filePath: filePath2, id });
-  const [isSaving, setIsSaving] = (0, import_react23.useState)(false);
+  const [form, setForm] = (0, import_react22.useState)({ ...defaultForm, filePath: filePath2, id });
+  const [isSaving, setIsSaving] = (0, import_react22.useState)(false);
   const updateForm = (key, value) => {
     setForm((prev) => ({
       ...prev,
       [key]: value
     }));
   };
-  const debouncer = (0, import_obsidian5.debounce)(
-    async (newForm) => {
-      const newSettings = await plugin2.updateBlockConfig(id, newForm);
-      setSettings2(() => newSettings);
-      console.log("newSettings: ", newSettings);
-      setIsSaving(false);
-    },
-    500,
-    true
-  );
-  (0, import_react23.useEffect)(() => {
+  (0, import_react22.useEffect)(() => {
     setIsSaving(true);
-    debouncer(form);
+    (async () => {
+      const newSettings = await plugin2.updateBlockConfig(id, form);
+      setSettings2(() => newSettings);
+      setIsSaving(false);
+    })();
   }, [form]);
-  return /* @__PURE__ */ import_react23.default.createElement(DialogRoot, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react23.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react23.default.createElement("h2", { className: "m-0" }, "Block config"), /* @__PURE__ */ import_react23.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react23.default.createElement("i", null, "id: ", id)), /* @__PURE__ */ import_react23.default.createElement(SettingDescription, { className: "pb-3" }, /* @__PURE__ */ import_react23.default.createElement("i", null, "note: ", filePath2)), /* @__PURE__ */ import_react23.default.createElement(SettingDescription, null, "Plugin repository:", " ", /* @__PURE__ */ import_react23.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react23.default.createElement(SettingDescription, { className: "pb-3" }, "Dataview docs:", " ", /* @__PURE__ */ import_react23.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/")), /* @__PURE__ */ import_react23.default.createElement(SettingDescription, { className: "pb-3" }, isSaving && /* @__PURE__ */ import_react23.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react23.default.createElement(
+  return /* @__PURE__ */ import_react22.default.createElement(DialogRoot, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react22.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react22.default.createElement("h2", { className: "m-0" }, "Block config"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react22.default.createElement("i", null, "id: ", id)), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "pb-3" }, /* @__PURE__ */ import_react22.default.createElement("i", null, "note: ", filePath2)), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, null, "Plugin repository:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "pb-3" }, "Dataview docs:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/")), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "pb-3" }, isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react22.default.createElement(
     LoaderCircle,
     {
       className: "animate-spin",
       size: "1em"
     }
-  )), !isSaving && /* @__PURE__ */ import_react23.default.createElement("div", { className: "text-success" }, "Config saved ", /* @__PURE__ */ import_react23.default.createElement(CircleCheck, { size: "1em" }))), /* @__PURE__ */ import_react23.default.createElement(
+  )), !isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-success" }, "Config saved ", /* @__PURE__ */ import_react22.default.createElement(CircleCheck, { size: "1em" }))), /* @__PURE__ */ import_react22.default.createElement(
     StandardSetting,
     {
       title: "Auto suggest",
-      description: "Automatically suggest values from the existing values used for that property\nOnly works on Text and Multitext",
-      control: /* @__PURE__ */ import_react23.default.createElement(
+      description: "Automatically suggest values from the existing values used for that property.\nOnly works on Text and Multitext.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
         SettingToggle,
         {
           checked: form.showAutoComplete,
           onCheckedChange: (b) => updateForm("showAutoComplete", b)
         }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Show type icons",
+      description: "Show an icon next to each header representing the set type of that property. Inline and nested properties have a special symbol.\n\nTip: For custom icons, turn this off and use the Iconize plugin to set an icon in the column alias.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        SettingToggle,
+        {
+          checked: form.showTypeIcons,
+          onCheckedChange: (b) => updateForm("showTypeIcons", b)
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Render markdown",
+      description: "Render markdown as HTML.\n\nNote: this only works in text, multitext, inline, and nested property types.\n\nAnother note: This is only rendered when not currently editing the table cell.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        SettingToggle,
+        {
+          checked: form.renderMarkdown,
+          onCheckedChange: (b) => updateForm("renderMarkdown", b)
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Show Column and Row Labels",
+      description: "Shows excel/sheets like labels for column and row numbers.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        SettingToggle,
+        {
+          checked: form.showColAndRowLabels,
+          onCheckedChange: (b) => updateForm("showColAndRowLabels", b)
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Lock editing",
+      description: "Lock the table from being able to be edited.\nWhen locked, links and tags are clickable.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        SettingToggle,
+        {
+          checked: form.lockEditing,
+          onCheckedChange: (b) => updateForm("lockEditing", b)
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Page size",
+      description: "The number of results to display per page.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        "input",
+        {
+          defaultValue: form.pageSize,
+          placeholder: "\u221E",
+          type: "number",
+          step: 1,
+          onBlur: (e) => {
+            const possibleNum = Number(e.target.value);
+            const num = Number.isNaN(possibleNum) ? 0 : possibleNum;
+            updateForm("pageSize", num);
+          }
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "List item prefix",
+      description: "What symbol to show prefixed to list items within multitext properties.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        "select",
+        {
+          className: "dropdown",
+          defaultValue: form.listItemPrefix,
+          onChange: (e) => {
+            updateForm(
+              "listItemPrefix",
+              e.currentTarget.value
+            );
+          }
+        },
+        LIST_STYLE_TYPES.map((v, i) => /* @__PURE__ */ import_react22.default.createElement("option", { key: i, value: v }, v))
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Horizontal alignment",
+      description: "Align table cells horizontally",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        "select",
+        {
+          className: "dropdown",
+          defaultValue: form.horizontalAlignment,
+          onChange: (e) => {
+            let a = "start";
+            const { value } = e.currentTarget;
+            if (["start", "center", "end"].includes(value)) {
+              a = value;
+            }
+            updateForm(
+              "horizontalAlignment",
+              a
+            );
+          }
+        },
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "start" }, "Left"),
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "center" }, "Center"),
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "end" }, "Right")
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Vertical alignment",
+      description: "Align table cells vertically",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        "select",
+        {
+          className: "dropdown",
+          defaultValue: form.verticalAlignment,
+          onChange: (e) => {
+            let a = "left";
+            const { value } = e.currentTarget;
+            if (["start", "center", "end"].includes(value)) {
+              a = value;
+            }
+            updateForm(
+              "verticalAlignment",
+              a
+            );
+          }
+        },
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "start" }, "Top"),
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "center" }, "Middle"),
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "end" }, "Bottom")
       )
     }
   )));
@@ -33120,28 +33304,32 @@ var StandardSetting = ({
   title,
   description,
   control
-}) => /* @__PURE__ */ import_react23.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react23.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react23.default.createElement(SettingName, null, title), /* @__PURE__ */ import_react23.default.createElement(SettingDescription, { className: "whitespace-pre" }, description)), /* @__PURE__ */ import_react23.default.createElement(SettingControl, null, control));
+}) => /* @__PURE__ */ import_react22.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, title), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, description)), /* @__PURE__ */ import_react22.default.createElement(SettingControl, null, control));
 
 // src/components/App.tsx
-var import_react37 = __toESM(require_react());
+var import_react36 = __toESM(require_react());
 
 // src/components/Markdown/index.tsx
-var import_obsidian6 = require("obsidian");
-var import_react24 = __toESM(require_react());
+var import_obsidian5 = require("obsidian");
+var import_react23 = __toESM(require_react());
 var Markdown = ({
   app: app2,
   filePath: filePath2,
   plainText,
   className,
+  disabled,
   ...props2
 }) => {
-  const component = new import_obsidian6.Component();
-  const ref = (0, import_react24.useRef)(null);
-  (0, import_react24.useEffect)(() => {
+  if (disabled) {
+    return /* @__PURE__ */ import_react23.default.createElement("div", { ...props2 }, plainText);
+  }
+  const component = new import_obsidian5.Component();
+  const ref = (0, import_react23.useRef)(null);
+  (0, import_react23.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.textContent = "";
-    import_obsidian6.MarkdownRenderer.render(
+    import_obsidian5.MarkdownRenderer.render(
       app2,
       plainText,
       ref.current,
@@ -33149,7 +33337,7 @@ var Markdown = ({
       component
     );
   }, [app2, filePath2, plainText]);
-  return /* @__PURE__ */ import_react24.default.createElement(
+  return /* @__PURE__ */ import_react23.default.createElement(
     "div",
     {
       ref,
@@ -33162,11 +33350,8 @@ var Markdown = ({
   );
 };
 
-// src/lib/consts.ts
-var FILE = "file";
-
 // src/components/Inputs/index.tsx
-var import_react35 = __toESM(require_react());
+var import_react34 = __toESM(require_react());
 var import_dns = require("dns");
 
 // node_modules/luxon/src/errors.js
@@ -39391,205 +39576,16 @@ function friendlyDateTime(dateTimeish) {
 }
 
 // src/components/Inputs/ArrayInput/index.tsx
-var import_react25 = __toESM(require_react());
-var ArrayInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
-  const { plugin: plugin2 } = useBlock();
-  const updateProperty = async (itemIndex, newValue, allowFalsey) => {
-    const newArrayValue = [...propertyValue];
-    newArrayValue[itemIndex] = newValue;
-    const filtered = allowFalsey ? newArrayValue : newArrayValue.filter((v) => !!v);
-    await updateMetaData(propertyName, filtered, filePath2, plugin2);
-  };
-  return /* @__PURE__ */ import_react25.default.createElement("ul", { className: "m-0 flex flex-col gap-1 p-0" }, propertyValue?.map((item, i) => /* @__PURE__ */ import_react25.default.createElement("li", { key: i, className: "flex" }, "- ", /* @__PURE__ */ import_react25.default.createElement(
-    ArrayInputItem,
-    {
-      ...props2,
-      itemValue: item,
-      itemIndex: i,
-      updateProperty
-    }
-  ))), /* @__PURE__ */ import_react25.default.createElement("li", null, /* @__PURE__ */ import_react25.default.createElement(
-    "div",
-    {
-      className: `clickable-icon w-fit ${isLocked2 && "cursor-not-allowed opacity-50"}`,
-      "aria-label": "New item",
-      onClick: async () => {
-        if (isLocked2)
-          return;
-        await updateProperty(propertyValue.length, "", true);
-      }
-    },
-    /* @__PURE__ */ import_react25.default.createElement(Plus, { className: "svg-icon" })
-  )));
-};
-var ArrayInputItem = (props2) => {
-  const { isLocked: isLocked2, itemValue, itemIndex, propertyType, updateProperty } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react25.useState)(false);
-  const plainText = tryToMarkdownLink(itemValue);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react25.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: propertyType === "tags" ? "#" + plainText : plainText,
-        className: "min-h-4 w-full [&_*]:my-0",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react25.default.createElement(
-    "input",
-    {
-      type: "text",
-      defaultValue: itemValue,
-      autoFocus: true,
-      onBlur: async (e) => {
-        await updateProperty(itemIndex, e.target.value);
-        setIsEditing(false);
-      }
-    }
-  );
-};
-
-// src/components/Inputs/BooleanInput/index.tsx
-var import_react26 = __toESM(require_react());
-var BooleanInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
-  const { plugin: plugin2 } = useBlock();
-  return /* @__PURE__ */ import_react26.default.createElement(
-    "input",
-    {
-      type: "checkbox",
-      disabled: !!isLocked2,
-      defaultChecked: !!propertyValue,
-      className: isLocked2 ? "opacity-50" : "",
-      onClick: (e) => {
-        updateMetaData(
-          propertyName,
-          e.currentTarget.checked,
-          filePath2,
-          plugin2
-        );
-      }
-    }
-  );
-};
-
-// src/components/Inputs/DateTimeInput/index.tsx
-var import_react27 = __toESM(require_react());
-var DateTimeInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2, hasTime } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react27.useState)(false);
-  const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react27.useState)({
-    formattedDate: null,
-    inputDate: null
-  });
-  const locale2 = currentLocale();
-  const dvSettings = app.plugins.plugins?.dataview?.settings;
-  const defaultFormat = hasTime ? dvSettings.defaultDateTimeFormat : dvSettings.defaultDateFormat;
-  const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
-  const max2 = hasTime ? "9999-12-31T23:59" : "9999-12-31";
-  (0, import_react27.useEffect)(() => {
-    if (!DateTime.isDateTime(propertyValue)) {
-      setDateStrings({
-        formattedDate: null,
-        inputDate: null
-      });
-    }
-    if (DateTime.isDateTime(propertyValue)) {
-      const formattedDate2 = propertyValue.toLocal().toFormat(defaultFormat, { locale: locale2 });
-      const inputDate2 = propertyValue.toLocal().toFormat(inputFormat);
-      setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
-    }
-  }, [propertyValue]);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react27.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: formattedDate ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react27.default.createElement(
-    "input",
-    {
-      type: hasTime ? "datetime-local" : "date",
-      defaultValue: inputDate,
-      max: max2,
-      autoFocus: true,
-      onBlur: async (e) => {
-        await updateMetaData(
-          propertyName,
-          e.target.value,
-          filePath2,
-          plugin2
-        );
-        setIsEditing(false);
-      }
-    }
-  );
-};
-
-// src/components/Inputs/NumberInput/index.tsx
-var import_react28 = __toESM(require_react());
-var NumberInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
-  const { ctx: ctx2, plugin: plugin2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react28.useState)(false);
-  if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react28.default.createElement(
-      Markdown,
-      {
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: propertyValue?.toString() ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0",
-        onClick: () => {
-          !isLocked2 && setIsEditing(true);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ import_react28.default.createElement(
-    "input",
-    {
-      type: "number",
-      defaultValue: propertyValue,
-      autoFocus: true,
-      onBlur: async (e) => {
-        const num = Number(e.target.value);
-        if (Number.isNaN(num))
-          return;
-        await updateMetaData(propertyName, num, filePath2, plugin2);
-        setIsEditing(false);
-      }
-    }
-  );
-};
-
-// src/components/Inputs/StringInput/index.tsx
-var import_react34 = __toESM(require_react());
+var import_react29 = __toESM(require_react());
 
 // src/components/ui/Popover/index.tsx
-var import_react33 = __toESM(require_react());
+var import_react28 = __toESM(require_react());
 
 // node_modules/@radix-ui/react-popover/dist/index.mjs
-var import_react32 = __toESM(require_react(), 1);
+var import_react27 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-popper/dist/index.mjs
-var import_react31 = __toESM(require_react(), 1);
+var import_react26 = __toESM(require_react(), 1);
 
 // node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
 var sides = ["top", "right", "bottom", "left"];
@@ -41093,8 +41089,8 @@ var computePosition2 = (reference, floating, options) => {
 };
 
 // node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
-var React19 = __toESM(require_react(), 1);
-var import_react29 = __toESM(require_react(), 1);
+var React14 = __toESM(require_react(), 1);
+var import_react24 = __toESM(require_react(), 1);
 var ReactDOM = __toESM(require_react_dom(), 1);
 var arrow3 = (options) => {
   function isRef(value) {
@@ -41127,7 +41123,7 @@ var arrow3 = (options) => {
     }
   };
 };
-var index = typeof document !== "undefined" ? import_react29.useLayoutEffect : import_react29.useEffect;
+var index = typeof document !== "undefined" ? import_react24.useLayoutEffect : import_react24.useEffect;
 function deepEqual(a, b) {
   if (a === b) {
     return true;
@@ -41188,7 +41184,7 @@ function roundByDPR(element, value) {
   return Math.round(value * dpr) / dpr;
 }
 function useLatestRef(value) {
-  const ref = React19.useRef(value);
+  const ref = React14.useRef(value);
   index(() => {
     ref.current = value;
   });
@@ -41211,7 +41207,7 @@ function useFloating(options) {
     whileElementsMounted,
     open
   } = options;
-  const [data2, setData] = React19.useState({
+  const [data2, setData] = React14.useState({
     x: 0,
     y: 0,
     strategy,
@@ -41219,19 +41215,19 @@ function useFloating(options) {
     middlewareData: {},
     isPositioned: false
   });
-  const [latestMiddleware, setLatestMiddleware] = React19.useState(middleware);
+  const [latestMiddleware, setLatestMiddleware] = React14.useState(middleware);
   if (!deepEqual(latestMiddleware, middleware)) {
     setLatestMiddleware(middleware);
   }
-  const [_reference, _setReference] = React19.useState(null);
-  const [_floating, _setFloating] = React19.useState(null);
-  const setReference = React19.useCallback((node) => {
+  const [_reference, _setReference] = React14.useState(null);
+  const [_floating, _setFloating] = React14.useState(null);
+  const setReference = React14.useCallback((node) => {
     if (node !== referenceRef.current) {
       referenceRef.current = node;
       _setReference(node);
     }
   }, []);
-  const setFloating = React19.useCallback((node) => {
+  const setFloating = React14.useCallback((node) => {
     if (node !== floatingRef.current) {
       floatingRef.current = node;
       _setFloating(node);
@@ -41239,13 +41235,13 @@ function useFloating(options) {
   }, []);
   const referenceEl = externalReference || _reference;
   const floatingEl = externalFloating || _floating;
-  const referenceRef = React19.useRef(null);
-  const floatingRef = React19.useRef(null);
-  const dataRef = React19.useRef(data2);
+  const referenceRef = React14.useRef(null);
+  const floatingRef = React14.useRef(null);
+  const dataRef = React14.useRef(data2);
   const hasWhileElementsMounted = whileElementsMounted != null;
   const whileElementsMountedRef = useLatestRef(whileElementsMounted);
   const platformRef = useLatestRef(platform2);
-  const update = React19.useCallback(() => {
+  const update = React14.useCallback(() => {
     if (!referenceRef.current || !floatingRef.current) {
       return;
     }
@@ -41279,7 +41275,7 @@ function useFloating(options) {
       }));
     }
   }, [open]);
-  const isMountedRef = React19.useRef(false);
+  const isMountedRef = React14.useRef(false);
   index(() => {
     isMountedRef.current = true;
     return () => {
@@ -41298,17 +41294,17 @@ function useFloating(options) {
       update();
     }
   }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
-  const refs = React19.useMemo(() => ({
+  const refs = React14.useMemo(() => ({
     reference: referenceRef,
     floating: floatingRef,
     setReference,
     setFloating
   }), [setReference, setFloating]);
-  const elements = React19.useMemo(() => ({
+  const elements = React14.useMemo(() => ({
     reference: referenceEl,
     floating: floatingEl
   }), [referenceEl, floatingEl]);
-  const floatingStyles = React19.useMemo(() => {
+  const floatingStyles = React14.useMemo(() => {
     const initialStyles = {
       position: strategy,
       left: 0,
@@ -41334,7 +41330,7 @@ function useFloating(options) {
       top: y
     };
   }, [strategy, transform, elements.floating, data2.x, data2.y]);
-  return React19.useMemo(() => ({
+  return React14.useMemo(() => ({
     ...data2,
     update,
     refs,
@@ -41344,9 +41340,9 @@ function useFloating(options) {
 }
 
 // node_modules/@radix-ui/react-use-size/dist/index.mjs
-var import_react30 = __toESM(require_react(), 1);
+var import_react25 = __toESM(require_react(), 1);
 function $db6c3485150b8e66$export$1ab7ae714698c4b8(element) {
-  const [size3, setSize] = (0, import_react30.useState)(void 0);
+  const [size3, setSize] = (0, import_react25.useState)(void 0);
   $9f79659886946c16$export$e5c5a5f917a5871c(() => {
     if (element) {
       setSize({
@@ -41393,38 +41389,38 @@ var [$cf1ac5d9fe0e8206$var$createPopperContext, $cf1ac5d9fe0e8206$export$722aac1
 var [$cf1ac5d9fe0e8206$var$PopperProvider, $cf1ac5d9fe0e8206$var$usePopperContext] = $cf1ac5d9fe0e8206$var$createPopperContext($cf1ac5d9fe0e8206$var$POPPER_NAME);
 var $cf1ac5d9fe0e8206$export$badac9ada3a0bdf9 = (props2) => {
   const { __scopePopper, children } = props2;
-  const [anchor, setAnchor] = (0, import_react31.useState)(null);
-  return /* @__PURE__ */ (0, import_react31.createElement)($cf1ac5d9fe0e8206$var$PopperProvider, {
+  const [anchor, setAnchor] = (0, import_react26.useState)(null);
+  return /* @__PURE__ */ (0, import_react26.createElement)($cf1ac5d9fe0e8206$var$PopperProvider, {
     scope: __scopePopper,
     anchor,
     onAnchorChange: setAnchor
   }, children);
 };
 var $cf1ac5d9fe0e8206$var$ANCHOR_NAME = "PopperAnchor";
-var $cf1ac5d9fe0e8206$export$ecd4e1ccab6ed6d = /* @__PURE__ */ (0, import_react31.forwardRef)((props2, forwardedRef) => {
+var $cf1ac5d9fe0e8206$export$ecd4e1ccab6ed6d = /* @__PURE__ */ (0, import_react26.forwardRef)((props2, forwardedRef) => {
   const { __scopePopper, virtualRef, ...anchorProps } = props2;
   const context = $cf1ac5d9fe0e8206$var$usePopperContext($cf1ac5d9fe0e8206$var$ANCHOR_NAME, __scopePopper);
-  const ref = (0, import_react31.useRef)(null);
+  const ref = (0, import_react26.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, ref);
-  (0, import_react31.useEffect)(() => {
+  (0, import_react26.useEffect)(() => {
     context.onAnchorChange((virtualRef === null || virtualRef === void 0 ? void 0 : virtualRef.current) || ref.current);
   });
-  return virtualRef ? null : /* @__PURE__ */ (0, import_react31.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, anchorProps, {
+  return virtualRef ? null : /* @__PURE__ */ (0, import_react26.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, anchorProps, {
     ref: composedRefs
   }));
 });
 var $cf1ac5d9fe0e8206$var$CONTENT_NAME = "PopperContent";
 var [$cf1ac5d9fe0e8206$var$PopperContentProvider, $cf1ac5d9fe0e8206$var$useContentContext] = $cf1ac5d9fe0e8206$var$createPopperContext($cf1ac5d9fe0e8206$var$CONTENT_NAME);
-var $cf1ac5d9fe0e8206$export$bc4ae5855d3c4fc = /* @__PURE__ */ (0, import_react31.forwardRef)((props2, forwardedRef) => {
+var $cf1ac5d9fe0e8206$export$bc4ae5855d3c4fc = /* @__PURE__ */ (0, import_react26.forwardRef)((props2, forwardedRef) => {
   var _arrowSize$width, _arrowSize$height, _middlewareData$arrow, _middlewareData$arrow2, _middlewareData$arrow3, _middlewareData$trans, _middlewareData$trans2, _middlewareData$hide;
   const { __scopePopper, side = "bottom", sideOffset = 0, align = "center", alignOffset = 0, arrowPadding = 0, avoidCollisions = true, collisionBoundary = [], collisionPadding: collisionPaddingProp = 0, sticky = "partial", hideWhenDetached = false, updatePositionStrategy = "optimized", onPlaced, ...contentProps } = props2;
   const context = $cf1ac5d9fe0e8206$var$usePopperContext($cf1ac5d9fe0e8206$var$CONTENT_NAME, __scopePopper);
-  const [content, setContent] = (0, import_react31.useState)(null);
+  const [content, setContent] = (0, import_react26.useState)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
     forwardedRef,
     (node) => setContent(node)
   );
-  const [arrow4, setArrow] = (0, import_react31.useState)(null);
+  const [arrow4, setArrow] = (0, import_react26.useState)(null);
   const arrowSize = $db6c3485150b8e66$export$1ab7ae714698c4b8(arrow4);
   const arrowWidth = (_arrowSize$width = arrowSize === null || arrowSize === void 0 ? void 0 : arrowSize.width) !== null && _arrowSize$width !== void 0 ? _arrowSize$width : 0;
   const arrowHeight = (_arrowSize$height = arrowSize === null || arrowSize === void 0 ? void 0 : arrowSize.height) !== null && _arrowSize$height !== void 0 ? _arrowSize$height : 0;
@@ -41510,14 +41506,14 @@ var $cf1ac5d9fe0e8206$export$bc4ae5855d3c4fc = /* @__PURE__ */ (0, import_react3
   const arrowX = (_middlewareData$arrow = middlewareData.arrow) === null || _middlewareData$arrow === void 0 ? void 0 : _middlewareData$arrow.x;
   const arrowY = (_middlewareData$arrow2 = middlewareData.arrow) === null || _middlewareData$arrow2 === void 0 ? void 0 : _middlewareData$arrow2.y;
   const cannotCenterArrow = ((_middlewareData$arrow3 = middlewareData.arrow) === null || _middlewareData$arrow3 === void 0 ? void 0 : _middlewareData$arrow3.centerOffset) !== 0;
-  const [contentZIndex, setContentZIndex] = (0, import_react31.useState)();
+  const [contentZIndex, setContentZIndex] = (0, import_react26.useState)();
   $9f79659886946c16$export$e5c5a5f917a5871c(() => {
     if (content)
       setContentZIndex(window.getComputedStyle(content).zIndex);
   }, [
     content
   ]);
-  return /* @__PURE__ */ (0, import_react31.createElement)("div", {
+  return /* @__PURE__ */ (0, import_react26.createElement)("div", {
     ref: refs.setFloating,
     "data-radix-popper-content-wrapper": "",
     style: {
@@ -41532,14 +41528,14 @@ var $cf1ac5d9fe0e8206$export$bc4ae5855d3c4fc = /* @__PURE__ */ (0, import_react3
       ].join(" ")
     },
     dir: props2.dir
-  }, /* @__PURE__ */ (0, import_react31.createElement)($cf1ac5d9fe0e8206$var$PopperContentProvider, {
+  }, /* @__PURE__ */ (0, import_react26.createElement)($cf1ac5d9fe0e8206$var$PopperContentProvider, {
     scope: __scopePopper,
     placedSide,
     onArrowChange: setArrow,
     arrowX,
     arrowY,
     shouldHideArrow: cannotCenterArrow
-  }, /* @__PURE__ */ (0, import_react31.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
+  }, /* @__PURE__ */ (0, import_react26.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
     "data-side": placedSide,
     "data-align": placedAlign
   }, contentProps, {
@@ -41619,20 +41615,20 @@ var [$cb5cc270b50c6fcd$var$PopoverProvider, $cb5cc270b50c6fcd$var$usePopoverCont
 var $cb5cc270b50c6fcd$export$5b6b19405a83ff9d = (props2) => {
   const { __scopePopover, children, open: openProp, defaultOpen, onOpenChange, modal = false } = props2;
   const popperScope = $cb5cc270b50c6fcd$var$usePopperScope(__scopePopover);
-  const triggerRef = (0, import_react32.useRef)(null);
-  const [hasCustomAnchor, setHasCustomAnchor] = (0, import_react32.useState)(false);
+  const triggerRef = (0, import_react27.useRef)(null);
+  const [hasCustomAnchor, setHasCustomAnchor] = (0, import_react27.useState)(false);
   const [open = false, setOpen] = $71cd76cc60e0454e$export$6f32135080cb4c3({
     prop: openProp,
     defaultProp: defaultOpen,
     onChange: onOpenChange
   });
-  return /* @__PURE__ */ (0, import_react32.createElement)($cf1ac5d9fe0e8206$export$be92b6f5f03c0fe9, popperScope, /* @__PURE__ */ (0, import_react32.createElement)($cb5cc270b50c6fcd$var$PopoverProvider, {
+  return /* @__PURE__ */ (0, import_react27.createElement)($cf1ac5d9fe0e8206$export$be92b6f5f03c0fe9, popperScope, /* @__PURE__ */ (0, import_react27.createElement)($cb5cc270b50c6fcd$var$PopoverProvider, {
     scope: __scopePopover,
     contentId: $1746a345f3d73bb7$export$f680877a34711e37(),
     triggerRef,
     open,
     onOpenChange: setOpen,
-    onOpenToggle: (0, import_react32.useCallback)(
+    onOpenToggle: (0, import_react27.useCallback)(
       () => setOpen(
         (prevOpen) => !prevOpen
       ),
@@ -41641,11 +41637,11 @@ var $cb5cc270b50c6fcd$export$5b6b19405a83ff9d = (props2) => {
       ]
     ),
     hasCustomAnchor,
-    onCustomAnchorAdd: (0, import_react32.useCallback)(
+    onCustomAnchorAdd: (0, import_react27.useCallback)(
       () => setHasCustomAnchor(true),
       []
     ),
-    onCustomAnchorRemove: (0, import_react32.useCallback)(
+    onCustomAnchorRemove: (0, import_react27.useCallback)(
       () => setHasCustomAnchor(false),
       []
     ),
@@ -41653,12 +41649,12 @@ var $cb5cc270b50c6fcd$export$5b6b19405a83ff9d = (props2) => {
   }, children));
 };
 var $cb5cc270b50c6fcd$var$TRIGGER_NAME = "PopoverTrigger";
-var $cb5cc270b50c6fcd$export$7dacb05d26466c3 = /* @__PURE__ */ (0, import_react32.forwardRef)((props2, forwardedRef) => {
+var $cb5cc270b50c6fcd$export$7dacb05d26466c3 = /* @__PURE__ */ (0, import_react27.forwardRef)((props2, forwardedRef) => {
   const { __scopePopover, ...triggerProps } = props2;
   const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$TRIGGER_NAME, __scopePopover);
   const popperScope = $cb5cc270b50c6fcd$var$usePopperScope(__scopePopover);
   const composedTriggerRef = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, context.triggerRef);
-  const trigger = /* @__PURE__ */ (0, import_react32.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.button, _extends({
+  const trigger = /* @__PURE__ */ (0, import_react27.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.button, _extends({
     type: "button",
     "aria-haspopup": "dialog",
     "aria-expanded": context.open,
@@ -41668,7 +41664,7 @@ var $cb5cc270b50c6fcd$export$7dacb05d26466c3 = /* @__PURE__ */ (0, import_react3
     ref: composedTriggerRef,
     onClick: $e42e1063c40fb3ef$export$b9ecd428b558ff10(props2.onClick, context.onOpenToggle)
   }));
-  return context.hasCustomAnchor ? trigger : /* @__PURE__ */ (0, import_react32.createElement)($cf1ac5d9fe0e8206$export$b688253958b8dfe7, _extends({
+  return context.hasCustomAnchor ? trigger : /* @__PURE__ */ (0, import_react27.createElement)($cf1ac5d9fe0e8206$export$b688253958b8dfe7, _extends({
     asChild: true
   }, popperScope), trigger);
 });
@@ -41679,43 +41675,43 @@ var [$cb5cc270b50c6fcd$var$PortalProvider, $cb5cc270b50c6fcd$var$usePortalContex
 var $cb5cc270b50c6fcd$export$dd679ffb4362d2d4 = (props2) => {
   const { __scopePopover, forceMount, children, container } = props2;
   const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$PORTAL_NAME, __scopePopover);
-  return /* @__PURE__ */ (0, import_react32.createElement)($cb5cc270b50c6fcd$var$PortalProvider, {
+  return /* @__PURE__ */ (0, import_react27.createElement)($cb5cc270b50c6fcd$var$PortalProvider, {
     scope: __scopePopover,
     forceMount
-  }, /* @__PURE__ */ (0, import_react32.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+  }, /* @__PURE__ */ (0, import_react27.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
     present: forceMount || context.open
-  }, /* @__PURE__ */ (0, import_react32.createElement)($f1701beae083dbae$export$602eac185826482c, {
+  }, /* @__PURE__ */ (0, import_react27.createElement)($f1701beae083dbae$export$602eac185826482c, {
     asChild: true,
     container
   }, children)));
 };
 var $cb5cc270b50c6fcd$var$CONTENT_NAME = "PopoverContent";
-var $cb5cc270b50c6fcd$export$d7e1f420b25549ff = /* @__PURE__ */ (0, import_react32.forwardRef)((props2, forwardedRef) => {
+var $cb5cc270b50c6fcd$export$d7e1f420b25549ff = /* @__PURE__ */ (0, import_react27.forwardRef)((props2, forwardedRef) => {
   const portalContext = $cb5cc270b50c6fcd$var$usePortalContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
   const { forceMount = portalContext.forceMount, ...contentProps } = props2;
   const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
-  return /* @__PURE__ */ (0, import_react32.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+  return /* @__PURE__ */ (0, import_react27.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
     present: forceMount || context.open
-  }, context.modal ? /* @__PURE__ */ (0, import_react32.createElement)($cb5cc270b50c6fcd$var$PopoverContentModal, _extends({}, contentProps, {
+  }, context.modal ? /* @__PURE__ */ (0, import_react27.createElement)($cb5cc270b50c6fcd$var$PopoverContentModal, _extends({}, contentProps, {
     ref: forwardedRef
-  })) : /* @__PURE__ */ (0, import_react32.createElement)($cb5cc270b50c6fcd$var$PopoverContentNonModal, _extends({}, contentProps, {
+  })) : /* @__PURE__ */ (0, import_react27.createElement)($cb5cc270b50c6fcd$var$PopoverContentNonModal, _extends({}, contentProps, {
     ref: forwardedRef
   })));
 });
-var $cb5cc270b50c6fcd$var$PopoverContentModal = /* @__PURE__ */ (0, import_react32.forwardRef)((props2, forwardedRef) => {
+var $cb5cc270b50c6fcd$var$PopoverContentModal = /* @__PURE__ */ (0, import_react27.forwardRef)((props2, forwardedRef) => {
   const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
-  const contentRef = (0, import_react32.useRef)(null);
+  const contentRef = (0, import_react27.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, contentRef);
-  const isRightClickOutsideRef = (0, import_react32.useRef)(false);
-  (0, import_react32.useEffect)(() => {
+  const isRightClickOutsideRef = (0, import_react27.useRef)(false);
+  (0, import_react27.useEffect)(() => {
     const content = contentRef.current;
     if (content)
       return hideOthers(content);
   }, []);
-  return /* @__PURE__ */ (0, import_react32.createElement)(Combination_default, {
+  return /* @__PURE__ */ (0, import_react27.createElement)(Combination_default, {
     as: $5e63c961fc1ce211$export$8c6ed5c666ac1360,
     allowPinchZoom: true
-  }, /* @__PURE__ */ (0, import_react32.createElement)($cb5cc270b50c6fcd$var$PopoverContentImpl, _extends({}, props2, {
+  }, /* @__PURE__ */ (0, import_react27.createElement)($cb5cc270b50c6fcd$var$PopoverContentImpl, _extends({}, props2, {
     ref: composedRefs,
     trapFocus: context.open,
     disableOutsidePointerEvents: true,
@@ -41742,11 +41738,11 @@ var $cb5cc270b50c6fcd$var$PopoverContentModal = /* @__PURE__ */ (0, import_react
     )
   })));
 });
-var $cb5cc270b50c6fcd$var$PopoverContentNonModal = /* @__PURE__ */ (0, import_react32.forwardRef)((props2, forwardedRef) => {
+var $cb5cc270b50c6fcd$var$PopoverContentNonModal = /* @__PURE__ */ (0, import_react27.forwardRef)((props2, forwardedRef) => {
   const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, props2.__scopePopover);
-  const hasInteractedOutsideRef = (0, import_react32.useRef)(false);
-  const hasPointerDownOutsideRef = (0, import_react32.useRef)(false);
-  return /* @__PURE__ */ (0, import_react32.createElement)($cb5cc270b50c6fcd$var$PopoverContentImpl, _extends({}, props2, {
+  const hasInteractedOutsideRef = (0, import_react27.useRef)(false);
+  const hasPointerDownOutsideRef = (0, import_react27.useRef)(false);
+  return /* @__PURE__ */ (0, import_react27.createElement)($cb5cc270b50c6fcd$var$PopoverContentImpl, _extends({}, props2, {
     ref: forwardedRef,
     trapFocus: false,
     disableOutsidePointerEvents: false,
@@ -41779,18 +41775,18 @@ var $cb5cc270b50c6fcd$var$PopoverContentNonModal = /* @__PURE__ */ (0, import_re
     }
   }));
 });
-var $cb5cc270b50c6fcd$var$PopoverContentImpl = /* @__PURE__ */ (0, import_react32.forwardRef)((props2, forwardedRef) => {
+var $cb5cc270b50c6fcd$var$PopoverContentImpl = /* @__PURE__ */ (0, import_react27.forwardRef)((props2, forwardedRef) => {
   const { __scopePopover, trapFocus, onOpenAutoFocus, onCloseAutoFocus, disableOutsidePointerEvents, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, ...contentProps } = props2;
   const context = $cb5cc270b50c6fcd$var$usePopoverContext($cb5cc270b50c6fcd$var$CONTENT_NAME, __scopePopover);
   const popperScope = $cb5cc270b50c6fcd$var$usePopperScope(__scopePopover);
   $3db38b7d1fb3fe6a$export$b7ece24a22aeda8c();
-  return /* @__PURE__ */ (0, import_react32.createElement)($d3863c46a17e8a28$export$20e40289641fbbb6, {
+  return /* @__PURE__ */ (0, import_react27.createElement)($d3863c46a17e8a28$export$20e40289641fbbb6, {
     asChild: true,
     loop: true,
     trapped: trapFocus,
     onMountAutoFocus: onOpenAutoFocus,
     onUnmountAutoFocus: onCloseAutoFocus
-  }, /* @__PURE__ */ (0, import_react32.createElement)($5cb92bef7577960e$export$177fb62ff3ec1f22, {
+  }, /* @__PURE__ */ (0, import_react27.createElement)($5cb92bef7577960e$export$177fb62ff3ec1f22, {
     asChild: true,
     disableOutsidePointerEvents,
     onInteractOutside,
@@ -41798,7 +41794,7 @@ var $cb5cc270b50c6fcd$var$PopoverContentImpl = /* @__PURE__ */ (0, import_react3
     onPointerDownOutside,
     onFocusOutside,
     onDismiss: () => context.onOpenChange(false)
-  }, /* @__PURE__ */ (0, import_react32.createElement)($cf1ac5d9fe0e8206$export$7c6e2c02157bb7d2, _extends({
+  }, /* @__PURE__ */ (0, import_react27.createElement)($cf1ac5d9fe0e8206$export$7c6e2c02157bb7d2, _extends({
     "data-state": $cb5cc270b50c6fcd$var$getState(context.open),
     role: "dialog",
     id: context.contentId
@@ -41825,7 +41821,7 @@ var $cb5cc270b50c6fcd$export$7c6e2c02157bb7d2 = $cb5cc270b50c6fcd$export$d7e1f42
 // src/components/ui/Popover/index.tsx
 var Popover = $cb5cc270b50c6fcd$export$be92b6f5f03c0fe9;
 var PopoverTrigger = $cb5cc270b50c6fcd$export$41fb9f06171c75f4;
-var PopoverContent = import_react33.default.forwardRef(({ className, align = "center", sideOffset = 4, ...props2 }, ref) => /* @__PURE__ */ import_react33.default.createElement($cb5cc270b50c6fcd$export$602eac185826482c, null, /* @__PURE__ */ import_react33.default.createElement(
+var PopoverContent = import_react28.default.forwardRef(({ className, align = "center", sideOffset = 4, ...props2 }, ref) => /* @__PURE__ */ import_react28.default.createElement($cb5cc270b50c6fcd$export$602eac185826482c, null, /* @__PURE__ */ import_react28.default.createElement(
   $cb5cc270b50c6fcd$export$7c6e2c02157bb7d2,
   {
     ref,
@@ -41918,11 +41914,10 @@ var Suggester = ({
   disabled
 }) => {
   if (disabled) {
-    console.log("I am disabled");
-    return /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, children);
+    return /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, null, children);
   }
-  const [selected, setSelected] = (0, import_react33.useState)();
-  const [keydownHandler, setKeydownHandler] = (0, import_react33.useState)();
+  const [selected, setSelected] = (0, import_react28.useState)();
+  const [keydownHandler, setKeydownHandler] = (0, import_react28.useState)();
   const getLinkSuggestions = async (q) => {
     const { charIndex, linkType } = getWikiLinkDetails(q);
     let items = getItems(q, charIndex, linkType, plugin2);
@@ -41943,7 +41938,7 @@ var Suggester = ({
     );
     return filtered;
   };
-  const [suggestions, setSuggestions] = (0, import_react33.useState)();
+  const [suggestions, setSuggestions] = (0, import_react28.useState)();
   const selectNext = (suggestionArr) => {
     setSelected((prev) => {
       if (prev === void 0 || prev + 1 >= suggestionArr.length) {
@@ -41974,7 +41969,7 @@ var Suggester = ({
       return setSelected(void 0);
     }
   };
-  (0, import_react33.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     if (!query2 || !query2?.startsWith("[[")) {
       setSuggestions(() => getSuggestions(query2));
       return;
@@ -41984,7 +41979,7 @@ var Suggester = ({
       setSuggestions(s2);
     })();
   }, [query2]);
-  (0, import_react33.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     if (selected !== void 0) {
       const selectedSuggestion = suggestions[selected];
       if (typeof selectedSuggestion === "string") {
@@ -42005,7 +42000,7 @@ var Suggester = ({
     }
     onSelect();
   }, [selected, query2]);
-  (0, import_react33.useEffect)(() => {
+  (0, import_react28.useEffect)(() => {
     console.log("suggestions: ", suggestions);
     if (keydownHandler) {
       window.removeEventListener("keydown", keydownHandler);
@@ -42018,7 +42013,7 @@ var Suggester = ({
     };
   }, [suggestions]);
   if (typeof suggestions?.[0] === "object") {
-    return /* @__PURE__ */ import_react33.default.createElement(Popover, { open }, /* @__PURE__ */ import_react33.default.createElement(PopoverTrigger, { asChild: true }, children), /* @__PURE__ */ import_react33.default.createElement(
+    return /* @__PURE__ */ import_react28.default.createElement(Popover, { open }, /* @__PURE__ */ import_react28.default.createElement(PopoverTrigger, { asChild: true }, children), /* @__PURE__ */ import_react28.default.createElement(
       PopoverContent,
       {
         className: "twcss",
@@ -42026,7 +42021,7 @@ var Suggester = ({
         align: "start",
         avoidCollisions: true
       },
-      /* @__PURE__ */ import_react33.default.createElement("div", { className: "suggestion" }, !suggestions && /* @__PURE__ */ import_react33.default.createElement(NoSuggestions, null), suggestions && /* @__PURE__ */ import_react33.default.createElement(
+      /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion" }, !suggestions && /* @__PURE__ */ import_react28.default.createElement(NoSuggestions, null), suggestions && /* @__PURE__ */ import_react28.default.createElement(
         LinkSuggestions,
         {
           suggestions,
@@ -42034,10 +42029,10 @@ var Suggester = ({
           setSelected
         }
       )),
-      /* @__PURE__ */ import_react33.default.createElement("div", { className: "prompt-instructions flex-nowrap text-nowrap" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "prompt-instruction-command" }, "Type #"), /* @__PURE__ */ import_react33.default.createElement("span", null, "to link heading")), /* @__PURE__ */ import_react33.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "prompt-instruction-command" }, "Type ^"), /* @__PURE__ */ import_react33.default.createElement("span", null, "to link blocks")), /* @__PURE__ */ import_react33.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "prompt-instruction-command" }, "Type |"), /* @__PURE__ */ import_react33.default.createElement("span", null, "to change display text")))
+      /* @__PURE__ */ import_react28.default.createElement("div", { className: "prompt-instructions flex-nowrap text-nowrap" }, /* @__PURE__ */ import_react28.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react28.default.createElement("span", { className: "prompt-instruction-command" }, "Type #"), /* @__PURE__ */ import_react28.default.createElement("span", null, "to link heading")), /* @__PURE__ */ import_react28.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react28.default.createElement("span", { className: "prompt-instruction-command" }, "Type ^"), /* @__PURE__ */ import_react28.default.createElement("span", null, "to link blocks")), /* @__PURE__ */ import_react28.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react28.default.createElement("span", { className: "prompt-instruction-command" }, "Type |"), /* @__PURE__ */ import_react28.default.createElement("span", null, "to change display text")))
     ));
   }
-  return /* @__PURE__ */ import_react33.default.createElement(Popover, { open }, /* @__PURE__ */ import_react33.default.createElement(PopoverTrigger, { asChild: true }, children), /* @__PURE__ */ import_react33.default.createElement(
+  return /* @__PURE__ */ import_react28.default.createElement(Popover, { open }, /* @__PURE__ */ import_react28.default.createElement(PopoverTrigger, { asChild: true }, children), /* @__PURE__ */ import_react28.default.createElement(
     PopoverContent,
     {
       className: "twcss",
@@ -42045,69 +42040,329 @@ var Suggester = ({
       align: "start",
       avoidCollisions: true
     },
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "suggestion" }, suggestions?.map((v, i) => /* @__PURE__ */ import_react33.default.createElement(
+    /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion" }, suggestions?.map((v, i) => /* @__PURE__ */ import_react28.default.createElement(
       "div",
       {
         key: i,
-        className: `suggestion-item ${selected === i ? "is-selected" : ""}`
-      },
-      /* @__PURE__ */ import_react33.default.createElement(
-        "span",
-        {
-          className: "suggestion-highlight",
-          onMouseEnter: () => {
-            setSelected(i);
-          },
-          onMouseLeave: () => {
-            setSelected(void 0);
-          }
+        className: `suggestion-item ${selected === i ? "is-selected" : ""}`,
+        onMouseEnter: () => {
+          setSelected(i);
         },
-        v
-      )
+        onMouseLeave: () => {
+          setSelected(void 0);
+        }
+      },
+      /* @__PURE__ */ import_react28.default.createElement("span", { className: "suggestion-highlight" }, v)
     ))),
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "prompt-instructions flex-nowrap text-nowrap" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "prompt-instruction-command" }, "Type [["), /* @__PURE__ */ import_react33.default.createElement("span", null, "to link note")), /* @__PURE__ */ import_react33.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "prompt-instruction-command" }, "esc"), /* @__PURE__ */ import_react33.default.createElement("span", null, "to dismiss")))
+    /* @__PURE__ */ import_react28.default.createElement("div", { className: "prompt-instructions flex-nowrap text-nowrap" }, /* @__PURE__ */ import_react28.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react28.default.createElement("span", { className: "prompt-instruction-command" }, "Type [["), /* @__PURE__ */ import_react28.default.createElement("span", null, "to link note")), /* @__PURE__ */ import_react28.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react28.default.createElement("span", { className: "prompt-instruction-command" }, "esc"), /* @__PURE__ */ import_react28.default.createElement("span", null, "to dismiss")))
   ));
 };
-var NoSuggestions = () => /* @__PURE__ */ import_react33.default.createElement("div", { className: `suggestion-item mod-complex` }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "suggestion-content" }, /* @__PURE__ */ import_react33.default.createElement("div", { className: "suggestion-title" }, "No matches found")));
+var NoSuggestions = () => /* @__PURE__ */ import_react28.default.createElement("div", { className: `suggestion-item mod-complex` }, /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion-content" }, /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion-title" }, "No matches found")));
 var LinkSuggestions = ({
   suggestions,
   selected,
   setSelected
-}) => /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, suggestions.map(
-  (v, i) => /* @__PURE__ */ import_react33.default.createElement(
+}) => /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, null, suggestions.map(
+  (v, i) => /* @__PURE__ */ import_react28.default.createElement(
     "div",
     {
       key: i,
-      className: `suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`
-    },
-    /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        className: "suggestion-content",
-        onMouseEnter: (e) => {
-          setSelected(i);
-        },
-        onMouseLeave: (e) => {
-          setSelected(void 0);
-        }
+      className: `suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`,
+      onMouseEnter: (e) => {
+        setSelected(i);
       },
-      /* @__PURE__ */ import_react33.default.createElement("div", { className: "suggestion-title" }, typeof v !== "object" && "No matches found", v?.hasOwnProperty("path") && v.path, v?.hasOwnProperty("section") && v.section, v?.hasOwnProperty("heading") && v.heading),
-      /* @__PURE__ */ import_react33.default.createElement("div", { className: "suggestion-note" }, v?.hasOwnProperty("alias") ? v?.alias : v?.hasOwnProperty("id") ? v.id : "")
-    ),
-    /* @__PURE__ */ import_react33.default.createElement("div", { className: "suggestion-aux" }, /* @__PURE__ */ import_react33.default.createElement("span", { className: "suggestion-flair", "aria-label": "Alias" }, v?.hasOwnProperty("alias") && /* @__PURE__ */ import_react33.default.createElement(Forward, { className: "svg-icon lucide-forward" }), v?.hasOwnProperty("level") && /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, "H", v.level), v?.hasOwnProperty("type") && v.type))
+      onMouseLeave: (e) => {
+        setSelected(void 0);
+      }
+    },
+    /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion-content" }, /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion-title" }, typeof v !== "object" && "No matches found", v?.hasOwnProperty("path") && v.path, v?.hasOwnProperty("section") && v.section, v?.hasOwnProperty("heading") && v.heading), /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion-note" }, v?.hasOwnProperty("alias") ? v?.alias : v?.hasOwnProperty("id") ? v.id : "")),
+    /* @__PURE__ */ import_react28.default.createElement("div", { className: "suggestion-aux" }, /* @__PURE__ */ import_react28.default.createElement("span", { className: "suggestion-flair", "aria-label": "Alias" }, v?.hasOwnProperty("alias") && /* @__PURE__ */ import_react28.default.createElement(Forward, { className: "svg-icon lucide-forward" }), v?.hasOwnProperty("level") && /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, null, "H", v.level), v?.hasOwnProperty("type") && v.type))
   )
 ));
 
+// src/components/Inputs/ArrayInput/index.tsx
+var ArrayInput = (props2) => {
+  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
+  const { plugin: plugin2, blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { listItemPrefix, horizontalAlignment } = getBlockConfig2(blockId2);
+  const updateProperty = async (itemIndex, newValue, allowFalsey) => {
+    const newArrayValue = [...propertyValue];
+    newArrayValue[itemIndex] = newValue;
+    const filtered = allowFalsey ? newArrayValue : newArrayValue.filter((v) => !!v);
+    await updateMetaData(propertyName, filtered, filePath2, plugin2);
+  };
+  return /* @__PURE__ */ import_react29.default.createElement(
+    "ul",
+    {
+      className: "m-0 flex w-full flex-col gap-1 p-0 pl-5",
+      style: { listStyleType: listItemPrefix }
+    },
+    propertyValue?.map((item, i) => /* @__PURE__ */ import_react29.default.createElement("li", { key: i }, /* @__PURE__ */ import_react29.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react29.default.createElement(
+      ArrayInputItem,
+      {
+        ...props2,
+        itemValue: item,
+        itemIndex: i,
+        updateProperty
+      }
+    )))),
+    /* @__PURE__ */ import_react29.default.createElement("li", { className: "w-full list-none" }, /* @__PURE__ */ import_react29.default.createElement(
+      "div",
+      {
+        className: "flex w-full " + getJustifyContentClass(horizontalAlignment)
+      },
+      /* @__PURE__ */ import_react29.default.createElement(
+        "div",
+        {
+          className: `clickable-icon w-fit ${isLocked2 && "cursor-not-allowed opacity-50"}`,
+          "aria-label": "New item",
+          onClick: async () => {
+            if (isLocked2)
+              return;
+            await updateProperty(
+              propertyValue.length,
+              "",
+              true
+            );
+          }
+        },
+        /* @__PURE__ */ import_react29.default.createElement(Plus, { className: "svg-icon" })
+      )
+    ))
+  );
+};
+var ArrayInputItem = (props2) => {
+  const {
+    isLocked: isLocked2,
+    itemValue,
+    itemIndex,
+    propertyType,
+    propertyName,
+    updateProperty
+  } = props2;
+  const { plugin: plugin2, ctx: ctx2, blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { showAutoComplete, renderMarkdown, horizontalAlignment } = getBlockConfig2(blockId2);
+  const [isEditing, setIsEditing] = (0, import_react29.useState)(false);
+  const [isSuggestShown, setIsSuggestShown] = (0, import_react29.useState)(false);
+  const [selectedSuggestion, setSelectedSuggestion] = (0, import_react29.useState)();
+  const [query2, setQuery] = (0, import_react29.useState)(itemValue);
+  const plainText = tryToMarkdownLink(itemValue);
+  const onBlur = async (value) => {
+    await updateProperty(itemIndex, value);
+    setIsEditing(false);
+    setIsSuggestShown(false);
+  };
+  const onKeyDown = async (key, value) => {
+    if (key === "Escape") {
+      setIsSuggestShown(false);
+    }
+    if (key === "Enter") {
+      await onBlur(value);
+    }
+  };
+  const getSuggestions = (q) => {
+    const suggestions = (
+      // @ts-ignore
+      app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
+    );
+    if (!suggestions || suggestions?.length === 0)
+      return;
+    return suggestions.filter((s2) => s2.includes(q));
+  };
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react29.default.createElement(
+      Markdown,
+      {
+        disabled: !renderMarkdown,
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: propertyType === "tags" ? "#" + plainText : plainText,
+        className: "flex h-fit min-h-4 w-full [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
+        onClick: () => {
+          if (!isLocked2) {
+            setIsEditing(true);
+            setIsSuggestShown(true);
+          }
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react29.default.createElement(
+    Suggester,
+    {
+      open: isSuggestShown,
+      query: query2.toString(),
+      onSelect: (text) => {
+        setSelectedSuggestion(text);
+      },
+      getSuggestions,
+      plugin: plugin2,
+      disabled: !showAutoComplete
+    },
+    /* @__PURE__ */ import_react29.default.createElement(
+      "input",
+      {
+        type: "text",
+        defaultValue: itemValue,
+        autoFocus: true,
+        onKeyDown: (e) => onKeyDown(e.key, e.currentTarget.value),
+        onBlur: (e) => onBlur(selectedSuggestion ?? e.target.value),
+        onChange: (e) => setQuery(e.target.value)
+      }
+    )
+  );
+};
+
+// src/components/Inputs/BooleanInput/index.tsx
+var import_react30 = __toESM(require_react());
+var BooleanInput = (props2) => {
+  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
+  const { plugin: plugin2, blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { horizontalAlignment } = getBlockConfig2(blockId2);
+  return /* @__PURE__ */ import_react30.default.createElement(
+    "div",
+    {
+      className: "flex h-fit w-full " + getJustifyContentClass(horizontalAlignment)
+    },
+    /* @__PURE__ */ import_react30.default.createElement(
+      "input",
+      {
+        type: "checkbox",
+        disabled: !!isLocked2,
+        defaultChecked: !!propertyValue,
+        className: isLocked2 ? "opacity-50" : "",
+        onClick: (e) => {
+          updateMetaData(
+            propertyName,
+            e.currentTarget.checked,
+            filePath2,
+            plugin2
+          );
+        }
+      }
+    )
+  );
+};
+
+// src/components/Inputs/DateTimeInput/index.tsx
+var import_react31 = __toESM(require_react());
+var DateTimeInput = (props2) => {
+  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2, hasTime } = props2;
+  const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { horizontalAlignment, renderMarkdown } = getBlockConfig2(blockId2);
+  const [isEditing, setIsEditing] = (0, import_react31.useState)(false);
+  const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react31.useState)({
+    formattedDate: null,
+    inputDate: null
+  });
+  const locale2 = currentLocale();
+  const dvSettings = app.plugins.plugins?.dataview?.settings;
+  const defaultFormat = hasTime ? dvSettings.defaultDateTimeFormat : dvSettings.defaultDateFormat;
+  const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
+  const max2 = hasTime ? "9999-12-31T23:59" : "9999-12-31";
+  (0, import_react31.useEffect)(() => {
+    if (!DateTime.isDateTime(propertyValue)) {
+      setDateStrings({
+        formattedDate: null,
+        inputDate: null
+      });
+    }
+    if (DateTime.isDateTime(propertyValue)) {
+      const formattedDate2 = propertyValue.toLocal().toFormat(defaultFormat, { locale: locale2 });
+      const inputDate2 = propertyValue.toLocal().toFormat(inputFormat);
+      setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
+    }
+  }, [propertyValue]);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react31.default.createElement(
+      Markdown,
+      {
+        disabled: !renderMarkdown,
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: formattedDate || dvRenderNullAs,
+        className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
+        onClick: () => {
+          !isLocked2 && setIsEditing(true);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react31.default.createElement(
+    "input",
+    {
+      type: hasTime ? "datetime-local" : "date",
+      defaultValue: inputDate,
+      max: max2,
+      autoFocus: true,
+      onBlur: async (e) => {
+        await updateMetaData(
+          propertyName,
+          e.target.value,
+          filePath2,
+          plugin2
+        );
+        setIsEditing(false);
+      }
+    }
+  );
+};
+
+// src/components/Inputs/NumberInput/index.tsx
+var import_react32 = __toESM(require_react());
+var NumberInput = (props2) => {
+  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
+  const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { horizontalAlignment, renderMarkdown } = getBlockConfig2(blockId2);
+  const [isEditing, setIsEditing] = (0, import_react32.useState)(false);
+  if (!isEditing || isLocked2) {
+    return /* @__PURE__ */ import_react32.default.createElement(
+      Markdown,
+      {
+        disabled: !renderMarkdown,
+        app: plugin2.app,
+        filePath: ctx2.sourcePath,
+        plainText: propertyValue?.toString() || dvRenderNullAs,
+        className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
+        onClick: () => {
+          !isLocked2 && setIsEditing(true);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ import_react32.default.createElement(
+    "input",
+    {
+      type: "number",
+      defaultValue: propertyValue,
+      autoFocus: true,
+      onBlur: async (e) => {
+        const num = Number(e.target.value);
+        if (Number.isNaN(num))
+          return;
+        await updateMetaData(propertyName, num, filePath2, plugin2);
+        setIsEditing(false);
+      }
+    }
+  );
+};
+
 // src/components/Inputs/StringInput/index.tsx
+var import_react33 = __toESM(require_react());
 var StringInput = (props2) => {
   const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
   const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react34.useState)(false);
-  const [isSuggestShown, setIsSuggestShown] = (0, import_react34.useState)(false);
-  const [selectedSuggestion, setSelectedSuggestion] = (0, import_react34.useState)();
-  const [query2, setQuery] = (0, import_react34.useState)(propertyValue);
+  const [isEditing, setIsEditing] = (0, import_react33.useState)(false);
+  const [isSuggestShown, setIsSuggestShown] = (0, import_react33.useState)(false);
+  const [selectedSuggestion, setSelectedSuggestion] = (0, import_react33.useState)();
+  const [query2, setQuery] = (0, import_react33.useState)(propertyValue);
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { showAutoComplete } = getBlockConfig2(blockId2);
+  const { showAutoComplete, renderMarkdown, horizontalAlignment } = getBlockConfig2(blockId2);
   const onBlur = async (value) => {
     await updateMetaData(
       propertyName,
@@ -42136,13 +42391,14 @@ var StringInput = (props2) => {
     return suggestions.filter((s2) => s2.includes(q));
   };
   if (!isEditing || isLocked2) {
-    return /* @__PURE__ */ import_react34.default.createElement(
+    return /* @__PURE__ */ import_react33.default.createElement(
       Markdown,
       {
+        disabled: !renderMarkdown,
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: propertyValue ?? dvRenderNullAs,
-        className: "h-full min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset]",
+        plainText: propertyValue || dvRenderNullAs,
+        className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset] " + getJustifyContentClass(horizontalAlignment),
         onClick: () => {
           if (!isLocked2) {
             setIsEditing(true);
@@ -42152,7 +42408,7 @@ var StringInput = (props2) => {
       }
     );
   }
-  return /* @__PURE__ */ import_react34.default.createElement(
+  return /* @__PURE__ */ import_react33.default.createElement(
     Suggester,
     {
       open: isSuggestShown,
@@ -42164,7 +42420,7 @@ var StringInput = (props2) => {
       plugin: plugin2,
       disabled: !showAutoComplete
     },
-    /* @__PURE__ */ import_react34.default.createElement(
+    /* @__PURE__ */ import_react33.default.createElement(
       "input",
       {
         type: "text",
@@ -42183,7 +42439,7 @@ var InputSwitch = (props2) => {
   const { plugin: plugin2, ctx: ctx2 } = useBlock();
   const { propertyValue, propertyType } = props2;
   if (props2.propertyType === import_dns.FILE) {
-    return /* @__PURE__ */ import_react35.default.createElement(
+    return /* @__PURE__ */ import_react34.default.createElement(
       Markdown,
       {
         app: plugin2.app,
@@ -42198,13 +42454,13 @@ var InputSwitch = (props2) => {
       case "aliases":
       case "text":
       case "object": {
-        return /* @__PURE__ */ import_react35.default.createElement(StringInput, { ...props2 });
+        return /* @__PURE__ */ import_react34.default.createElement(StringInput, { ...props2 });
       }
       case "checkbox": {
-        return /* @__PURE__ */ import_react35.default.createElement(BooleanInput, { ...props2 });
+        return /* @__PURE__ */ import_react34.default.createElement(BooleanInput, { ...props2 });
       }
       case "date": {
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react34.default.createElement(
           DateTimeInput,
           {
             hasTime: false,
@@ -42213,7 +42469,7 @@ var InputSwitch = (props2) => {
         );
       }
       case "datetime": {
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react34.default.createElement(
           DateTimeInput,
           {
             hasTime: true,
@@ -42222,7 +42478,7 @@ var InputSwitch = (props2) => {
         );
       }
       case "multitext": {
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react34.default.createElement(
           ArrayInput,
           {
             ...props2
@@ -42230,10 +42486,10 @@ var InputSwitch = (props2) => {
         );
       }
       case "number": {
-        return /* @__PURE__ */ import_react35.default.createElement(NumberInput, { ...props2 });
+        return /* @__PURE__ */ import_react34.default.createElement(NumberInput, { ...props2 });
       }
       case "tags": {
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react34.default.createElement(
           ArrayInput,
           {
             ...props2
@@ -42241,18 +42497,18 @@ var InputSwitch = (props2) => {
         );
       }
       default: {
-        return /* @__PURE__ */ import_react35.default.createElement(StringInput, { ...props2 });
+        return /* @__PURE__ */ import_react34.default.createElement(StringInput, { ...props2 });
       }
     }
   }
   switch (typeof propertyValue) {
     case "string":
-      return /* @__PURE__ */ import_react35.default.createElement(StringInput, { ...props2 });
+      return /* @__PURE__ */ import_react34.default.createElement(StringInput, { ...props2 });
     case "number":
-      return /* @__PURE__ */ import_react35.default.createElement(NumberInput, { ...props2 });
+      return /* @__PURE__ */ import_react34.default.createElement(NumberInput, { ...props2 });
     case "object":
       if (Array.isArray(propertyValue)) {
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react34.default.createElement(
           ArrayInput,
           {
             ...props2
@@ -42261,7 +42517,7 @@ var InputSwitch = (props2) => {
       }
       if (DateTime.isDateTime(propertyValue)) {
         const hasTime = isDateWithTime(propertyValue);
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react34.default.createElement(
           DateTimeInput,
           {
             hasTime,
@@ -42271,7 +42527,7 @@ var InputSwitch = (props2) => {
       }
       const potentialMarkdownLink = tryToMarkdownLink(propertyValue);
       if (typeof potentialMarkdownLink === "string") {
-        return /* @__PURE__ */ import_react35.default.createElement(
+        return /* @__PURE__ */ import_react34.default.createElement(
           StringInput,
           {
             ...props2,
@@ -42279,11 +42535,11 @@ var InputSwitch = (props2) => {
           }
         );
       }
-      return /* @__PURE__ */ import_react35.default.createElement("div", null, "[Object object]");
+      return /* @__PURE__ */ import_react34.default.createElement("div", null, "[Object object]");
     case "boolean":
-      return /* @__PURE__ */ import_react35.default.createElement(BooleanInput, { ...props2 });
+      return /* @__PURE__ */ import_react34.default.createElement(BooleanInput, { ...props2 });
     default:
-      return /* @__PURE__ */ import_react35.default.createElement(
+      return /* @__PURE__ */ import_react34.default.createElement(
         Markdown,
         {
           app: plugin2.app,
@@ -42296,13 +42552,13 @@ var InputSwitch = (props2) => {
 };
 
 // node_modules/react-error-boundary/dist/react-error-boundary.esm.js
-var import_react36 = __toESM(require_react());
-var ErrorBoundaryContext = (0, import_react36.createContext)(null);
+var import_react35 = __toESM(require_react());
+var ErrorBoundaryContext = (0, import_react35.createContext)(null);
 var initialState = {
   didCatch: false,
   error: null
 };
-var ErrorBoundary = class extends import_react36.Component {
+var ErrorBoundary = class extends import_react35.Component {
   constructor(props2) {
     super(props2);
     this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
@@ -42371,14 +42627,14 @@ var ErrorBoundary = class extends import_react36.Component {
       if (typeof fallbackRender === "function") {
         childToRender = fallbackRender(props2);
       } else if (FallbackComponent) {
-        childToRender = (0, import_react36.createElement)(FallbackComponent, props2);
-      } else if (fallback === null || (0, import_react36.isValidElement)(fallback)) {
+        childToRender = (0, import_react35.createElement)(FallbackComponent, props2);
+      } else if (fallback === null || (0, import_react35.isValidElement)(fallback)) {
         childToRender = fallback;
       } else {
         throw error;
       }
     }
-    return (0, import_react36.createElement)(ErrorBoundaryContext.Provider, {
+    return (0, import_react35.createElement)(ErrorBoundaryContext.Provider, {
       value: {
         didCatch,
         error,
@@ -63040,40 +63296,40 @@ var PropertyIcon = ({
 }) => {
   switch (propertyType) {
     case "aliases": {
-      return /* @__PURE__ */ import_react37.default.createElement(Forward, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Forward, { style: iconStyle });
     }
     case "checkbox": {
-      return /* @__PURE__ */ import_react37.default.createElement(SquareCheckBig, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(SquareCheckBig, { style: iconStyle });
     }
     case "date": {
-      return /* @__PURE__ */ import_react37.default.createElement(Calendar, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Calendar, { style: iconStyle });
     }
     case "datetime": {
-      return /* @__PURE__ */ import_react37.default.createElement(Clock, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Clock, { style: iconStyle });
     }
     case "multitext": {
-      return /* @__PURE__ */ import_react37.default.createElement(List, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(List, { style: iconStyle });
     }
     case "number": {
-      return /* @__PURE__ */ import_react37.default.createElement(Binary, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Binary, { style: iconStyle });
     }
     case "tags": {
-      return /* @__PURE__ */ import_react37.default.createElement(Tags, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Tags, { style: iconStyle });
     }
     case "text": {
-      return /* @__PURE__ */ import_react37.default.createElement(Text, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Text, { style: iconStyle });
     }
     case "file": {
-      return /* @__PURE__ */ import_react37.default.createElement(File, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(File, { style: iconStyle });
     }
     case "inline": {
-      return /* @__PURE__ */ import_react37.default.createElement(ScanText, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(ScanText, { style: iconStyle });
     }
     case "object": {
-      return /* @__PURE__ */ import_react37.default.createElement(Braces, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Braces, { style: iconStyle });
     }
     default: {
-      return /* @__PURE__ */ import_react37.default.createElement(Text, { style: iconStyle });
+      return /* @__PURE__ */ import_react36.default.createElement(Text, { style: iconStyle });
     }
   }
 };
@@ -63151,15 +63407,15 @@ var writeRandomId = async (m, s2, plugin2, pluginSettingsConfigs) => {
   div2.textContent = "Click the gear again to configure block";
   frag.appendChild(div1);
   frag.appendChild(div2);
-  new import_obsidian7.Notice(frag);
+  new import_obsidian6.Notice(frag);
 };
-var App6 = (props) => {
+var App5 = (props) => {
   const { data, plugin, ctx, getSectionInfo } = props;
-  const [queryResults, setQueryResults] = (0, import_react37.useState)();
-  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react37.useState)(-1);
-  const [dvErr, setDvErr] = (0, import_react37.useState)();
-  const [showSettings, setShowSettings] = (0, import_react37.useState)(false);
-  const [isLocked, setIsLocked] = (0, import_react37.useState)(false);
+  const [queryResults, setQueryResults] = (0, import_react36.useState)();
+  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react36.useState)(-1);
+  const [dvErr, setDvErr] = (0, import_react36.useState)();
+  const [showSettings, setShowSettings] = (0, import_react36.useState)(false);
+  const [isLocked, setIsLocked] = (0, import_react36.useState)(false);
   const { blockId, query: preQuery } = getBlockId(data);
   const { query, hideFileLink } = ensureFileLink(preQuery);
   const { settings, setSettings, getBlockConfig } = usePluginSettings();
@@ -63188,12 +63444,12 @@ var App6 = (props) => {
     }
     safeSetQueryResults(qr.value);
   };
-  (0, import_react37.useEffect)(() => {
+  (0, import_react36.useEffect)(() => {
     setSettings(() => plugin.settings);
     (async () => {
       const b = await loadDependencies();
       if (!b) {
-        return new import_obsidian7.Notice(
+        return new import_obsidian6.Notice(
           "Datedit: Failed to load dependencies\n\nIs Dataview installed and enabled?"
         );
       }
@@ -63219,10 +63475,10 @@ var App6 = (props) => {
       console.log("App unmounted");
     };
   }, []);
-  (0, import_react37.useEffect)(() => {
+  (0, import_react36.useEffect)(() => {
     plugin.updateSettings(settings);
   }, [settings]);
-  (0, import_react37.useEffect)(() => {
+  (0, import_react36.useEffect)(() => {
     console.log("queryResults changed: ", queryResults);
     if (!queryResults)
       return;
@@ -63230,7 +63486,7 @@ var App6 = (props) => {
   }, [queryResults]);
   if (!settings)
     return;
-  const { pageSize, currentPage } = getBlockConfig(blockId);
+  const { pageSize, currentPage, showColAndRowLabels } = getBlockConfig(blockId);
   const startIndex = pageSize < 1 ? 0 : (currentPage - 1) * pageSize;
   const endIndex = pageSize < 1 ? queryResults?.values?.length : startIndex + pageSize;
   const currentRows = queryResults?.values?.slice(startIndex, endIndex);
@@ -63240,9 +63496,9 @@ var App6 = (props) => {
   const config = blockConfigs[blockId] ?? blockConfigs["default"];
   console.log("config: ", config);
   if (!queryResults || fileHeaderIndex === -1) {
-    return /* @__PURE__ */ import_react37.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react37.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react37.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react37.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
+    return /* @__PURE__ */ import_react36.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react36.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react36.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react36.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react36.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
   }
-  return /* @__PURE__ */ import_react37.default.createElement(
+  return /* @__PURE__ */ import_react36.default.createElement(
     BlockProvider,
     {
       plugin,
@@ -63251,7 +63507,14 @@ var App6 = (props) => {
       ctx,
       aliasObj
     },
-    /* @__PURE__ */ import_react37.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react37.default.createElement(ErrorBoundary, { FallbackComponent: Fallback }, /* @__PURE__ */ import_react37.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react37.default.createElement("thead", null, false, /* @__PURE__ */ import_react37.default.createElement("tr", null, false, queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react37.default.createElement(
+    /* @__PURE__ */ import_react36.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react36.default.createElement(ErrorBoundary, { FallbackComponent: Fallback }, /* @__PURE__ */ import_react36.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react36.default.createElement("thead", null, showColAndRowLabels && /* @__PURE__ */ import_react36.default.createElement("tr", null, /* @__PURE__ */ import_react36.default.createElement("th", { className: "!bg-secondary" }), queryResults?.headers?.map((_, i) => /* @__PURE__ */ import_react36.default.createElement(
+      "th",
+      {
+        key: i + "-table-header-col-label",
+        className: "!bg-secondary"
+      },
+      /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex items-center justify-center font-normal" }, numberToBase26Letters(i + 1))
+    ))), /* @__PURE__ */ import_react36.default.createElement("tr", null, showColAndRowLabels && /* @__PURE__ */ import_react36.default.createElement("th", { className: "w-fit min-w-0 !bg-secondary" }, /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex h-full w-full items-center justify-center font-normal" }, "1")), queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react36.default.createElement(
       Th,
       {
         key: i + "table-header",
@@ -63259,7 +63522,7 @@ var App6 = (props) => {
         hideFileLink,
         propertyName: h
       }
-    )))), /* @__PURE__ */ import_react37.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react37.default.createElement("tr", { key: i + "-table-body-row" }, false, r2?.map((d, k) => /* @__PURE__ */ import_react37.default.createElement(
+    )))), /* @__PURE__ */ import_react36.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react36.default.createElement("tr", { key: i + "-table-body-row" }, showColAndRowLabels && /* @__PURE__ */ import_react36.default.createElement("td", { className: "w-fit min-w-0 bg-secondary" }, /* @__PURE__ */ import_react36.default.createElement("div", { className: "my-auto flex h-full w-full items-center justify-center" }, i + 2)), r2?.map((d, k) => /* @__PURE__ */ import_react36.default.createElement(
       Td,
       {
         key: k + "table-data",
@@ -63270,7 +63533,7 @@ var App6 = (props) => {
         filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path,
         isLocked
       }
-    )))))), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react37.default.createElement(PaginationNav, { totalRows: queryResults.values.length }), /* @__PURE__ */ import_react37.default.createElement(PaginationSize, null), /* @__PURE__ */ import_react37.default.createElement(
+    )))))), /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react36.default.createElement(PaginationNav, { totalRows: queryResults.values.length }), /* @__PURE__ */ import_react36.default.createElement(PaginationSize, null), /* @__PURE__ */ import_react36.default.createElement(
       SettingsGear,
       {
         blockId,
@@ -63281,7 +63544,7 @@ var App6 = (props) => {
           settings.blockConfigs
         )
       }
-    ), showSettings && /* @__PURE__ */ import_react37.default.createElement(
+    ), showSettings && /* @__PURE__ */ import_react36.default.createElement(
       BlockConfig,
       {
         id: blockId,
@@ -63289,16 +63552,16 @@ var App6 = (props) => {
         open: showSettings,
         setOpen: setShowSettings
       }
-    ), /* @__PURE__ */ import_react37.default.createElement(LockToggle, null))))
+    ), /* @__PURE__ */ import_react36.default.createElement(LockToggle, null))))
   );
 };
 var Fallback = ({ error }) => {
   console.error("Fallback got error: ", error);
   const e = error;
-  return /* @__PURE__ */ import_react37.default.createElement("div", { className: "border-[1px] border-dashed border-error p-3" }, /* @__PURE__ */ import_react37.default.createElement("h2", { className: "text-error" }, "Dataedit Error ", /* @__PURE__ */ import_react37.default.createElement(CircleX, { className: "svg-icon" })), /* @__PURE__ */ import_react37.default.createElement("p", null, /* @__PURE__ */ import_react37.default.createElement("i", null, "It's not you, it's me"), "\uFF08>\uFE4F<\uFF09"), /* @__PURE__ */ import_react37.default.createElement("p", null, "Sorry about that!"), /* @__PURE__ */ import_react37.default.createElement("p", null, "If you'd like this to get fixed, please check the", " ", /* @__PURE__ */ import_react37.default.createElement("a", { href: "https://github.com/unxok/dataedit/issues" }, "known issues", /* @__PURE__ */ import_react37.default.createElement("span", { className: "external-link" })), ". If there's no open issue yet, please open one and provide the info below as well as the steps to reproduce the issue"), /* @__PURE__ */ import_react37.default.createElement("details", null, /* @__PURE__ */ import_react37.default.createElement("summary", { className: "hover:cursor-pointer hover:underline" }, "Show error details"), /* @__PURE__ */ import_react37.default.createElement("h3", null, "Error message"), /* @__PURE__ */ import_react37.default.createElement("pre", null, /* @__PURE__ */ import_react37.default.createElement("code", null, e?.message)), /* @__PURE__ */ import_react37.default.createElement("h3", null, "Error stack"), /* @__PURE__ */ import_react37.default.createElement("pre", null, /* @__PURE__ */ import_react37.default.createElement("code", null, e?.stack))));
+  return /* @__PURE__ */ import_react36.default.createElement("div", { className: "border-[1px] border-dashed border-error p-3" }, /* @__PURE__ */ import_react36.default.createElement("h2", { className: "text-error" }, "Dataedit Error ", /* @__PURE__ */ import_react36.default.createElement(CircleX, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("p", null, /* @__PURE__ */ import_react36.default.createElement("i", null, "It's not you, it's me"), "\uFF08>\uFE4F<\uFF09"), /* @__PURE__ */ import_react36.default.createElement("p", null, "Sorry about that!"), /* @__PURE__ */ import_react36.default.createElement("p", null, "If you'd like this to get fixed, please check the", " ", /* @__PURE__ */ import_react36.default.createElement("a", { href: "https://github.com/unxok/dataedit/issues" }, "known issues", /* @__PURE__ */ import_react36.default.createElement("span", { className: "external-link" })), ". If there's no open issue yet, please open one and provide the info below as well as the steps to reproduce the issue"), /* @__PURE__ */ import_react36.default.createElement("details", null, /* @__PURE__ */ import_react36.default.createElement("summary", { className: "hover:cursor-pointer hover:underline" }, "Show error details"), /* @__PURE__ */ import_react36.default.createElement("h3", null, "Error message"), /* @__PURE__ */ import_react36.default.createElement("pre", null, /* @__PURE__ */ import_react36.default.createElement("code", null, e?.message)), /* @__PURE__ */ import_react36.default.createElement("h3", null, "Error stack"), /* @__PURE__ */ import_react36.default.createElement("pre", null, /* @__PURE__ */ import_react36.default.createElement("code", null, e?.stack))));
 };
 var PaginationSize = () => {
-  const [isEditing, setIsEditing] = (0, import_react37.useState)(false);
+  const [isEditing, setIsEditing] = (0, import_react36.useState)(false);
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
   const { pageSize: pageSize2 } = getBlockConfig2(blockId2);
@@ -63318,8 +63581,8 @@ var PaginationSize = () => {
     setBlockConfig(blockId2, (prev) => ({ ...prev, pageSize: cb }));
   };
   if (!isEditing)
-    return /* @__PURE__ */ import_react37.default.createElement("div", { className: "clickable-icon", onClick: () => setIsEditing(true) }, pageSize2 || "Infinity", " per page");
-  return /* @__PURE__ */ import_react37.default.createElement(
+    return /* @__PURE__ */ import_react36.default.createElement("div", { className: "clickable-icon", onClick: () => setIsEditing(true) }, pageSize2 || "Infinity", " per page");
+  return /* @__PURE__ */ import_react36.default.createElement(
     "input",
     {
       type: "number",
@@ -63359,7 +63622,7 @@ var PaginationSize = () => {
   );
 };
 var PaginationNav = ({ totalRows }) => {
-  const [isEditing, setIsEditing] = (0, import_react37.useState)(false);
+  const [isEditing, setIsEditing] = (0, import_react36.useState)(false);
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
   const { currentPage: currentPage2, pageSize: pageSize2 } = getBlockConfig2(blockId2);
@@ -63398,7 +63661,7 @@ var PaginationNav = ({ totalRows }) => {
       setCurrentPage(totalPages);
     }
   };
-  return /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex items-center justify-center" }, /* @__PURE__ */ import_react37.default.createElement("div", { onClick: goFirst, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react37.default.createElement(ChevronFirst, { className: "svg-icon" })), /* @__PURE__ */ import_react37.default.createElement("div", { onClick: goPrev, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react37.default.createElement(ChevronLeft, { className: "svg-icon" })), /* @__PURE__ */ import_react37.default.createElement("span", { className: "px-1" }, !isEditing && /* @__PURE__ */ import_react37.default.createElement(
+  return /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex items-center justify-center" }, /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goFirst, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronFirst, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goPrev, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronLeft, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("span", { className: "px-1" }, !isEditing && /* @__PURE__ */ import_react36.default.createElement(
     "span",
     {
       "aria-label": "Enter page number",
@@ -63406,7 +63669,7 @@ var PaginationNav = ({ totalRows }) => {
       onClick: () => setIsEditing(true)
     },
     currentPage2
-  ), isEditing && /* @__PURE__ */ import_react37.default.createElement(
+  ), isEditing && /* @__PURE__ */ import_react36.default.createElement(
     "input",
     {
       type: "number",
@@ -63448,7 +63711,7 @@ var PaginationNav = ({ totalRows }) => {
         }
       }
     }
-  ), /* @__PURE__ */ import_react37.default.createElement("span", null, " of ", totalPages)), /* @__PURE__ */ import_react37.default.createElement("div", { onClick: goNext, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react37.default.createElement(ChevronRight, { className: "svg-icon" })), /* @__PURE__ */ import_react37.default.createElement("div", { onClick: goLast, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react37.default.createElement(ChevronLast, { className: "svg-icon" })));
+  ), /* @__PURE__ */ import_react36.default.createElement("span", null, " of ", totalPages)), /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goNext, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronRight, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goLast, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronLast, { className: "svg-icon" })));
 };
 var LockToggle = () => {
   const { blockId: blockId2 } = useBlock();
@@ -63461,14 +63724,14 @@ var LockToggle = () => {
   };
   const { lockEditing } = getBlockConfig2(blockId2);
   const Icon = lockEditing ? Lock : LockOpen;
-  return /* @__PURE__ */ import_react37.default.createElement(
+  return /* @__PURE__ */ import_react36.default.createElement(
     "div",
     {
       onClick: () => toggleLock(),
       "aria-label": "Lock editing",
       className: "clickable-icon side-dock-ribbon-action"
     },
-    /* @__PURE__ */ import_react37.default.createElement(
+    /* @__PURE__ */ import_react36.default.createElement(
       Icon,
       {
         className: `svg-icon lucide-lock ${!lockEditing ? "text-muted opacity-50" : "text-inherit opacity-100"}`
@@ -63480,14 +63743,14 @@ var SettingsGear = ({
   blockId: blockId2,
   onClick
 }) => {
-  return /* @__PURE__ */ import_react37.default.createElement(
+  return /* @__PURE__ */ import_react36.default.createElement(
     "div",
     {
       onClick,
       "aria-label": blockId2 ? `id: ${blockId2}` : `No id found. Click to generate random id`,
       className: "clickable-icon side-dock-ribbon-action"
     },
-    /* @__PURE__ */ import_react37.default.createElement(Settings, { className: "svg-icon lucide-settings" })
+    /* @__PURE__ */ import_react36.default.createElement(Settings, { className: "svg-icon lucide-settings" })
   );
 };
 var Th = ({
@@ -63495,32 +63758,36 @@ var Th = ({
   className,
   hideFileLink: hideFileLink2
 }) => {
-  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
+  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2, blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { showTypeIcons } = getBlockConfig2(blockId2);
   const propName = aliasObj2[propertyName] ?? propertyName;
   const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
   const prePropertyType = isFileProp ? FILE : getPropertyType(propName);
   const propertyType = prePropertyType ?? "inline";
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react37.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react37.default.createElement(
+  return /* @__PURE__ */ import_react36.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react36.default.createElement(
     Markdown,
     {
       app: plugin2.app,
       filePath: ctx2.sourcePath,
       plainText: propertyName
     }
-  ), "\xA0", /* @__PURE__ */ import_react37.default.createElement(
+  ), "\xA0", /* @__PURE__ */ import_react36.default.createElement(
     "div",
     {
       "aria-label": propertyType,
       className: "flex items-center justify-center"
     },
-    /* @__PURE__ */ import_react37.default.createElement(PropertyIcon, { propertyType })
+    showTypeIcons && /* @__PURE__ */ import_react36.default.createElement(PropertyIcon, { propertyType })
   )));
 };
 var Td = (props2) => {
   const { propertyValue, propertyName, className, hideFileLink: hideFileLink2, filePath: filePath2 } = props2;
-  const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2 } = useBlock();
+  const { plugin: plugin2, aliasObj: aliasObj2, blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { verticalAlignment } = getBlockConfig2(blockId2);
   const propName = aliasObj2[propertyName] ?? propertyName;
   const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
   const prePropertyType = isFileProp ? FILE : getPropertyType(propName);
@@ -63533,15 +63800,21 @@ var Td = (props2) => {
   const propValue = tryToMarkdownLink(propertyValue);
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react37.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex h-full w-full" }, /* @__PURE__ */ import_react37.default.createElement(
-    InputSwitch,
+  return /* @__PURE__ */ import_react36.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react36.default.createElement(
+    "div",
     {
-      ...props2,
-      propertyName: propName,
-      propertyValue: propValue,
-      propertyType
-    }
-  )));
+      className: `flex h-full w-full ${getAlignItemsClass(verticalAlignment)}`
+    },
+    /* @__PURE__ */ import_react36.default.createElement(
+      InputSwitch,
+      {
+        ...props2,
+        propertyName: propName,
+        propertyValue: propValue,
+        propertyType
+      }
+    )
+  ));
 };
 
 // src/main.tsx
@@ -63554,7 +63827,7 @@ var loadDependencies = async () => {
   await plugins.loadPlugin(DATAVIEW);
   return true;
 };
-var DataEdit2 = class extends import_obsidian8.Plugin {
+var DataEdit2 = class extends import_obsidian7.Plugin {
   async onExternalSettingsChange() {
     console.log("settings were changed");
     await this.loadSettings();
@@ -63577,8 +63850,8 @@ var DataEdit2 = class extends import_obsidian8.Plugin {
       const root = (0, import_client3.createRoot)(e);
       root.render(
         // <React.StrictMode>
-        /* @__PURE__ */ import_react38.default.createElement(
-          App6,
+        /* @__PURE__ */ import_react37.default.createElement(
+          App5,
           {
             data: s2,
             getSectionInfo: () => ctx2.getSectionInfo(e),
@@ -63611,7 +63884,7 @@ var DataEdit2 = class extends import_obsidian8.Plugin {
     const parsed = PluginSettingsSchema2.safeParse(modifiedSavedSettings);
     console.log(parsed);
     if (!parsed.success) {
-      new import_obsidian8.Notice("Invalid settings detected. Reverting to default");
+      new import_obsidian7.Notice("Invalid settings detected. Reverting to default");
       return await this.updateSettings(defaultPluginSettings);
     }
     this.settings = modifiedSavedSettings;

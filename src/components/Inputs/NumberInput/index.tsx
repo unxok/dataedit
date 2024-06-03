@@ -1,21 +1,32 @@
 import { Markdown } from "@/components/Markdown";
-import { dvRenderNullAs, updateMetaData } from "@/lib/utils";
+import {
+	dvRenderNullAs,
+	getJustifyContentClass,
+	updateMetaData,
+} from "@/lib/utils";
 import React, { useState } from "react";
 import { InputSwitchProps } from "..";
 import { useBlock } from "@/components/BlockProvider";
+import { usePluginSettings } from "@/stores/global";
 
 export const NumberInput = (props: InputSwitchProps<number>) => {
 	const { propertyName, propertyValue, filePath, isLocked } = props;
-	const { ctx, plugin } = useBlock();
+	const { ctx, plugin, blockId } = useBlock();
+	const { getBlockConfig } = usePluginSettings();
+	const { horizontalAlignment, renderMarkdown } = getBlockConfig(blockId);
 	const [isEditing, setIsEditing] = useState(false);
 
 	if (!isEditing || isLocked) {
 		return (
 			<Markdown
+				disabled={!renderMarkdown}
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={propertyValue?.toString() ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0"
+				plainText={propertyValue?.toString() || dvRenderNullAs}
+				className={
+					"flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " +
+					getJustifyContentClass(horizontalAlignment)
+				}
 				onClick={() => {
 					!isLocked && setIsEditing(true);
 				}}

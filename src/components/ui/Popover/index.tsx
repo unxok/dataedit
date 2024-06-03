@@ -194,7 +194,6 @@ export const Suggester = ({
 	disabled,
 }: SuggesterProps) => {
 	if (disabled) {
-		console.log("I am disabled");
 		return <>{children}</>;
 	}
 	const [selected, setSelected] = useState<number>();
@@ -386,19 +385,15 @@ export const Suggester = ({
 						<div
 							key={i}
 							className={`suggestion-item ${selected === i ? "is-selected" : ""}`}
+							onMouseEnter={() => {
+								setSelected(i);
+							}}
+							onMouseLeave={() => {
+								setSelected(undefined);
+								// onSelect(e.currentTarget.textContent);
+							}}
 						>
-							<span
-								className="suggestion-highlight"
-								onMouseEnter={() => {
-									setSelected(i);
-								}}
-								onMouseLeave={() => {
-									setSelected(undefined);
-									// onSelect(e.currentTarget.textContent);
-								}}
-							>
-								{v}
-							</span>
+							<span className="suggestion-highlight">{v}</span>
 						</div>
 					))}
 				</div>
@@ -447,17 +442,15 @@ const LinkSuggestions = ({
 				<div
 					key={i}
 					className={`suggestion-item mod-complex ${selected === i ? "is-selected" : ""}`}
+					onMouseEnter={(e) => {
+						setSelected(i);
+					}}
+					onMouseLeave={(e) => {
+						setSelected(undefined);
+						// onSelect(e.currentTarget.textContent);
+					}}
 				>
-					<div
-						className="suggestion-content"
-						onMouseEnter={(e) => {
-							setSelected(i);
-						}}
-						onMouseLeave={(e) => {
-							setSelected(undefined);
-							// onSelect(e.currentTarget.textContent);
-						}}
-					>
+					<div className="suggestion-content">
 						<div className="suggestion-title">
 							{typeof v !== "object" && "No matches found"}
 							{v?.hasOwnProperty("path") &&

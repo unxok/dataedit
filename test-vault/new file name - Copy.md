@@ -6,6 +6,8 @@ datetime: 2023-02-25T18:06
 file.link: "[[testt.md|testt]]"
 tags:
   - testt
+  - randomtag
+  - test
   - onemoretagg
 some-list: 
 File: "[[new file name.md|new file name]]"

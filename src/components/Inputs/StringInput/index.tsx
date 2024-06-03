@@ -7,7 +7,11 @@ import React, {
 } from "react";
 import { Markdown } from "@/components/Markdown";
 import { InputSwitchProps } from "..";
-import { dvRenderNullAs, updateMetaData } from "@/lib/utils";
+import {
+	dvRenderNullAs,
+	getJustifyContentClass,
+	updateMetaData,
+} from "@/lib/utils";
 import { getBlockId } from "@/components/App";
 import {
 	Popover,
@@ -26,7 +30,12 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 	const [selectedSuggestion, setSelectedSuggestion] = useState<string>();
 	const [query, setQuery] = useState(propertyValue);
 	const { getBlockConfig } = usePluginSettings();
-	const { showAutoComplete } = getBlockConfig(blockId);
+	const {
+		showAutoComplete,
+		renderMarkdown,
+		horizontalAlignment,
+		allowImageFullSize,
+	} = getBlockConfig(blockId);
 	// console.log("blockId: ", blockId);
 	// console.log("showAutoComplete: ", showAutoComplete);
 
@@ -53,7 +62,7 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 		}
 	};
 
-	const getSuggestions = (q) => {
+	const getSuggestions = (q: string) => {
 		const suggestions: string[] =
 			// @ts-ignore
 			app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName);
@@ -69,10 +78,11 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 	if (!isEditing || isLocked) {
 		return (
 			<Markdown
+				disabled={!renderMarkdown}
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={propertyValue ?? dvRenderNullAs}
-				className="h-full min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset]"
+				plainText={propertyValue || dvRenderNullAs}
+				className={`flex h-fit min-h-4 w-full break-keep [&_*]:my-0 ${getJustifyContentClass(horizontalAlignment)} ${allowImageFullSize ? "[&_img]:!max-w-[unset]" : ""}`}
 				onClick={() => {
 					if (!isLocked) {
 						setIsEditing(true);

@@ -12,12 +12,17 @@ export const Markdown = ({
 	filePath,
 	plainText,
 	className,
+	disabled,
 	...props
 }: {
 	app: App;
 	filePath: string;
 	plainText: string;
+	disabled?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>) => {
+	if (disabled) {
+		return <div {...props}>{plainText}</div>;
+	}
 	const component = new Component();
 	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {

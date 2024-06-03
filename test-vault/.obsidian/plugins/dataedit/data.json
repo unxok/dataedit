@@ -4,16 +4,17 @@
     "default": {
       "filePath": "",
       "lockEditing": false,
-      "listItemPrefix": "-",
+      "listItemPrefix": "disc",
       "listVertical": true,
       "renderMarkdown": true,
       "showTypeIcons": true,
       "showAutoComplete": true,
+      "showColAndRowLabels": false,
       "pageSize": 0,
       "currentPage": 1,
       "queryLinkPropertyName": "",
       "allowImageFullSize": false,
-      "verticalAlignment": "top",
+      "verticalAlignment": "start",
       "horizontalAlignment": "start",
       "alignmentByType": {
         "text": {
@@ -50,120 +51,21 @@
       "columnWidths": [],
       "columnPresets": []
     },
-    "myid": {
+    "stylish-perception": {
       "filePath": "Welcomeee.md",
       "lockEditing": false,
-      "listItemPrefix": "-",
-      "listVertical": true,
-      "renderMarkdown": true,
-      "showTypeIcons": true,
-      "showAutoComplete": false,
-      "pageSize": 0,
-      "currentPage": 1,
-      "queryLinkPropertyName": "",
-      "allowImageFullSize": false,
-      "verticalAlignment": "top",
-      "horizontalAlignment": "start",
-      "alignmentByType": {
-        "text": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "list": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "number": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "checkbox": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "date": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "datetime": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        }
-      },
-      "columnWidths": [],
-      "columnPresets": [],
-      "id": "myid"
-    },
-    "myid2": {
-      "filePath": "Welcomeee.md",
-      "lockEditing": false,
-      "listItemPrefix": "-",
+      "listItemPrefix": "disc",
       "listVertical": true,
       "renderMarkdown": true,
       "showTypeIcons": true,
       "showAutoComplete": true,
+      "showColAndRowLabels": false,
       "pageSize": 0,
       "currentPage": 1,
       "queryLinkPropertyName": "",
       "allowImageFullSize": false,
-      "verticalAlignment": "top",
-      "horizontalAlignment": "start",
-      "alignmentByType": {
-        "text": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "list": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "number": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "checkbox": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "date": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        },
-        "datetime": {
-          "vertical": "top",
-          "horizontal": "start",
-          "enabled": false
-        }
-      },
-      "columnWidths": [],
-      "columnPresets": [],
-      "id": "myid2"
-    },
-    "stylish-perception": {
-      "filePath": "Welcomeee.md",
-      "lockEditing": false,
-      "listItemPrefix": "-",
-      "listVertical": true,
-      "renderMarkdown": true,
-      "showTypeIcons": true,
-      "showAutoComplete": false,
-      "pageSize": 3,
-      "currentPage": 2,
-      "queryLinkPropertyName": "",
-      "allowImageFullSize": false,
-      "verticalAlignment": "top",
-      "horizontalAlignment": "start",
+      "verticalAlignment": "center",
+      "horizontalAlignment": "end",
       "alignmentByType": {
         "text": {
           "vertical": "top",

@@ -69,6 +69,11 @@ func('world')
 
 TODO next
 - [ ] Add rest of settings to block config modal
+	- [x] auto complete
+	- [x] lock editing
+	- [x] page size
+	- [x] list item prefix
+	- [x] render markdown
 - [ ] Create other toolbar items for other settings if applicable
 - [ ] Create customizable toolbar
 - [ ] prevent duplicate ids from being used
@@ -82,7 +87,7 @@ TODO Add keydown for enter and escape for all inputs
 - [ ] boolean
 
 ```dataedit
-TABLE test, num, boool
+TABLE tags, test, num
 ID stylish-perception
 ```
 

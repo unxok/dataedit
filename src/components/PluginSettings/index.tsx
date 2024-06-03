@@ -52,6 +52,7 @@ import {
 } from "../Dialog";
 import { usePluginSettings } from "@/stores/global";
 import { useBlock } from "../BlockProvider";
+import { LIST_STYLE_TYPES } from "@/lib/consts";
 
 const StartCenterEnd = z.union([
 	z.literal("start"),
@@ -79,11 +80,12 @@ export const BlockConfigSchema = z.object({
 	renderMarkdown: z.boolean(),
 	showTypeIcons: z.boolean(),
 	showAutoComplete: z.boolean(),
+	showColAndRowLabels: z.boolean(),
 	pageSize: z.number(),
 	currentPage: z.number(),
 	queryLinkPropertyName: z.string(),
 	allowImageFullSize: z.boolean(),
-	verticalAlignment: TopMiddleBottom,
+	verticalAlignment: StartCenterEnd,
 	horizontalAlignment: StartCenterEnd,
 	alignmentByType: z.object({
 		text: Alignment,
@@ -100,16 +102,17 @@ export const BlockConfigSchema = z.object({
 export const defaultDefaultBlockConfig: z.infer<typeof BlockConfigSchema> = {
 	filePath: "",
 	lockEditing: false,
-	listItemPrefix: "-",
+	listItemPrefix: "disc",
 	listVertical: true,
 	renderMarkdown: true,
 	showTypeIcons: true,
 	showAutoComplete: true,
+	showColAndRowLabels: false,
 	pageSize: 0,
 	currentPage: 1,
 	queryLinkPropertyName: "",
 	allowImageFullSize: false,
-	verticalAlignment: "top",
+	verticalAlignment: "start",
 	horizontalAlignment: "start",
 	alignmentByType: {
 		text: {
@@ -159,73 +162,73 @@ export const defaultPluginSettings: z.infer<typeof PluginSettingsSchema> = {
 	},
 };
 
-export const SettingsSchema = z.object({
-	autoSuggest: z.boolean(),
-	renderMarkdown: z.boolean(),
-	showNumberButtons: z.boolean(),
-	showTypeIcons: z.boolean(),
-	emptyValueDisplay: z.string(),
-	queryLinksPropertyName: z.string(),
-	cssClassName: z.string(),
-	columnAliases: z.array(z.array(z.string(), z.string())),
-	verticalAlignment: TopMiddleBottom,
-	horizontalAlignment: StartCenterEnd,
-	alignmentByType: z.object({
-		text: Alignment,
-		list: Alignment,
-		number: Alignment,
-		checkbox: Alignment,
-		date: Alignment,
-		datetime: Alignment,
-	}),
-});
+// export const SettingsSchema = z.object({
+// 	autoSuggest: z.boolean(),
+// 	renderMarkdown: z.boolean(),
+// 	showNumberButtons: z.boolean(),
+// 	showTypeIcons: z.boolean(),
+// 	emptyValueDisplay: z.string(),
+// 	queryLinksPropertyName: z.string(),
+// 	cssClassName: z.string(),
+// 	columnAliases: z.array(z.array(z.string(), z.string())),
+// 	verticalAlignment: StartCenterEnd,
+// 	horizontalAlignment: StartCenterEnd,
+// 	alignmentByType: z.object({
+// 		text: Alignment,
+// 		list: Alignment,
+// 		number: Alignment,
+// 		checkbox: Alignment,
+// 		date: Alignment,
+// 		datetime: Alignment,
+// 	}),
+// });
 
-export type Settings = z.infer<typeof SettingsSchema>;
+// export type Settings = z.infer<typeof SettingsSchema>;
 
-export const defaultSettings: Settings = {
-	autoSuggest: true,
-	renderMarkdown: true,
-	showNumberButtons: true,
-	showTypeIcons: true,
-	emptyValueDisplay: "-",
-	queryLinksPropertyName: "dataedit-links",
-	cssClassName: "",
-	columnAliases: [["thisColumn", "showThisAlias"]],
-	verticalAlignment: "top",
-	horizontalAlignment: "start",
-	alignmentByType: {
-		text: {
-			vertical: "top",
-			horizontal: "start",
-			enabled: false,
-		},
-		list: {
-			vertical: "top",
-			horizontal: "start",
-			enabled: false,
-		},
-		number: {
-			vertical: "top",
-			horizontal: "start",
-			enabled: false,
-		},
-		checkbox: {
-			vertical: "top",
-			horizontal: "start",
-			enabled: false,
-		},
-		date: {
-			vertical: "top",
-			horizontal: "start",
-			enabled: false,
-		},
-		datetime: {
-			vertical: "top",
-			horizontal: "start",
-			enabled: false,
-		},
-	},
-};
+// export const defaultSettings: Settings = {
+// 	autoSuggest: true,
+// 	renderMarkdown: true,
+// 	showNumberButtons: true,
+// 	showTypeIcons: true,
+// 	emptyValueDisplay: "-",
+// 	queryLinksPropertyName: "dataedit-links",
+// 	cssClassName: "",
+// 	columnAliases: [["thisColumn", "showThisAlias"]],
+// 	verticalAlignment: "top",
+// 	horizontalAlignment: "start",
+// 	alignmentByType: {
+// 		text: {
+// 			vertical: "top",
+// 			horizontal: "start",
+// 			enabled: false,
+// 		},
+// 		list: {
+// 			vertical: "top",
+// 			horizontal: "start",
+// 			enabled: false,
+// 		},
+// 		number: {
+// 			vertical: "top",
+// 			horizontal: "start",
+// 			enabled: false,
+// 		},
+// 		checkbox: {
+// 			vertical: "top",
+// 			horizontal: "start",
+// 			enabled: false,
+// 		},
+// 		date: {
+// 			vertical: "top",
+// 			horizontal: "start",
+// 			enabled: false,
+// 		},
+// 		datetime: {
+// 			vertical: "top",
+// 			horizontal: "start",
+// 			enabled: false,
+// 		},
+// 	},
+// };
 
 // export const PluginSettings = ({
 // 	plugin,
@@ -488,21 +491,32 @@ export const BlockConfig = ({
 			[key]: value,
 		}));
 	};
-	const debouncer = debounce(
-		async (newForm: typeof form) => {
-			const newSettings = await plugin.updateBlockConfig(id, newForm);
-			setSettings(() => newSettings);
-			console.log("newSettings: ", newSettings);
-			setIsSaving(false);
-		},
-		500,
-		true,
-	);
 
 	useEffect(() => {
 		setIsSaving(true);
-		debouncer(form);
+		(async () => {
+			const newSettings = await plugin.updateBlockConfig(id, form);
+			setSettings(() => newSettings);
+			// console.log("newSettings: ", newSettings);
+			setIsSaving(false);
+		})();
 	}, [form]);
+
+	// const debouncer = debounce(
+	// async (newForm: typeof form) => {
+	// 	const newSettings = await plugin.updateBlockConfig(id, newForm);
+	// 	setSettings(() => newSettings);
+	// 	console.log("newSettings: ", newSettings);
+	// 	setIsSaving(false);
+	// },
+	// 	500,
+	// 	true,
+	// );
+
+	// useEffect(() => {
+	// 	setIsSaving(true);
+	// 	debouncer(form);
+	// }, [form]);
 
 	return (
 		<DialogRoot open={open} onOpenChange={setOpen}>
@@ -545,7 +559,7 @@ export const BlockConfig = ({
 				<StandardSetting
 					title={"Auto suggest"}
 					description={
-						"Automatically suggest values from the existing values used for that property\nOnly works on Text and Multitext"
+						"Automatically suggest values from the existing values used for that property.\nOnly works on Text and Multitext."
 					}
 					control={
 						<SettingToggle
@@ -554,6 +568,173 @@ export const BlockConfig = ({
 								updateForm("showAutoComplete", b)
 							}
 						/>
+					}
+				/>
+				<StandardSetting
+					title={"Show type icons"}
+					description={
+						"Show an icon next to each header representing the set type of that property. Inline and nested properties have a special symbol.\n\nTip: For custom icons, turn this off and use the Iconize plugin to set an icon in the column alias."
+					}
+					control={
+						<SettingToggle
+							checked={form.showTypeIcons}
+							onCheckedChange={(b) =>
+								updateForm("showTypeIcons", b)
+							}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"Render markdown"}
+					description={
+						"Render markdown as HTML.\n\nNote: this only works in text, multitext, inline, and nested property types.\n\nAnother note: This is only rendered when not currently editing the table cell."
+					}
+					control={
+						<SettingToggle
+							checked={form.renderMarkdown}
+							onCheckedChange={(b) =>
+								updateForm("renderMarkdown", b)
+							}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"Allow full size images"}
+					description={
+						"Allows image embeds to grow to their actual size."
+					}
+					control={
+						<SettingToggle
+							checked={form.allowImageFullSize}
+							onCheckedChange={(b) =>
+								updateForm("allowImageFullSize", b)
+							}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"Show Column and Row Labels"}
+					description={
+						"Shows excel/sheets like labels for column and row numbers."
+					}
+					control={
+						<SettingToggle
+							checked={form.showColAndRowLabels}
+							onCheckedChange={(b) =>
+								updateForm("showColAndRowLabels", b)
+							}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"Lock editing"}
+					description={
+						"Lock the table from being able to be edited.\nWhen locked, links and tags are clickable."
+					}
+					control={
+						<SettingToggle
+							checked={form.lockEditing}
+							onCheckedChange={(b) =>
+								updateForm("lockEditing", b)
+							}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"Page size"}
+					description={"The number of results to display per page."}
+					control={
+						<input
+							defaultValue={form.pageSize}
+							placeholder="∞"
+							type="number"
+							step={1}
+							onBlur={(e) => {
+								const possibleNum = Number(e.target.value);
+								const num = Number.isNaN(possibleNum)
+									? 0
+									: possibleNum;
+								updateForm("pageSize", num);
+							}}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"List item prefix"}
+					description={
+						"What symbol to show prefixed to list items within multitext properties."
+					}
+					control={
+						<select
+							className="dropdown"
+							defaultValue={form.listItemPrefix}
+							onChange={(e) => {
+								updateForm(
+									"listItemPrefix",
+									e.currentTarget.value,
+								);
+							}}
+						>
+							{LIST_STYLE_TYPES.map((v, i) => (
+								<option key={i} value={v}>
+									{v}
+								</option>
+							))}
+						</select>
+					}
+				/>
+				<StandardSetting
+					title={"Horizontal alignment"}
+					description={"Align table cells horizontally"}
+					control={
+						<select
+							className="dropdown"
+							defaultValue={form.horizontalAlignment}
+							onChange={(e) => {
+								let a = "start";
+								const { value } = e.currentTarget;
+								if (
+									["start", "center", "end"].includes(value)
+								) {
+									a = value;
+								}
+								updateForm(
+									"horizontalAlignment",
+									a as "start" | "center" | "end",
+								);
+							}}
+						>
+							<option value="start">Left</option>
+							<option value="center">Center</option>
+							<option value="end">Right</option>
+						</select>
+					}
+				/>
+				<StandardSetting
+					title={"Vertical alignment"}
+					description={"Align table cells vertically"}
+					control={
+						<select
+							className="dropdown"
+							defaultValue={form.verticalAlignment}
+							onChange={(e) => {
+								let a = "left";
+								const { value } = e.currentTarget;
+								if (
+									["start", "center", "end"].includes(value)
+								) {
+									a = value;
+								}
+								updateForm(
+									"verticalAlignment",
+									a as "start" | "center" | "end",
+								);
+							}}
+						>
+							<option value="start">Top</option>
+							<option value="center">Middle</option>
+							<option value="end">Bottom</option>
+						</select>
 					}
 				/>
 			</DialogContent>
@@ -573,7 +754,7 @@ const StandardSetting = ({
 	<SettingRoot>
 		<SettingInfo>
 			<SettingName>{title}</SettingName>
-			<SettingDescription className="whitespace-pre">
+			<SettingDescription className="whitespace-pre-line">
 				{description}
 			</SettingDescription>
 		</SettingInfo>
@@ -996,603 +1177,603 @@ const StandardSetting = ({
 // 	);
 // };
 
-const AutoSuggest = <T,>({
-	value,
-	onChange,
-}: {
-	value: T;
-	onChange: (value: T) => void;
-}) => (
-	<SettingRoot>
-		<SettingInfo>
-			<SettingName>Auto suggest</SettingName>
-			<SettingDescription>
-				<div>
-					Automatically suggest values from the existing values used
-					for that property.
-				</div>
-				<br />
-				<div className="flex items-center gap-1">
-					<b>Note:</b>
-					<span>this only works for text and multitext</span>
-					<div
-						className="flex items-center hover:cursor-help"
-						aria-label="Obsidian's properties natively only support auto suggest on text and multitext type properties. This plugin uses that same API to get suggestions."
-					>
-						<CircleHelp size={"1em"} className="text-accent" />
-					</div>
-				</div>
-			</SettingDescription>
-		</SettingInfo>
-		<SettingControl>
-			<SettingToggle
-				checked={value as boolean}
-				onCheckedChange={onChange as (b: boolean) => void}
-			/>
-		</SettingControl>
-	</SettingRoot>
-);
+// const AutoSuggest = <T,>({
+// 	value,
+// 	onChange,
+// }: {
+// 	value: T;
+// 	onChange: (value: T) => void;
+// }) => (
+// 	<SettingRoot>
+// 		<SettingInfo>
+// 			<SettingName>Auto suggest</SettingName>
+// 			<SettingDescription>
+// 				<div>
+// 					Automatically suggest values from the existing values used
+// 					for that property.
+// 				</div>
+// 				<br />
+// 				<div className="flex items-center gap-1">
+// 					<b>Note:</b>
+// 					<span>this only works for text and multitext</span>
+// 					<div
+// 						className="flex items-center hover:cursor-help"
+// 						aria-label="Obsidian's properties natively only support auto suggest on text and multitext type properties. This plugin uses that same API to get suggestions."
+// 					>
+// 						<CircleHelp size={"1em"} className="text-accent" />
+// 					</div>
+// 				</div>
+// 			</SettingDescription>
+// 		</SettingInfo>
+// 		<SettingControl>
+// 			<SettingToggle
+// 				checked={value as boolean}
+// 				onCheckedChange={onChange as (b: boolean) => void}
+// 			/>
+// 		</SettingControl>
+// 	</SettingRoot>
+// );
 
-const RenderMarkdown = <T,>({
-	value,
-	onChange,
-}: {
-	value: T;
-	onChange: (value: T) => void;
-}) => (
-	<SettingRoot>
-		<SettingInfo>
-			<SettingName>Render markdown</SettingName>
-			<SettingDescription>
-				<div>
-					Render markdown syntax plain text to HTML when not editing
-				</div>
-				<br />
-				<div className="flex items-center gap-1">
-					<b>Note:</b>
-					<span>
-						This is <i>not</i> live preview markdown.
-					</span>
-					<div
-						className="flex items-center hover:cursor-help"
-						aria-label="I have almost figured out the best way to implement live preview markdown editing, but not yet!"
-					>
-						<CircleHelp size={"1em"} className="text-accent" />
-					</div>
-				</div>
-				<br />
-				<div>
-					Also, clicking links and tags will edit the cell currently
-					rather than allowing you to follow navigation, unless the{" "}
-					<i>only</i> thing in the cell is the link
-				</div>
-			</SettingDescription>
-		</SettingInfo>
-		<SettingControl>
-			<SettingToggle
-				checked={value as boolean}
-				onCheckedChange={onChange as (b: boolean) => void}
-			/>
-		</SettingControl>
-	</SettingRoot>
-);
+// const RenderMarkdown = <T,>({
+// 	value,
+// 	onChange,
+// }: {
+// 	value: T;
+// 	onChange: (value: T) => void;
+// }) => (
+// 	<SettingRoot>
+// 		<SettingInfo>
+// 			<SettingName>Render markdown</SettingName>
+// 			<SettingDescription>
+// 				<div>
+// 					Render markdown syntax plain text to HTML when not editing
+// 				</div>
+// 				<br />
+// 				<div className="flex items-center gap-1">
+// 					<b>Note:</b>
+// 					<span>
+// 						This is <i>not</i> live preview markdown.
+// 					</span>
+// 					<div
+// 						className="flex items-center hover:cursor-help"
+// 						aria-label="I have almost figured out the best way to implement live preview markdown editing, but not yet!"
+// 					>
+// 						<CircleHelp size={"1em"} className="text-accent" />
+// 					</div>
+// 				</div>
+// 				<br />
+// 				<div>
+// 					Also, clicking links and tags will edit the cell currently
+// 					rather than allowing you to follow navigation, unless the{" "}
+// 					<i>only</i> thing in the cell is the link
+// 				</div>
+// 			</SettingDescription>
+// 		</SettingInfo>
+// 		<SettingControl>
+// 			<SettingToggle
+// 				checked={value as boolean}
+// 				onCheckedChange={onChange as (b: boolean) => void}
+// 			/>
+// 		</SettingControl>
+// 	</SettingRoot>
+// );
 
-const ShowNumberButtons = <T,>({
-	value,
-	onChange,
-}: {
-	value: T;
-	onChange: (value: T) => void;
-}) => (
-	<SettingRoot>
-		<SettingInfo>
-			<SettingName>Number buttons</SettingName>
-			<SettingDescription>
-				Show a minus, plus, and expression button below each input for a
-				number type property
-			</SettingDescription>
-		</SettingInfo>
-		<SettingControl>
-			<SettingToggle
-				checked={value as boolean}
-				onCheckedChange={onChange as (b: boolean) => void}
-			/>
-		</SettingControl>
-	</SettingRoot>
-);
+// const ShowNumberButtons = <T,>({
+// 	value,
+// 	onChange,
+// }: {
+// 	value: T;
+// 	onChange: (value: T) => void;
+// }) => (
+// 	<SettingRoot>
+// 		<SettingInfo>
+// 			<SettingName>Number buttons</SettingName>
+// 			<SettingDescription>
+// 				Show a minus, plus, and expression button below each input for a
+// 				number type property
+// 			</SettingDescription>
+// 		</SettingInfo>
+// 		<SettingControl>
+// 			<SettingToggle
+// 				checked={value as boolean}
+// 				onCheckedChange={onChange as (b: boolean) => void}
+// 			/>
+// 		</SettingControl>
+// 	</SettingRoot>
+// );
 
-const ShowTypeIcons = <T,>({
-	value,
-	onChange,
-}: {
-	value: T;
-	onChange: (value: T) => void;
-}) => (
-	<SettingRoot>
-		<SettingInfo>
-			<SettingName>Type icons</SettingName>
-			<SettingDescription>
-				Show an icon on each column header for the chosen type of that
-				property
-			</SettingDescription>
-		</SettingInfo>
-		<SettingControl>
-			<SettingToggle
-				checked={value as boolean}
-				onCheckedChange={onChange as (b: boolean) => void}
-			/>
-		</SettingControl>
-	</SettingRoot>
-);
+// const ShowTypeIcons = <T,>({
+// 	value,
+// 	onChange,
+// }: {
+// 	value: T;
+// 	onChange: (value: T) => void;
+// }) => (
+// 	<SettingRoot>
+// 		<SettingInfo>
+// 			<SettingName>Type icons</SettingName>
+// 			<SettingDescription>
+// 				Show an icon on each column header for the chosen type of that
+// 				property
+// 			</SettingDescription>
+// 		</SettingInfo>
+// 		<SettingControl>
+// 			<SettingToggle
+// 				checked={value as boolean}
+// 				onCheckedChange={onChange as (b: boolean) => void}
+// 			/>
+// 		</SettingControl>
+// 	</SettingRoot>
+// );
 
-const EmptyValueDisplay = <T,>({
-	value,
-	onChange,
-}: {
-	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => {
-	return (
-		<SettingRoot>
-			<SettingInfo>
-				<SettingName>Empty value display</SettingName>
-				<SettingDescription>
-					What to show when a property is unset, undefined, or null
-				</SettingDescription>
-			</SettingInfo>
-			<SettingControl>
-				<input type="text" value={value} onChange={onChange} />
-			</SettingControl>
-		</SettingRoot>
-	);
-};
+// const EmptyValueDisplay = <T,>({
+// 	value,
+// 	onChange,
+// }: {
+// 	value: string;
+// 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+// }) => {
+// 	return (
+// 		<SettingRoot>
+// 			<SettingInfo>
+// 				<SettingName>Empty value display</SettingName>
+// 				<SettingDescription>
+// 					What to show when a property is unset, undefined, or null
+// 				</SettingDescription>
+// 			</SettingInfo>
+// 			<SettingControl>
+// 				<input type="text" value={value} onChange={onChange} />
+// 			</SettingControl>
+// 		</SettingRoot>
+// 	);
+// };
 
-const QueryLinksPropertyName = <T,>({
-	value,
-	onChange,
-}: {
-	value: T;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => (
-	<SettingRoot>
-		<SettingInfo>
-			<SettingName>Query links property name</SettingName>
-			<SettingDescription>
-				<div>
-					The frontmatter property name for the property Dataedit
-					tables will update with links from files returned in the
-					query
-				</div>
-				<br />
-				<div>
-					<b>Note:</b> If you have multiple dataedit blocks, this may
-					be updated arbitrarily. To circumvent this, set a specific
-					property name for each block's configuration
-				</div>
-				<br />
-				<div>
-					<b>Don't want this? </b>
-					<span>Leave as blank</span>
-				</div>
-			</SettingDescription>
-		</SettingInfo>
-		<SettingControl>
-			<input
-				type="text"
-				tabIndex={0}
-				placeholder="unset"
-				value={value as string}
-				onChange={onChange}
-			/>
-		</SettingControl>
-	</SettingRoot>
-);
+// const QueryLinksPropertyName = <T,>({
+// 	value,
+// 	onChange,
+// }: {
+// 	value: T;
+// 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+// }) => (
+// 	<SettingRoot>
+// 		<SettingInfo>
+// 			<SettingName>Query links property name</SettingName>
+// 			<SettingDescription>
+// 				<div>
+// 					The frontmatter property name for the property Dataedit
+// 					tables will update with links from files returned in the
+// 					query
+// 				</div>
+// 				<br />
+// 				<div>
+// 					<b>Note:</b> If you have multiple dataedit blocks, this may
+// 					be updated arbitrarily. To circumvent this, set a specific
+// 					property name for each block's configuration
+// 				</div>
+// 				<br />
+// 				<div>
+// 					<b>Don't want this? </b>
+// 					<span>Leave as blank</span>
+// 				</div>
+// 			</SettingDescription>
+// 		</SettingInfo>
+// 		<SettingControl>
+// 			<input
+// 				type="text"
+// 				tabIndex={0}
+// 				placeholder="unset"
+// 				value={value as string}
+// 				onChange={onChange}
+// 			/>
+// 		</SettingControl>
+// 	</SettingRoot>
+// );
 
-const CssClassName = <T,>({
-	app,
-	value,
-	onChange,
-	onSelect,
-}: {
-	app: App;
-	value: T;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	onSelect: (v: string) => void;
-}) => {
-	const measuredRef = useCallback((node: HTMLInputElement) => {
-		if (node === null) return;
-		new Suggest(
-			app,
-			node,
-			(q) => [
-				q,
-				// @ts-ignore
-				...app.metadataCache.getFrontmatterPropertyValuesForKey(
-					"cssclasses",
-				),
-			],
-			onSelect,
-		);
-	}, []);
-	return (
-		<SettingRoot>
-			<SettingInfo>
-				<SettingName>CSS class name</SettingName>
-				<SettingDescription>
-					Add additional CSS class names to the Dataedit HTML table
-					element
-				</SettingDescription>
-			</SettingInfo>
-			<SettingControl>
-				<input
-					type="text"
-					tabIndex={0}
-					placeholder="classA classB"
-					value={value as string}
-					onChange={onChange}
-					ref={measuredRef}
-				/>
-			</SettingControl>
-		</SettingRoot>
-	);
-};
+// const CssClassName = <T,>({
+// 	app,
+// 	value,
+// 	onChange,
+// 	onSelect,
+// }: {
+// 	app: App;
+// 	value: T;
+// 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+// 	onSelect: (v: string) => void;
+// }) => {
+// 	const measuredRef = useCallback((node: HTMLInputElement) => {
+// 		if (node === null) return;
+// 		new Suggest(
+// 			app,
+// 			node,
+// 			(q) => [
+// 				q,
+// 				// @ts-ignore
+// 				...app.metadataCache.getFrontmatterPropertyValuesForKey(
+// 					"cssclasses",
+// 				),
+// 			],
+// 			onSelect,
+// 		);
+// 	}, []);
+// 	return (
+// 		<SettingRoot>
+// 			<SettingInfo>
+// 				<SettingName>CSS class name</SettingName>
+// 				<SettingDescription>
+// 					Add additional CSS class names to the Dataedit HTML table
+// 					element
+// 				</SettingDescription>
+// 			</SettingInfo>
+// 			<SettingControl>
+// 				<input
+// 					type="text"
+// 					tabIndex={0}
+// 					placeholder="classA classB"
+// 					value={value as string}
+// 					onChange={onChange}
+// 					ref={measuredRef}
+// 				/>
+// 			</SettingControl>
+// 		</SettingRoot>
+// 	);
+// };
 
-const ColumnAliases = <T,>({
-	app,
-	value,
-	updateForm,
-}: {
-	app: App;
-	value: Settings["columnAliases"];
-	updateForm: <T>(key: string, value: T) => void;
-}) => {
-	return (
-		<SettingRoot className="flex flex-col gap-3">
-			<SettingInfo>
-				<SettingName>Column aliases</SettingName>
-				<SettingDescription>
-					<span>Setup aliases for frontmatter property names.</span>
-					&nbsp;
-					<span>
-						Property names will be replaced by their aliases set
-						here in the column headers of Dataedit tables.
-					</span>
-				</SettingDescription>
-			</SettingInfo>
-			<div className="flex w-full flex-col justify-end gap-3">
-				{value.map((arr, i) => (
-					<div
-						key={i + "-setting-control-columnAlias"}
-						className="flex items-center justify-end gap-1"
-					>
-						<SettingControl className="flex-none">
-							<button
-								className="group border-none bg-transparent shadow-none"
-								onClick={() => {
-									const newValue = value.filter(
-										(_, k) => k !== i,
-									);
-									updateForm("columnAliases", newValue);
-								}}
-							>
-								<X
-									size={"1em"}
-									className="text-faint group-hover:text-normal"
-								/>
-							</button>
-							<PropertyNameInput
-								app={app}
-								aliasArr={value}
-								property={arr[0]}
-								index={i}
-								updateForm={updateForm}
-							/>
-						</SettingControl>
-						<ArrowRight size={"1em"} />
-						<SettingControl className="flex-none">
-							<PropertyValueInput
-								key={i}
-								app={app}
-								aliasArr={value}
-								property={arr[0]}
-								value={arr[1]}
-								index={i}
-								updateForm={updateForm}
-							/>
-						</SettingControl>
-					</div>
-				))}
-			</div>
-			<div className="flex w-full justify-end">
-				<button
-					className="flex items-center"
-					onClick={() => {
-						const newValue = [...value, ["", ""]];
-						updateForm("columnAliases", newValue);
-					}}
-				>
-					Add new alias&nbsp;
-					<Plus size={"1em"} />
-				</button>
-			</div>
-		</SettingRoot>
-	);
-};
+// const ColumnAliases = <T,>({
+// 	app,
+// 	value,
+// 	updateForm,
+// }: {
+// 	app: App;
+// 	value: Settings["columnAliases"];
+// 	updateForm: <T>(key: string, value: T) => void;
+// }) => {
+// 	return (
+// 		<SettingRoot className="flex flex-col gap-3">
+// 			<SettingInfo>
+// 				<SettingName>Column aliases</SettingName>
+// 				<SettingDescription>
+// 					<span>Setup aliases for frontmatter property names.</span>
+// 					&nbsp;
+// 					<span>
+// 						Property names will be replaced by their aliases set
+// 						here in the column headers of Dataedit tables.
+// 					</span>
+// 				</SettingDescription>
+// 			</SettingInfo>
+// 			<div className="flex w-full flex-col justify-end gap-3">
+// 				{value.map((arr, i) => (
+// 					<div
+// 						key={i + "-setting-control-columnAlias"}
+// 						className="flex items-center justify-end gap-1"
+// 					>
+// 						<SettingControl className="flex-none">
+// 							<button
+// 								className="group border-none bg-transparent shadow-none"
+// 								onClick={() => {
+// 									const newValue = value.filter(
+// 										(_, k) => k !== i,
+// 									);
+// 									updateForm("columnAliases", newValue);
+// 								}}
+// 							>
+// 								<X
+// 									size={"1em"}
+// 									className="text-faint group-hover:text-normal"
+// 								/>
+// 							</button>
+// 							<PropertyNameInput
+// 								app={app}
+// 								aliasArr={value}
+// 								property={arr[0]}
+// 								index={i}
+// 								updateForm={updateForm}
+// 							/>
+// 						</SettingControl>
+// 						<ArrowRight size={"1em"} />
+// 						<SettingControl className="flex-none">
+// 							<PropertyValueInput
+// 								key={i}
+// 								app={app}
+// 								aliasArr={value}
+// 								property={arr[0]}
+// 								value={arr[1]}
+// 								index={i}
+// 								updateForm={updateForm}
+// 							/>
+// 						</SettingControl>
+// 					</div>
+// 				))}
+// 			</div>
+// 			<div className="flex w-full justify-end">
+// 				<button
+// 					className="flex items-center"
+// 					onClick={() => {
+// 						const newValue = [...value, ["", ""]];
+// 						updateForm("columnAliases", newValue);
+// 					}}
+// 				>
+// 					Add new alias&nbsp;
+// 					<Plus size={"1em"} />
+// 				</button>
+// 			</div>
+// 		</SettingRoot>
+// 	);
+// };
 
-const PropertyNameInput = <T,>({
-	app,
-	aliasArr,
-	property,
-	updateForm,
-	index,
-}: {
-	app: App;
-	aliasArr: Settings["columnAliases"];
-	property: string;
-	updateForm: <T>(key: string, value: T) => void;
-	index: number;
-}) => {
-	const updateFormValue = (newPropName) => {
-		const copyAliasArr = [...aliasArr];
-		copyAliasArr[index][0] = newPropName;
-		updateForm("columnAliases", copyAliasArr);
-	};
-	const measuredRef = useCallback((node: HTMLInputElement) => {
-		if (node === null) return;
-		new Suggest(
-			app,
-			node,
-			(q) => {
-				const existingProps = Object.keys(
-					// @ts-ignore
-					app.metadataCache.getAllPropertyInfos(),
-				).sort((a, b) => a.localeCompare(b));
-				return [q, ...existingProps];
-			},
-			(v) => updateFormValue(v),
-		);
-	}, []);
+// const PropertyNameInput = <T,>({
+// 	app,
+// 	aliasArr,
+// 	property,
+// 	updateForm,
+// 	index,
+// }: {
+// 	app: App;
+// 	aliasArr: Settings["columnAliases"];
+// 	property: string;
+// 	updateForm: <T>(key: string, value: T) => void;
+// 	index: number;
+// }) => {
+// 	const updateFormValue = (newPropName) => {
+// 		const copyAliasArr = [...aliasArr];
+// 		copyAliasArr[index][0] = newPropName;
+// 		updateForm("columnAliases", copyAliasArr);
+// 	};
+// 	const measuredRef = useCallback((node: HTMLInputElement) => {
+// 		if (node === null) return;
+// 		new Suggest(
+// 			app,
+// 			node,
+// 			(q) => {
+// 				const existingProps = Object.keys(
+// 					// @ts-ignore
+// 					app.metadataCache.getAllPropertyInfos(),
+// 				).sort((a, b) => a.localeCompare(b));
+// 				return [q, ...existingProps];
+// 			},
+// 			(v) => updateFormValue(v),
+// 		);
+// 	}, []);
 
-	return (
-		<input
-			type="text"
-			tabIndex={0}
-			ref={measuredRef}
-			placeholder="property name"
-			value={property}
-			onChange={(e) => updateFormValue(e.target.value)}
-		/>
+// 	return (
+// 		<input
+// 			type="text"
+// 			tabIndex={0}
+// 			ref={measuredRef}
+// 			placeholder="property name"
+// 			value={property}
+// 			onChange={(e) => updateFormValue(e.target.value)}
+// 		/>
 
-		// <SettingInput
-		// 	app={app}
-		// 	placeholder="property name"
-		// 	value={property as string}
-		// 	onChange={(e) => {
-		// 		updateFormValue(e.target.value);
-		// 	}}
-		// 	getSuggestions={() =>
-		// 		// @ts-ignore
-		// 		Object.keys(app.metadataCache.getAllPropertyInfos()).sort(
-		// 			(a, b) => a.localeCompare(b),
-		// 		)
-		// 	}
-		// 	onSelect={(v, e) => updateFormValue(v)}
-		// />
-	);
-};
+// 		// <SettingInput
+// 		// 	app={app}
+// 		// 	placeholder="property name"
+// 		// 	value={property as string}
+// 		// 	onChange={(e) => {
+// 		// 		updateFormValue(e.target.value);
+// 		// 	}}
+// 		// 	getSuggestions={() =>
+// 		// 		// @ts-ignore
+// 		// 		Object.keys(app.metadataCache.getAllPropertyInfos()).sort(
+// 		// 			(a, b) => a.localeCompare(b),
+// 		// 		)
+// 		// 	}
+// 		// 	onSelect={(v, e) => updateFormValue(v)}
+// 		// />
+// 	);
+// };
 
-const PropertyValueInput = <T,>({
-	app,
-	aliasArr,
-	property,
-	value,
-	updateForm,
-	index,
-}: {
-	app: App;
-	aliasArr: Settings["columnAliases"];
-	property: string;
-	value: string;
-	updateForm: <T>(key: string, value: T) => void;
-	index: number;
-}) => {
-	const updateFormValue = (newValue) => {
-		const copyAliasArr = [...aliasArr];
-		copyAliasArr[index][1] = newValue;
-		updateForm("columnAliases", copyAliasArr);
-	};
-	return (
-		<input
-			tabIndex={0}
-			type="text"
-			placeholder="alias to show"
-			value={value as string}
-			onChange={(e) => {
-				updateFormValue(e.target.value);
-			}}
-		/>
-	);
-};
+// const PropertyValueInput = <T,>({
+// 	app,
+// 	aliasArr,
+// 	property,
+// 	value,
+// 	updateForm,
+// 	index,
+// }: {
+// 	app: App;
+// 	aliasArr: Settings["columnAliases"];
+// 	property: string;
+// 	value: string;
+// 	updateForm: <T>(key: string, value: T) => void;
+// 	index: number;
+// }) => {
+// 	const updateFormValue = (newValue) => {
+// 		const copyAliasArr = [...aliasArr];
+// 		copyAliasArr[index][1] = newValue;
+// 		updateForm("columnAliases", copyAliasArr);
+// 	};
+// 	return (
+// 		<input
+// 			tabIndex={0}
+// 			type="text"
+// 			placeholder="alias to show"
+// 			value={value as string}
+// 			onChange={(e) => {
+// 				updateFormValue(e.target.value);
+// 			}}
+// 		/>
+// 	);
+// };
 
-const VerticalAlignment = <T,>({
-	app,
-	value,
-	onChange,
-}: {
-	app: App;
-	value: T;
-	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}) => {
-	return (
-		<SettingRoot>
-			<SettingInfo>
-				<SettingName>Vertical alignment</SettingName>
-				<SettingDescription>
-					Applies to all table cells
-				</SettingDescription>
-			</SettingInfo>
-			<SettingControl>
-				<select
-					className="dropdown"
-					value={value as string}
-					onChange={onChange}
-				>
-					<option value="top">top</option>
-					<option value="middle">middle</option>
-					<option value="bottom">bottom</option>
-				</select>
-			</SettingControl>
-		</SettingRoot>
-	);
-};
+// const VerticalAlignment = <T,>({
+// 	app,
+// 	value,
+// 	onChange,
+// }: {
+// 	app: App;
+// 	value: T;
+// 	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+// }) => {
+// 	return (
+// 		<SettingRoot>
+// 			<SettingInfo>
+// 				<SettingName>Vertical alignment</SettingName>
+// 				<SettingDescription>
+// 					Applies to all table cells
+// 				</SettingDescription>
+// 			</SettingInfo>
+// 			<SettingControl>
+// 				<select
+// 					className="dropdown"
+// 					value={value as string}
+// 					onChange={onChange}
+// 				>
+// 					<option value="top">top</option>
+// 					<option value="middle">middle</option>
+// 					<option value="bottom">bottom</option>
+// 				</select>
+// 			</SettingControl>
+// 		</SettingRoot>
+// 	);
+// };
 
-const AlignmentByType = <T,>({
-	app,
-	value,
-	updateForm,
-}: {
-	app: App;
-	value: Settings["alignmentByType"];
-	updateForm: <T>(key: string, value: T) => void;
-}) => {
-	return (
-		<SettingRoot className="flex flex-col gap-3">
-			<SettingInfo className="m-0 w-full">
-				<SettingName>Alignment by type</SettingName>
-				<SettingDescription>
-					<span>
-						Align table cells based on property type. Vertical
-						alignment is the first dropdown and horizontal is the
-						second.
-					</span>
-					<br />
-					<br />
-					<span>
-						This will override the alignment set in the{" "}
-						<b>Vertical alignment</b> and{" "}
-						<b>Horizontal alignment</b> settings
-					</span>
-				</SettingDescription>
-			</SettingInfo>
-			<div className="flex w-full flex-col justify-end gap-3">
-				{Object.keys(value).map((typeName, i) => (
-					<div
-						key={i + "-setting-control-alignmentByType"}
-						className="flex items-center justify-end gap-2 "
-						style={{
-							color: value[typeName].enabled
-								? "var(--text-normal)"
-								: "var(--text-faint)",
-						}}
-					>
-						<span>{typeName}: </span>
-						<div className="flex justify-end gap-3">
-							<SettingControl className="flex-none">
-								<select
-									name="vertical"
-									disabled={!value[typeName].enabled}
-									className="dropdown"
-									value={value[typeName].vertical}
-									onChange={(e) => {
-										const copyValue = {
-											...value,
-											[typeName]: {
-												...value[typeName],
-												vertical: e.target.value,
-											},
-										};
-										updateForm(
-											"alignmentByType",
-											copyValue,
-										);
-									}}
-								>
-									<option value="top">top</option>
-									<option value="middle">middle</option>
-									<option value="bottom">bottom</option>
-								</select>
-							</SettingControl>
-							<SettingControl className="flex-none">
-								<select
-									name="horizontal"
-									disabled={!value[typeName].enabled}
-									className="dropdown"
-									value={value[typeName].horizontal}
-									onChange={(e) => {
-										const copyValue = {
-											...value,
-											[typeName]: {
-												...value[typeName],
-												horizontal: e.target.value,
-											},
-										};
-										updateForm(
-											"alignmentByType",
-											copyValue,
-										);
-									}}
-								>
-									<option value="start">left</option>
-									<option value="center">center</option>
-									<option value="end">end</option>
-								</select>
-							</SettingControl>
-							<SettingControl className="flex-none">
-								<input
-									type="checkbox"
-									data-indeterminate="false"
-									checked={value[typeName].enabled}
-									onChange={(e) => {
-										const copyValue = {
-											...value,
-											[typeName]: {
-												...value[typeName],
-												enabled: e.target.checked,
-											},
-										};
-										updateForm(
-											"alignmentByType",
-											copyValue,
-										);
-									}}
-								/>
-							</SettingControl>
-						</div>
-					</div>
-				))}
-			</div>
-		</SettingRoot>
-	);
-};
+// const AlignmentByType = <T,>({
+// 	app,
+// 	value,
+// 	updateForm,
+// }: {
+// 	app: App;
+// 	value: Settings["alignmentByType"];
+// 	updateForm: <T>(key: string, value: T) => void;
+// }) => {
+// 	return (
+// 		<SettingRoot className="flex flex-col gap-3">
+// 			<SettingInfo className="m-0 w-full">
+// 				<SettingName>Alignment by type</SettingName>
+// 				<SettingDescription>
+// 					<span>
+// 						Align table cells based on property type. Vertical
+// 						alignment is the first dropdown and horizontal is the
+// 						second.
+// 					</span>
+// 					<br />
+// 					<br />
+// 					<span>
+// 						This will override the alignment set in the{" "}
+// 						<b>Vertical alignment</b> and{" "}
+// 						<b>Horizontal alignment</b> settings
+// 					</span>
+// 				</SettingDescription>
+// 			</SettingInfo>
+// 			<div className="flex w-full flex-col justify-end gap-3">
+// 				{Object.keys(value).map((typeName, i) => (
+// 					<div
+// 						key={i + "-setting-control-alignmentByType"}
+// 						className="flex items-center justify-end gap-2 "
+// 						style={{
+// 							color: value[typeName].enabled
+// 								? "var(--text-normal)"
+// 								: "var(--text-faint)",
+// 						}}
+// 					>
+// 						<span>{typeName}: </span>
+// 						<div className="flex justify-end gap-3">
+// 							<SettingControl className="flex-none">
+// 								<select
+// 									name="vertical"
+// 									disabled={!value[typeName].enabled}
+// 									className="dropdown"
+// 									value={value[typeName].vertical}
+// 									onChange={(e) => {
+// 										const copyValue = {
+// 											...value,
+// 											[typeName]: {
+// 												...value[typeName],
+// 												vertical: e.target.value,
+// 											},
+// 										};
+// 										updateForm(
+// 											"alignmentByType",
+// 											copyValue,
+// 										);
+// 									}}
+// 								>
+// 									<option value="top">top</option>
+// 									<option value="middle">middle</option>
+// 									<option value="bottom">bottom</option>
+// 								</select>
+// 							</SettingControl>
+// 							<SettingControl className="flex-none">
+// 								<select
+// 									name="horizontal"
+// 									disabled={!value[typeName].enabled}
+// 									className="dropdown"
+// 									value={value[typeName].horizontal}
+// 									onChange={(e) => {
+// 										const copyValue = {
+// 											...value,
+// 											[typeName]: {
+// 												...value[typeName],
+// 												horizontal: e.target.value,
+// 											},
+// 										};
+// 										updateForm(
+// 											"alignmentByType",
+// 											copyValue,
+// 										);
+// 									}}
+// 								>
+// 									<option value="start">left</option>
+// 									<option value="center">center</option>
+// 									<option value="end">end</option>
+// 								</select>
+// 							</SettingControl>
+// 							<SettingControl className="flex-none">
+// 								<input
+// 									type="checkbox"
+// 									data-indeterminate="false"
+// 									checked={value[typeName].enabled}
+// 									onChange={(e) => {
+// 										const copyValue = {
+// 											...value,
+// 											[typeName]: {
+// 												...value[typeName],
+// 												enabled: e.target.checked,
+// 											},
+// 										};
+// 										updateForm(
+// 											"alignmentByType",
+// 											copyValue,
+// 										);
+// 									}}
+// 								/>
+// 							</SettingControl>
+// 						</div>
+// 					</div>
+// 				))}
+// 			</div>
+// 		</SettingRoot>
+// 	);
+// };
 
-const HorizontalAlignment = <T,>({
-	app,
-	value,
-	onChange,
-}: {
-	app: App;
-	value: T;
-	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}) => {
-	return (
-		<SettingRoot>
-			<SettingInfo>
-				<SettingName>Horizontal alignment</SettingName>
-				<SettingDescription>
-					Applies to all table cells
-				</SettingDescription>
-			</SettingInfo>
-			<SettingControl>
-				<select
-					className="dropdown"
-					value={value as "start" | "center" | "end"}
-					onChange={onChange}
-				>
-					<option value="start">left</option>
-					<option value="center">center</option>
-					<option value="end">right</option>
-				</select>
-			</SettingControl>
-		</SettingRoot>
-	);
-};
+// const HorizontalAlignment = <T,>({
+// 	app,
+// 	value,
+// 	onChange,
+// }: {
+// 	app: App;
+// 	value: T;
+// 	onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+// }) => {
+// 	return (
+// 		<SettingRoot>
+// 			<SettingInfo>
+// 				<SettingName>Horizontal alignment</SettingName>
+// 				<SettingDescription>
+// 					Applies to all table cells
+// 				</SettingDescription>
+// 			</SettingInfo>
+// 			<SettingControl>
+// 				<select
+// 					className="dropdown"
+// 					value={value as "start" | "center" | "end"}
+// 					onChange={onChange}
+// 				>
+// 					<option value="start">left</option>
+// 					<option value="center">center</option>
+// 					<option value="end">right</option>
+// 				</select>
+// 			</SettingControl>
+// 		</SettingRoot>
+// 	);
+// };

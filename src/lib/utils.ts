@@ -3,6 +3,7 @@ import { clsx, type ClassValue } from "clsx";
 import { DateTime } from "luxon";
 import { TFile, stringifyYaml } from "obsidian";
 import { twMerge } from "tailwind-merge";
+import { ITEMS, JUSTIFY } from "./consts";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -400,4 +401,26 @@ export const numberToBase26Letters = (num: number) => {
 	}
 
 	return result;
+};
+
+export const getJustifyContentClass = (horizontalAlignment: string) => {
+	let justifyContent = JUSTIFY.START;
+	if (horizontalAlignment === "center") {
+		justifyContent = JUSTIFY.CENTER;
+	}
+	if (horizontalAlignment === "end") {
+		justifyContent = JUSTIFY.END;
+	}
+	return justifyContent;
+};
+
+export const getAlignItemsClass = (verticalAlignment: string) => {
+	let alignItems = ITEMS.START;
+	if (verticalAlignment === "center") {
+		alignItems = ITEMS.CENTER;
+	}
+	if (verticalAlignment === "end") {
+		alignItems = ITEMS.END;
+	}
+	return alignItems;
 };
