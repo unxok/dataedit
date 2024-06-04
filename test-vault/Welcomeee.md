@@ -77,8 +77,17 @@ TODO next
 	- [x] list item prefix
 	- [x] render markdown
 - [ ] Create other toolbar items for other settings if applicable
+	- [ ] Export options
+		- [ ] CSV
+		- [ ] JSON
+		- [ ] HTML
+		- [ ] custom delimiter
+- [ ] Add action buttons in config
+	- [ ] Export (JSON)
+	- [ ] Import (JSON)
+	- [ ] Reset to default
 - [ ] Create customizable toolbar
-- [ ] prevent duplicate ids from being used
+- [ ] prevent duplicate ids from being used?
 
 
 TODO Add keydown for enter and escape for all inputs
