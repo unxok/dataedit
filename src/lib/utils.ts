@@ -1,7 +1,7 @@
 import DataEdit from "@/main";
 import { clsx, type ClassValue } from "clsx";
 import { DateTime } from "luxon";
-import { TFile, stringifyYaml } from "obsidian";
+import { Notice, TFile, stringifyYaml } from "obsidian";
 import { twMerge } from "tailwind-merge";
 import { ITEMS, JUSTIFY } from "./consts";
 
@@ -263,6 +263,10 @@ const udpateInlineField = async (
 		return true;
 	});
 	if (!foundField) {
+		new Notice(
+			"Dataedit: Failed to update property. You shouldn't ever see this unless your syntax is wrong. Most likely your aliases are specified wrong?",
+			0,
+		);
 		throw new Error(
 			"Tried updating an inline field but couldn't find matching field. This should be impossible. Property name: " +
 				propertyName,
@@ -423,4 +427,19 @@ export const getAlignItemsClass = (verticalAlignment: string) => {
 		alignItems = ITEMS.END;
 	}
 	return alignItems;
+};
+
+/**
+ * Moves and item from one position to another
+ * @param arr An array of `T`
+ * @param fromIndex The 0 based index of the item
+ * @param toIndex The 0 based index of where to move the item to
+ * @returns The new array
+ */
+export const arrayMove = <T>(arr: T[], fromIndex: number, toIndex: number) => {
+	const copy = [...arr];
+	const el = copy[fromIndex];
+	copy.splice(fromIndex, 1);
+	copy.splice(toIndex, 0, el);
+	return copy;
 };

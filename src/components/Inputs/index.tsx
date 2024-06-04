@@ -1,6 +1,9 @@
 import React from "react";
-import { isDateWithTime, tryToMarkdownLink } from "@/lib/utils";
-import { FILE } from "dns";
+import {
+	getJustifyContentClass,
+	isDateWithTime,
+	tryToMarkdownLink,
+} from "@/lib/utils";
 import { DateTime } from "luxon";
 import { Markdown } from "../Markdown";
 import { ArrayInput } from "./ArrayInput";
@@ -10,21 +13,33 @@ import { NumberInput } from "./NumberInput";
 import { StringInput } from "./StringInput";
 import { useBlock } from "../BlockProvider";
 import { TdProps } from "../App";
+import { FILE } from "@/lib/consts";
+import { usePluginSettings } from "@/stores/global";
 
 export type InputSwitchProps<T> = {
 	propertyType: string;
 } & TdProps<T>;
 
 export const InputSwitch = (props: InputSwitchProps<unknown>) => {
-	const { plugin, ctx } = useBlock();
-	const { propertyValue, propertyType } = props;
-	if (props.propertyType === FILE) {
+	const { plugin, ctx, blockId } = useBlock();
+	const { propertyValue, propertyType, propertyName } = props;
+	const { getBlockConfig } = usePluginSettings();
+	const { horizontalAlignment } = getBlockConfig(blockId);
+
+	if (
+		propertyType.toLowerCase() === FILE ||
+		propertyName.toLowerCase() === FILE ||
+		propertyName.toLowerCase() === "file.link"
+	) {
 		return (
 			<Markdown
 				app={plugin.app}
 				filePath={ctx.sourcePath}
 				plainText={propertyValue as string}
-				className="[&_*]:my-0"
+				className={
+					"flex w-full flex-row [&_*]:my-0 " +
+					getJustifyContentClass(horizontalAlignment)
+				}
 			/>
 		);
 	}

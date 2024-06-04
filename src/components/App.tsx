@@ -10,7 +10,13 @@ import {
 	BlockConfigSchema,
 	PluginSettingsSchema,
 } from "./PluginSettings";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+	Fragment,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import DataEdit, { loadDependencies } from "@/main";
 import {
 	checkForInlineField,
@@ -52,6 +58,12 @@ import {
 	ChevronLast,
 	ChevronFirst,
 	CircleX,
+	AlignCenter,
+	AlignLeft,
+	AlignRight,
+	ChevronsUp,
+	ChevronsDownUp,
+	ChevronsDown,
 } from "lucide-react";
 import { ClassValue } from "clsx";
 import { create } from "zustand";
@@ -64,6 +76,17 @@ import { BlockProvider, useBlock } from "./BlockProvider";
 import { z } from "zod";
 import { word } from "minifaker";
 import "minifaker/locales/en";
+import {
+	HORIZONTAL_ALIGNMENT,
+	LOCK_EDITING,
+	PAGE_SIZE,
+	PAGINATION_NAV,
+	SETTINGS_GEAR,
+	TOTAL_RESULTS,
+	VERTICAL_ALIGNMENT,
+} from "@/lib/consts/toolbarComponentNames";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
+import { DividerVerticalIcon } from "@radix-ui/react-icons";
 // import { NumberInput } from "./Inputs";
 
 type ObsdianPropertyType =
@@ -268,13 +291,14 @@ export const App = (props: {
 	const { data, plugin, ctx, getSectionInfo } = props;
 	const [queryResults, setQueryResults] = useState<QueryResults>();
 	const [fileHeaderIndex, setFileHeaderIndex] = useState<number>(-1);
+	const [isFileLinkHidden, setFileLinkHidden] = useState(false);
+	const [aliasObj, setAliasObj] = useState({});
 	const [dvErr, setDvErr] = useState<string>();
 	const [showSettings, setShowSettings] = useState(false);
-	const [isLocked, setIsLocked] = useState(false);
 	const { blockId, query: preQuery } = getBlockId(data);
 	const { query, hideFileLink } = ensureFileLink(preQuery);
 	const { settings, setSettings, getBlockConfig } = usePluginSettings();
-	const aliasObj = getColAliasObj(query);
+	// const aliasObj = getColAliasObj(query);
 
 	/**
 	 * Block data becomes undefined in reading mode, so this protects against setting it undefined
@@ -293,11 +317,43 @@ export const App = (props: {
 		// @ts-ignore
 		const dv = app.plugins.plugins.dataview.api;
 		if (query.split(" ")[0].toLowerCase() !== "table") {
-			const result = eval(`(() => {${query}})()`);
+			let result: {
+				headers?: string[];
+				values?: any[][];
+				options?: {
+					hideFileLink: boolean;
+					aliases: Record<string, string>;
+				};
+			} = {};
+			const func = (
+				headers: string[],
+				values: any[][],
+				options: {
+					hideFileLink: boolean;
+					aliases: Record<string, string>;
+				},
+			) => {
+				result = {
+					headers,
+					values,
+					options,
+				};
+			};
+			dv.table = func;
+			dv.markdownTable = func;
+			eval(`(() => {${query}})()`);
+			// const result = eval(`(() => {${query}})()`);
 			// console.log("result: ", result);
 			if (!result) return;
-			return safeSetQueryResults(result);
+			setFileLinkHidden(!!result?.options?.hideFileLink);
+			setAliasObj(() => result?.options?.aliases ?? {});
+			// return safeSetQueryResults(result);
+			return safeSetQueryResults({
+				headers: result.headers,
+				values: result.values,
+			});
 		}
+		setAliasObj(getColAliasObj(query));
 		const qr = await dv.query(query);
 		console.log("dv q: ", qr);
 		if (!qr.successful) {
@@ -309,6 +365,7 @@ export const App = (props: {
 
 	useEffect(() => {
 		setSettings(() => plugin.settings);
+		setFileLinkHidden(hideFileLink);
 		(async () => {
 			const b = await loadDependencies();
 			if (!b) {
@@ -361,6 +418,16 @@ export const App = (props: {
 	const { blockConfigs } = settings;
 	if (!blockConfigs) return;
 	const config = blockConfigs[blockId] ?? blockConfigs["default"];
+
+	const settingsGearOnClick = blockId
+		? () => setShowSettings(true)
+		: async () =>
+				await writeRandomId(
+					ctx,
+					getSectionInfo(),
+					plugin,
+					settings.blockConfigs,
+				);
 
 	console.log("config: ", config);
 
@@ -417,7 +484,7 @@ export const App = (props: {
 									<Th
 										key={i + "table-header"}
 										className=""
-										hideFileLink={hideFileLink}
+										hideFileLink={isFileLinkHidden}
 										propertyName={h}
 									/>
 								))}
@@ -441,21 +508,47 @@ export const App = (props: {
 											}
 											propertyValue={d}
 											className=""
-											hideFileLink={hideFileLink}
+											hideFileLink={isFileLinkHidden}
 											filePath={
 												queryResults.values[
 													startIndex + i
 												][fileHeaderIndex]?.path
 											}
-											isLocked={isLocked}
 										/>
 									))}
 								</tr>
 							))}
 						</tbody>
 					</table>
-					<div className="flex w-full flex-row items-center p-2">
-						<PaginationNav totalRows={queryResults.values.length} />
+					<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
+						{config.toolbarConfig.map(
+							({ componentName, enabled }, i) => {
+								if (!enabled) return;
+								return (
+									<Fragment key={i}>
+										<ToolbarSwitch
+											// key={i + "toolbar"}
+											componentName={componentName}
+											settingsGearOnClick={
+												settingsGearOnClick
+											}
+											blockId={blockId}
+											totalRows={
+												queryResults?.values?.length
+											}
+										/>
+										{i !==
+											config.toolbarConfig.length - 1 && (
+											<DividerVerticalIcon
+												// key={i + "divider"}
+												className="text-secondary-alt"
+											/>
+										)}
+									</Fragment>
+								);
+							},
+						)}
+						{/* <PaginationNav totalRows={queryResults.values.length} />
 						<PaginationSize />
 						<SettingsGear
 							blockId={blockId}
@@ -470,7 +563,7 @@ export const App = (props: {
 												settings.blockConfigs,
 											)
 							}
-						/>
+						/> */}
 						{showSettings && (
 							<BlockConfig
 								id={blockId}
@@ -480,12 +573,42 @@ export const App = (props: {
 								// onChange={(bc) => setBlockConfig(bc)}
 							/>
 						)}
-						<LockToggle />
 					</div>
 				</ErrorBoundary>
 			</div>
 		</BlockProvider>
 	);
+};
+
+const ToolbarSwitch = ({
+	componentName,
+	blockId,
+	settingsGearOnClick,
+	totalRows,
+}: {
+	componentName: string;
+	blockId: string;
+	settingsGearOnClick: any;
+	totalRows: number;
+}) => {
+	switch (componentName) {
+		case SETTINGS_GEAR:
+			return (
+				<SettingsGear blockId={blockId} onClick={settingsGearOnClick} />
+			);
+		case PAGE_SIZE:
+			return <PaginationSize />;
+		case PAGINATION_NAV:
+			return <PaginationNav totalRows={totalRows} />;
+		case LOCK_EDITING:
+			return <LockToggle />;
+		case HORIZONTAL_ALIGNMENT:
+			return <HorizontalAlignment />;
+		case VERTICAL_ALIGNMENT:
+			return <VerticalAlignment />;
+		case TOTAL_RESULTS:
+			return <TotalResults totalResults={totalRows} />;
+	}
 };
 
 const Fallback = ({ error }: FallbackProps) => {
@@ -500,9 +623,11 @@ const Fallback = ({ error }: FallbackProps) => {
 				<i>It's not you, it's me</i>
 				{"\uff08>\ufe4f<\uff09"}
 			</p>
-			<p>Sorry about that!</p>
+			<p className="text-sm">
+				(except it might be you, if you messed up your syntax)
+			</p>
 			<p>
-				If you'd like this to get fixed, please check the{" "}
+				Assuming your syntax is all correct, please check the{" "}
 				<a href="https://github.com/unxok/dataedit/issues">
 					known issues
 					<span className="external-link" />
@@ -551,7 +676,11 @@ const PaginationSize = () => {
 
 	if (!isEditing)
 		return (
-			<div className="clickable-icon" onClick={() => setIsEditing(true)}>
+			<div
+				className="clickable-icon"
+				aria-label="Page size"
+				onClick={() => setIsEditing(true)}
+			>
 				{pageSize || "Infinity"} per page
 			</div>
 		);
@@ -600,7 +729,14 @@ const PaginationNav = ({ totalRows }: { totalRows: number }) => {
 	const { blockId } = useBlock();
 	const { getBlockConfig, setBlockConfig } = usePluginSettings();
 	const { currentPage, pageSize } = getBlockConfig(blockId);
-	const totalPages = pageSize < 1 ? 1 : Math.floor(totalRows / pageSize);
+	// const totalPages = pageSize < 1 ? 1 : Math.floor(totalRows / pageSize);
+	const totalPages = (() => {
+		if (pageSize < 1) return 1;
+		const isDivisible = totalRows % pageSize === 0;
+		const diff = totalRows / pageSize;
+		if (isDivisible) return diff;
+		return Math.floor(diff + 1);
+	})();
 
 	const setCurrentPage = (cb: ((num: number) => number) | number) => {
 		if (typeof cb === "function") {
@@ -643,10 +779,18 @@ const PaginationNav = ({ totalRows }: { totalRows: number }) => {
 
 	return (
 		<div className="flex items-center justify-center">
-			<div onClick={goFirst} className="clickable-icon w-fit">
+			<div
+				aria-label="First page"
+				onClick={goFirst}
+				className="clickable-icon w-fit"
+			>
 				<ChevronFirst className="svg-icon" />
 			</div>
-			<div onClick={goPrev} className="clickable-icon w-fit">
+			<div
+				aria-label="Previous page"
+				onClick={goPrev}
+				className="clickable-icon w-fit"
+			>
 				<ChevronLeft className="svg-icon" />
 			</div>
 			<span className="px-1">
@@ -703,12 +847,46 @@ const PaginationNav = ({ totalRows }: { totalRows: number }) => {
 				)}
 				<span> of {totalPages}</span>
 			</span>
-			<div onClick={goNext} className="clickable-icon w-fit">
+			<div
+				aria-label="Next page"
+				onClick={goNext}
+				className="clickable-icon w-fit"
+			>
 				<ChevronRight className="svg-icon" />
 			</div>
-			<div onClick={goLast} className="clickable-icon w-fit">
+			<div
+				aria-label="Last page"
+				onClick={goLast}
+				className="clickable-icon w-fit"
+			>
 				<ChevronLast className="svg-icon" />
 			</div>
+		</div>
+	);
+};
+
+const TotalResults = ({ totalResults }: { totalResults: number }) => {
+	const { blockId } = useBlock();
+	const { getBlockConfig } = usePluginSettings();
+	const { pageSize, currentPage } = getBlockConfig(blockId);
+	const product = currentPage * pageSize;
+	const startResults = product - (pageSize - 1);
+	const endResults = product > totalResults ? totalResults : product;
+
+	let content =
+		startResults + " - " + endResults + " of " + totalResults + " results";
+
+	if (pageSize === 0 || product === totalResults) {
+		content = totalResults + " results";
+	}
+
+	if (startResults === endResults) {
+		content = startResults + " of " + totalResults + " results";
+	}
+
+	return (
+		<div aria-label="Total results" className="clickable-icon">
+			{content}
 		</div>
 	);
 };
@@ -739,6 +917,132 @@ const LockToggle = () => {
 				}`}
 			/>
 		</div>
+	);
+};
+
+const HorizontalAlignment = () => {
+	const { blockId } = useBlock();
+	const { getBlockConfig, setBlockConfig } = usePluginSettings();
+	const { horizontalAlignment } = getBlockConfig(blockId);
+
+	const updateAlignment = (alignment: typeof horizontalAlignment) => {
+		setBlockConfig(blockId, (prev) => ({
+			...prev,
+			horizontalAlignment: alignment,
+		}));
+	};
+
+	return (
+		<Popover>
+			<PopoverTrigger asChild>
+				<div
+					onClick={() => console.log()}
+					aria-label={"Horizontal alignment"}
+					className="clickable-icon"
+				>
+					{horizontalAlignment === "start" && (
+						<AlignLeft className="svg-icon" />
+					)}
+					{horizontalAlignment === "center" && (
+						<AlignCenter className="svg-icon" />
+					)}
+					{horizontalAlignment === "end" && (
+						<AlignRight className="svg-icon" />
+					)}
+				</div>
+			</PopoverTrigger>
+			<PopoverContent className="twcss">
+				<div className="flex flex-row gap-1 p-2">
+					<div
+						onClick={() => updateAlignment("start")}
+						aria-label={"Left"}
+						data-selected={horizontalAlignment === "start"}
+						className="clickable-icon data-[selected=true]:bg-secondary-alt"
+					>
+						<AlignLeft className="svg-icon" />
+					</div>
+					<div
+						onClick={() => updateAlignment("center")}
+						aria-label={"Center"}
+						data-selected={horizontalAlignment === "center"}
+						className="clickable-icon data-[selected=true]:bg-secondary-alt"
+					>
+						<AlignCenter className="svg-icon" />
+					</div>
+					<div
+						onClick={() => updateAlignment("end")}
+						aria-label={"Right"}
+						data-selected={horizontalAlignment === "end"}
+						className="clickable-icon data-[selected=true]:bg-secondary-alt"
+					>
+						<AlignRight className="svg-icon" />
+					</div>
+				</div>
+			</PopoverContent>
+		</Popover>
+	);
+};
+
+const VerticalAlignment = () => {
+	const { blockId } = useBlock();
+	const { getBlockConfig, setBlockConfig } = usePluginSettings();
+	const { verticalAlignment } = getBlockConfig(blockId);
+
+	const updateAlignment = (alignment: typeof verticalAlignment) => {
+		setBlockConfig(blockId, (prev) => ({
+			...prev,
+			verticalAlignment: alignment,
+		}));
+	};
+
+	return (
+		<Popover>
+			<PopoverTrigger asChild>
+				<div
+					onClick={() => console.log()}
+					aria-label={"Vertical alignment"}
+					className="clickable-icon"
+				>
+					{verticalAlignment === "start" && (
+						<ChevronsUp className="svg-icon" />
+					)}
+					{verticalAlignment === "center" && (
+						<ChevronsDownUp className="svg-icon" />
+					)}
+					{verticalAlignment === "end" && (
+						<ChevronsDown className="svg-icon" />
+					)}
+				</div>
+			</PopoverTrigger>
+			<PopoverContent className="twcss">
+				<div className="flex flex-row gap-1 p-2">
+					<div
+						onClick={() => updateAlignment("start")}
+						aria-label={"Top"}
+						data-selected={verticalAlignment === "start"}
+						className="clickable-icon data-[selected=true]:bg-secondary-alt"
+					>
+						<ChevronsUp className="svg-icon" />
+					</div>
+					<div
+						onClick={() => updateAlignment("center")}
+						aria-label={"Middle"}
+						data-selected={verticalAlignment === "center"}
+						className="clickable-icon data-[selected=true]:bg-secondary-alt"
+					>
+						<ChevronsDownUp className="svg-icon" />
+					</div>
+					<div
+						onClick={() => updateAlignment("end")}
+						aria-label={"Bottom"}
+						data-selected={verticalAlignment === "end"}
+						className="clickable-icon data-[selected=true]:bg-secondary-alt"
+					>
+						<ChevronsDown className="svg-icon" />
+					</div>
+				</div>
+			</PopoverContent>
+		</Popover>
 	);
 };
 
@@ -811,7 +1115,6 @@ export type TdProps<T> = {
 	className?: ClassValue;
 	hideFileLink: boolean;
 	filePath: string;
-	isLocked: boolean;
 };
 const Td = (props: TdProps<unknown>) => {
 	const { propertyValue, propertyName, className, hideFileLink, filePath } =

@@ -28,6 +28,8 @@ embed: "![[demo.gif|demo.gif]]"
 
 inlineProp:: 551
 
+[[]]
+
 ## Editing inline fields
 An inline field can be of two types:
 1. Entire line ^f3abc4
@@ -87,7 +89,7 @@ TODO Add keydown for enter and escape for all inputs
 - [ ] boolean
 
 ```dataedit
-TABLE tags, test, num
+TABLE tags, test, test, test, test, test
 ID stylish-perception
 ```
 
@@ -96,7 +98,17 @@ ID stylish-perception
 
 
 ```dataedit
-TABLE test, num
+const data = dv.pages().map(p => {
+  return [p.file.link, p?.test]
+});
+const headers = ['file', 'alias'];
+dv.table(headers, data, {
+  hideFileLink: true,
+  aliases: {
+    alias: 'test'
+  }
+})
+ID asldkjflsdkjf
 ```
 
 | asldkfj | asldfkjl                |

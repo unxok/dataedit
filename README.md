@@ -260,6 +260,9 @@ I thought about it a lot and decided I wanted to pretty much rework how a lot of
     -   You no longer need to use Dataedit's settings to set aliases. Just specifiy them like normal in Dataview ('TABLE prop AS alias...')
 -   [x] Allow no file link being displayed
 -   [x] You can now do 'TABLE WITHOUT ID...' _without_ including `file.link`
+    -   Dataedit will silently add `, file.link` to your query but will hide the column from view
+-   [x] Dataviewjs syntax is now more closely supported
+    -   Dataedit blocks hijack `dv.table()` and `dv.markdownTable()` so they will render an editable table
 -   [x] Nested property support
     -   If you use YAML objects in frontmatter, that will update correctly
 -   [x] ~~Grouped results support?~~ This might not make sense...

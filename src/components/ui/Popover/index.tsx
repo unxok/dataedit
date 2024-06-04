@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { cn } from "@/lib/utils";
 import {
-	BlockCache,
 	HeadingCache,
 	MetadataCache,
 	Plugin,
@@ -10,7 +9,6 @@ import {
 	TFile,
 } from "obsidian";
 import { Forward } from "lucide-react";
-import { boolean } from "zod";
 
 const Popover = PopoverPrimitive.Root;
 

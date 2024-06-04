@@ -518,7 +518,7 @@ var require_react_development = __commonJS({
           }
           return element;
         };
-        function createElement8(type, config2, children) {
+        function createElement9(type, config2, children) {
           var propName;
           var props2 = {};
           var key = null;
@@ -758,14 +758,14 @@ var require_react_development = __commonJS({
           }
           return subtreeCount;
         }
-        function mapChildren(children, func, context) {
+        function mapChildren(children, func2, context) {
           if (children == null) {
             return children;
           }
           var result2 = [];
           var count = 0;
           mapIntoArray(children, result2, "", "", function(child) {
-            return func.call(context, child, count++);
+            return func2.call(context, child, count++);
           });
           return result2;
         }
@@ -979,7 +979,7 @@ var require_react_development = __commonJS({
           }
           return lazyType2;
         }
-        function forwardRef6(render) {
+        function forwardRef7(render) {
           {
             if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
               error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1100,7 +1100,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef10(initialValue) {
+        function useRef9(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
@@ -1116,7 +1116,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useLayoutEffect(create2, deps);
         }
-        function useCallback6(callback, deps) {
+        function useCallback5(callback, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useCallback(callback, deps);
         }
@@ -1617,7 +1617,7 @@ var require_react_development = __commonJS({
               error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
             }
           }
-          var element = createElement8.apply(this, arguments);
+          var element = createElement9.apply(this, arguments);
           if (element == null) {
             return element;
           }
@@ -1877,13 +1877,13 @@ var require_react_development = __commonJS({
         exports.createElement = createElement$1;
         exports.createFactory = createFactory;
         exports.createRef = createRef;
-        exports.forwardRef = forwardRef6;
+        exports.forwardRef = forwardRef7;
         exports.isValidElement = isValidElement2;
         exports.lazy = lazy;
         exports.memo = memo;
         exports.startTransition = startTransition;
         exports.unstable_act = act;
-        exports.useCallback = useCallback6;
+        exports.useCallback = useCallback5;
         exports.useContext = useContext3;
         exports.useDebugValue = useDebugValue2;
         exports.useDeferredValue = useDeferredValue;
@@ -1894,7 +1894,7 @@ var require_react_development = __commonJS({
         exports.useLayoutEffect = useLayoutEffect3;
         exports.useMemo = useMemo4;
         exports.useReducer = useReducer;
-        exports.useRef = useRef10;
+        exports.useRef = useRef9;
         exports.useState = useState17;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
@@ -2442,7 +2442,7 @@ var require_react_dom_development = __commonJS({
         var HostPortal = 4;
         var HostComponent = 5;
         var HostText = 6;
-        var Fragment3 = 7;
+        var Fragment4 = 7;
         var Mode = 8;
         var ContextConsumer = 9;
         var ContextProvider = 10;
@@ -3598,7 +3598,7 @@ var require_react_dom_development = __commonJS({
               return "DehydratedFragment";
             case ForwardRef:
               return getWrappedName$1(type, type.render, "ForwardRef");
-            case Fragment3:
+            case Fragment4:
               return "Fragment";
             case HostComponent:
               return type;
@@ -4252,15 +4252,15 @@ var require_react_dom_development = __commonJS({
           }
           return parentNamespace;
         }
-        var createMicrosoftUnsafeLocalFunction = function(func) {
+        var createMicrosoftUnsafeLocalFunction = function(func2) {
           if (typeof MSApp !== "undefined" && MSApp.execUnsafeLocalFunction) {
             return function(arg0, arg1, arg2, arg3) {
               MSApp.execUnsafeLocalFunction(function() {
-                return func(arg0, arg1, arg2, arg3);
+                return func2(arg0, arg1, arg2, arg3);
               });
             };
           } else {
-            return func;
+            return func2;
           }
         };
         var reusableSVGContainer;
@@ -5554,10 +5554,10 @@ var require_react_dom_development = __commonJS({
             passiveBrowserEventsSupported = false;
           }
         }
-        function invokeGuardedCallbackProd(name2, func, context, a, b, c, d, e, f2) {
+        function invokeGuardedCallbackProd(name2, func2, context, a, b, c, d, e, f2) {
           var funcArgs = Array.prototype.slice.call(arguments, 3);
           try {
-            func.apply(context, funcArgs);
+            func2.apply(context, funcArgs);
           } catch (error2) {
             this.onError(error2);
           }
@@ -5566,7 +5566,7 @@ var require_react_dom_development = __commonJS({
         {
           if (typeof window !== "undefined" && typeof window.dispatchEvent === "function" && typeof document !== "undefined" && typeof document.createEvent === "function") {
             var fakeNode = document.createElement("react");
-            invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name2, func, context, a, b, c, d, e, f2) {
+            invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name2, func2, context, a, b, c, d, e, f2) {
               if (typeof document === "undefined" || document === null) {
                 throw new Error("The `document` global was defined when React was initialized, but is not defined anymore. This can happen in a test environment if a component schedules an update from an asynchronous callback, but the test has already finished running. To solve this, you can either unmount the component at the end of your test (and ensure that any asynchronous operations get canceled in `componentWillUnmount`), or you can change the test itself to be asynchronous.");
               }
@@ -5585,7 +5585,7 @@ var require_react_dom_development = __commonJS({
               function callCallback2() {
                 didCall = true;
                 restoreAfterDispatch();
-                func.apply(context, funcArgs);
+                func2.apply(context, funcArgs);
                 didError = false;
               }
               var error2;
@@ -5641,12 +5641,12 @@ var require_react_dom_development = __commonJS({
             caughtError = error2;
           }
         };
-        function invokeGuardedCallback(name2, func, context, a, b, c, d, e, f2) {
+        function invokeGuardedCallback(name2, func2, context, a, b, c, d, e, f2) {
           hasError = false;
           caughtError = null;
           invokeGuardedCallbackImpl$1.apply(reporter, arguments);
         }
-        function invokeGuardedCallbackAndCatchFirstError(name2, func, context, a, b, c, d, e, f2) {
+        function invokeGuardedCallbackAndCatchFirstError(name2, func2, context, a, b, c, d, e, f2) {
           invokeGuardedCallback.apply(this, arguments);
           if (hasError) {
             var error2 = clearCaughtError();
@@ -9397,7 +9397,7 @@ var require_react_dom_development = __commonJS({
             }
           }
         }
-        function createElement8(type, props2, rootContainerElement, parentNamespace) {
+        function createElement9(type, props2, rootContainerElement, parentNamespace) {
           var isCustomComponentTag;
           var ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement);
           var domElement;
@@ -10258,7 +10258,7 @@ var require_react_dom_development = __commonJS({
             }
             parentNamespace = hostContextDev.namespace;
           }
-          var domElement = createElement8(type, props2, rootContainerInstance, parentNamespace);
+          var domElement = createElement9(type, props2, rootContainerInstance, parentNamespace);
           precacheFiberNode(internalInstanceHandle, domElement);
           updateFiberProps(domElement, props2);
           return domElement;
@@ -11999,7 +11999,7 @@ var require_react_dom_development = __commonJS({
             }
           }
           function updateFragment2(returnFiber, current2, fragment, lanes, key) {
-            if (current2 === null || current2.tag !== Fragment3) {
+            if (current2 === null || current2.tag !== Fragment4) {
               var created = createFiberFromFragment(fragment, returnFiber.mode, lanes, key);
               created.return = returnFiber;
               return created;
@@ -12402,7 +12402,7 @@ var require_react_dom_development = __commonJS({
               if (child.key === key) {
                 var elementType = element.type;
                 if (elementType === REACT_FRAGMENT_TYPE) {
-                  if (child.tag === Fragment3) {
+                  if (child.tag === Fragment4) {
                     deleteRemainingChildren(returnFiber, child.sibling);
                     var existing = useFiber(child, element.props.children);
                     existing.return = returnFiber;
@@ -17879,7 +17879,7 @@ var require_react_dom_development = __commonJS({
               var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
               return updateForwardRef(current2, workInProgress2, type, _resolvedProps2, renderLanes2);
             }
-            case Fragment3:
+            case Fragment4:
               return updateFragment(current2, workInProgress2, renderLanes2);
             case Mode:
               return updateMode(current2, workInProgress2, renderLanes2);
@@ -18152,7 +18152,7 @@ var require_react_dom_development = __commonJS({
             case SimpleMemoComponent:
             case FunctionComponent:
             case ForwardRef:
-            case Fragment3:
+            case Fragment4:
             case Mode:
             case Profiler:
             case ContextConsumer:
@@ -22411,7 +22411,7 @@ var require_react_dom_development = __commonJS({
           return fiber;
         }
         function createFiberFromFragment(elements, mode, lanes, key) {
-          var fiber = createFiber(Fragment3, elements, key, mode);
+          var fiber = createFiber(Fragment4, elements, key, mode);
           fiber.lanes = lanes;
           return fiber;
         }
@@ -23079,7 +23079,7 @@ var require_react_dom_development = __commonJS({
             unmarkContainerAsRoot(container);
           }
         };
-        function createRoot4(container, options2) {
+        function createRoot3(container, options2) {
           if (!isValidContainer(container)) {
             throw new Error("createRoot(...): Target container is not a DOM element.");
           }
@@ -23462,7 +23462,7 @@ var require_react_dom_development = __commonJS({
               error('You are importing createRoot from "react-dom" which is not supported. You should instead import it from "react-dom/client".');
             }
           }
-          return createRoot4(container, options2);
+          return createRoot3(container, options2);
         }
         function hydrateRoot$1(container, initialChildren, options2) {
           {
@@ -23711,9 +23711,9 @@ var require_with_selector_development = __commonJS({
         }
         var objectIs = typeof Object.is === "function" ? Object.is : is;
         var useSyncExternalStore = shim.useSyncExternalStore;
-        var useRef10 = React24.useRef, useEffect15 = React24.useEffect, useMemo4 = React24.useMemo, useDebugValue2 = React24.useDebugValue;
+        var useRef9 = React24.useRef, useEffect15 = React24.useEffect, useMemo4 = React24.useMemo, useDebugValue2 = React24.useDebugValue;
         function useSyncExternalStoreWithSelector2(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-          var instRef = useRef10(null);
+          var instRef = useRef9(null);
           var inst;
           if (instRef.current === null) {
             inst = {
@@ -23803,9 +23803,9 @@ __export(main_exports, {
   loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian7 = require("obsidian");
-var import_react37 = __toESM(require_react());
-var import_client3 = __toESM(require_client());
+var import_obsidian6 = require("obsidian");
+var import_react38 = __toESM(require_react());
+var import_client2 = __toESM(require_client());
 
 // src/settings-tab.tsx
 var import_react = __toESM(require_react());
@@ -23856,7 +23856,7 @@ var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
 };
 
 // src/components/App.tsx
-var import_obsidian6 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 
 // src/components/PluginSettings/index.tsx
 var import_react22 = __toESM(require_react());
@@ -23994,8 +23994,8 @@ function getPart(classPartObject, path) {
   });
   return currentClassPartObject;
 }
-function isThemeGetter(func) {
-  return func.isThemeGetter;
+function isThemeGetter(func2) {
+  return func2.isThemeGetter;
 }
 function getPrefixedClassGroupEntries(classGroupEntries, prefix) {
   if (!prefix) {
@@ -26377,22 +26377,11 @@ var LIST_STYLE_TYPES = [
   "disc",
   "square",
   "armenian",
-  "cjk - ideographic",
   "decimal",
-  "decimal - leading - zero",
   "georgian",
   "hebrew",
   "hiragana",
-  "hiragana - iroha",
   "katakana",
-  "katakana - iroha",
-  "lower - alpha",
-  "lower - greek",
-  "lower - latin",
-  "lower - roman",
-  "upper - alpha",
-  "upper - latin",
-  "upper - roman",
   "none"
 ];
 var JUSTIFY = {
@@ -26515,6 +26504,10 @@ var udpateInlineField = async (propertyName, oldValue, newValue, file, plugin2) 
     return true;
   });
   if (!foundField) {
+    new import_obsidian2.Notice(
+      "Dataedit: Failed to update property. You shouldn't ever see this unless your syntax is wrong. Most likely your aliases are specified wrong?",
+      0
+    );
     throw new Error(
       "Tried updating an inline field but couldn't find matching field. This should be impossible. Property name: " + propertyName
     );
@@ -26606,6 +26599,13 @@ var getAlignItemsClass = (verticalAlignment) => {
   }
   return alignItems;
 };
+var arrayMove = (arr, fromIndex, toIndex) => {
+  const copy = [...arr];
+  const el = copy[fromIndex];
+  copy.splice(fromIndex, 1);
+  copy.splice(toIndex, 0, el);
+  return copy;
+};
 
 // src/components/Setting/index.tsx
 var SettingRoot = ({
@@ -26662,7 +26662,7 @@ var SettingToggle = ({
 };
 
 // src/components/PluginSettings/index.tsx
-var import_obsidian4 = require("obsidian");
+var import_obsidian3 = require("obsidian");
 
 // node_modules/zod/lib/index.mjs
 var util;
@@ -29788,12 +29788,12 @@ var ZodFunction = class _ZodFunction extends ZodType {
       returns: returnType
     });
   }
-  implement(func) {
-    const validatedFunc = this.parse(func);
+  implement(func2) {
+    const validatedFunc = this.parse(func2);
     return validatedFunc;
   }
-  strictImplement(func) {
-    const validatedFunc = this.parse(func);
+  strictImplement(func2) {
+    const validatedFunc = this.parse(func2);
     return validatedFunc;
   }
   static create(args, returns, params) {
@@ -30635,6 +30635,39 @@ var createLucideIcon = (iconName, iconNode) => {
   return Component3;
 };
 
+// node_modules/lucide-react/dist/esm/icons/align-center.js
+var AlignCenter = createLucideIcon("AlignCenter", [
+  ["line", { x1: "21", x2: "3", y1: "6", y2: "6", key: "1fp77t" }],
+  ["line", { x1: "17", x2: "7", y1: "12", y2: "12", key: "rsh8ii" }],
+  ["line", { x1: "19", x2: "5", y1: "18", y2: "18", key: "1t0tuv" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/align-left.js
+var AlignLeft = createLucideIcon("AlignLeft", [
+  ["line", { x1: "21", x2: "3", y1: "6", y2: "6", key: "1fp77t" }],
+  ["line", { x1: "15", x2: "3", y1: "12", y2: "12", key: "v6grx8" }],
+  ["line", { x1: "17", x2: "3", y1: "18", y2: "18", key: "1awlsn" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/align-right.js
+var AlignRight = createLucideIcon("AlignRight", [
+  ["line", { x1: "21", x2: "3", y1: "6", y2: "6", key: "1fp77t" }],
+  ["line", { x1: "21", x2: "9", y1: "12", y2: "12", key: "1uyos4" }],
+  ["line", { x1: "21", x2: "7", y1: "18", y2: "18", key: "1g9eri" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/arrow-down.js
+var ArrowDown = createLucideIcon("ArrowDown", [
+  ["path", { d: "M12 5v14", key: "s699le" }],
+  ["path", { d: "m19 12-7 7-7-7", key: "1idqje" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/arrow-up.js
+var ArrowUp = createLucideIcon("ArrowUp", [
+  ["path", { d: "m5 12 7-7 7 7", key: "hav0vg" }],
+  ["path", { d: "M12 19V5", key: "x0mq9r" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/binary.js
 var Binary = createLucideIcon("Binary", [
   ["rect", { x: "14", y: "14", width: "4", height: "6", rx: "2", key: "p02svl" }],
@@ -30688,6 +30721,24 @@ var ChevronLeft = createLucideIcon("ChevronLeft", [
 // node_modules/lucide-react/dist/esm/icons/chevron-right.js
 var ChevronRight = createLucideIcon("ChevronRight", [
   ["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/chevrons-down-up.js
+var ChevronsDownUp = createLucideIcon("ChevronsDownUp", [
+  ["path", { d: "m7 20 5-5 5 5", key: "13a0gw" }],
+  ["path", { d: "m7 4 5 5 5-5", key: "1kwcof" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/chevrons-down.js
+var ChevronsDown = createLucideIcon("ChevronsDown", [
+  ["path", { d: "m7 6 5 5 5-5", key: "1lc07p" }],
+  ["path", { d: "m7 13 5 5 5-5", key: "1d48rs" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/chevrons-up.js
+var ChevronsUp = createLucideIcon("ChevronsUp", [
+  ["path", { d: "m17 11-5-5-5 5", key: "e8nh98" }],
+  ["path", { d: "m17 18-5-5-5 5", key: "2avn1x" }]
 ]);
 
 // node_modules/lucide-react/dist/esm/icons/circle-check.js
@@ -30810,10 +30861,8 @@ var Text = createLucideIcon("Text", [
   ["path", { d: "M15.1 18H3", key: "1nb16a" }]
 ]);
 
-// src/components/Dialog/index.tsx
-var import_obsidian3 = require("obsidian");
+// src/components/ui/Dialog/index.tsx
 var import_react19 = __toESM(require_react());
-var import_client2 = __toESM(require_client());
 
 // node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
@@ -32845,6 +32894,39 @@ var $5d3850c4d0b4e6c7$var$DialogContentImpl = /* @__PURE__ */ (0, import_react18
   }))), false);
 });
 var $5d3850c4d0b4e6c7$var$TITLE_NAME = "DialogTitle";
+var $5d3850c4d0b4e6c7$export$16f7638e4a34b909 = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+  const { __scopeDialog, ...titleProps } = props2;
+  const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$TITLE_NAME, __scopeDialog);
+  return /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.h2, _extends({
+    id: context.titleId
+  }, titleProps, {
+    ref: forwardedRef
+  }));
+});
+var $5d3850c4d0b4e6c7$var$DESCRIPTION_NAME = "DialogDescription";
+var $5d3850c4d0b4e6c7$export$94e94c2ec2c954d5 = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+  const { __scopeDialog, ...descriptionProps } = props2;
+  const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$DESCRIPTION_NAME, __scopeDialog);
+  return /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.p, _extends({
+    id: context.descriptionId
+  }, descriptionProps, {
+    ref: forwardedRef
+  }));
+});
+var $5d3850c4d0b4e6c7$var$CLOSE_NAME = "DialogClose";
+var $5d3850c4d0b4e6c7$export$fba2fb7cd781b7ac = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+  const { __scopeDialog, ...closeProps } = props2;
+  const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CLOSE_NAME, __scopeDialog);
+  return /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.button, _extends({
+    type: "button"
+  }, closeProps, {
+    ref: forwardedRef,
+    onClick: $e42e1063c40fb3ef$export$b9ecd428b558ff10(
+      props2.onClick,
+      () => context.onOpenChange(false)
+    )
+  }));
+});
 function $5d3850c4d0b4e6c7$var$getState(open) {
   return open ? "open" : "closed";
 }
@@ -32858,19 +32940,82 @@ var $5d3850c4d0b4e6c7$export$be92b6f5f03c0fe9 = $5d3850c4d0b4e6c7$export$3ddf2d1
 var $5d3850c4d0b4e6c7$export$602eac185826482c = $5d3850c4d0b4e6c7$export$dad7c95542bacce0;
 var $5d3850c4d0b4e6c7$export$c6fdb837b070b4ff = $5d3850c4d0b4e6c7$export$bd1d06c79be19e17;
 var $5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2 = $5d3850c4d0b4e6c7$export$b6d9565de1e068cf;
+var $5d3850c4d0b4e6c7$export$f99233281efd08a0 = $5d3850c4d0b4e6c7$export$16f7638e4a34b909;
+var $5d3850c4d0b4e6c7$export$393edc798c47379d = $5d3850c4d0b4e6c7$export$94e94c2ec2c954d5;
+var $5d3850c4d0b4e6c7$export$f39c2d165cd861fe = $5d3850c4d0b4e6c7$export$fba2fb7cd781b7ac;
 
-// src/components/Dialog/index.tsx
-var DialogRoot = (props2) => /* @__PURE__ */ import_react19.default.createElement(
-  $5d3850c4d0b4e6c7$export$be92b6f5f03c0fe9,
+// src/components/ui/Dialog/index.tsx
+var Dialog = $5d3850c4d0b4e6c7$export$be92b6f5f03c0fe9;
+var DialogPortal = $5d3850c4d0b4e6c7$export$602eac185826482c;
+var DialogOverlay = import_react19.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(
+  $5d3850c4d0b4e6c7$export$c6fdb837b070b4ff,
   {
-    defaultOpen: props2.defaultOpen,
-    open: props2.open,
-    onOpenChange: props2.onOpenChange,
-    modal: true
+    ref,
+    className: cn(
+      "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 modal-bg",
+      className
+    ),
+    ...props2
+  }
+));
+DialogOverlay.displayName = $5d3850c4d0b4e6c7$export$c6fdb837b070b4ff.displayName;
+var DialogContent = import_react19.default.forwardRef(({ className, children, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(DialogPortal, null, /* @__PURE__ */ import_react19.default.createElement("div", { className: "twcss modal-container" }, /* @__PURE__ */ import_react19.default.createElement(DialogOverlay, { className: "modal-bg" }), /* @__PURE__ */ import_react19.default.createElement(
+  $5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2,
+  {
+    ref,
+    className: cn("modal", className),
+    ...props2
   },
-  /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$602eac185826482c, null, /* @__PURE__ */ import_react19.default.createElement("div", { className: "twcss modal-container" }, /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$c6fdb837b070b4ff, { className: "modal-bg" }), props2.children))
+  children,
+  /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$f39c2d165cd861fe, { asChild: true }, /* @__PURE__ */ import_react19.default.createElement("div", { className: "modal-close-button" }, /* @__PURE__ */ import_react19.default.createElement("span", { className: "sr-only" }, "Close")))
+))));
+DialogContent.displayName = $5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2.displayName;
+var DialogHeader = ({
+  className,
+  ...props2
+}) => /* @__PURE__ */ import_react19.default.createElement(
+  "div",
+  {
+    className: cn(
+      "flex flex-col space-y-1.5 text-center sm:text-left",
+      className
+    ),
+    ...props2
+  }
 );
-var DialogContent = (props2) => /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2, { ...props2, className: cn("modal", props2.className) }, props2.children);
+DialogHeader.displayName = "DialogHeader";
+var DialogFooter = ({
+  className,
+  ...props2
+}) => /* @__PURE__ */ import_react19.default.createElement(
+  "div",
+  {
+    className: cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    ),
+    ...props2
+  }
+);
+DialogFooter.displayName = "DialogFooter";
+var DialogTitle = import_react19.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(
+  $5d3850c4d0b4e6c7$export$f99233281efd08a0,
+  {
+    ref,
+    className: cn("m-0", className),
+    ...props2
+  }
+));
+DialogTitle.displayName = $5d3850c4d0b4e6c7$export$f99233281efd08a0.displayName;
+var DialogDescription = import_react19.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(
+  $5d3850c4d0b4e6c7$export$393edc798c47379d,
+  {
+    ref,
+    className: cn("text-sm text-muted", className),
+    ...props2
+  }
+));
+DialogDescription.displayName = $5d3850c4d0b4e6c7$export$393edc798c47379d.displayName;
 
 // node_modules/zustand/esm/vanilla.mjs
 var import_meta = {};
@@ -32992,6 +33137,15 @@ var useBlock = () => {
   return context;
 };
 
+// src/lib/consts/toolbarComponentNames.ts
+var SETTINGS_GEAR = "SettingsGear";
+var PAGINATION_NAV = "PaginationNav";
+var PAGE_SIZE = "PageSize";
+var LOCK_EDITING = "LockEditing";
+var HORIZONTAL_ALIGNMENT = "HorizontalAlignment";
+var VERTICAL_ALIGNMENT = "VerticalAlignment";
+var TOTAL_RESULTS = "TotalResults";
+
 // src/components/PluginSettings/index.tsx
 var StartCenterEnd = z.union([
   z.literal("start"),
@@ -33010,6 +33164,13 @@ var Alignment = z.object({
 });
 var BlockConfigSchema2 = z.object({
   filePath: z.string(),
+  toolbarConfig: z.array(
+    z.object({
+      componentName: z.string(),
+      displayText: z.string(),
+      enabled: z.boolean()
+    })
+  ),
   lockEditing: z.boolean(),
   listItemPrefix: z.string(),
   listVertical: z.boolean(),
@@ -33036,6 +33197,43 @@ var BlockConfigSchema2 = z.object({
 });
 var defaultDefaultBlockConfig = {
   filePath: "",
+  toolbarConfig: [
+    {
+      componentName: SETTINGS_GEAR,
+      displayText: "Settings gear",
+      enabled: true
+    },
+    {
+      componentName: TOTAL_RESULTS,
+      displayText: "Total results",
+      enabled: true
+    },
+    {
+      componentName: PAGINATION_NAV,
+      displayText: "Pagination",
+      enabled: true
+    },
+    {
+      componentName: PAGE_SIZE,
+      displayText: "Page size",
+      enabled: true
+    },
+    {
+      componentName: LOCK_EDITING,
+      displayText: "Lock editing",
+      enabled: true
+    },
+    {
+      componentName: HORIZONTAL_ALIGNMENT,
+      displayText: "Horizontal alignment",
+      enabled: true
+    },
+    {
+      componentName: VERTICAL_ALIGNMENT,
+      displayText: "Vertical alignment",
+      enabled: true
+    }
+  ],
   lockEditing: false,
   listItemPrefix: "disc",
   listVertical: true,
@@ -33098,7 +33296,8 @@ var BlockConfig = ({
   id,
   filePath: filePath2,
   open,
-  setOpen
+  setOpen,
+  hideGhLinks
 }) => {
   const { plugin: plugin2 } = useBlock();
   const { settings: settings2, setSettings: setSettings2 } = usePluginSettings();
@@ -33111,7 +33310,7 @@ var BlockConfig = ({
   const defaultForm = existingConfig ?? defaultDefaultBlockConfig;
   if (defaultForm.filePath) {
     if (defaultForm.filePath !== filePath2) {
-      new import_obsidian4.Notice(
+      new import_obsidian3.Notice(
         "Error: duplicate id found, please change it and try again"
       );
       return;
@@ -33133,13 +33332,23 @@ var BlockConfig = ({
       setIsSaving(false);
     })();
   }, [form]);
-  return /* @__PURE__ */ import_react22.default.createElement(DialogRoot, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react22.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react22.default.createElement("h2", { className: "m-0" }, "Block config"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, null, /* @__PURE__ */ import_react22.default.createElement("i", null, "id: ", id)), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "pb-3" }, /* @__PURE__ */ import_react22.default.createElement("i", null, "note: ", filePath2)), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, null, "Plugin repository:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "pb-3" }, "Dataview docs:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/")), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "pb-3" }, isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react22.default.createElement(
+  return /* @__PURE__ */ import_react22.default.createElement(Dialog, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react22.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react22.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react22.default.createElement(DialogTitle, null, "Dataedit block config"), /* @__PURE__ */ import_react22.default.createElement(DialogDescription, { className: "flex flex-col gap-2" }, /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "id:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, id)), /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex" }, "note:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, filePath2))), !hideGhLinks && /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "Plugin repository:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react22.default.createElement("span", null, "Dataview docs:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/"))))), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "py-3" }, isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react22.default.createElement(
     LoaderCircle,
     {
       className: "animate-spin",
       size: "1em"
     }
-  )), !isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-success" }, "Config saved ", /* @__PURE__ */ import_react22.default.createElement(CircleCheck, { size: "1em" }))), /* @__PURE__ */ import_react22.default.createElement(
+  )), !isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-success" }, "Config saved ", /* @__PURE__ */ import_react22.default.createElement(CircleCheck, { size: "1em" })), /* @__PURE__ */ import_react22.default.createElement("details", null, /* @__PURE__ */ import_react22.default.createElement("summary", null, "Actions"), /* @__PURE__ */ import_react22.default.createElement("button", null, "Export"), /* @__PURE__ */ import_react22.default.createElement("button", null, "Import"), /* @__PURE__ */ import_react22.default.createElement(
+    "button",
+    {
+      onClick: () => setForm({
+        ...defaultDefaultBlockConfig,
+        id: form.id,
+        filePath: form.filePath
+      })
+    },
+    "Reset"
+  ))), /* @__PURE__ */ import_react22.default.createElement(ToolbarSetting, { items: form.toolbarConfig, setForm }), /* @__PURE__ */ import_react22.default.createElement(
     StandardSetting,
     {
       title: "Auto suggest",
@@ -33175,6 +33384,19 @@ var BlockConfig = ({
         {
           checked: form.renderMarkdown,
           onCheckedChange: (b) => updateForm("renderMarkdown", b)
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Allow full size images",
+      description: "Allows image embeds to grow to their actual size.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        SettingToggle,
+        {
+          checked: form.allowImageFullSize,
+          onCheckedChange: (b) => updateForm("allowImageFullSize", b)
         }
       )
     }
@@ -33228,7 +33450,17 @@ var BlockConfig = ({
     StandardSetting,
     {
       title: "List item prefix",
-      description: "What symbol to show prefixed to list items within multitext properties.",
+      description: /* @__PURE__ */ import_react22.default.createElement(import_react22.default.Fragment, null, /* @__PURE__ */ import_react22.default.createElement("span", null, "What symbol to show prefixed to list items within multitext properties."), /* @__PURE__ */ import_react22.default.createElement(
+        "ul",
+        {
+          style: {
+            listStyleType: form.listItemPrefix
+          }
+        },
+        /* @__PURE__ */ import_react22.default.createElement("li", null, "item"),
+        /* @__PURE__ */ import_react22.default.createElement("li", null, "another item"),
+        /* @__PURE__ */ import_react22.default.createElement("li", null, "and one more item")
+      )),
       control: /* @__PURE__ */ import_react22.default.createElement(
         "select",
         {
@@ -33305,12 +33537,78 @@ var StandardSetting = ({
   description,
   control
 }) => /* @__PURE__ */ import_react22.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, title), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, description)), /* @__PURE__ */ import_react22.default.createElement(SettingControl, null, control));
+var ToolbarSetting = ({
+  items,
+  setForm
+}) => {
+  return /* @__PURE__ */ import_react22.default.createElement(SettingRoot, { className: "flex-col justify-start gap-4" }, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, { className: "flex w-full flex-col justify-start" }, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, "Toolbar"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Select and reorder the items to show in the toolbar of the table")), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex w-full flex-col gap-3" }, items.map(({ componentName, displayText, enabled }, i) => /* @__PURE__ */ import_react22.default.createElement("div", { key: i, className: "flex items-center gap-1" }, /* @__PURE__ */ import_react22.default.createElement(
+    "input",
+    {
+      type: "checkbox",
+      defaultChecked: enabled,
+      className: "disabled:opacity-50 disabled:hover:cursor-not-allowed",
+      disabled: componentName === SETTINGS_GEAR,
+      onChange: (e) => {
+        setForm((prev) => {
+          const copy = [...prev.toolbarConfig];
+          copy[i].enabled = e.target.checked;
+          return {
+            ...prev,
+            toolbarConfig: [...copy]
+          };
+        });
+      }
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement("div", null, displayText), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react22.default.createElement(
+    "div",
+    {
+      className: "clickable-icon",
+      onClick: () => {
+        if (i === 0)
+          return;
+        setForm((prev) => {
+          const copy = [...prev.toolbarConfig];
+          return {
+            ...prev,
+            toolbarConfig: arrayMove(
+              copy,
+              i,
+              i - 1
+            )
+          };
+        });
+      }
+    },
+    /* @__PURE__ */ import_react22.default.createElement(ArrowUp, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    "div",
+    {
+      className: "clickable-icon",
+      onClick: () => {
+        setForm((prev) => {
+          const copy = [...prev.toolbarConfig];
+          if (i === copy.length - 1)
+            return;
+          return {
+            ...prev,
+            toolbarConfig: arrayMove(
+              copy,
+              i,
+              i + 1
+            )
+          };
+        });
+      }
+    },
+    /* @__PURE__ */ import_react22.default.createElement(ArrowDown, { className: "svg-icon" })
+  ))))));
+};
 
 // src/components/App.tsx
-var import_react36 = __toESM(require_react());
+var import_react37 = __toESM(require_react());
 
 // src/components/Markdown/index.tsx
-var import_obsidian5 = require("obsidian");
+var import_obsidian4 = require("obsidian");
 var import_react23 = __toESM(require_react());
 var Markdown = ({
   app: app2,
@@ -33318,18 +33616,19 @@ var Markdown = ({
   plainText,
   className,
   disabled,
+  span,
   ...props2
 }) => {
   if (disabled) {
     return /* @__PURE__ */ import_react23.default.createElement("div", { ...props2 }, plainText);
   }
-  const component = new import_obsidian5.Component();
+  const component = new import_obsidian4.Component();
   const ref = (0, import_react23.useRef)(null);
   (0, import_react23.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.textContent = "";
-    import_obsidian5.MarkdownRenderer.render(
+    import_obsidian4.MarkdownRenderer.render(
       app2,
       plainText,
       ref.current,
@@ -33337,6 +33636,19 @@ var Markdown = ({
       component
     );
   }, [app2, filePath2, plainText]);
+  if (span) {
+    return /* @__PURE__ */ import_react23.default.createElement(
+      "span",
+      {
+        ref,
+        className: cn(
+          "no-p-margin h-fit w-fit [&>p]:whitespace-pre",
+          className
+        ),
+        ...props2
+      }
+    );
+  }
   return /* @__PURE__ */ import_react23.default.createElement(
     "div",
     {
@@ -33352,7 +33664,6 @@ var Markdown = ({
 
 // src/components/Inputs/index.tsx
 var import_react34 = __toESM(require_react());
-var import_dns = require("dns");
 
 // node_modules/luxon/src/errors.js
 var LuxonError = class extends Error {
@@ -36939,7 +37250,7 @@ var Interval = class _Interval {
 };
 
 // node_modules/luxon/src/info.js
-var Info3 = class {
+var Info2 = class {
   /**
    * Return whether the specified zone contains a DST.
    * @param {string|Zone} [zone='local'] - Zone to check. Defaults to the environment's local zone.
@@ -38542,7 +38853,7 @@ var DateTime = class _DateTime {
    * @type {string}
    */
   get monthShort() {
-    return this.isValid ? Info3.months("short", { locObj: this.loc })[this.month - 1] : null;
+    return this.isValid ? Info2.months("short", { locObj: this.loc })[this.month - 1] : null;
   }
   /**
    * Get the human readable long month name, such as 'October'.
@@ -38551,7 +38862,7 @@ var DateTime = class _DateTime {
    * @type {string}
    */
   get monthLong() {
-    return this.isValid ? Info3.months("long", { locObj: this.loc })[this.month - 1] : null;
+    return this.isValid ? Info2.months("long", { locObj: this.loc })[this.month - 1] : null;
   }
   /**
    * Get the human readable short weekday, such as 'Mon'.
@@ -38560,7 +38871,7 @@ var DateTime = class _DateTime {
    * @type {string}
    */
   get weekdayShort() {
-    return this.isValid ? Info3.weekdays("short", { locObj: this.loc })[this.weekday - 1] : null;
+    return this.isValid ? Info2.weekdays("short", { locObj: this.loc })[this.weekday - 1] : null;
   }
   /**
    * Get the human readable long weekday, such as 'Monday'.
@@ -38569,7 +38880,7 @@ var DateTime = class _DateTime {
    * @type {string}
    */
   get weekdayLong() {
-    return this.isValid ? Info3.weekdays("long", { locObj: this.loc })[this.weekday - 1] : null;
+    return this.isValid ? Info2.weekdays("long", { locObj: this.loc })[this.weekday - 1] : null;
   }
   /**
    * Get the UTC offset of this DateTime in minutes
@@ -42082,7 +42393,7 @@ var LinkSuggestions = ({
 
 // src/components/Inputs/ArrayInput/index.tsx
 var ArrayInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
+  const { propertyName, propertyValue, filePath: filePath2, isLocked } = props2;
   const { plugin: plugin2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
   const { listItemPrefix, horizontalAlignment } = getBlockConfig2(blockId2);
@@ -42115,10 +42426,10 @@ var ArrayInput = (props2) => {
       /* @__PURE__ */ import_react29.default.createElement(
         "div",
         {
-          className: `clickable-icon w-fit ${isLocked2 && "cursor-not-allowed opacity-50"}`,
+          className: `clickable-icon w-fit ${isLocked && "cursor-not-allowed opacity-50"}`,
           "aria-label": "New item",
           onClick: async () => {
-            if (isLocked2)
+            if (isLocked)
               return;
             await updateProperty(
               propertyValue.length,
@@ -42134,7 +42445,7 @@ var ArrayInput = (props2) => {
 };
 var ArrayInputItem = (props2) => {
   const {
-    isLocked: isLocked2,
+    isLocked,
     itemValue,
     itemIndex,
     propertyType,
@@ -42171,7 +42482,7 @@ var ArrayInputItem = (props2) => {
       return;
     return suggestions.filter((s2) => s2.includes(q));
   };
-  if (!isEditing || isLocked2) {
+  if (!isEditing || isLocked) {
     return /* @__PURE__ */ import_react29.default.createElement(
       Markdown,
       {
@@ -42181,7 +42492,7 @@ var ArrayInputItem = (props2) => {
         plainText: propertyType === "tags" ? "#" + plainText : plainText,
         className: "flex h-fit min-h-4 w-full [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
         onClick: () => {
-          if (!isLocked2) {
+          if (!isLocked) {
             setIsEditing(true);
             setIsSuggestShown(true);
           }
@@ -42218,7 +42529,7 @@ var ArrayInputItem = (props2) => {
 // src/components/Inputs/BooleanInput/index.tsx
 var import_react30 = __toESM(require_react());
 var BooleanInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
+  const { propertyName, propertyValue, filePath: filePath2, isLocked } = props2;
   const { plugin: plugin2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
   const { horizontalAlignment } = getBlockConfig2(blockId2);
@@ -42231,9 +42542,9 @@ var BooleanInput = (props2) => {
       "input",
       {
         type: "checkbox",
-        disabled: !!isLocked2,
+        disabled: !!isLocked,
         defaultChecked: !!propertyValue,
-        className: isLocked2 ? "opacity-50" : "",
+        className: isLocked ? "opacity-50" : "",
         onClick: (e) => {
           updateMetaData(
             propertyName,
@@ -42250,7 +42561,7 @@ var BooleanInput = (props2) => {
 // src/components/Inputs/DateTimeInput/index.tsx
 var import_react31 = __toESM(require_react());
 var DateTimeInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2, hasTime } = props2;
+  const { propertyName, propertyValue, filePath: filePath2, isLocked, hasTime } = props2;
   const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
   const { horizontalAlignment, renderMarkdown } = getBlockConfig2(blockId2);
@@ -42277,7 +42588,7 @@ var DateTimeInput = (props2) => {
       setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
     }
   }, [propertyValue]);
-  if (!isEditing || isLocked2) {
+  if (!isEditing || isLocked) {
     return /* @__PURE__ */ import_react31.default.createElement(
       Markdown,
       {
@@ -42287,7 +42598,7 @@ var DateTimeInput = (props2) => {
         plainText: formattedDate || dvRenderNullAs,
         className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
         onClick: () => {
-          !isLocked2 && setIsEditing(true);
+          !isLocked && setIsEditing(true);
         }
       }
     );
@@ -42315,12 +42626,12 @@ var DateTimeInput = (props2) => {
 // src/components/Inputs/NumberInput/index.tsx
 var import_react32 = __toESM(require_react());
 var NumberInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
+  const { propertyName, propertyValue, filePath: filePath2, isLocked } = props2;
   const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
   const { horizontalAlignment, renderMarkdown } = getBlockConfig2(blockId2);
   const [isEditing, setIsEditing] = (0, import_react32.useState)(false);
-  if (!isEditing || isLocked2) {
+  if (!isEditing || isLocked) {
     return /* @__PURE__ */ import_react32.default.createElement(
       Markdown,
       {
@@ -42330,7 +42641,7 @@ var NumberInput = (props2) => {
         plainText: propertyValue?.toString() || dvRenderNullAs,
         className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
         onClick: () => {
-          !isLocked2 && setIsEditing(true);
+          !isLocked && setIsEditing(true);
         }
       }
     );
@@ -42355,14 +42666,20 @@ var NumberInput = (props2) => {
 // src/components/Inputs/StringInput/index.tsx
 var import_react33 = __toESM(require_react());
 var StringInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked: isLocked2 } = props2;
+  const { propertyName, propertyValue, filePath: filePath2 } = props2;
   const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
   const [isEditing, setIsEditing] = (0, import_react33.useState)(false);
   const [isSuggestShown, setIsSuggestShown] = (0, import_react33.useState)(false);
   const [selectedSuggestion, setSelectedSuggestion] = (0, import_react33.useState)();
   const [query2, setQuery] = (0, import_react33.useState)(propertyValue);
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { showAutoComplete, renderMarkdown, horizontalAlignment } = getBlockConfig2(blockId2);
+  const {
+    showAutoComplete,
+    renderMarkdown,
+    horizontalAlignment,
+    allowImageFullSize,
+    lockEditing
+  } = getBlockConfig2(blockId2);
   const onBlur = async (value) => {
     await updateMetaData(
       propertyName,
@@ -42390,7 +42707,7 @@ var StringInput = (props2) => {
       return;
     return suggestions.filter((s2) => s2.includes(q));
   };
-  if (!isEditing || isLocked2) {
+  if (!isEditing || lockEditing) {
     return /* @__PURE__ */ import_react33.default.createElement(
       Markdown,
       {
@@ -42398,9 +42715,9 @@ var StringInput = (props2) => {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
         plainText: propertyValue || dvRenderNullAs,
-        className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 [&_img]:!max-w-[unset] " + getJustifyContentClass(horizontalAlignment),
+        className: `flex h-fit min-h-4 w-full break-keep [&_*]:my-0 ${getJustifyContentClass(horizontalAlignment)} ${allowImageFullSize ? "[&_img]:!max-w-[unset]" : ""}`,
         onClick: () => {
-          if (!isLocked2) {
+          if (!lockEditing) {
             setIsEditing(true);
             setIsSuggestShown(true);
           }
@@ -42436,16 +42753,18 @@ var StringInput = (props2) => {
 
 // src/components/Inputs/index.tsx
 var InputSwitch = (props2) => {
-  const { plugin: plugin2, ctx: ctx2 } = useBlock();
-  const { propertyValue, propertyType } = props2;
-  if (props2.propertyType === import_dns.FILE) {
+  const { plugin: plugin2, ctx: ctx2, blockId: blockId2 } = useBlock();
+  const { propertyValue, propertyType, propertyName } = props2;
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { horizontalAlignment } = getBlockConfig2(blockId2);
+  if (propertyType.toLowerCase() === FILE || propertyName.toLowerCase() === FILE || propertyName.toLowerCase() === "file.link") {
     return /* @__PURE__ */ import_react34.default.createElement(
       Markdown,
       {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
         plainText: propertyValue,
-        className: "[&_*]:my-0"
+        className: "flex w-full flex-row [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment)
       }
     );
   }
@@ -43414,42 +43733,42 @@ var require_xorshift7 = __commonJS2({
       function XorGen(seed) {
         var me = this;
         me.next = function() {
-          var X2 = me.x, i = me.i, t, v, w;
-          t = X2[i];
+          var X = me.x, i = me.i, t, v, w;
+          t = X[i];
           t ^= t >>> 7;
           v = t ^ t << 24;
-          t = X2[i + 1 & 7];
+          t = X[i + 1 & 7];
           v ^= t ^ t >>> 10;
-          t = X2[i + 3 & 7];
+          t = X[i + 3 & 7];
           v ^= t ^ t >>> 3;
-          t = X2[i + 4 & 7];
+          t = X[i + 4 & 7];
           v ^= t ^ t << 7;
-          t = X2[i + 7 & 7];
+          t = X[i + 7 & 7];
           t = t ^ t << 13;
           v ^= t ^ t << 9;
-          X2[i] = v;
+          X[i] = v;
           me.i = i + 1 & 7;
           return v;
         };
         function init(me2, seed2) {
-          var j, w, X2 = [];
+          var j, w, X = [];
           if (seed2 === (seed2 | 0)) {
-            w = X2[0] = seed2;
+            w = X[0] = seed2;
           } else {
             seed2 = "" + seed2;
             for (j = 0; j < seed2.length; ++j) {
-              X2[j & 7] = X2[j & 7] << 15 ^ seed2.charCodeAt(j) + X2[j + 1 & 7] << 13;
+              X[j & 7] = X[j & 7] << 15 ^ seed2.charCodeAt(j) + X[j + 1 & 7] << 13;
             }
           }
-          while (X2.length < 8)
-            X2.push(0);
-          for (j = 0; j < 8 && X2[j] === 0; ++j)
+          while (X.length < 8)
+            X.push(0);
+          for (j = 0; j < 8 && X[j] === 0; ++j)
             ;
           if (j == 8)
-            w = X2[7] = -1;
+            w = X[7] = -1;
           else
-            w = X2[j];
-          me2.x = X2;
+            w = X[j];
+          me2.x = X;
           me2.i = 0;
           for (j = 256; j > 0; --j) {
             me2.next();
@@ -43503,20 +43822,20 @@ var require_xor4096 = __commonJS2({
       function XorGen(seed) {
         var me = this;
         me.next = function() {
-          var w = me.w, X2 = me.X, i = me.i, t, v;
+          var w = me.w, X = me.X, i = me.i, t, v;
           me.w = w = w + 1640531527 | 0;
-          v = X2[i + 34 & 127];
-          t = X2[i = i + 1 & 127];
+          v = X[i + 34 & 127];
+          t = X[i = i + 1 & 127];
           v ^= v << 13;
           t ^= t << 17;
           v ^= v >>> 15;
           t ^= t >>> 12;
-          v = X2[i] = v ^ t;
+          v = X[i] = v ^ t;
           me.i = i;
           return v + (w ^ w >>> 16) | 0;
         };
         function init(me2, seed2) {
-          var t, v, i, j, w, X2 = [], limit = 128;
+          var t, v, i, j, w, X = [], limit = 128;
           if (seed2 === (seed2 | 0)) {
             v = seed2;
             seed2 = null;
@@ -43536,25 +43855,25 @@ var require_xor4096 = __commonJS2({
             v ^= v >>> 13;
             if (j >= 0) {
               w = w + 1640531527 | 0;
-              t = X2[j & 127] ^= v + w;
+              t = X[j & 127] ^= v + w;
               i = t == 0 ? i + 1 : 0;
             }
           }
           if (i >= 128) {
-            X2[(seed2 && seed2.length || 0) & 127] = -1;
+            X[(seed2 && seed2.length || 0) & 127] = -1;
           }
           i = 127;
           for (j = 4 * 128; j > 0; --j) {
-            v = X2[i + 34 & 127];
-            t = X2[i = i + 1 & 127];
+            v = X[i + 34 & 127];
+            t = X[i = i + 1 & 127];
             v ^= v << 13;
             t ^= t << 17;
             v ^= v >>> 15;
             t ^= t >>> 12;
-            X2[i] = v ^ t;
+            X[i] = v ^ t;
           }
           me2.w = w;
-          me2.X = X2;
+          me2.X = X;
           me2.i = i;
         }
         init(me, seed);
@@ -63290,46 +63609,81 @@ var locale = {
 };
 src_default.addLocale("en", locale);
 
+// node_modules/@radix-ui/react-icons/dist/react-icons.esm.js
+var import_react36 = __toESM(require_react());
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null)
+    return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0)
+      continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+var _excluded$1G = ["color"];
+var DividerVerticalIcon = /* @__PURE__ */ (0, import_react36.forwardRef)(function(_ref, forwardedRef) {
+  var _ref$color = _ref.color, color2 = _ref$color === void 0 ? "currentColor" : _ref$color, props2 = _objectWithoutPropertiesLoose(_ref, _excluded$1G);
+  return (0, import_react36.createElement)("svg", Object.assign({
+    width: "15",
+    height: "15",
+    viewBox: "0 0 15 15",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, props2, {
+    ref: forwardedRef
+  }), (0, import_react36.createElement)("path", {
+    d: "M7.5 2C7.77614 2 8 2.22386 8 2.5L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 2.5C7 2.22386 7.22386 2 7.5 2Z",
+    fill: color2,
+    fillRule: "evenodd",
+    clipRule: "evenodd"
+  }));
+});
+
 // src/components/App.tsx
 var PropertyIcon = ({
   propertyType
 }) => {
   switch (propertyType) {
     case "aliases": {
-      return /* @__PURE__ */ import_react36.default.createElement(Forward, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Forward, { style: iconStyle });
     }
     case "checkbox": {
-      return /* @__PURE__ */ import_react36.default.createElement(SquareCheckBig, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(SquareCheckBig, { style: iconStyle });
     }
     case "date": {
-      return /* @__PURE__ */ import_react36.default.createElement(Calendar, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Calendar, { style: iconStyle });
     }
     case "datetime": {
-      return /* @__PURE__ */ import_react36.default.createElement(Clock, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Clock, { style: iconStyle });
     }
     case "multitext": {
-      return /* @__PURE__ */ import_react36.default.createElement(List, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(List, { style: iconStyle });
     }
     case "number": {
-      return /* @__PURE__ */ import_react36.default.createElement(Binary, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Binary, { style: iconStyle });
     }
     case "tags": {
-      return /* @__PURE__ */ import_react36.default.createElement(Tags, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Tags, { style: iconStyle });
     }
     case "text": {
-      return /* @__PURE__ */ import_react36.default.createElement(Text, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Text, { style: iconStyle });
     }
     case "file": {
-      return /* @__PURE__ */ import_react36.default.createElement(File, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(File, { style: iconStyle });
     }
     case "inline": {
-      return /* @__PURE__ */ import_react36.default.createElement(ScanText, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(ScanText, { style: iconStyle });
     }
     case "object": {
-      return /* @__PURE__ */ import_react36.default.createElement(Braces, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Braces, { style: iconStyle });
     }
     default: {
-      return /* @__PURE__ */ import_react36.default.createElement(Text, { style: iconStyle });
+      return /* @__PURE__ */ import_react37.default.createElement(Text, { style: iconStyle });
     }
   }
 };
@@ -63407,19 +63761,19 @@ var writeRandomId = async (m, s2, plugin2, pluginSettingsConfigs) => {
   div2.textContent = "Click the gear again to configure block";
   frag.appendChild(div1);
   frag.appendChild(div2);
-  new import_obsidian6.Notice(frag);
+  new import_obsidian5.Notice(frag);
 };
-var App5 = (props) => {
+var App3 = (props) => {
   const { data, plugin, ctx, getSectionInfo } = props;
-  const [queryResults, setQueryResults] = (0, import_react36.useState)();
-  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react36.useState)(-1);
-  const [dvErr, setDvErr] = (0, import_react36.useState)();
-  const [showSettings, setShowSettings] = (0, import_react36.useState)(false);
-  const [isLocked, setIsLocked] = (0, import_react36.useState)(false);
+  const [queryResults, setQueryResults] = (0, import_react37.useState)();
+  const [fileHeaderIndex, setFileHeaderIndex] = (0, import_react37.useState)(-1);
+  const [isFileLinkHidden, setFileLinkHidden] = (0, import_react37.useState)(false);
+  const [aliasObj, setAliasObj] = (0, import_react37.useState)({});
+  const [dvErr, setDvErr] = (0, import_react37.useState)();
+  const [showSettings, setShowSettings] = (0, import_react37.useState)(false);
   const { blockId, query: preQuery } = getBlockId(data);
   const { query, hideFileLink } = ensureFileLink(preQuery);
   const { settings, setSettings, getBlockConfig } = usePluginSettings();
-  const aliasObj = getColAliasObj(query);
   const safeSetQueryResults = (qr2) => {
     setQueryResults((prev) => {
       if (qr2)
@@ -63432,11 +63786,27 @@ var App5 = (props) => {
   const doQuery = async () => {
     const dv = app.plugins.plugins.dataview.api;
     if (query.split(" ")[0].toLowerCase() !== "table") {
-      const result = eval(`(() => {${query}})()`);
+      let result = {};
+      const func = (headers, values, options) => {
+        result = {
+          headers,
+          values,
+          options
+        };
+      };
+      dv.table = func;
+      dv.markdownTable = func;
+      eval(`(() => {${query}})()`);
       if (!result)
         return;
-      return safeSetQueryResults(result);
+      setFileLinkHidden(!!result?.options?.hideFileLink);
+      setAliasObj(() => result?.options?.aliases ?? {});
+      return safeSetQueryResults({
+        headers: result.headers,
+        values: result.values
+      });
     }
+    setAliasObj(getColAliasObj(query));
     const qr = await dv.query(query);
     console.log("dv q: ", qr);
     if (!qr.successful) {
@@ -63444,12 +63814,13 @@ var App5 = (props) => {
     }
     safeSetQueryResults(qr.value);
   };
-  (0, import_react36.useEffect)(() => {
+  (0, import_react37.useEffect)(() => {
     setSettings(() => plugin.settings);
+    setFileLinkHidden(hideFileLink);
     (async () => {
       const b = await loadDependencies();
       if (!b) {
-        return new import_obsidian6.Notice(
+        return new import_obsidian5.Notice(
           "Datedit: Failed to load dependencies\n\nIs Dataview installed and enabled?"
         );
       }
@@ -63475,10 +63846,10 @@ var App5 = (props) => {
       console.log("App unmounted");
     };
   }, []);
-  (0, import_react36.useEffect)(() => {
+  (0, import_react37.useEffect)(() => {
     plugin.updateSettings(settings);
   }, [settings]);
-  (0, import_react36.useEffect)(() => {
+  (0, import_react37.useEffect)(() => {
     console.log("queryResults changed: ", queryResults);
     if (!queryResults)
       return;
@@ -63494,11 +63865,17 @@ var App5 = (props) => {
   if (!blockConfigs)
     return;
   const config = blockConfigs[blockId] ?? blockConfigs["default"];
+  const settingsGearOnClick = blockId ? () => setShowSettings(true) : async () => await writeRandomId(
+    ctx,
+    getSectionInfo(),
+    plugin,
+    settings.blockConfigs
+  );
   console.log("config: ", config);
   if (!queryResults || fileHeaderIndex === -1) {
-    return /* @__PURE__ */ import_react36.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react36.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react36.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react36.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react36.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
+    return /* @__PURE__ */ import_react37.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react37.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react37.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react37.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
   }
-  return /* @__PURE__ */ import_react36.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement(
     BlockProvider,
     {
       plugin,
@@ -63507,44 +63884,51 @@ var App5 = (props) => {
       ctx,
       aliasObj
     },
-    /* @__PURE__ */ import_react36.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react36.default.createElement(ErrorBoundary, { FallbackComponent: Fallback }, /* @__PURE__ */ import_react36.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react36.default.createElement("thead", null, showColAndRowLabels && /* @__PURE__ */ import_react36.default.createElement("tr", null, /* @__PURE__ */ import_react36.default.createElement("th", { className: "!bg-secondary" }), queryResults?.headers?.map((_, i) => /* @__PURE__ */ import_react36.default.createElement(
+    /* @__PURE__ */ import_react37.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react37.default.createElement(ErrorBoundary, { FallbackComponent: Fallback }, /* @__PURE__ */ import_react37.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react37.default.createElement("thead", null, showColAndRowLabels && /* @__PURE__ */ import_react37.default.createElement("tr", null, /* @__PURE__ */ import_react37.default.createElement("th", { className: "!bg-secondary" }), queryResults?.headers?.map((_, i) => /* @__PURE__ */ import_react37.default.createElement(
       "th",
       {
         key: i + "-table-header-col-label",
         className: "!bg-secondary"
       },
-      /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex items-center justify-center font-normal" }, numberToBase26Letters(i + 1))
-    ))), /* @__PURE__ */ import_react36.default.createElement("tr", null, showColAndRowLabels && /* @__PURE__ */ import_react36.default.createElement("th", { className: "w-fit min-w-0 !bg-secondary" }, /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex h-full w-full items-center justify-center font-normal" }, "1")), queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react36.default.createElement(
+      /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex items-center justify-center font-normal" }, numberToBase26Letters(i + 1))
+    ))), /* @__PURE__ */ import_react37.default.createElement("tr", null, showColAndRowLabels && /* @__PURE__ */ import_react37.default.createElement("th", { className: "w-fit min-w-0 !bg-secondary" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex h-full w-full items-center justify-center font-normal" }, "1")), queryResults?.headers?.map((h, i) => /* @__PURE__ */ import_react37.default.createElement(
       Th,
       {
         key: i + "table-header",
         className: "",
-        hideFileLink,
+        hideFileLink: isFileLinkHidden,
         propertyName: h
       }
-    )))), /* @__PURE__ */ import_react36.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react36.default.createElement("tr", { key: i + "-table-body-row" }, showColAndRowLabels && /* @__PURE__ */ import_react36.default.createElement("td", { className: "w-fit min-w-0 bg-secondary" }, /* @__PURE__ */ import_react36.default.createElement("div", { className: "my-auto flex h-full w-full items-center justify-center" }, i + 2)), r2?.map((d, k) => /* @__PURE__ */ import_react36.default.createElement(
+    )))), /* @__PURE__ */ import_react37.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react37.default.createElement("tr", { key: i + "-table-body-row" }, showColAndRowLabels && /* @__PURE__ */ import_react37.default.createElement("td", { className: "w-fit min-w-0 bg-secondary" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "my-auto flex h-full w-full items-center justify-center" }, i + 2)), r2?.map((d, k) => /* @__PURE__ */ import_react37.default.createElement(
       Td,
       {
         key: k + "table-data",
         propertyName: queryResults.headers[k],
         propertyValue: d,
         className: "",
-        hideFileLink,
-        filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path,
-        isLocked
+        hideFileLink: isFileLinkHidden,
+        filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path
       }
-    )))))), /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex w-full flex-row items-center p-2" }, /* @__PURE__ */ import_react36.default.createElement(PaginationNav, { totalRows: queryResults.values.length }), /* @__PURE__ */ import_react36.default.createElement(PaginationSize, null), /* @__PURE__ */ import_react36.default.createElement(
-      SettingsGear,
-      {
-        blockId,
-        onClick: blockId ? () => setShowSettings(true) : async () => await writeRandomId(
-          ctx,
-          getSectionInfo(),
-          plugin,
-          settings.blockConfigs
-        )
+    )))))), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, config.toolbarConfig.map(
+      ({ componentName, enabled }, i) => {
+        if (!enabled)
+          return;
+        return /* @__PURE__ */ import_react37.default.createElement(import_react37.Fragment, { key: i }, /* @__PURE__ */ import_react37.default.createElement(
+          ToolbarSwitch,
+          {
+            componentName,
+            settingsGearOnClick,
+            blockId,
+            totalRows: queryResults?.values?.length
+          }
+        ), i !== config.toolbarConfig.length - 1 && /* @__PURE__ */ import_react37.default.createElement(
+          DividerVerticalIcon,
+          {
+            className: "text-secondary-alt"
+          }
+        ));
       }
-    ), showSettings && /* @__PURE__ */ import_react36.default.createElement(
+    ), showSettings && /* @__PURE__ */ import_react37.default.createElement(
       BlockConfig,
       {
         id: blockId,
@@ -63552,16 +63936,39 @@ var App5 = (props) => {
         open: showSettings,
         setOpen: setShowSettings
       }
-    ), /* @__PURE__ */ import_react36.default.createElement(LockToggle, null))))
+    ))))
   );
+};
+var ToolbarSwitch = ({
+  componentName,
+  blockId: blockId2,
+  settingsGearOnClick: settingsGearOnClick2,
+  totalRows
+}) => {
+  switch (componentName) {
+    case SETTINGS_GEAR:
+      return /* @__PURE__ */ import_react37.default.createElement(SettingsGear, { blockId: blockId2, onClick: settingsGearOnClick2 });
+    case PAGE_SIZE:
+      return /* @__PURE__ */ import_react37.default.createElement(PaginationSize, null);
+    case PAGINATION_NAV:
+      return /* @__PURE__ */ import_react37.default.createElement(PaginationNav, { totalRows });
+    case LOCK_EDITING:
+      return /* @__PURE__ */ import_react37.default.createElement(LockToggle, null);
+    case HORIZONTAL_ALIGNMENT:
+      return /* @__PURE__ */ import_react37.default.createElement(HorizontalAlignment, null);
+    case VERTICAL_ALIGNMENT:
+      return /* @__PURE__ */ import_react37.default.createElement(VerticalAlignment, null);
+    case TOTAL_RESULTS:
+      return /* @__PURE__ */ import_react37.default.createElement(TotalResults, { totalResults: totalRows });
+  }
 };
 var Fallback = ({ error }) => {
   console.error("Fallback got error: ", error);
   const e = error;
-  return /* @__PURE__ */ import_react36.default.createElement("div", { className: "border-[1px] border-dashed border-error p-3" }, /* @__PURE__ */ import_react36.default.createElement("h2", { className: "text-error" }, "Dataedit Error ", /* @__PURE__ */ import_react36.default.createElement(CircleX, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("p", null, /* @__PURE__ */ import_react36.default.createElement("i", null, "It's not you, it's me"), "\uFF08>\uFE4F<\uFF09"), /* @__PURE__ */ import_react36.default.createElement("p", null, "Sorry about that!"), /* @__PURE__ */ import_react36.default.createElement("p", null, "If you'd like this to get fixed, please check the", " ", /* @__PURE__ */ import_react36.default.createElement("a", { href: "https://github.com/unxok/dataedit/issues" }, "known issues", /* @__PURE__ */ import_react36.default.createElement("span", { className: "external-link" })), ". If there's no open issue yet, please open one and provide the info below as well as the steps to reproduce the issue"), /* @__PURE__ */ import_react36.default.createElement("details", null, /* @__PURE__ */ import_react36.default.createElement("summary", { className: "hover:cursor-pointer hover:underline" }, "Show error details"), /* @__PURE__ */ import_react36.default.createElement("h3", null, "Error message"), /* @__PURE__ */ import_react36.default.createElement("pre", null, /* @__PURE__ */ import_react36.default.createElement("code", null, e?.message)), /* @__PURE__ */ import_react36.default.createElement("h3", null, "Error stack"), /* @__PURE__ */ import_react36.default.createElement("pre", null, /* @__PURE__ */ import_react36.default.createElement("code", null, e?.stack))));
+  return /* @__PURE__ */ import_react37.default.createElement("div", { className: "border-[1px] border-dashed border-error p-3" }, /* @__PURE__ */ import_react37.default.createElement("h2", { className: "text-error" }, "Dataedit Error ", /* @__PURE__ */ import_react37.default.createElement(CircleX, { className: "svg-icon" })), /* @__PURE__ */ import_react37.default.createElement("p", null, /* @__PURE__ */ import_react37.default.createElement("i", null, "It's not you, it's me"), "\uFF08>\uFE4F<\uFF09"), /* @__PURE__ */ import_react37.default.createElement("p", { className: "text-sm" }, "(except it might be you, if you messed up your syntax)"), /* @__PURE__ */ import_react37.default.createElement("p", null, "Assuming your syntax is all correct, please check the", " ", /* @__PURE__ */ import_react37.default.createElement("a", { href: "https://github.com/unxok/dataedit/issues" }, "known issues", /* @__PURE__ */ import_react37.default.createElement("span", { className: "external-link" })), ". If there's no open issue yet, please open one and provide the info below as well as the steps to reproduce the issue"), /* @__PURE__ */ import_react37.default.createElement("details", null, /* @__PURE__ */ import_react37.default.createElement("summary", { className: "hover:cursor-pointer hover:underline" }, "Show error details"), /* @__PURE__ */ import_react37.default.createElement("h3", null, "Error message"), /* @__PURE__ */ import_react37.default.createElement("pre", null, /* @__PURE__ */ import_react37.default.createElement("code", null, e?.message)), /* @__PURE__ */ import_react37.default.createElement("h3", null, "Error stack"), /* @__PURE__ */ import_react37.default.createElement("pre", null, /* @__PURE__ */ import_react37.default.createElement("code", null, e?.stack))));
 };
 var PaginationSize = () => {
-  const [isEditing, setIsEditing] = (0, import_react36.useState)(false);
+  const [isEditing, setIsEditing] = (0, import_react37.useState)(false);
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
   const { pageSize: pageSize2 } = getBlockConfig2(blockId2);
@@ -63581,8 +63988,17 @@ var PaginationSize = () => {
     setBlockConfig(blockId2, (prev) => ({ ...prev, pageSize: cb }));
   };
   if (!isEditing)
-    return /* @__PURE__ */ import_react36.default.createElement("div", { className: "clickable-icon", onClick: () => setIsEditing(true) }, pageSize2 || "Infinity", " per page");
-  return /* @__PURE__ */ import_react36.default.createElement(
+    return /* @__PURE__ */ import_react37.default.createElement(
+      "div",
+      {
+        className: "clickable-icon",
+        "aria-label": "Page size",
+        onClick: () => setIsEditing(true)
+      },
+      pageSize2 || "Infinity",
+      " per page"
+    );
+  return /* @__PURE__ */ import_react37.default.createElement(
     "input",
     {
       type: "number",
@@ -63622,11 +64038,19 @@ var PaginationSize = () => {
   );
 };
 var PaginationNav = ({ totalRows }) => {
-  const [isEditing, setIsEditing] = (0, import_react36.useState)(false);
+  const [isEditing, setIsEditing] = (0, import_react37.useState)(false);
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
   const { currentPage: currentPage2, pageSize: pageSize2 } = getBlockConfig2(blockId2);
-  const totalPages = pageSize2 < 1 ? 1 : Math.floor(totalRows / pageSize2);
+  const totalPages = (() => {
+    if (pageSize2 < 1)
+      return 1;
+    const isDivisible = totalRows % pageSize2 === 0;
+    const diff = totalRows / pageSize2;
+    if (isDivisible)
+      return diff;
+    return Math.floor(diff + 1);
+  })();
   const setCurrentPage = (cb) => {
     if (typeof cb === "function") {
       setBlockConfig(blockId2, (prev) => {
@@ -63661,7 +64085,23 @@ var PaginationNav = ({ totalRows }) => {
       setCurrentPage(totalPages);
     }
   };
-  return /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex items-center justify-center" }, /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goFirst, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronFirst, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goPrev, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronLeft, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("span", { className: "px-1" }, !isEditing && /* @__PURE__ */ import_react36.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex items-center justify-center" }, /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      "aria-label": "First page",
+      onClick: goFirst,
+      className: "clickable-icon w-fit"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(ChevronFirst, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      "aria-label": "Previous page",
+      onClick: goPrev,
+      className: "clickable-icon w-fit"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(ChevronLeft, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react37.default.createElement("span", { className: "px-1" }, !isEditing && /* @__PURE__ */ import_react37.default.createElement(
     "span",
     {
       "aria-label": "Enter page number",
@@ -63669,7 +64109,7 @@ var PaginationNav = ({ totalRows }) => {
       onClick: () => setIsEditing(true)
     },
     currentPage2
-  ), isEditing && /* @__PURE__ */ import_react36.default.createElement(
+  ), isEditing && /* @__PURE__ */ import_react37.default.createElement(
     "input",
     {
       type: "number",
@@ -63711,7 +64151,39 @@ var PaginationNav = ({ totalRows }) => {
         }
       }
     }
-  ), /* @__PURE__ */ import_react36.default.createElement("span", null, " of ", totalPages)), /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goNext, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronRight, { className: "svg-icon" })), /* @__PURE__ */ import_react36.default.createElement("div", { onClick: goLast, className: "clickable-icon w-fit" }, /* @__PURE__ */ import_react36.default.createElement(ChevronLast, { className: "svg-icon" })));
+  ), /* @__PURE__ */ import_react37.default.createElement("span", null, " of ", totalPages)), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      "aria-label": "Next page",
+      onClick: goNext,
+      className: "clickable-icon w-fit"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(ChevronRight, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      "aria-label": "Last page",
+      onClick: goLast,
+      className: "clickable-icon w-fit"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(ChevronLast, { className: "svg-icon" })
+  ));
+};
+var TotalResults = ({ totalResults }) => {
+  const { blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const { pageSize: pageSize2, currentPage: currentPage2 } = getBlockConfig2(blockId2);
+  const product = currentPage2 * pageSize2;
+  const startResults = product - (pageSize2 - 1);
+  const endResults = product > totalResults ? totalResults : product;
+  let content = startResults + " - " + endResults + " of " + totalResults + " results";
+  if (pageSize2 === 0 || product === totalResults) {
+    content = totalResults + " results";
+  }
+  if (startResults === endResults) {
+    content = startResults + " of " + totalResults + " results";
+  }
+  return /* @__PURE__ */ import_react37.default.createElement("div", { "aria-label": "Total results", className: "clickable-icon" }, content);
 };
 var LockToggle = () => {
   const { blockId: blockId2 } = useBlock();
@@ -63724,14 +64196,14 @@ var LockToggle = () => {
   };
   const { lockEditing } = getBlockConfig2(blockId2);
   const Icon = lockEditing ? Lock : LockOpen;
-  return /* @__PURE__ */ import_react36.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       onClick: () => toggleLock(),
       "aria-label": "Lock editing",
       className: "clickable-icon side-dock-ribbon-action"
     },
-    /* @__PURE__ */ import_react36.default.createElement(
+    /* @__PURE__ */ import_react37.default.createElement(
       Icon,
       {
         className: `svg-icon lucide-lock ${!lockEditing ? "text-muted opacity-50" : "text-inherit opacity-100"}`
@@ -63739,18 +64211,116 @@ var LockToggle = () => {
     )
   );
 };
+var HorizontalAlignment = () => {
+  const { blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
+  const { horizontalAlignment } = getBlockConfig2(blockId2);
+  const updateAlignment = (alignment) => {
+    setBlockConfig(blockId2, (prev) => ({
+      ...prev,
+      horizontalAlignment: alignment
+    }));
+  };
+  return /* @__PURE__ */ import_react37.default.createElement(Popover, null, /* @__PURE__ */ import_react37.default.createElement(PopoverTrigger, { asChild: true }, /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => console.log(),
+      "aria-label": "Horizontal alignment",
+      className: "clickable-icon"
+    },
+    horizontalAlignment === "start" && /* @__PURE__ */ import_react37.default.createElement(AlignLeft, { className: "svg-icon" }),
+    horizontalAlignment === "center" && /* @__PURE__ */ import_react37.default.createElement(AlignCenter, { className: "svg-icon" }),
+    horizontalAlignment === "end" && /* @__PURE__ */ import_react37.default.createElement(AlignRight, { className: "svg-icon" })
+  )), /* @__PURE__ */ import_react37.default.createElement(PopoverContent, { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex flex-row gap-1 p-2" }, /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => updateAlignment("start"),
+      "aria-label": "Left",
+      "data-selected": horizontalAlignment === "start",
+      className: "clickable-icon data-[selected=true]:bg-secondary-alt"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(AlignLeft, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => updateAlignment("center"),
+      "aria-label": "Center",
+      "data-selected": horizontalAlignment === "center",
+      className: "clickable-icon data-[selected=true]:bg-secondary-alt"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(AlignCenter, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => updateAlignment("end"),
+      "aria-label": "Right",
+      "data-selected": horizontalAlignment === "end",
+      className: "clickable-icon data-[selected=true]:bg-secondary-alt"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(AlignRight, { className: "svg-icon" })
+  ))));
+};
+var VerticalAlignment = () => {
+  const { blockId: blockId2 } = useBlock();
+  const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
+  const { verticalAlignment } = getBlockConfig2(blockId2);
+  const updateAlignment = (alignment) => {
+    setBlockConfig(blockId2, (prev) => ({
+      ...prev,
+      verticalAlignment: alignment
+    }));
+  };
+  return /* @__PURE__ */ import_react37.default.createElement(Popover, null, /* @__PURE__ */ import_react37.default.createElement(PopoverTrigger, { asChild: true }, /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => console.log(),
+      "aria-label": "Vertical alignment",
+      className: "clickable-icon"
+    },
+    verticalAlignment === "start" && /* @__PURE__ */ import_react37.default.createElement(ChevronsUp, { className: "svg-icon" }),
+    verticalAlignment === "center" && /* @__PURE__ */ import_react37.default.createElement(ChevronsDownUp, { className: "svg-icon" }),
+    verticalAlignment === "end" && /* @__PURE__ */ import_react37.default.createElement(ChevronsDown, { className: "svg-icon" })
+  )), /* @__PURE__ */ import_react37.default.createElement(PopoverContent, { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex flex-row gap-1 p-2" }, /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => updateAlignment("start"),
+      "aria-label": "Top",
+      "data-selected": verticalAlignment === "start",
+      className: "clickable-icon data-[selected=true]:bg-secondary-alt"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(ChevronsUp, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => updateAlignment("center"),
+      "aria-label": "Middle",
+      "data-selected": verticalAlignment === "center",
+      className: "clickable-icon data-[selected=true]:bg-secondary-alt"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(ChevronsDownUp, { className: "svg-icon" })
+  ), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      onClick: () => updateAlignment("end"),
+      "aria-label": "Bottom",
+      "data-selected": verticalAlignment === "end",
+      className: "clickable-icon data-[selected=true]:bg-secondary-alt"
+    },
+    /* @__PURE__ */ import_react37.default.createElement(ChevronsDown, { className: "svg-icon" })
+  ))));
+};
 var SettingsGear = ({
   blockId: blockId2,
   onClick
 }) => {
-  return /* @__PURE__ */ import_react36.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       onClick,
       "aria-label": blockId2 ? `id: ${blockId2}` : `No id found. Click to generate random id`,
       className: "clickable-icon side-dock-ribbon-action"
     },
-    /* @__PURE__ */ import_react36.default.createElement(Settings, { className: "svg-icon lucide-settings" })
+    /* @__PURE__ */ import_react37.default.createElement(Settings, { className: "svg-icon lucide-settings" })
   );
 };
 var Th = ({
@@ -63767,20 +64337,20 @@ var Th = ({
   const propertyType = prePropertyType ?? "inline";
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react36.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react36.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react36.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement("th", { className: cn(className) }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex h-full w-full items-center" }, /* @__PURE__ */ import_react37.default.createElement(
     Markdown,
     {
       app: plugin2.app,
       filePath: ctx2.sourcePath,
       plainText: propertyName
     }
-  ), "\xA0", /* @__PURE__ */ import_react36.default.createElement(
+  ), "\xA0", /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       "aria-label": propertyType,
       className: "flex items-center justify-center"
     },
-    showTypeIcons && /* @__PURE__ */ import_react36.default.createElement(PropertyIcon, { propertyType })
+    showTypeIcons && /* @__PURE__ */ import_react37.default.createElement(PropertyIcon, { propertyType })
   )));
 };
 var Td = (props2) => {
@@ -63800,12 +64370,12 @@ var Td = (props2) => {
   const propValue = tryToMarkdownLink(propertyValue);
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react36.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react36.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       className: `flex h-full w-full ${getAlignItemsClass(verticalAlignment)}`
     },
-    /* @__PURE__ */ import_react36.default.createElement(
+    /* @__PURE__ */ import_react37.default.createElement(
       InputSwitch,
       {
         ...props2,
@@ -63827,7 +64397,7 @@ var loadDependencies = async () => {
   await plugins.loadPlugin(DATAVIEW);
   return true;
 };
-var DataEdit2 = class extends import_obsidian7.Plugin {
+var DataEdit2 = class extends import_obsidian6.Plugin {
   async onExternalSettingsChange() {
     console.log("settings were changed");
     await this.loadSettings();
@@ -63847,11 +64417,11 @@ var DataEdit2 = class extends import_obsidian7.Plugin {
   registerCodeBlock() {
     this.registerMarkdownCodeBlockProcessor("dataedit", (s2, e, ctx2) => {
       e.empty();
-      const root = (0, import_client3.createRoot)(e);
+      const root = (0, import_client2.createRoot)(e);
       root.render(
         // <React.StrictMode>
-        /* @__PURE__ */ import_react37.default.createElement(
-          App5,
+        /* @__PURE__ */ import_react38.default.createElement(
+          App3,
           {
             data: s2,
             getSectionInfo: () => ctx2.getSectionInfo(e),
@@ -63884,7 +64454,7 @@ var DataEdit2 = class extends import_obsidian7.Plugin {
     const parsed = PluginSettingsSchema2.safeParse(modifiedSavedSettings);
     console.log(parsed);
     if (!parsed.success) {
-      new import_obsidian7.Notice("Invalid settings detected. Reverting to default");
+      new import_obsidian6.Notice("Invalid settings detected. Reverting to default");
       return await this.updateSettings(defaultPluginSettings);
     }
     this.settings = modifiedSavedSettings;
@@ -63985,6 +64555,46 @@ lucide-react/dist/esm/createLucideIcon.js:
    * See the LICENSE file in the root directory of this source tree.
    *)
 
+lucide-react/dist/esm/icons/align-center.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/align-left.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/align-right.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/arrow-down.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/arrow-up.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
 lucide-react/dist/esm/icons/binary.js:
   (**
    * @license lucide-react v0.372.0 - ISC
@@ -64034,6 +64644,30 @@ lucide-react/dist/esm/icons/chevron-left.js:
    *)
 
 lucide-react/dist/esm/icons/chevron-right.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevrons-down-up.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevrons-down.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/chevrons-up.js:
   (**
    * @license lucide-react v0.372.0 - ISC
    *

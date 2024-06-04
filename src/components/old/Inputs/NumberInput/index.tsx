@@ -10,7 +10,7 @@ import {
 	DialogRoot,
 	DialogSample,
 	DialogTitle,
-} from "@/components/Dialog";
+} from "@/components/ui/Dialog";
 
 export const NumberInput = ({
 	propertyValue,

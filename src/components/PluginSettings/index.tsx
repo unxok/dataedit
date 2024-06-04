@@ -1,12 +1,5 @@
-import React, {
-	ReactNode,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import {
-	SampleSetting,
 	SettingControl,
 	SettingDescription,
 	SettingInfo,
@@ -14,45 +7,29 @@ import {
 	SettingRoot,
 	SettingToggle,
 } from "../Setting";
-import {
-	App,
-	MarkdownPostProcessorContext,
-	Modal,
-	Notice,
-	Plugin,
-	debounce,
-	parseYaml,
-	stringifyYaml,
-} from "obsidian";
+import { Notice } from "obsidian";
 import { z } from "zod";
+import { ArrowDown, ArrowUp, CircleCheck, LoaderCircle } from "lucide-react";
+import { addNewKeyValues, arrayMove, removeKeys } from "@/lib/utils";
 import {
-	ArrowRight,
-	CircleCheck,
-	CircleHelp,
-	FileWarning,
-	Info,
-	LoaderCircle,
-	MessageCircleQuestion,
-	MessageCircleWarning,
-	Plus,
-	TriangleAlert,
-	X,
-} from "lucide-react";
-import DataEdit from "@/main";
-import { Suggest, useSuggest } from "@/hooks/useSuggest";
-import { BuyMeCoffee } from "../BuyMeCoffee";
-import { addNewKeyValues, removeKeys } from "@/lib/utils";
-import {
-	DialogClose,
+	Dialog,
 	DialogContent,
 	DialogDescription,
-	DialogRoot,
+	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
-} from "../Dialog";
+} from "../ui/Dialog";
 import { usePluginSettings } from "@/stores/global";
 import { useBlock } from "../BlockProvider";
 import { LIST_STYLE_TYPES } from "@/lib/consts";
+import {
+	HORIZONTAL_ALIGNMENT,
+	LOCK_EDITING,
+	PAGE_SIZE,
+	PAGINATION_NAV,
+	SETTINGS_GEAR,
+	TOTAL_RESULTS,
+	VERTICAL_ALIGNMENT,
+} from "@/lib/consts/toolbarComponentNames";
 
 const StartCenterEnd = z.union([
 	z.literal("start"),
@@ -74,6 +51,13 @@ const Alignment = z.object({
 
 export const BlockConfigSchema = z.object({
 	filePath: z.string(),
+	toolbarConfig: z.array(
+		z.object({
+			componentName: z.string(),
+			displayText: z.string(),
+			enabled: z.boolean(),
+		}),
+	),
 	lockEditing: z.boolean(),
 	listItemPrefix: z.string(),
 	listVertical: z.boolean(),
@@ -101,6 +85,43 @@ export const BlockConfigSchema = z.object({
 
 export const defaultDefaultBlockConfig: z.infer<typeof BlockConfigSchema> = {
 	filePath: "",
+	toolbarConfig: [
+		{
+			componentName: SETTINGS_GEAR,
+			displayText: "Settings gear",
+			enabled: true,
+		},
+		{
+			componentName: TOTAL_RESULTS,
+			displayText: "Total results",
+			enabled: true,
+		},
+		{
+			componentName: PAGINATION_NAV,
+			displayText: "Pagination",
+			enabled: true,
+		},
+		{
+			componentName: PAGE_SIZE,
+			displayText: "Page size",
+			enabled: true,
+		},
+		{
+			componentName: LOCK_EDITING,
+			displayText: "Lock editing",
+			enabled: true,
+		},
+		{
+			componentName: HORIZONTAL_ALIGNMENT,
+			displayText: "Horizontal alignment",
+			enabled: true,
+		},
+		{
+			componentName: VERTICAL_ALIGNMENT,
+			displayText: "Vertical alignment",
+			enabled: true,
+		},
+	],
 	lockEditing: false,
 	listItemPrefix: "disc",
 	listVertical: true,
@@ -455,11 +476,13 @@ export const BlockConfig = ({
 	filePath,
 	open,
 	setOpen,
+	hideGhLinks,
 }: {
 	id: string;
 	filePath: string;
 	open: boolean;
 	setOpen: (b: boolean) => void;
+	hideGhLinks?: boolean;
 	// onChange: (bc: z.infer<typeof PluginSettingsSchema>) => void;
 }) => {
 	const { plugin } = useBlock();
@@ -519,28 +542,40 @@ export const BlockConfig = ({
 	// }, [form]);
 
 	return (
-		<DialogRoot open={open} onOpenChange={setOpen}>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogContent className="vertical-tab-content">
-				<h2 className="m-0">Block config</h2>
-				<SettingDescription>
-					<i>id: {id}</i>
-				</SettingDescription>
-				<SettingDescription className="pb-3">
-					<i>note: {filePath}</i>
-				</SettingDescription>
-				<SettingDescription>
-					Plugin repository:{" "}
-					<a href="https://github.com/unxok/dataedit">
-						github.com/unxok/dataedit
-					</a>
-				</SettingDescription>
-				<SettingDescription className="pb-3">
-					Dataview docs:{" "}
-					<a href="https://blacksmithgu.github.io/obsidian-dataview/">
-						blacksmithgu.github.io/obsidian-dataview/
-					</a>
-				</SettingDescription>
-				<SettingDescription className="pb-3">
+				<DialogHeader>
+					<DialogTitle>Dataedit block config</DialogTitle>
+					<DialogDescription className="flex flex-col gap-2">
+						<span className="flex flex-col">
+							<span>
+								id:&nbsp;
+								<span className="text-normal">{id}</span>
+							</span>
+							<span className="flex">
+								note:&nbsp;
+								<span className="text-normal">{filePath}</span>
+							</span>
+						</span>
+						{!hideGhLinks && (
+							<span className="flex flex-col">
+								<span>
+									Plugin repository:{" "}
+									<a href="https://github.com/unxok/dataedit">
+										github.com/unxok/dataedit
+									</a>
+								</span>
+								<span>
+									Dataview docs:{" "}
+									<a href="https://blacksmithgu.github.io/obsidian-dataview/">
+										blacksmithgu.github.io/obsidian-dataview/
+									</a>
+								</span>
+							</span>
+						)}
+					</DialogDescription>
+				</DialogHeader>
+				<SettingDescription className="py-3">
 					{isSaving && (
 						<div className="text-error">
 							Saving config{" "}
@@ -555,7 +590,24 @@ export const BlockConfig = ({
 							Config saved <CircleCheck size={"1em"} />
 						</div>
 					)}
+					<details>
+						<summary>Actions</summary>
+						<button>Export</button>
+						<button>Import</button>
+						<button
+							onClick={() =>
+								setForm({
+									...defaultDefaultBlockConfig,
+									id: form.id,
+									filePath: form.filePath,
+								})
+							}
+						>
+							Reset
+						</button>
+					</details>
 				</SettingDescription>
+				<ToolbarSetting items={form.toolbarConfig} setForm={setForm} />
 				<StandardSetting
 					title={"Auto suggest"}
 					description={
@@ -662,7 +714,21 @@ export const BlockConfig = ({
 				<StandardSetting
 					title={"List item prefix"}
 					description={
-						"What symbol to show prefixed to list items within multitext properties."
+						<>
+							<span>
+								What symbol to show prefixed to list items
+								within multitext properties.
+							</span>
+							<ul
+								style={{
+									listStyleType: form.listItemPrefix,
+								}}
+							>
+								<li>item</li>
+								<li>another item</li>
+								<li>and one more item</li>
+							</ul>
+						</>
 					}
 					control={
 						<select
@@ -738,7 +804,7 @@ export const BlockConfig = ({
 					}
 				/>
 			</DialogContent>
-		</DialogRoot>
+		</Dialog>
 	);
 };
 
@@ -761,6 +827,95 @@ const StandardSetting = ({
 		<SettingControl>{control}</SettingControl>
 	</SettingRoot>
 );
+
+const ToolbarSetting = ({
+	items,
+	setForm,
+}: {
+	items: z.infer<typeof BlockConfigSchema>["toolbarConfig"];
+	setForm: React.Dispatch<
+		React.SetStateAction<z.infer<typeof BlockConfigSchema>>
+	>;
+}) => {
+	//
+	return (
+		<SettingRoot className="flex-col justify-start gap-4">
+			<SettingInfo className="flex w-full flex-col justify-start">
+				<SettingName>Toolbar</SettingName>
+				<SettingDescription className="whitespace-pre-line">
+					Select and reorder the items to show in the toolbar of the
+					table
+				</SettingDescription>
+			</SettingInfo>
+			<div className="flex w-full flex-col gap-3">
+				{items.map(({ componentName, displayText, enabled }, i) => (
+					<div key={i} className="flex items-center gap-1">
+						<input
+							type="checkbox"
+							defaultChecked={enabled}
+							className="disabled:opacity-50 disabled:hover:cursor-not-allowed"
+							disabled={componentName === SETTINGS_GEAR}
+							onChange={(e) => {
+								setForm((prev) => {
+									const copy = [...prev.toolbarConfig];
+									copy[i].enabled = e.target.checked;
+									return {
+										...prev,
+										toolbarConfig: [...copy],
+									};
+								});
+							}}
+						/>
+						<div>{displayText}</div>
+						<div className="flex">
+							<div
+								className="clickable-icon"
+								onClick={() => {
+									if (i === 0) return;
+									setForm((prev) => {
+										const copy = [...prev.toolbarConfig];
+										return {
+											...prev,
+											toolbarConfig: arrayMove(
+												copy,
+												i,
+												i - 1,
+											),
+										};
+									});
+								}}
+							>
+								<ArrowUp className="svg-icon" />
+							</div>
+							<div
+								className="clickable-icon"
+								onClick={() => {
+									setForm((prev) => {
+										const copy = [...prev.toolbarConfig];
+										if (i === copy.length - 1) return;
+										return {
+											...prev,
+											toolbarConfig: arrayMove(
+												copy,
+												i,
+												i + 1,
+											),
+										};
+									});
+								}}
+							>
+								<ArrowDown className="svg-icon" />
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+			{/* <SettingControl>
+				<input type="text" />
+			</SettingControl> */}
+		</SettingRoot>
+	);
+};
 
 // export const BlockSettings = ({
 // 	plugin,

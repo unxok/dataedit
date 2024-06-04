@@ -23,7 +23,7 @@ import { usePluginSettings } from "@/stores/global";
 import { useBlock } from "@/components/BlockProvider";
 
 export const StringInput = (props: InputSwitchProps<string>) => {
-	const { propertyName, propertyValue, filePath, isLocked } = props;
+	const { propertyName, propertyValue, filePath } = props;
 	const { ctx, plugin, blockId } = useBlock();
 	const [isEditing, setIsEditing] = useState(false);
 	const [isSuggestShown, setIsSuggestShown] = useState(false);
@@ -35,6 +35,7 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 		renderMarkdown,
 		horizontalAlignment,
 		allowImageFullSize,
+		lockEditing,
 	} = getBlockConfig(blockId);
 	// console.log("blockId: ", blockId);
 	// console.log("showAutoComplete: ", showAutoComplete);
@@ -75,7 +76,7 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 	// 	[selectedSuggestion],
 	// );
 
-	if (!isEditing || isLocked) {
+	if (!isEditing || lockEditing) {
 		return (
 			<Markdown
 				disabled={!renderMarkdown}
@@ -84,7 +85,7 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 				plainText={propertyValue || dvRenderNullAs}
 				className={`flex h-fit min-h-4 w-full break-keep [&_*]:my-0 ${getJustifyContentClass(horizontalAlignment)} ${allowImageFullSize ? "[&_img]:!max-w-[unset]" : ""}`}
 				onClick={() => {
-					if (!isLocked) {
+					if (!lockEditing) {
 						setIsEditing(true);
 						setIsSuggestShown(true);
 					}

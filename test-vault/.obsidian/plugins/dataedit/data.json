@@ -3,6 +3,23 @@
   "blockConfigs": {
     "default": {
       "filePath": "",
+      "toolbarConfig": [
+        {
+          "componentName": "SettingsGear",
+          "displayText": "Settings gear",
+          "enabled": true
+        },
+        {
+          "componentName": "PaginationNav",
+          "displayText": "Pagination",
+          "enabled": true
+        },
+        {
+          "componentName": "PageSize",
+          "displayText": "Page size",
+          "enabled": true
+        }
+      ],
       "lockEditing": false,
       "listItemPrefix": "disc",
       "listVertical": true,
@@ -53,6 +70,43 @@
     },
     "stylish-perception": {
       "filePath": "Welcomeee.md",
+      "toolbarConfig": [
+        {
+          "componentName": "TotalResults",
+          "displayText": "Total results",
+          "enabled": true
+        },
+        {
+          "componentName": "SettingsGear",
+          "displayText": "Settings gear",
+          "enabled": true
+        },
+        {
+          "componentName": "PaginationNav",
+          "displayText": "Pagination",
+          "enabled": true
+        },
+        {
+          "componentName": "PageSize",
+          "displayText": "Page size",
+          "enabled": true
+        },
+        {
+          "componentName": "LockEditing",
+          "displayText": "Lock editing",
+          "enabled": true
+        },
+        {
+          "componentName": "HorizontalAlignment",
+          "displayText": "Horizontal alignment",
+          "enabled": true
+        },
+        {
+          "componentName": "VerticalAlignment",
+          "displayText": "Vertical alignment",
+          "enabled": true
+        }
+      ],
       "lockEditing": false,
       "listItemPrefix": "disc",
       "listVertical": true,
@@ -60,12 +114,12 @@
       "showTypeIcons": true,
       "showAutoComplete": true,
       "showColAndRowLabels": false,
-      "pageSize": 0,
+      "pageSize": 7,
       "currentPage": 1,
       "queryLinkPropertyName": "",
       "allowImageFullSize": false,
-      "verticalAlignment": "center",
-      "horizontalAlignment": "end",
+      "verticalAlignment": "start",
+      "horizontalAlignment": "start",
       "alignmentByType": {
         "text": {
           "vertical": "top",
