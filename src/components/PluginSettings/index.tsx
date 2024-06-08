@@ -58,6 +58,11 @@ export const BlockConfigSchema = z.object({
 			enabled: z.boolean(),
 		}),
 	),
+	toolbarPosition: z.union([
+		z.literal("top"),
+		z.literal("bottom"),
+		z.literal("disabled"),
+	]),
 	lockEditing: z.boolean(),
 	listItemPrefix: z.string(),
 	listVertical: z.boolean(),
@@ -124,6 +129,7 @@ export const defaultDefaultBlockConfig: z.infer<typeof BlockConfigSchema> = {
 			enabled: true,
 		},
 	],
+	toolbarPosition: "bottom",
 	lockEditing: false,
 	listItemPrefix: "disc",
 	listVertical: true,
@@ -177,11 +183,13 @@ export const defaultDefaultBlockConfig: z.infer<typeof BlockConfigSchema> = {
 
 export const PluginSettingsSchema = z.object({
 	allowJs: z.boolean(),
+	renderNullAs: z.string(),
 	blockConfigs: z.record(BlockConfigSchema),
 });
 
 export const defaultPluginSettings: z.infer<typeof PluginSettingsSchema> = {
 	allowJs: false,
+	renderNullAs: "\\-",
 	blockConfigs: {
 		default: defaultDefaultBlockConfig,
 	},
@@ -613,6 +621,29 @@ export const BlockConfig = ({
 				</SettingDescription>
 				<ToolbarSetting items={form.toolbarConfig} setForm={setForm} />
 				<StandardSetting
+					title={"Toolbar position"}
+					description={
+						"Set whether the position of the toolbar or disable it entirely.\n\nNote: if disabled, the settings gear will still be present"
+					}
+					control={
+						<select
+							className="dropdown"
+							defaultValue={form.toolbarPosition}
+							onChange={(v) =>
+								updateForm(
+									"toolbarPosition",
+									v.target
+										.value as typeof form.toolbarPosition,
+								)
+							}
+						>
+							<option value="top">Top</option>
+							<option value="bottom">Bottom</option>
+							<option value="disabled">disabled</option>
+						</select>
+					}
+				/>
+				<StandardSetting
 					title={"Auto suggest"}
 					description={
 						"Automatically suggest values from the existing values used for that property.\nOnly works on Text and Multitext."
@@ -743,6 +774,25 @@ export const BlockConfig = ({
 						/>
 					}
 				/>
+				{/* <StandardSetting
+					title={"Query links property name"}
+					description={
+						"If set, will cause Dataedit blocks to update that property name with the links for the queried notes.\nThis will cause queried notes to show in graph view"
+					}
+					control={
+						<input
+							defaultValue={form.queryLinkPropertyName}
+							placeholder="unset"
+							type="text"
+							onBlur={(e) =>
+								updateForm(
+									"queryLinkPropertyName",
+									e.target.value,
+								)
+							}
+						/>
+					}
+				/> */}
 				<StandardSetting
 					title={"List item prefix"}
 					description={
@@ -873,7 +923,7 @@ const ToolbarSetting = ({
 	return (
 		<SettingRoot className="flex-col justify-start gap-4">
 			<SettingInfo className="flex w-full flex-col justify-start">
-				<SettingName>Toolbar</SettingName>
+				<SettingName>Toolbar configuration</SettingName>
 				<SettingDescription className="whitespace-pre-line">
 					Select and reorder the items to show in the toolbar of the
 					table

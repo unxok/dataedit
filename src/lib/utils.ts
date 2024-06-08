@@ -332,16 +332,14 @@ export const updateMetaData = async (
 			propertyName,
 			propertyValue,
 		);
-		return (frontmatter = stringifyYaml(frontmatterObj));
+		// return (frontmatter = stringifyYaml(frontmatterObj));
+		frontmatter = frontmatterObj;
 	});
 	// await updateDataeditLinks();
 };
 
 // @ts-ignore
 export const dv = app.plugins.plugins?.dataview?.api;
-
-// TODO make this a setting
-export const dvRenderNullAs = "\\-";
 
 export const currentLocale = () => {
 	if (typeof window === "undefined") return "en-US";
@@ -442,4 +440,15 @@ export const arrayMove = <T>(arr: T[], fromIndex: number, toIndex: number) => {
 	copy.splice(fromIndex, 1);
 	copy.splice(toIndex, 0, el);
 	return copy;
+};
+
+/**
+ * Compares two arrays of a single depth
+ * @param arr1 The first array
+ * @param arr2 The second array
+ * @returns True if the arrays are the same, false otherwise
+ */
+export const simpleArrayCompare = (arr1: string[], arr2: string[]) => {
+	if (arr1?.length !== arr2?.length) return false;
+	return arr1.every((v, i) => v === arr2[i]);
 };

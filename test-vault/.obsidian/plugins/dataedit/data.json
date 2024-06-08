@@ -1,5 +1,6 @@
 {
   "allowJs": false,
+  "renderNullAs": "\\-",
   "blockConfigs": {
     "default": {
       "filePath": "",
@@ -40,6 +41,7 @@
           "enabled": true
         }
       ],
+      "toolbarPosition": "bottom",
       "lockEditing": false,
       "listItemPrefix": "disc",
       "listVertical": true,
@@ -129,6 +131,7 @@
           "enabled": true
         }
       ],
+      "toolbarPosition": "bottom",
       "lockEditing": false,
       "listItemPrefix": "disc",
       "listVertical": true,

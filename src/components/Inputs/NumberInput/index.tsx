@@ -1,6 +1,5 @@
 import { Markdown } from "@/components/Markdown";
 import {
-	dvRenderNullAs,
 	getAlignItemsClass,
 	getJustifyContentClass,
 	updateMetaData,
@@ -23,7 +22,10 @@ export const NumberInput = (props: InputSwitchProps<number>) => {
 	const { propertyName, propertyValue, filePath } = props;
 	const num = Number.isNaN(Number(propertyValue)) ? 0 : Number(propertyValue);
 	const { ctx, plugin, blockId } = useBlock();
-	const { getBlockConfig } = usePluginSettings();
+	const {
+		settings: { renderNullAs },
+		getBlockConfig,
+	} = usePluginSettings();
 	const {
 		horizontalAlignment,
 		verticalAlignment,
@@ -59,7 +61,7 @@ export const NumberInput = (props: InputSwitchProps<number>) => {
 					disabled={!renderMarkdown}
 					app={plugin.app}
 					filePath={ctx.sourcePath}
-					plainText={propertyValue?.toString() || dvRenderNullAs}
+					plainText={propertyValue?.toString() || renderNullAs}
 					className={
 						"flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " +
 						justify
@@ -70,25 +72,27 @@ export const NumberInput = (props: InputSwitchProps<number>) => {
 				/>
 				{!lockEditing && showNumberButtons && (
 					<div className={"flex w-full " + justify}>
-						<div className="clickable-icon">
-							<Minus
-								className="svg-icon"
-								onClick={async () => {
-									await updateMetaData(
-										propertyName,
-										num - 1,
-										filePath,
-										plugin,
-									);
-									setIsEditing(false);
-								}}
-							/>
+						<div
+							aria-label="Subtract 1"
+							className="clickable-icon"
+							onClick={async () => {
+								await updateMetaData(
+									propertyName,
+									num - 1,
+									filePath,
+									plugin,
+								);
+								setIsEditing(false);
+							}}
+						>
+							<Minus className="svg-icon" />
 						</div>
-						<div className="clickable-icon">
-							<Parentheses
-								className="svg-icon"
-								onClick={() => setDialogOpen(true)}
-							/>
+						<div
+							aria-label="Enter expression"
+							className="clickable-icon"
+							onClick={() => setDialogOpen(true)}
+						>
+							<Parentheses className="svg-icon" />
 							{isDialogOpen && (
 								<Dialog
 									open={isDialogOpen}
@@ -178,21 +182,22 @@ export const NumberInput = (props: InputSwitchProps<number>) => {
 								</Dialog>
 							)}
 						</div>
-						<div className="clickable-icon">
-							<Plus
-								className="svg-icon"
-								onClick={async () => {
-									const val = Number(propertyValue);
-									const num = Number.isNaN(val) ? 0 : val;
-									await updateMetaData(
-										propertyName,
-										num + 1,
-										filePath,
-										plugin,
-									);
-									setIsEditing(false);
-								}}
-							/>
+						<div
+							aria-label="Add 1"
+							className="clickable-icon"
+							onClick={async () => {
+								const val = Number(propertyValue);
+								const num = Number.isNaN(val) ? 0 : val;
+								await updateMetaData(
+									propertyName,
+									num + 1,
+									filePath,
+									plugin,
+								);
+								setIsEditing(false);
+							}}
+						>
+							<Plus className="svg-icon" />
 						</div>
 					</div>
 				)}

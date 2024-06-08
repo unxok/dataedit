@@ -1,7 +1,6 @@
 import { Markdown } from "@/components/Markdown";
 import {
 	currentLocale,
-	dvRenderNullAs,
 	getJustifyContentClass,
 	updateMetaData,
 } from "@/lib/utils";
@@ -16,7 +15,10 @@ export const DateTimeInput = (
 ) => {
 	const { propertyName, propertyValue, filePath, hasTime } = props;
 	const { ctx, plugin, blockId } = useBlock();
-	const { getBlockConfig } = usePluginSettings();
+	const {
+		settings: { renderNullAs },
+		getBlockConfig,
+	} = usePluginSettings();
 	const { horizontalAlignment, renderMarkdown, lockEditing } =
 		getBlockConfig(blockId);
 	const [isEditing, setIsEditing] = useState(false);
@@ -58,7 +60,7 @@ export const DateTimeInput = (
 				disabled={!renderMarkdown}
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={formattedDate || dvRenderNullAs}
+				plainText={formattedDate || renderNullAs}
 				className={
 					"flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " +
 					getJustifyContentClass(horizontalAlignment)

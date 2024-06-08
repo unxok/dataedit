@@ -2,6 +2,7 @@ import {
 	MarkdownPostProcessorContext,
 	MarkdownSectionInformation,
 	Notice,
+	debounce,
 	parseYaml,
 	stringifyYaml,
 } from "obsidian";
@@ -21,18 +22,12 @@ import DataEdit, { loadDependencies } from "@/main";
 import {
 	checkForInlineField,
 	cn,
-	currentLocale,
-	dv,
-	dvRenderNullAs,
 	getAlignItemsClass,
 	getColAliasObj,
 	getPropertyType,
 	iconStyle,
-	isDateWithTime,
-	iterateStringKeys,
 	numberToBase26Letters,
 	tryToMarkdownLink,
-	updateMetaData,
 } from "@/lib/utils";
 import { Markdown } from "./Markdown";
 import {
@@ -364,7 +359,6 @@ export const App = (props: {
 	};
 
 	useEffect(() => {
-		setSettings(() => plugin.settings);
 		setFileLinkHidden(hideFileLink);
 		(async () => {
 			const b = await loadDependencies();
@@ -373,6 +367,12 @@ export const App = (props: {
 					"Datedit: Failed to load dependencies\n\nIs Dataview installed and enabled?",
 				);
 			}
+			setSettings(() => ({
+				...plugin?.settings,
+				renderNullAs:
+					// @ts-ignore
+					app.plugins.plugins.dataview.settings.renderNullAs,
+			}));
 			await doQuery();
 		})();
 		plugin.app.metadataCache.on(
@@ -400,16 +400,52 @@ export const App = (props: {
 		plugin.updateSettings(settings);
 	}, [settings]);
 
+	// const updateQueryLinks = debounce(() => {
+	// 	// @ts-ignore
+	// 	const current = app.plugins.plugins.dataview.api.page(ctx.sourcePath)?.[
+	// 		queryLinkPropertyName
+	// 	];
+	// 	const queryLinks = queryResults?.values?.map((row) =>
+	// 		row?.[fileHeaderIndex]?.markdown(),
+	// 	);
+	// 	if (simpleArrayCompare(current, queryLinks)) return;
+	// 	console.log("about to do query links");
+	// 	(async () => {
+	// 		await updateMetaData(
+	// 			queryLinkPropertyName,
+	// 			queryLinks,
+	// 			ctx.sourcePath,
+	// 			plugin,
+	// 		);
+	// 	})();
+	// }, 1000);
+
 	useEffect(() => {
 		console.log("queryResults changed: ", queryResults);
 		if (!queryResults) return;
-		setFileHeaderIndex(findFileHeaderIndex(queryResults.headers));
+		const h = findFileHeaderIndex(queryResults.headers);
+		setFileHeaderIndex((prev) => {
+			if (prev !== h) {
+				return h;
+			}
+			return prev;
+		});
+		if (!queryLinkPropertyName) return;
+		// TODO Doing this causes the metadata update event to fire which causes this to run again
+		// despite doing a shallow compare that doesn't seem to work so it causes an infinite loop
+		// updateQueryLinks();
 	}, [queryResults]);
 
 	if (!settings) return;
 
-	const { pageSize, currentPage, showColAndRowLabels } =
-		getBlockConfig(blockId);
+	const {
+		pageSize,
+		currentPage,
+		showColAndRowLabels,
+		queryLinkPropertyName,
+		toolbarPosition,
+	} = getBlockConfig(blockId);
+
 	const startIndex = pageSize < 1 ? 0 : (currentPage - 1) * pageSize;
 	const endIndex =
 		pageSize < 1 ? queryResults?.values?.length : startIndex + pageSize;
@@ -418,6 +454,29 @@ export const App = (props: {
 	const { blockConfigs } = settings;
 	if (!blockConfigs) return;
 	const config = blockConfigs[blockId] ?? blockConfigs["default"];
+
+	const Toolbar = () => {
+		return config?.toolbarConfig?.map(({ componentName, enabled }, i) => {
+			if (!enabled) return;
+			return (
+				<Fragment key={i}>
+					<ToolbarSwitch
+						// key={i + "toolbar"}
+						componentName={componentName}
+						settingsGearOnClick={settingsGearOnClick}
+						blockId={blockId}
+						totalRows={queryResults?.values?.length}
+					/>
+					{i !== config.toolbarConfig.length - 1 && (
+						<DividerVerticalIcon
+							// key={i + "divider"}
+							className="text-secondary-alt"
+						/>
+					)}
+				</Fragment>
+			);
+		});
+	};
 
 	const settingsGearOnClick = blockId
 		? () => setShowSettings(true)
@@ -454,6 +513,17 @@ export const App = (props: {
 		>
 			<div className="twcss" style={{ overflowX: "scroll" }}>
 				<ErrorBoundary FallbackComponent={Fallback}>
+					{toolbarPosition === "top" && (
+						<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
+							{blockId && <Toolbar />}
+							{!blockId && (
+								<SettingsGear
+									blockId={blockId}
+									onClick={settingsGearOnClick}
+								/>
+							)}
+						</div>
+					)}
 					{/* height 1px allows divs to be 100% of the td -_- */}
 					<table className="dataedit h-[1px]">
 						<thead>
@@ -486,6 +556,7 @@ export const App = (props: {
 										className=""
 										hideFileLink={isFileLinkHidden}
 										propertyName={h}
+										index={i}
 									/>
 								))}
 							</tr>
@@ -520,68 +591,34 @@ export const App = (props: {
 							))}
 						</tbody>
 					</table>
-					<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
-						{blockId &&
-							config?.toolbarConfig?.map(
-								({ componentName, enabled }, i) => {
-									if (!enabled) return;
-									return (
-										<Fragment key={i}>
-											<ToolbarSwitch
-												// key={i + "toolbar"}
-												componentName={componentName}
-												settingsGearOnClick={
-													settingsGearOnClick
-												}
-												blockId={blockId}
-												totalRows={
-													queryResults?.values?.length
-												}
-											/>
-											{i !==
-												config.toolbarConfig.length -
-													1 && (
-												<DividerVerticalIcon
-													// key={i + "divider"}
-													className="text-secondary-alt"
-												/>
-											)}
-										</Fragment>
-									);
-								},
+					{toolbarPosition === "bottom" && (
+						<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
+							{blockId && <Toolbar />}
+							{!blockId && (
+								<SettingsGear
+									blockId={blockId}
+									onClick={settingsGearOnClick}
+								/>
 							)}
-						{!blockId && (
+						</div>
+					)}
+					{(!blockId || toolbarPosition === "disabled") && (
+						<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
 							<SettingsGear
 								blockId={blockId}
 								onClick={settingsGearOnClick}
 							/>
-						)}
-						{/* <PaginationNav totalRows={queryResults.values.length} />
-						<PaginationSize />
-						<SettingsGear
-							blockId={blockId}
-							onClick={
-								blockId
-									? () => setShowSettings(true)
-									: async () =>
-											await writeRandomId(
-												ctx,
-												getSectionInfo(),
-												plugin,
-												settings.blockConfigs,
-											)
-							}
-						/> */}
-						{showSettings && (
-							<BlockConfig
-								id={blockId}
-								filePath={ctx.sourcePath}
-								open={showSettings}
-								setOpen={setShowSettings}
-								// onChange={(bc) => setBlockConfig(bc)}
-							/>
-						)}
-					</div>
+						</div>
+					)}
+					{showSettings && (
+						<BlockConfig
+							id={blockId}
+							filePath={ctx.sourcePath}
+							open={showSettings}
+							setOpen={setShowSettings}
+							// onChange={(bc) => setBlockConfig(bc)}
+						/>
+					)}
 				</ErrorBoundary>
 			</div>
 		</BlockProvider>
@@ -1080,14 +1117,16 @@ const Th = ({
 	propertyName,
 	className,
 	hideFileLink,
+	index,
 }: {
 	propertyName: string;
 	className?: ClassValue;
 	hideFileLink: boolean;
+	index: number;
 }) => {
 	const { ctx, plugin, aliasObj, blockId } = useBlock();
 	const { getBlockConfig } = usePluginSettings();
-	const { showTypeIcons } = getBlockConfig(blockId);
+	const { showTypeIcons, columnWidths } = getBlockConfig(blockId);
 	const propName = aliasObj[propertyName] ?? propertyName;
 	// TODO check for different prop name set in dataview settings?
 	const isFileProp =

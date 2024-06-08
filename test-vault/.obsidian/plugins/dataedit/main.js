@@ -26528,11 +26528,11 @@ var updateMetaData = async (propertyName2, propertyValue2, filePath3, plugin2) =
   await plugin2.app.fileManager.processFrontMatter(file, (frontmatter) => {
     const arr = propertyName2.split(".");
     if (arr.length === 1) {
-      const dv4 = app.plugins.plugins.dataview.api;
+      const dv3 = app.plugins.plugins.dataview.api;
       const isInlineField = checkForInlineField(
         propertyName2,
         filePath3,
-        dv4
+        dv3
       );
       if (isInlineField.success) {
         if (propertyValue2 === isInlineField.value)
@@ -26552,11 +26552,10 @@ var updateMetaData = async (propertyName2, propertyValue2, filePath3, plugin2) =
       propertyName2,
       propertyValue2
     );
-    return frontmatter = (0, import_obsidian2.stringifyYaml)(frontmatterObj);
+    frontmatter = frontmatterObj;
   });
 };
 var dv2 = app.plugins.plugins?.dataview?.api;
-var dvRenderNullAs = "\\-";
 var currentLocale = () => {
   if (typeof window === "undefined")
     return "en-US";
@@ -33184,6 +33183,11 @@ var BlockConfigSchema2 = z.object({
       enabled: z.boolean()
     })
   ),
+  toolbarPosition: z.union([
+    z.literal("top"),
+    z.literal("bottom"),
+    z.literal("disabled")
+  ]),
   lockEditing: z.boolean(),
   listItemPrefix: z.string(),
   listVertical: z.boolean(),
@@ -33249,6 +33253,7 @@ var defaultDefaultBlockConfig = {
       enabled: true
     }
   ],
+  toolbarPosition: "bottom",
   lockEditing: false,
   listItemPrefix: "disc",
   listVertical: true,
@@ -33301,10 +33306,12 @@ var defaultDefaultBlockConfig = {
 };
 var PluginSettingsSchema2 = z.object({
   allowJs: z.boolean(),
+  renderNullAs: z.string(),
   blockConfigs: z.record(BlockConfigSchema2)
 });
 var defaultPluginSettings = {
   allowJs: false,
+  renderNullAs: "\\-",
   blockConfigs: {
     default: defaultDefaultBlockConfig
   }
@@ -33366,6 +33373,26 @@ var BlockConfig = ({
     },
     "Reset"
   ))), /* @__PURE__ */ import_react22.default.createElement(ToolbarSetting, { items: form.toolbarConfig, setForm }), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Toolbar position",
+      description: "Set whether the position of the toolbar or disable it entirely.\n\nNote: if disabled, the settings gear will still be present",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        "select",
+        {
+          className: "dropdown",
+          defaultValue: form.toolbarPosition,
+          onChange: (v) => updateForm(
+            "toolbarPosition",
+            v.target.value
+          )
+        },
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "top" }, "Top"),
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "bottom" }, "Bottom"),
+        /* @__PURE__ */ import_react22.default.createElement("option", { value: "disabled" }, "disabled")
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
     StandardSetting,
     {
       title: "Auto suggest",
@@ -33584,7 +33611,7 @@ var ToolbarSetting = ({
   items,
   setForm
 }) => {
-  return /* @__PURE__ */ import_react22.default.createElement(SettingRoot, { className: "flex-col justify-start gap-4" }, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, { className: "flex w-full flex-col justify-start" }, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, "Toolbar"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Select and reorder the items to show in the toolbar of the table")), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex w-full flex-col gap-3" }, items.map(({ componentName, displayText, enabled }, i) => /* @__PURE__ */ import_react22.default.createElement("div", { key: i, className: "flex items-center gap-1" }, /* @__PURE__ */ import_react22.default.createElement(
+  return /* @__PURE__ */ import_react22.default.createElement(SettingRoot, { className: "flex-col justify-start gap-4" }, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, { className: "flex w-full flex-col justify-start" }, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, "Toolbar configuration"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Select and reorder the items to show in the toolbar of the table")), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex w-full flex-col gap-3" }, items.map(({ componentName, displayText, enabled }, i) => /* @__PURE__ */ import_react22.default.createElement("div", { key: i, className: "flex items-center gap-1" }, /* @__PURE__ */ import_react22.default.createElement(
     "input",
     {
       type: "checkbox",
@@ -42614,7 +42641,10 @@ var import_react31 = __toESM(require_react());
 var DateTimeInput = (props2) => {
   const { propertyName: propertyName2, propertyValue: propertyValue2, filePath: filePath3, hasTime } = props2;
   const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
-  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const {
+    settings: { renderNullAs: renderNullAs2 },
+    getBlockConfig: getBlockConfig2
+  } = usePluginSettings();
   const { horizontalAlignment: horizontalAlignment2, renderMarkdown: renderMarkdown2, lockEditing: lockEditing2 } = getBlockConfig2(blockId2);
   const [isEditing2, setIsEditing2] = (0, import_react31.useState)(false);
   const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react31.useState)({
@@ -42646,7 +42676,7 @@ var DateTimeInput = (props2) => {
         disabled: !renderMarkdown2,
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: formattedDate || dvRenderNullAs,
+        plainText: formattedDate || renderNullAs2,
         className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment2),
         onClick: () => {
           !lockEditing2 && setIsEditing2(true);
@@ -42680,7 +42710,10 @@ var NumberInput = (props) => {
   const { propertyName, propertyValue, filePath } = props;
   const num = Number.isNaN(Number(propertyValue)) ? 0 : Number(propertyValue);
   const { ctx, plugin, blockId } = useBlock();
-  const { getBlockConfig } = usePluginSettings();
+  const {
+    settings: { renderNullAs },
+    getBlockConfig
+  } = usePluginSettings();
   const {
     horizontalAlignment,
     verticalAlignment,
@@ -42714,17 +42747,18 @@ var NumberInput = (props) => {
           disabled: !renderMarkdown,
           app: plugin.app,
           filePath: ctx.sourcePath,
-          plainText: propertyValue?.toString() || dvRenderNullAs,
+          plainText: propertyValue?.toString() || renderNullAs,
           className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + justify,
           onClick: () => {
             !lockEditing && setIsEditing(true);
           }
         }
       ),
-      !lockEditing && showNumberButtons && /* @__PURE__ */ import_react32.default.createElement("div", { className: "flex w-full " + justify }, /* @__PURE__ */ import_react32.default.createElement("div", { className: "clickable-icon" }, /* @__PURE__ */ import_react32.default.createElement(
-        Minus,
+      !lockEditing && showNumberButtons && /* @__PURE__ */ import_react32.default.createElement("div", { className: "flex w-full " + justify }, /* @__PURE__ */ import_react32.default.createElement(
+        "div",
         {
-          className: "svg-icon",
+          "aria-label": "Subtract 1",
+          className: "clickable-icon",
           onClick: async () => {
             await updateMetaData(
               propertyName,
@@ -42734,71 +42768,76 @@ var NumberInput = (props) => {
             );
             setIsEditing(false);
           }
-        }
-      )), /* @__PURE__ */ import_react32.default.createElement("div", { className: "clickable-icon" }, /* @__PURE__ */ import_react32.default.createElement(
-        Parentheses,
-        {
-          className: "svg-icon",
-          onClick: () => setDialogOpen(true)
-        }
-      ), isDialogOpen && /* @__PURE__ */ import_react32.default.createElement(
-        Dialog,
-        {
-          open: isDialogOpen,
-          onOpenChange: (b) => {
-            setCalculated(num);
-            setDialogOpen(b);
-          }
         },
-        /* @__PURE__ */ import_react32.default.createElement(DialogContent, { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react32.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react32.default.createElement(DialogTitle, null, "Expression input"), /* @__PURE__ */ import_react32.default.createElement(DialogDescription, null, "Enter any valid", " ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Math" }, "Javascript math expression", /* @__PURE__ */ import_react32.default.createElement("span", { className: "external-link" })), ". You may use ", /* @__PURE__ */ import_react32.default.createElement("code", null, "x"), " to use the current value in your expressions")), /* @__PURE__ */ import_react32.default.createElement(
-          "input",
-          {
-            autoFocus: true,
-            type: "text",
-            placeholder: "(x + 5)**2 - Math.PI",
-            className: "w-full",
-            onChange: (e) => doCalculation(e.target.value),
-            onKeyDown: async (e) => {
-              if (e.key !== "Enter" || Number.isNaN(calculated))
-                return;
-              await updateMetaData(
-                propertyName,
-                calculated,
-                filePath,
-                plugin
-              );
-              setDialogOpen(false);
-            }
-          }
-        ), /* @__PURE__ */ import_react32.default.createElement("div", null, "Calculated:", " ", Number.isNaN(calculated) ? /* @__PURE__ */ import_react32.default.createElement("span", { className: "text-error" }, "Invalid") : /* @__PURE__ */ import_react32.default.createElement("span", { className: "text-success" }, calculated)), /* @__PURE__ */ import_react32.default.createElement(DialogFooter, null, /* @__PURE__ */ import_react32.default.createElement(
-          "button",
-          {
-            onClick: () => setDialogOpen(false)
-          },
-          "cancel"
-        ), /* @__PURE__ */ import_react32.default.createElement(
-          "button",
-          {
-            disabled: Number.isNaN(
-              calculated
-            ),
-            onClick: async () => {
-              await updateMetaData(
-                propertyName,
-                calculated,
-                filePath,
-                plugin
-              );
-              setDialogOpen(false);
-            },
-            className: "mod-cta"
-          },
-          "update"
-        )))
-      )), /* @__PURE__ */ import_react32.default.createElement("div", { className: "clickable-icon" }, /* @__PURE__ */ import_react32.default.createElement(
-        Plus,
+        /* @__PURE__ */ import_react32.default.createElement(Minus, { className: "svg-icon" })
+      ), /* @__PURE__ */ import_react32.default.createElement(
+        "div",
         {
-          className: "svg-icon",
+          "aria-label": "Enter expression",
+          className: "clickable-icon",
+          onClick: () => setDialogOpen(true)
+        },
+        /* @__PURE__ */ import_react32.default.createElement(Parentheses, { className: "svg-icon" }),
+        isDialogOpen && /* @__PURE__ */ import_react32.default.createElement(
+          Dialog,
+          {
+            open: isDialogOpen,
+            onOpenChange: (b) => {
+              setCalculated(num);
+              setDialogOpen(b);
+            }
+          },
+          /* @__PURE__ */ import_react32.default.createElement(DialogContent, { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react32.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react32.default.createElement(DialogTitle, null, "Expression input"), /* @__PURE__ */ import_react32.default.createElement(DialogDescription, null, "Enter any valid", " ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Math" }, "Javascript math expression", /* @__PURE__ */ import_react32.default.createElement("span", { className: "external-link" })), ". You may use ", /* @__PURE__ */ import_react32.default.createElement("code", null, "x"), " to use the current value in your expressions")), /* @__PURE__ */ import_react32.default.createElement(
+            "input",
+            {
+              autoFocus: true,
+              type: "text",
+              placeholder: "(x + 5)**2 - Math.PI",
+              className: "w-full",
+              onChange: (e) => doCalculation(e.target.value),
+              onKeyDown: async (e) => {
+                if (e.key !== "Enter" || Number.isNaN(calculated))
+                  return;
+                await updateMetaData(
+                  propertyName,
+                  calculated,
+                  filePath,
+                  plugin
+                );
+                setDialogOpen(false);
+              }
+            }
+          ), /* @__PURE__ */ import_react32.default.createElement("div", null, "Calculated:", " ", Number.isNaN(calculated) ? /* @__PURE__ */ import_react32.default.createElement("span", { className: "text-error" }, "Invalid") : /* @__PURE__ */ import_react32.default.createElement("span", { className: "text-success" }, calculated)), /* @__PURE__ */ import_react32.default.createElement(DialogFooter, null, /* @__PURE__ */ import_react32.default.createElement(
+            "button",
+            {
+              onClick: () => setDialogOpen(false)
+            },
+            "cancel"
+          ), /* @__PURE__ */ import_react32.default.createElement(
+            "button",
+            {
+              disabled: Number.isNaN(
+                calculated
+              ),
+              onClick: async () => {
+                await updateMetaData(
+                  propertyName,
+                  calculated,
+                  filePath,
+                  plugin
+                );
+                setDialogOpen(false);
+              },
+              className: "mod-cta"
+            },
+            "update"
+          )))
+        )
+      ), /* @__PURE__ */ import_react32.default.createElement(
+        "div",
+        {
+          "aria-label": "Add 1",
+          className: "clickable-icon",
           onClick: async () => {
             const val = Number(propertyValue);
             const num2 = Number.isNaN(val) ? 0 : val;
@@ -42810,8 +42849,9 @@ var NumberInput = (props) => {
             );
             setIsEditing(false);
           }
-        }
-      )))
+        },
+        /* @__PURE__ */ import_react32.default.createElement(Plus, { className: "svg-icon" })
+      ))
     );
   }
   return /* @__PURE__ */ import_react32.default.createElement(
@@ -42840,7 +42880,10 @@ var StringInput = (props2) => {
   const [isSuggestShown, setIsSuggestShown] = (0, import_react33.useState)(false);
   const [selectedSuggestion, setSelectedSuggestion] = (0, import_react33.useState)();
   const [query2, setQuery] = (0, import_react33.useState)(propertyValue2);
-  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
+  const {
+    settings: { renderNullAs: renderNullAs2 },
+    getBlockConfig: getBlockConfig2
+  } = usePluginSettings();
   const {
     showAutoComplete,
     renderMarkdown: renderMarkdown2,
@@ -42882,7 +42925,7 @@ var StringInput = (props2) => {
         disabled: !renderMarkdown2,
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: propertyValue2 || dvRenderNullAs,
+        plainText: propertyValue2 || renderNullAs2,
         className: `flex h-fit min-h-4 w-full break-keep [&_*]:my-0 ${getJustifyContentClass(horizontalAlignment2)} ${allowImageFullSize ? "[&_img]:!max-w-[unset]" : ""}`,
         onClick: () => {
           if (!lockEditing2) {
@@ -63983,7 +64026,6 @@ var App3 = (props) => {
     safeSetQueryResults(qr.value);
   };
   (0, import_react37.useEffect)(() => {
-    setSettings(() => plugin.settings);
     setFileLinkHidden(hideFileLink);
     (async () => {
       const b = await loadDependencies();
@@ -63992,6 +64034,13 @@ var App3 = (props) => {
           "Datedit: Failed to load dependencies\n\nIs Dataview installed and enabled?"
         );
       }
+      setSettings(() => ({
+        ...plugin?.settings,
+        renderNullAs: (
+          // @ts-ignore
+          app.plugins.plugins.dataview.settings.renderNullAs
+        )
+      }));
       await doQuery();
     })();
     plugin.app.metadataCache.on(
@@ -64021,11 +64070,25 @@ var App3 = (props) => {
     console.log("queryResults changed: ", queryResults);
     if (!queryResults)
       return;
-    setFileHeaderIndex(findFileHeaderIndex(queryResults.headers));
+    const h = findFileHeaderIndex(queryResults.headers);
+    setFileHeaderIndex((prev) => {
+      if (prev !== h) {
+        return h;
+      }
+      return prev;
+    });
+    if (!queryLinkPropertyName)
+      return;
   }, [queryResults]);
   if (!settings)
     return;
-  const { pageSize, currentPage, showColAndRowLabels } = getBlockConfig(blockId);
+  const {
+    pageSize,
+    currentPage,
+    showColAndRowLabels,
+    queryLinkPropertyName,
+    toolbarPosition
+  } = getBlockConfig(blockId);
   const startIndex = pageSize < 1 ? 0 : (currentPage - 1) * pageSize;
   const endIndex = pageSize < 1 ? queryResults?.values?.length : startIndex + pageSize;
   const currentRows = queryResults?.values?.slice(startIndex, endIndex);
@@ -64033,6 +64096,26 @@ var App3 = (props) => {
   if (!blockConfigs)
     return;
   const config = blockConfigs[blockId] ?? blockConfigs["default"];
+  const Toolbar = () => {
+    return config?.toolbarConfig?.map(({ componentName, enabled }, i) => {
+      if (!enabled)
+        return;
+      return /* @__PURE__ */ import_react37.default.createElement(import_react37.Fragment, { key: i }, /* @__PURE__ */ import_react37.default.createElement(
+        ToolbarSwitch,
+        {
+          componentName,
+          settingsGearOnClick,
+          blockId,
+          totalRows: queryResults?.values?.length
+        }
+      ), i !== config.toolbarConfig.length - 1 && /* @__PURE__ */ import_react37.default.createElement(
+        DividerVerticalIcon,
+        {
+          className: "text-secondary-alt"
+        }
+      ));
+    });
+  };
   const settingsGearOnClick = blockId ? () => setShowSettings(true) : async () => await writeRandomId(
     ctx,
     getSectionInfo(),
@@ -64052,7 +64135,13 @@ var App3 = (props) => {
       ctx,
       aliasObj
     },
-    /* @__PURE__ */ import_react37.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react37.default.createElement(ErrorBoundary, { FallbackComponent: Fallback }, /* @__PURE__ */ import_react37.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react37.default.createElement("thead", null, showColAndRowLabels && /* @__PURE__ */ import_react37.default.createElement("tr", null, /* @__PURE__ */ import_react37.default.createElement("th", { className: "!bg-secondary" }), queryResults?.headers?.map((_, i) => /* @__PURE__ */ import_react37.default.createElement(
+    /* @__PURE__ */ import_react37.default.createElement("div", { className: "twcss", style: { overflowX: "scroll" } }, /* @__PURE__ */ import_react37.default.createElement(ErrorBoundary, { FallbackComponent: Fallback }, toolbarPosition === "top" && /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, blockId && /* @__PURE__ */ import_react37.default.createElement(Toolbar, null), !blockId && /* @__PURE__ */ import_react37.default.createElement(
+      SettingsGear,
+      {
+        blockId,
+        onClick: settingsGearOnClick
+      }
+    )), /* @__PURE__ */ import_react37.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react37.default.createElement("thead", null, showColAndRowLabels && /* @__PURE__ */ import_react37.default.createElement("tr", null, /* @__PURE__ */ import_react37.default.createElement("th", { className: "!bg-secondary" }), queryResults?.headers?.map((_, i) => /* @__PURE__ */ import_react37.default.createElement(
       "th",
       {
         key: i + "-table-header-col-label",
@@ -64065,7 +64154,8 @@ var App3 = (props) => {
         key: i + "table-header",
         className: "",
         hideFileLink: isFileLinkHidden,
-        propertyName: h
+        propertyName: h,
+        index: i
       }
     )))), /* @__PURE__ */ import_react37.default.createElement("tbody", null, currentRows?.map((r2, i) => /* @__PURE__ */ import_react37.default.createElement("tr", { key: i + "-table-body-row" }, showColAndRowLabels && /* @__PURE__ */ import_react37.default.createElement("td", { className: "w-fit min-w-0 bg-secondary" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "my-auto flex h-full w-full items-center justify-center" }, i + 2)), r2?.map((d, k) => /* @__PURE__ */ import_react37.default.createElement(
       Td,
@@ -64077,32 +64167,19 @@ var App3 = (props) => {
         hideFileLink: isFileLinkHidden,
         filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path
       }
-    )))))), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, blockId && config?.toolbarConfig?.map(
-      ({ componentName, enabled }, i) => {
-        if (!enabled)
-          return;
-        return /* @__PURE__ */ import_react37.default.createElement(import_react37.Fragment, { key: i }, /* @__PURE__ */ import_react37.default.createElement(
-          ToolbarSwitch,
-          {
-            componentName,
-            settingsGearOnClick,
-            blockId,
-            totalRows: queryResults?.values?.length
-          }
-        ), i !== config.toolbarConfig.length - 1 && /* @__PURE__ */ import_react37.default.createElement(
-          DividerVerticalIcon,
-          {
-            className: "text-secondary-alt"
-          }
-        ));
-      }
-    ), !blockId && /* @__PURE__ */ import_react37.default.createElement(
+    )))))), toolbarPosition === "bottom" && /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, blockId && /* @__PURE__ */ import_react37.default.createElement(Toolbar, null), !blockId && /* @__PURE__ */ import_react37.default.createElement(
       SettingsGear,
       {
         blockId,
         onClick: settingsGearOnClick
       }
-    ), showSettings && /* @__PURE__ */ import_react37.default.createElement(
+    )), (!blockId || toolbarPosition === "disabled") && /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, /* @__PURE__ */ import_react37.default.createElement(
+      SettingsGear,
+      {
+        blockId,
+        onClick: settingsGearOnClick
+      }
+    )), showSettings && /* @__PURE__ */ import_react37.default.createElement(
       BlockConfig,
       {
         id: blockId,
@@ -64110,7 +64187,7 @@ var App3 = (props) => {
         open: showSettings,
         setOpen: setShowSettings
       }
-    ))))
+    )))
   );
 };
 var ToolbarSwitch = ({
@@ -64500,11 +64577,12 @@ var SettingsGear = ({
 var Th = ({
   propertyName: propertyName2,
   className,
-  hideFileLink: hideFileLink2
+  hideFileLink: hideFileLink2,
+  index: index2
 }) => {
   const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { showTypeIcons } = getBlockConfig2(blockId2);
+  const { showTypeIcons, columnWidths } = getBlockConfig2(blockId2);
   const propName = aliasObj2[propertyName2] ?? propertyName2;
   const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
   const prePropertyType = isFileProp ? FILE : getPropertyType(propName);

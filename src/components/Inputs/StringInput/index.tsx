@@ -7,11 +7,7 @@ import React, {
 } from "react";
 import { Markdown } from "@/components/Markdown";
 import { InputSwitchProps } from "..";
-import {
-	dvRenderNullAs,
-	getJustifyContentClass,
-	updateMetaData,
-} from "@/lib/utils";
+import { getJustifyContentClass, updateMetaData } from "@/lib/utils";
 import { getBlockId } from "@/components/App";
 import {
 	Popover,
@@ -29,7 +25,10 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 	const [isSuggestShown, setIsSuggestShown] = useState(false);
 	const [selectedSuggestion, setSelectedSuggestion] = useState<string>();
 	const [query, setQuery] = useState(propertyValue);
-	const { getBlockConfig } = usePluginSettings();
+	const {
+		settings: { renderNullAs },
+		getBlockConfig,
+	} = usePluginSettings();
 	const {
 		showAutoComplete,
 		renderMarkdown,
@@ -82,7 +81,7 @@ export const StringInput = (props: InputSwitchProps<string>) => {
 				disabled={!renderMarkdown}
 				app={plugin.app}
 				filePath={ctx.sourcePath}
-				plainText={propertyValue || dvRenderNullAs}
+				plainText={propertyValue || renderNullAs}
 				className={`flex h-fit min-h-4 w-full break-keep [&_*]:my-0 ${getJustifyContentClass(horizontalAlignment)} ${allowImageFullSize ? "[&_img]:!max-w-[unset]" : ""}`}
 				onClick={() => {
 					if (!lockEditing) {
