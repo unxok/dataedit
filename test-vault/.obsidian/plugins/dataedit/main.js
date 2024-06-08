@@ -3064,8 +3064,8 @@ var require_react_dom_development = __commonJS({
         function getValueForProperty(node, name2, expected, propertyInfo) {
           {
             if (propertyInfo.mustUseProperty) {
-              var propertyName = propertyInfo.propertyName;
-              return node[propertyName];
+              var propertyName2 = propertyInfo.propertyName;
+              return node[propertyName2];
             } else {
               {
                 checkAttributeStringCoercion(expected, name2);
@@ -3150,12 +3150,12 @@ var require_react_dom_development = __commonJS({
           }
           var mustUseProperty = propertyInfo.mustUseProperty;
           if (mustUseProperty) {
-            var propertyName = propertyInfo.propertyName;
+            var propertyName2 = propertyInfo.propertyName;
             if (value === null) {
               var type = propertyInfo.type;
-              node[propertyName] = type === BOOLEAN ? false : "";
+              node[propertyName2] = type === BOOLEAN ? false : "";
             } else {
-              node[propertyName] = value;
+              node[propertyName2] = value;
             }
             return;
           }
@@ -26399,12 +26399,12 @@ var ITEMS = {
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
-var getPropertyType = (propertyName) => {
+var getPropertyType = (propertyName2) => {
   const { metadataTypeManager } = app;
-  const preType = metadataTypeManager.properties[propertyName]?.type;
+  const preType = metadataTypeManager.properties[propertyName2]?.type;
   if (preType)
     return preType;
-  if (propertyName.includes("."))
+  if (propertyName2.includes("."))
     return "object";
   return "inline";
 };
@@ -26462,12 +26462,12 @@ var iterateStringKeys = (obj, str, val) => {
   });
   return obj;
 };
-var checkForInlineField = (propertyName, filePath2, dataviewApi) => {
-  const f2 = dataviewApi.page(filePath2);
-  if (f2.file.frontmatter.hasOwnProperty(propertyName))
+var checkForInlineField = (propertyName2, filePath3, dataviewApi) => {
+  const f2 = dataviewApi.page(filePath3);
+  if (f2.file.frontmatter.hasOwnProperty(propertyName2))
     return { success: false };
-  if (f2.hasOwnProperty(propertyName))
-    return { success: true, value: f2[propertyName] };
+  if (f2.hasOwnProperty(propertyName2))
+    return { success: true, value: f2[propertyName2] };
   return { success: false };
 };
 var parseLinesForInlineFields = (lines) => {
@@ -26492,12 +26492,12 @@ var parseLinesForInlineFields = (lines) => {
     ];
   }, []);
 };
-var udpateInlineField = async (propertyName, oldValue, newValue, file, plugin2) => {
+var udpateInlineField = async (propertyName2, oldValue, newValue, file, plugin2) => {
   const pageContent = await plugin2.app.vault.cachedRead(file);
   const lines = pageContent.split("\n");
   const inlineFields = parseLinesForInlineFields(lines);
   const foundField = inlineFields.find(({ key, value }) => {
-    if (key !== propertyName)
+    if (key !== propertyName2)
       return false;
     if (value.toString() !== oldValue.toString())
       return false;
@@ -26509,7 +26509,7 @@ var udpateInlineField = async (propertyName, oldValue, newValue, file, plugin2) 
       0
     );
     throw new Error(
-      "Tried updating an inline field but couldn't find matching field. This should be impossible. Property name: " + propertyName
+      "Tried updating an inline field but couldn't find matching field. This should be impossible. Property name: " + propertyName2
     );
   }
   const oldLineContent = lines[foundField.line];
@@ -26520,37 +26520,37 @@ var udpateInlineField = async (propertyName, oldValue, newValue, file, plugin2) 
   lines[foundField.line] = newLineContent;
   await plugin2.app.vault.modify(file, lines.join("\n"));
 };
-var updateMetaData = async (propertyName, propertyValue, filePath2, plugin2) => {
-  const file = plugin2.app.vault.getFileByPath(filePath2);
+var updateMetaData = async (propertyName2, propertyValue2, filePath3, plugin2) => {
+  const file = plugin2.app.vault.getFileByPath(filePath3);
   if (!file) {
     throw new Error("Tried to update property but couldn't find file");
   }
   await plugin2.app.fileManager.processFrontMatter(file, (frontmatter) => {
-    const arr = propertyName.split(".");
+    const arr = propertyName2.split(".");
     if (arr.length === 1) {
       const dv4 = app.plugins.plugins.dataview.api;
       const isInlineField = checkForInlineField(
-        propertyName,
-        filePath2,
+        propertyName2,
+        filePath3,
         dv4
       );
       if (isInlineField.success) {
-        if (propertyValue === isInlineField.value)
+        if (propertyValue2 === isInlineField.value)
           return;
         return udpateInlineField(
-          propertyName,
+          propertyName2,
           isInlineField.value,
-          propertyValue,
+          propertyValue2,
           file,
           plugin2
         );
       }
-      return frontmatter[propertyName] = propertyValue;
+      return frontmatter[propertyName2] = propertyValue2;
     }
     const frontmatterObj = iterateStringKeys(
       frontmatter,
-      propertyName,
-      propertyValue
+      propertyName2,
+      propertyValue2
     );
     return frontmatter = (0, import_obsidian2.stringifyYaml)(frontmatterObj);
   });
@@ -26569,32 +26569,32 @@ var isDateWithTime = (dt) => {
   }
   return true;
 };
-var numberToBase26Letters = (num) => {
+var numberToBase26Letters = (num2) => {
   const start = 96;
   let result2 = "";
-  while (num > 0) {
-    const remainder = num % 26 || 26;
+  while (num2 > 0) {
+    const remainder = num2 % 26 || 26;
     result2 = (String.fromCharCode(start + remainder) + result2).toUpperCase();
-    num = (num - remainder) / 26;
+    num2 = (num2 - remainder) / 26;
   }
   return result2;
 };
-var getJustifyContentClass = (horizontalAlignment) => {
+var getJustifyContentClass = (horizontalAlignment2) => {
   let justifyContent = JUSTIFY.START;
-  if (horizontalAlignment === "center") {
+  if (horizontalAlignment2 === "center") {
     justifyContent = JUSTIFY.CENTER;
   }
-  if (horizontalAlignment === "end") {
+  if (horizontalAlignment2 === "end") {
     justifyContent = JUSTIFY.END;
   }
   return justifyContent;
 };
-var getAlignItemsClass = (verticalAlignment) => {
+var getAlignItemsClass = (verticalAlignment2) => {
   let alignItems = ITEMS.START;
-  if (verticalAlignment === "center") {
+  if (verticalAlignment2 === "center") {
     alignItems = ITEMS.CENTER;
   }
-  if (verticalAlignment === "end") {
+  if (verticalAlignment2 === "end") {
     alignItems = ITEMS.END;
   }
   return alignItems;
@@ -26630,7 +26630,8 @@ var SettingControl = ({
 }) => /* @__PURE__ */ import_react2.default.createElement("div", { className: cn("setting-item-control", className) }, children);
 var SettingToggle = ({
   checked,
-  onCheckedChange
+  onCheckedChange,
+  disabled
 }) => {
   const [toggleClass, setToggleClass] = (0, import_react2.useState)("");
   const setEnabledClass = (newValue) => {
@@ -26646,13 +26647,16 @@ var SettingToggle = ({
     {
       className: "checkbox-container " + toggleClass,
       onClick: () => {
-        onCheckedChange(!checked);
+        if (!disabled) {
+          onCheckedChange(!checked);
+        }
       }
     },
     /* @__PURE__ */ import_react2.default.createElement(
       "input",
       {
         type: "checkbox",
+        disabled: !!disabled,
         checked,
         tabIndex: 0,
         readOnly: true
@@ -30806,6 +30810,15 @@ var Lock = createLucideIcon("Lock", [
   ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/minus.js
+var Minus = createLucideIcon("Minus", [["path", { d: "M5 12h14", key: "1ays0h" }]]);
+
+// node_modules/lucide-react/dist/esm/icons/parentheses.js
+var Parentheses = createLucideIcon("Parentheses", [
+  ["path", { d: "M8 21s-4-3-4-9 4-9 4-9", key: "uto9ud" }],
+  ["path", { d: "M16 3s4 3 4 9-4 9-4 9", key: "4w2vsq" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/plus.js
 var Plus = createLucideIcon("Plus", [
   ["path", { d: "M5 12h14", key: "1ays0h" }],
@@ -33110,7 +33123,7 @@ var usePluginSettings = create()((set, get) => ({
   },
   setBlockConfig: (id, cb) => {
     set((prev) => {
-      const currentConfig = prev.settings.blockConfigs[id];
+      const currentConfig = prev?.settings?.blockConfigs[id] ?? defaultDefaultBlockConfig;
       const newConfig = typeof cb === "function" ? cb(currentConfig) : cb;
       return {
         ...prev,
@@ -33176,8 +33189,10 @@ var BlockConfigSchema2 = z.object({
   listVertical: z.boolean(),
   renderMarkdown: z.boolean(),
   showTypeIcons: z.boolean(),
+  showNumberButtons: z.boolean(),
   showAutoComplete: z.boolean(),
   showColAndRowLabels: z.boolean(),
+  useToggleForCheckbox: z.boolean(),
   pageSize: z.number(),
   currentPage: z.number(),
   queryLinkPropertyName: z.string(),
@@ -33239,8 +33254,10 @@ var defaultDefaultBlockConfig = {
   listVertical: true,
   renderMarkdown: true,
   showTypeIcons: true,
+  showNumberButtons: true,
   showAutoComplete: true,
   showColAndRowLabels: false,
+  useToggleForCheckbox: false,
   pageSize: 0,
   currentPage: 1,
   queryLinkPropertyName: "",
@@ -33294,7 +33311,7 @@ var defaultPluginSettings = {
 };
 var BlockConfig = ({
   id,
-  filePath: filePath2,
+  filePath: filePath3,
   open,
   setOpen,
   hideGhLinks
@@ -33309,14 +33326,14 @@ var BlockConfig = ({
   const existingConfig = blockConfigs2[id] ?? blockConfigs2["default"];
   const defaultForm = existingConfig ?? defaultDefaultBlockConfig;
   if (defaultForm.filePath) {
-    if (defaultForm.filePath !== filePath2) {
+    if (defaultForm.filePath !== filePath3) {
       new import_obsidian3.Notice(
         "Error: duplicate id found, please change it and try again"
       );
       return;
     }
   }
-  const [form, setForm] = (0, import_react22.useState)({ ...defaultForm, filePath: filePath2, id });
+  const [form, setForm] = (0, import_react22.useState)({ ...defaultForm, filePath: filePath3, id });
   const [isSaving, setIsSaving] = (0, import_react22.useState)(false);
   const updateForm = (key, value) => {
     setForm((prev) => ({
@@ -33332,7 +33349,7 @@ var BlockConfig = ({
       setIsSaving(false);
     })();
   }, [form]);
-  return /* @__PURE__ */ import_react22.default.createElement(Dialog, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react22.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react22.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react22.default.createElement(DialogTitle, null, "Dataedit block config"), /* @__PURE__ */ import_react22.default.createElement(DialogDescription, { className: "flex flex-col gap-2" }, /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "id:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, id)), /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex" }, "note:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, filePath2))), !hideGhLinks && /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "Plugin repository:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react22.default.createElement("span", null, "Dataview docs:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/"))))), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "py-3" }, isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react22.default.createElement(
+  return /* @__PURE__ */ import_react22.default.createElement(Dialog, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react22.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react22.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react22.default.createElement(DialogTitle, null, "Dataedit block config"), /* @__PURE__ */ import_react22.default.createElement(DialogDescription, { className: "flex flex-col gap-2" }, /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "id:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, id)), /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex" }, "note:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, filePath3))), !hideGhLinks && /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "Plugin repository:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react22.default.createElement("span", null, "Dataview docs:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/"))))), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "py-3" }, isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react22.default.createElement(
     LoaderCircle,
     {
       className: "animate-spin",
@@ -33364,7 +33381,20 @@ var BlockConfig = ({
   ), /* @__PURE__ */ import_react22.default.createElement(
     StandardSetting,
     {
-      title: "Show type icons",
+      title: "Number buttons",
+      description: "Show buttons below number type table cells that let you add, substract, or enter an expression.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        SettingToggle,
+        {
+          checked: form.showNumberButtons,
+          onCheckedChange: (b) => updateForm("showNumberButtons", b)
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
+      title: "Type icons",
       description: "Show an icon next to each header representing the set type of that property. Inline and nested properties have a special symbol.\n\nTip: For custom icons, turn this off and use the Iconize plugin to set an icon in the column alias.",
       control: /* @__PURE__ */ import_react22.default.createElement(
         SettingToggle,
@@ -33403,7 +33433,7 @@ var BlockConfig = ({
   ), /* @__PURE__ */ import_react22.default.createElement(
     StandardSetting,
     {
-      title: "Show Column and Row Labels",
+      title: "Column and Row Labels",
       description: "Shows excel/sheets like labels for column and row numbers.",
       control: /* @__PURE__ */ import_react22.default.createElement(
         SettingToggle,
@@ -33429,6 +33459,19 @@ var BlockConfig = ({
   ), /* @__PURE__ */ import_react22.default.createElement(
     StandardSetting,
     {
+      title: "Use toggle for checkbox",
+      description: "Uses toggles instead of checkboxes for checkbox type properties.",
+      control: /* @__PURE__ */ import_react22.default.createElement(
+        SettingToggle,
+        {
+          checked: form.useToggleForCheckbox,
+          onCheckedChange: (b) => updateForm("useToggleForCheckbox", b)
+        }
+      )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    StandardSetting,
+    {
       title: "Page size",
       description: "The number of results to display per page.",
       control: /* @__PURE__ */ import_react22.default.createElement(
@@ -33440,8 +33483,8 @@ var BlockConfig = ({
           step: 1,
           onBlur: (e) => {
             const possibleNum = Number(e.target.value);
-            const num = Number.isNaN(possibleNum) ? 0 : possibleNum;
-            updateForm("pageSize", num);
+            const num2 = Number.isNaN(possibleNum) ? 0 : possibleNum;
+            updateForm("pageSize", num2);
           }
         }
       )
@@ -33612,7 +33655,7 @@ var import_obsidian4 = require("obsidian");
 var import_react23 = __toESM(require_react());
 var Markdown = ({
   app: app2,
-  filePath: filePath2,
+  filePath: filePath3,
   plainText,
   className,
   disabled,
@@ -33632,10 +33675,10 @@ var Markdown = ({
       app2,
       plainText,
       ref.current,
-      filePath2,
+      filePath3,
       component
     );
-  }, [app2, filePath2, plainText]);
+  }, [app2, filePath3, plainText]);
   if (span) {
     return /* @__PURE__ */ import_react23.default.createElement(
       "span",
@@ -35714,7 +35757,7 @@ function extractISODuration(match2) {
   const [s2, yearStr, monthStr, weekStr, dayStr, hourStr, minuteStr, secondStr, millisecondsStr] = match2;
   const hasNegativePrefix = s2[0] === "-";
   const negativeSeconds = secondStr && secondStr[0] === "-";
-  const maybeNegate = (num, force = false) => num !== void 0 && (force || num && hasNegativePrefix) ? -num : num;
+  const maybeNegate = (num2, force = false) => num2 !== void 0 && (force || num2 && hasNegativePrefix) ? -num2 : num2;
   return [
     {
       years: maybeNegate(parseFloating(yearStr)),
@@ -42174,11 +42217,11 @@ var getItems = (query2, charIndex, linkType, plugin2) => {
   const { headings, sections } = plugin2.app.metadataCache.getFileCache(potentialFile);
   return linkType === HEADER ? headings : sections;
 };
-var toModifiedSectionCache = async (filePath2, sections, plugin2) => {
-  const file = plugin2.app.vault.getFileByPath(filePath2 + ".md");
+var toModifiedSectionCache = async (filePath3, sections, plugin2) => {
+  const file = plugin2.app.vault.getFileByPath(filePath3 + ".md");
   if (!file)
     throw new Error(
-      "Tried reading sections but couldn't get file from filepath: " + filePath2 + ".md"
+      "Tried reading sections but couldn't get file from filepath: " + filePath3 + ".md"
     );
   const content = await plugin2.app.vault.cachedRead(file);
   return sections.map((s2) => {
@@ -42393,15 +42436,15 @@ var LinkSuggestions = ({
 
 // src/components/Inputs/ArrayInput/index.tsx
 var ArrayInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked } = props2;
+  const { propertyName: propertyName2, propertyValue: propertyValue2, filePath: filePath3 } = props2;
   const { plugin: plugin2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { listItemPrefix, horizontalAlignment } = getBlockConfig2(blockId2);
+  const { listItemPrefix, horizontalAlignment: horizontalAlignment2, lockEditing: lockEditing2 } = getBlockConfig2(blockId2);
   const updateProperty = async (itemIndex, newValue, allowFalsey) => {
-    const newArrayValue = [...propertyValue];
+    const newArrayValue = [...propertyValue2];
     newArrayValue[itemIndex] = newValue;
     const filtered = allowFalsey ? newArrayValue : newArrayValue.filter((v) => !!v);
-    await updateMetaData(propertyName, filtered, filePath2, plugin2);
+    await updateMetaData(propertyName2, filtered, filePath3, plugin2);
   };
   return /* @__PURE__ */ import_react29.default.createElement(
     "ul",
@@ -42409,7 +42452,7 @@ var ArrayInput = (props2) => {
       className: "m-0 flex w-full flex-col gap-1 p-0 pl-5",
       style: { listStyleType: listItemPrefix }
     },
-    propertyValue?.map((item, i) => /* @__PURE__ */ import_react29.default.createElement("li", { key: i }, /* @__PURE__ */ import_react29.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react29.default.createElement(
+    propertyValue2?.map((item, i) => /* @__PURE__ */ import_react29.default.createElement("li", { key: i }, /* @__PURE__ */ import_react29.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react29.default.createElement(
       ArrayInputItem,
       {
         ...props2,
@@ -42421,18 +42464,18 @@ var ArrayInput = (props2) => {
     /* @__PURE__ */ import_react29.default.createElement("li", { className: "w-full list-none" }, /* @__PURE__ */ import_react29.default.createElement(
       "div",
       {
-        className: "flex w-full " + getJustifyContentClass(horizontalAlignment)
+        className: "flex w-full " + getJustifyContentClass(horizontalAlignment2)
       },
       /* @__PURE__ */ import_react29.default.createElement(
         "div",
         {
-          className: `clickable-icon w-fit ${isLocked && "cursor-not-allowed opacity-50"}`,
+          className: `clickable-icon w-fit ${lockEditing2 && "cursor-not-allowed opacity-50"}`,
           "aria-label": "New item",
           onClick: async () => {
-            if (isLocked)
+            if (lockEditing2)
               return;
             await updateProperty(
-              propertyValue.length,
+              propertyValue2.length,
               "",
               true
             );
@@ -42444,25 +42487,23 @@ var ArrayInput = (props2) => {
   );
 };
 var ArrayInputItem = (props2) => {
-  const {
-    isLocked,
-    itemValue,
-    itemIndex,
-    propertyType,
-    propertyName,
-    updateProperty
-  } = props2;
+  const { itemValue, itemIndex, propertyType, propertyName: propertyName2, updateProperty } = props2;
   const { plugin: plugin2, ctx: ctx2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { showAutoComplete, renderMarkdown, horizontalAlignment } = getBlockConfig2(blockId2);
-  const [isEditing, setIsEditing] = (0, import_react29.useState)(false);
+  const {
+    showAutoComplete,
+    renderMarkdown: renderMarkdown2,
+    horizontalAlignment: horizontalAlignment2,
+    lockEditing: lockEditing2
+  } = getBlockConfig2(blockId2);
+  const [isEditing2, setIsEditing2] = (0, import_react29.useState)(false);
   const [isSuggestShown, setIsSuggestShown] = (0, import_react29.useState)(false);
   const [selectedSuggestion, setSelectedSuggestion] = (0, import_react29.useState)();
   const [query2, setQuery] = (0, import_react29.useState)(itemValue);
   const plainText = tryToMarkdownLink(itemValue);
   const onBlur = async (value) => {
     await updateProperty(itemIndex, value);
-    setIsEditing(false);
+    setIsEditing2(false);
     setIsSuggestShown(false);
   };
   const onKeyDown = async (key, value) => {
@@ -42476,24 +42517,24 @@ var ArrayInputItem = (props2) => {
   const getSuggestions = (q) => {
     const suggestions = (
       // @ts-ignore
-      app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
+      app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName2)
     );
     if (!suggestions || suggestions?.length === 0)
       return;
     return suggestions.filter((s2) => s2.includes(q));
   };
-  if (!isEditing || isLocked) {
+  if (!isEditing2 || lockEditing2) {
     return /* @__PURE__ */ import_react29.default.createElement(
       Markdown,
       {
-        disabled: !renderMarkdown,
+        disabled: !renderMarkdown2,
         app: plugin2.app,
         filePath: ctx2.sourcePath,
         plainText: propertyType === "tags" ? "#" + plainText : plainText,
-        className: "flex h-fit min-h-4 w-full [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
+        className: "flex h-fit min-h-4 w-full [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment2),
         onClick: () => {
-          if (!isLocked) {
-            setIsEditing(true);
+          if (!lockEditing2) {
+            setIsEditing2(true);
             setIsSuggestShown(true);
           }
         }
@@ -42529,30 +42570,40 @@ var ArrayInputItem = (props2) => {
 // src/components/Inputs/BooleanInput/index.tsx
 var import_react30 = __toESM(require_react());
 var BooleanInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked } = props2;
+  const { propertyName: propertyName2, propertyValue: propertyValue2, filePath: filePath3 } = props2;
   const { plugin: plugin2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { horizontalAlignment } = getBlockConfig2(blockId2);
+  const { horizontalAlignment: horizontalAlignment2, lockEditing: lockEditing2, useToggleForCheckbox } = getBlockConfig2(blockId2);
   return /* @__PURE__ */ import_react30.default.createElement(
     "div",
     {
-      className: "flex h-fit w-full " + getJustifyContentClass(horizontalAlignment)
+      className: "flex h-fit w-full " + getJustifyContentClass(horizontalAlignment2)
     },
-    /* @__PURE__ */ import_react30.default.createElement(
+    !useToggleForCheckbox && /* @__PURE__ */ import_react30.default.createElement(
       "input",
       {
         type: "checkbox",
-        disabled: !!isLocked,
-        defaultChecked: !!propertyValue,
-        className: isLocked ? "opacity-50" : "",
+        disabled: !!lockEditing2,
+        defaultChecked: !!propertyValue2,
+        className: lockEditing2 ? "opacity-50" : "",
         onClick: (e) => {
           updateMetaData(
-            propertyName,
+            propertyName2,
             e.currentTarget.checked,
-            filePath2,
+            filePath3,
             plugin2
           );
         }
+      }
+    ),
+    useToggleForCheckbox && /* @__PURE__ */ import_react30.default.createElement(
+      SettingToggle,
+      {
+        checked: !!propertyValue2,
+        onCheckedChange: (b) => {
+          updateMetaData(propertyName2, b, filePath3, plugin2);
+        },
+        disabled: lockEditing2
       }
     )
   );
@@ -42561,11 +42612,11 @@ var BooleanInput = (props2) => {
 // src/components/Inputs/DateTimeInput/index.tsx
 var import_react31 = __toESM(require_react());
 var DateTimeInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked, hasTime } = props2;
+  const { propertyName: propertyName2, propertyValue: propertyValue2, filePath: filePath3, hasTime } = props2;
   const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { horizontalAlignment, renderMarkdown } = getBlockConfig2(blockId2);
-  const [isEditing, setIsEditing] = (0, import_react31.useState)(false);
+  const { horizontalAlignment: horizontalAlignment2, renderMarkdown: renderMarkdown2, lockEditing: lockEditing2 } = getBlockConfig2(blockId2);
+  const [isEditing2, setIsEditing2] = (0, import_react31.useState)(false);
   const [{ formattedDate, inputDate }, setDateStrings] = (0, import_react31.useState)({
     formattedDate: null,
     inputDate: null
@@ -42576,29 +42627,29 @@ var DateTimeInput = (props2) => {
   const inputFormat = hasTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd";
   const max2 = hasTime ? "9999-12-31T23:59" : "9999-12-31";
   (0, import_react31.useEffect)(() => {
-    if (!DateTime.isDateTime(propertyValue)) {
+    if (!DateTime.isDateTime(propertyValue2)) {
       setDateStrings({
         formattedDate: null,
         inputDate: null
       });
     }
-    if (DateTime.isDateTime(propertyValue)) {
-      const formattedDate2 = propertyValue.toLocal().toFormat(defaultFormat, { locale: locale2 });
-      const inputDate2 = propertyValue.toLocal().toFormat(inputFormat);
+    if (DateTime.isDateTime(propertyValue2)) {
+      const formattedDate2 = propertyValue2.toLocal().toFormat(defaultFormat, { locale: locale2 });
+      const inputDate2 = propertyValue2.toLocal().toFormat(inputFormat);
       setDateStrings({ formattedDate: formattedDate2, inputDate: inputDate2 });
     }
-  }, [propertyValue]);
-  if (!isEditing || isLocked) {
+  }, [propertyValue2]);
+  if (!isEditing2 || lockEditing2) {
     return /* @__PURE__ */ import_react31.default.createElement(
       Markdown,
       {
-        disabled: !renderMarkdown,
+        disabled: !renderMarkdown2,
         app: plugin2.app,
         filePath: ctx2.sourcePath,
         plainText: formattedDate || dvRenderNullAs,
-        className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
+        className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment2),
         onClick: () => {
-          !isLocked && setIsEditing(true);
+          !lockEditing2 && setIsEditing2(true);
         }
       }
     );
@@ -42612,12 +42663,12 @@ var DateTimeInput = (props2) => {
       autoFocus: true,
       onBlur: async (e) => {
         await updateMetaData(
-          propertyName,
+          propertyName2,
           e.target.value,
-          filePath2,
+          filePath3,
           plugin2
         );
-        setIsEditing(false);
+        setIsEditing2(false);
       }
     }
   );
@@ -42625,25 +42676,142 @@ var DateTimeInput = (props2) => {
 
 // src/components/Inputs/NumberInput/index.tsx
 var import_react32 = __toESM(require_react());
-var NumberInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2, isLocked } = props2;
-  const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
-  const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { horizontalAlignment, renderMarkdown } = getBlockConfig2(blockId2);
+var NumberInput = (props) => {
+  const { propertyName, propertyValue, filePath } = props;
+  const num = Number.isNaN(Number(propertyValue)) ? 0 : Number(propertyValue);
+  const { ctx, plugin, blockId } = useBlock();
+  const { getBlockConfig } = usePluginSettings();
+  const {
+    horizontalAlignment,
+    verticalAlignment,
+    renderMarkdown,
+    lockEditing,
+    showNumberButtons
+  } = getBlockConfig(blockId);
   const [isEditing, setIsEditing] = (0, import_react32.useState)(false);
-  if (!isEditing || isLocked) {
+  const [isDialogOpen, setDialogOpen] = (0, import_react32.useState)(false);
+  const [calculated, setCalculated] = (0, import_react32.useState)(num);
+  const doCalculation = (expression) => {
+    let result = 0;
+    try {
+      result = eval(`((x) => (${expression}))(${num})`);
+    } catch (e) {
+      result = NaN;
+    }
+    setCalculated(result);
+  };
+  const justify = getJustifyContentClass(horizontalAlignment);
+  const vertical = getAlignItemsClass(verticalAlignment).split("-")[1];
+  if (!isEditing || lockEditing) {
     return /* @__PURE__ */ import_react32.default.createElement(
-      Markdown,
+      "div",
       {
-        disabled: !renderMarkdown,
-        app: plugin2.app,
-        filePath: ctx2.sourcePath,
-        plainText: propertyValue?.toString() || dvRenderNullAs,
-        className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment),
-        onClick: () => {
-          !isLocked && setIsEditing(true);
+        className: "flex h-full w-full flex-col justify-" + vertical
+      },
+      /* @__PURE__ */ import_react32.default.createElement(
+        Markdown,
+        {
+          disabled: !renderMarkdown,
+          app: plugin.app,
+          filePath: ctx.sourcePath,
+          plainText: propertyValue?.toString() || dvRenderNullAs,
+          className: "flex h-fit min-h-4 w-full break-keep [&_*]:my-0 " + justify,
+          onClick: () => {
+            !lockEditing && setIsEditing(true);
+          }
         }
-      }
+      ),
+      !lockEditing && showNumberButtons && /* @__PURE__ */ import_react32.default.createElement("div", { className: "flex w-full " + justify }, /* @__PURE__ */ import_react32.default.createElement("div", { className: "clickable-icon" }, /* @__PURE__ */ import_react32.default.createElement(
+        Minus,
+        {
+          className: "svg-icon",
+          onClick: async () => {
+            await updateMetaData(
+              propertyName,
+              num - 1,
+              filePath,
+              plugin
+            );
+            setIsEditing(false);
+          }
+        }
+      )), /* @__PURE__ */ import_react32.default.createElement("div", { className: "clickable-icon" }, /* @__PURE__ */ import_react32.default.createElement(
+        Parentheses,
+        {
+          className: "svg-icon",
+          onClick: () => setDialogOpen(true)
+        }
+      ), isDialogOpen && /* @__PURE__ */ import_react32.default.createElement(
+        Dialog,
+        {
+          open: isDialogOpen,
+          onOpenChange: (b) => {
+            setCalculated(num);
+            setDialogOpen(b);
+          }
+        },
+        /* @__PURE__ */ import_react32.default.createElement(DialogContent, { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react32.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react32.default.createElement(DialogTitle, null, "Expression input"), /* @__PURE__ */ import_react32.default.createElement(DialogDescription, null, "Enter any valid", " ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Math" }, "Javascript math expression", /* @__PURE__ */ import_react32.default.createElement("span", { className: "external-link" })), ". You may use ", /* @__PURE__ */ import_react32.default.createElement("code", null, "x"), " to use the current value in your expressions")), /* @__PURE__ */ import_react32.default.createElement(
+          "input",
+          {
+            autoFocus: true,
+            type: "text",
+            placeholder: "(x + 5)**2 - Math.PI",
+            className: "w-full",
+            onChange: (e) => doCalculation(e.target.value),
+            onKeyDown: async (e) => {
+              if (e.key !== "Enter" || Number.isNaN(calculated))
+                return;
+              await updateMetaData(
+                propertyName,
+                calculated,
+                filePath,
+                plugin
+              );
+              setDialogOpen(false);
+            }
+          }
+        ), /* @__PURE__ */ import_react32.default.createElement("div", null, "Calculated:", " ", Number.isNaN(calculated) ? /* @__PURE__ */ import_react32.default.createElement("span", { className: "text-error" }, "Invalid") : /* @__PURE__ */ import_react32.default.createElement("span", { className: "text-success" }, calculated)), /* @__PURE__ */ import_react32.default.createElement(DialogFooter, null, /* @__PURE__ */ import_react32.default.createElement(
+          "button",
+          {
+            onClick: () => setDialogOpen(false)
+          },
+          "cancel"
+        ), /* @__PURE__ */ import_react32.default.createElement(
+          "button",
+          {
+            disabled: Number.isNaN(
+              calculated
+            ),
+            onClick: async () => {
+              await updateMetaData(
+                propertyName,
+                calculated,
+                filePath,
+                plugin
+              );
+              setDialogOpen(false);
+            },
+            className: "mod-cta"
+          },
+          "update"
+        )))
+      )), /* @__PURE__ */ import_react32.default.createElement("div", { className: "clickable-icon" }, /* @__PURE__ */ import_react32.default.createElement(
+        Plus,
+        {
+          className: "svg-icon",
+          onClick: async () => {
+            const val = Number(propertyValue);
+            const num2 = Number.isNaN(val) ? 0 : val;
+            await updateMetaData(
+              propertyName,
+              num2 + 1,
+              filePath,
+              plugin
+            );
+            setIsEditing(false);
+          }
+        }
+      )))
     );
   }
   return /* @__PURE__ */ import_react32.default.createElement(
@@ -42653,10 +42821,10 @@ var NumberInput = (props2) => {
       defaultValue: propertyValue,
       autoFocus: true,
       onBlur: async (e) => {
-        const num = Number(e.target.value);
-        if (Number.isNaN(num))
+        const num2 = Number(e.target.value);
+        if (Number.isNaN(num2))
           return;
-        await updateMetaData(propertyName, num, filePath2, plugin2);
+        await updateMetaData(propertyName, num2, filePath, plugin);
         setIsEditing(false);
       }
     }
@@ -42666,28 +42834,28 @@ var NumberInput = (props2) => {
 // src/components/Inputs/StringInput/index.tsx
 var import_react33 = __toESM(require_react());
 var StringInput = (props2) => {
-  const { propertyName, propertyValue, filePath: filePath2 } = props2;
+  const { propertyName: propertyName2, propertyValue: propertyValue2, filePath: filePath3 } = props2;
   const { ctx: ctx2, plugin: plugin2, blockId: blockId2 } = useBlock();
-  const [isEditing, setIsEditing] = (0, import_react33.useState)(false);
+  const [isEditing2, setIsEditing2] = (0, import_react33.useState)(false);
   const [isSuggestShown, setIsSuggestShown] = (0, import_react33.useState)(false);
   const [selectedSuggestion, setSelectedSuggestion] = (0, import_react33.useState)();
-  const [query2, setQuery] = (0, import_react33.useState)(propertyValue);
+  const [query2, setQuery] = (0, import_react33.useState)(propertyValue2);
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
   const {
     showAutoComplete,
-    renderMarkdown,
-    horizontalAlignment,
+    renderMarkdown: renderMarkdown2,
+    horizontalAlignment: horizontalAlignment2,
     allowImageFullSize,
-    lockEditing
+    lockEditing: lockEditing2
   } = getBlockConfig2(blockId2);
   const onBlur = async (value) => {
     await updateMetaData(
-      propertyName,
+      propertyName2,
       selectedSuggestion ?? value,
-      filePath2,
+      filePath3,
       plugin2
     );
-    setIsEditing(false);
+    setIsEditing2(false);
     setIsSuggestShown(false);
   };
   const onKeyDown = async (key, value) => {
@@ -42701,24 +42869,24 @@ var StringInput = (props2) => {
   const getSuggestions = (q) => {
     const suggestions = (
       // @ts-ignore
-      app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName)
+      app.metadataCache.getFrontmatterPropertyValuesForKey(propertyName2)
     );
     if (!suggestions || suggestions?.length === 0)
       return;
     return suggestions.filter((s2) => s2.includes(q));
   };
-  if (!isEditing || lockEditing) {
+  if (!isEditing2 || lockEditing2) {
     return /* @__PURE__ */ import_react33.default.createElement(
       Markdown,
       {
-        disabled: !renderMarkdown,
+        disabled: !renderMarkdown2,
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: propertyValue || dvRenderNullAs,
-        className: `flex h-fit min-h-4 w-full break-keep [&_*]:my-0 ${getJustifyContentClass(horizontalAlignment)} ${allowImageFullSize ? "[&_img]:!max-w-[unset]" : ""}`,
+        plainText: propertyValue2 || dvRenderNullAs,
+        className: `flex h-fit min-h-4 w-full break-keep [&_*]:my-0 ${getJustifyContentClass(horizontalAlignment2)} ${allowImageFullSize ? "[&_img]:!max-w-[unset]" : ""}`,
         onClick: () => {
-          if (!lockEditing) {
-            setIsEditing(true);
+          if (!lockEditing2) {
+            setIsEditing2(true);
             setIsSuggestShown(true);
           }
         }
@@ -42741,7 +42909,7 @@ var StringInput = (props2) => {
       "input",
       {
         type: "text",
-        defaultValue: propertyValue,
+        defaultValue: propertyValue2,
         autoFocus: true,
         onKeyDown: (e) => onKeyDown(e.key, e.currentTarget.value),
         onChange: (e) => setQuery(e.target.value),
@@ -42754,21 +42922,21 @@ var StringInput = (props2) => {
 // src/components/Inputs/index.tsx
 var InputSwitch = (props2) => {
   const { plugin: plugin2, ctx: ctx2, blockId: blockId2 } = useBlock();
-  const { propertyValue, propertyType, propertyName } = props2;
+  const { propertyValue: propertyValue2, propertyType, propertyName: propertyName2 } = props2;
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { horizontalAlignment } = getBlockConfig2(blockId2);
-  if (propertyType.toLowerCase() === FILE || propertyName.toLowerCase() === FILE || propertyName.toLowerCase() === "file.link") {
+  const { horizontalAlignment: horizontalAlignment2 } = getBlockConfig2(blockId2);
+  if (propertyType.toLowerCase() === FILE || propertyName2.toLowerCase() === FILE || propertyName2.toLowerCase() === "file.link") {
     return /* @__PURE__ */ import_react34.default.createElement(
       Markdown,
       {
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: propertyValue,
-        className: "flex w-full flex-row [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment)
+        plainText: propertyValue2,
+        className: "flex w-full flex-row [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment2)
       }
     );
   }
-  if (!propertyValue) {
+  if (!propertyValue2) {
     switch (propertyType) {
       case "aliases":
       case "text":
@@ -42820,13 +42988,13 @@ var InputSwitch = (props2) => {
       }
     }
   }
-  switch (typeof propertyValue) {
+  switch (typeof propertyValue2) {
     case "string":
       return /* @__PURE__ */ import_react34.default.createElement(StringInput, { ...props2 });
     case "number":
       return /* @__PURE__ */ import_react34.default.createElement(NumberInput, { ...props2 });
     case "object":
-      if (Array.isArray(propertyValue)) {
+      if (Array.isArray(propertyValue2)) {
         return /* @__PURE__ */ import_react34.default.createElement(
           ArrayInput,
           {
@@ -42834,8 +43002,8 @@ var InputSwitch = (props2) => {
           }
         );
       }
-      if (DateTime.isDateTime(propertyValue)) {
-        const hasTime = isDateWithTime(propertyValue);
+      if (DateTime.isDateTime(propertyValue2)) {
+        const hasTime = isDateWithTime(propertyValue2);
         return /* @__PURE__ */ import_react34.default.createElement(
           DateTimeInput,
           {
@@ -42844,7 +43012,7 @@ var InputSwitch = (props2) => {
           }
         );
       }
-      const potentialMarkdownLink = tryToMarkdownLink(propertyValue);
+      const potentialMarkdownLink = tryToMarkdownLink(propertyValue2);
       if (typeof potentialMarkdownLink === "string") {
         return /* @__PURE__ */ import_react34.default.createElement(
           StringInput,
@@ -42863,7 +43031,7 @@ var InputSwitch = (props2) => {
         {
           app: plugin2.app,
           filePath: ctx2.sourcePath,
-          plainText: propertyValue ?? "null",
+          plainText: propertyValue2 ?? "null",
           className: "h-full min-h-4 w-full break-keep [&_*]:my-0"
         }
       );
@@ -43344,8 +43512,8 @@ function safeAdd(x, y) {
   var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
   return msw << 16 | lsw & 65535;
 }
-function bitRotateLeft(num, cnt) {
-  return num << cnt | num >>> 32 - cnt;
+function bitRotateLeft(num2, cnt) {
+  return num2 << cnt | num2 >>> 32 - cnt;
 }
 function md5cmn(q, a, b, x, s2, t) {
   return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s2), b);
@@ -44798,7 +44966,7 @@ var fileName = () => {
   const words = array(number({ max: 3 }), () => word());
   return `${words.join("_").toLocaleLowerCase()}${fileExt()}`;
 };
-var filePath = () => {
+var filePath2 = () => {
   return `${dirPath()}/${fileName()}`;
 };
 var password = (options = {}) => {
@@ -44929,7 +45097,7 @@ var src_default = {
   mimeType,
   fileExt,
   dirPath,
-  filePath,
+  filePath: filePath2,
   fileName,
   setSeed,
   hex,
@@ -63909,7 +64077,7 @@ var App3 = (props) => {
         hideFileLink: isFileLinkHidden,
         filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path
       }
-    )))))), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, config.toolbarConfig.map(
+    )))))), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, blockId && config?.toolbarConfig?.map(
       ({ componentName, enabled }, i) => {
         if (!enabled)
           return;
@@ -63927,6 +64095,12 @@ var App3 = (props) => {
             className: "text-secondary-alt"
           }
         ));
+      }
+    ), !blockId && /* @__PURE__ */ import_react37.default.createElement(
+      SettingsGear,
+      {
+        blockId,
+        onClick: settingsGearOnClick
       }
     ), showSettings && /* @__PURE__ */ import_react37.default.createElement(
       BlockConfig,
@@ -63968,7 +64142,7 @@ var Fallback = ({ error }) => {
   return /* @__PURE__ */ import_react37.default.createElement("div", { className: "border-[1px] border-dashed border-error p-3" }, /* @__PURE__ */ import_react37.default.createElement("h2", { className: "text-error" }, "Dataedit Error ", /* @__PURE__ */ import_react37.default.createElement(CircleX, { className: "svg-icon" })), /* @__PURE__ */ import_react37.default.createElement("p", null, /* @__PURE__ */ import_react37.default.createElement("i", null, "It's not you, it's me"), "\uFF08>\uFE4F<\uFF09"), /* @__PURE__ */ import_react37.default.createElement("p", { className: "text-sm" }, "(except it might be you, if you messed up your syntax)"), /* @__PURE__ */ import_react37.default.createElement("p", null, "Assuming your syntax is all correct, please check the", " ", /* @__PURE__ */ import_react37.default.createElement("a", { href: "https://github.com/unxok/dataedit/issues" }, "known issues", /* @__PURE__ */ import_react37.default.createElement("span", { className: "external-link" })), ". If there's no open issue yet, please open one and provide the info below as well as the steps to reproduce the issue"), /* @__PURE__ */ import_react37.default.createElement("details", null, /* @__PURE__ */ import_react37.default.createElement("summary", { className: "hover:cursor-pointer hover:underline" }, "Show error details"), /* @__PURE__ */ import_react37.default.createElement("h3", null, "Error message"), /* @__PURE__ */ import_react37.default.createElement("pre", null, /* @__PURE__ */ import_react37.default.createElement("code", null, e?.message)), /* @__PURE__ */ import_react37.default.createElement("h3", null, "Error stack"), /* @__PURE__ */ import_react37.default.createElement("pre", null, /* @__PURE__ */ import_react37.default.createElement("code", null, e?.stack))));
 };
 var PaginationSize = () => {
-  const [isEditing, setIsEditing] = (0, import_react37.useState)(false);
+  const [isEditing2, setIsEditing2] = (0, import_react37.useState)(false);
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
   const { pageSize: pageSize2 } = getBlockConfig2(blockId2);
@@ -63987,13 +64161,13 @@ var PaginationSize = () => {
     console.log("newPage: ", cb);
     setBlockConfig(blockId2, (prev) => ({ ...prev, pageSize: cb }));
   };
-  if (!isEditing)
+  if (!isEditing2)
     return /* @__PURE__ */ import_react37.default.createElement(
       "div",
       {
         className: "clickable-icon",
         "aria-label": "Page size",
-        onClick: () => setIsEditing(true)
+        onClick: () => setIsEditing2(true)
       },
       pageSize2 || "Infinity",
       " per page"
@@ -64011,34 +64185,34 @@ var PaginationSize = () => {
       className: "w-8",
       onBlur: (e) => {
         setPageSize((prev) => {
-          const num = Math.floor(Number(e.target.value));
-          if (num < 0 || Number.isNaN(num)) {
+          const num2 = Math.floor(Number(e.target.value));
+          if (num2 < 0 || Number.isNaN(num2)) {
             return 0;
           }
-          return num;
+          return num2;
         });
-        setIsEditing(false);
+        setIsEditing2(false);
       },
       onKeyDown: (e) => {
         if (e.key === "Enter") {
           setPageSize((prev) => {
-            const num = Math.floor(Number(e.currentTarget.value));
-            if (num < 0 || Number.isNaN(num)) {
+            const num2 = Math.floor(Number(e.currentTarget.value));
+            if (num2 < 0 || Number.isNaN(num2)) {
               return 0;
             }
-            return num;
+            return num2;
           });
-          setIsEditing(false);
+          setIsEditing2(false);
         }
         if (e.key === "Escape") {
-          setIsEditing(false);
+          setIsEditing2(false);
         }
       }
     }
   );
 };
 var PaginationNav = ({ totalRows }) => {
-  const [isEditing, setIsEditing] = (0, import_react37.useState)(false);
+  const [isEditing2, setIsEditing2] = (0, import_react37.useState)(false);
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
   const { currentPage: currentPage2, pageSize: pageSize2 } = getBlockConfig2(blockId2);
@@ -64101,15 +64275,15 @@ var PaginationNav = ({ totalRows }) => {
       className: "clickable-icon w-fit"
     },
     /* @__PURE__ */ import_react37.default.createElement(ChevronLeft, { className: "svg-icon" })
-  ), /* @__PURE__ */ import_react37.default.createElement("span", { className: "px-1" }, !isEditing && /* @__PURE__ */ import_react37.default.createElement(
+  ), /* @__PURE__ */ import_react37.default.createElement("span", { className: "px-1" }, !isEditing2 && /* @__PURE__ */ import_react37.default.createElement(
     "span",
     {
       "aria-label": "Enter page number",
       className: "hover:cursor-pointer hover:underline",
-      onClick: () => setIsEditing(true)
+      onClick: () => setIsEditing2(true)
     },
     currentPage2
-  ), isEditing && /* @__PURE__ */ import_react37.default.createElement(
+  ), isEditing2 && /* @__PURE__ */ import_react37.default.createElement(
     "input",
     {
       type: "number",
@@ -64121,14 +64295,14 @@ var PaginationNav = ({ totalRows }) => {
         const newPage = Math.floor(Number(e.target.value));
         if (Number.isNaN(newPage) || newPage < 1) {
           setCurrentPage(1);
-          return setIsEditing(false);
+          return setIsEditing2(false);
         }
         if (newPage > totalPages) {
           setCurrentPage(totalPages);
-          return setIsEditing(false);
+          return setIsEditing2(false);
         }
         setCurrentPage(newPage);
-        setIsEditing(false);
+        setIsEditing2(false);
       },
       onKeyDown: (e) => {
         if (e.key === "Enter") {
@@ -64137,17 +64311,17 @@ var PaginationNav = ({ totalRows }) => {
           );
           if (Number.isNaN(newPage) || newPage < 1) {
             setCurrentPage(1);
-            return setIsEditing(false);
+            return setIsEditing2(false);
           }
           if (newPage > totalPages) {
             setCurrentPage(totalPages);
-            return setIsEditing(false);
+            return setIsEditing2(false);
           }
           setCurrentPage(newPage);
-          setIsEditing(false);
+          setIsEditing2(false);
         }
         if (e.key === "Escape") {
-          setIsEditing(false);
+          setIsEditing2(false);
         }
       }
     }
@@ -64194,8 +64368,8 @@ var LockToggle = () => {
       lockEditing: !prev.lockEditing
     }));
   };
-  const { lockEditing } = getBlockConfig2(blockId2);
-  const Icon = lockEditing ? Lock : LockOpen;
+  const { lockEditing: lockEditing2 } = getBlockConfig2(blockId2);
+  const Icon = lockEditing2 ? Lock : LockOpen;
   return /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
@@ -64206,7 +64380,7 @@ var LockToggle = () => {
     /* @__PURE__ */ import_react37.default.createElement(
       Icon,
       {
-        className: `svg-icon lucide-lock ${!lockEditing ? "text-muted opacity-50" : "text-inherit opacity-100"}`
+        className: `svg-icon lucide-lock ${!lockEditing2 ? "text-muted opacity-50" : "text-inherit opacity-100"}`
       }
     )
   );
@@ -64214,7 +64388,7 @@ var LockToggle = () => {
 var HorizontalAlignment = () => {
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
-  const { horizontalAlignment } = getBlockConfig2(blockId2);
+  const { horizontalAlignment: horizontalAlignment2 } = getBlockConfig2(blockId2);
   const updateAlignment = (alignment) => {
     setBlockConfig(blockId2, (prev) => ({
       ...prev,
@@ -64228,15 +64402,15 @@ var HorizontalAlignment = () => {
       "aria-label": "Horizontal alignment",
       className: "clickable-icon"
     },
-    horizontalAlignment === "start" && /* @__PURE__ */ import_react37.default.createElement(AlignLeft, { className: "svg-icon" }),
-    horizontalAlignment === "center" && /* @__PURE__ */ import_react37.default.createElement(AlignCenter, { className: "svg-icon" }),
-    horizontalAlignment === "end" && /* @__PURE__ */ import_react37.default.createElement(AlignRight, { className: "svg-icon" })
+    horizontalAlignment2 === "start" && /* @__PURE__ */ import_react37.default.createElement(AlignLeft, { className: "svg-icon" }),
+    horizontalAlignment2 === "center" && /* @__PURE__ */ import_react37.default.createElement(AlignCenter, { className: "svg-icon" }),
+    horizontalAlignment2 === "end" && /* @__PURE__ */ import_react37.default.createElement(AlignRight, { className: "svg-icon" })
   )), /* @__PURE__ */ import_react37.default.createElement(PopoverContent, { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex flex-row gap-1 p-2" }, /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       onClick: () => updateAlignment("start"),
       "aria-label": "Left",
-      "data-selected": horizontalAlignment === "start",
+      "data-selected": horizontalAlignment2 === "start",
       className: "clickable-icon data-[selected=true]:bg-secondary-alt"
     },
     /* @__PURE__ */ import_react37.default.createElement(AlignLeft, { className: "svg-icon" })
@@ -64245,7 +64419,7 @@ var HorizontalAlignment = () => {
     {
       onClick: () => updateAlignment("center"),
       "aria-label": "Center",
-      "data-selected": horizontalAlignment === "center",
+      "data-selected": horizontalAlignment2 === "center",
       className: "clickable-icon data-[selected=true]:bg-secondary-alt"
     },
     /* @__PURE__ */ import_react37.default.createElement(AlignCenter, { className: "svg-icon" })
@@ -64254,7 +64428,7 @@ var HorizontalAlignment = () => {
     {
       onClick: () => updateAlignment("end"),
       "aria-label": "Right",
-      "data-selected": horizontalAlignment === "end",
+      "data-selected": horizontalAlignment2 === "end",
       className: "clickable-icon data-[selected=true]:bg-secondary-alt"
     },
     /* @__PURE__ */ import_react37.default.createElement(AlignRight, { className: "svg-icon" })
@@ -64263,7 +64437,7 @@ var HorizontalAlignment = () => {
 var VerticalAlignment = () => {
   const { blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2, setBlockConfig } = usePluginSettings();
-  const { verticalAlignment } = getBlockConfig2(blockId2);
+  const { verticalAlignment: verticalAlignment2 } = getBlockConfig2(blockId2);
   const updateAlignment = (alignment) => {
     setBlockConfig(blockId2, (prev) => ({
       ...prev,
@@ -64277,15 +64451,15 @@ var VerticalAlignment = () => {
       "aria-label": "Vertical alignment",
       className: "clickable-icon"
     },
-    verticalAlignment === "start" && /* @__PURE__ */ import_react37.default.createElement(ChevronsUp, { className: "svg-icon" }),
-    verticalAlignment === "center" && /* @__PURE__ */ import_react37.default.createElement(ChevronsDownUp, { className: "svg-icon" }),
-    verticalAlignment === "end" && /* @__PURE__ */ import_react37.default.createElement(ChevronsDown, { className: "svg-icon" })
+    verticalAlignment2 === "start" && /* @__PURE__ */ import_react37.default.createElement(ChevronsUp, { className: "svg-icon" }),
+    verticalAlignment2 === "center" && /* @__PURE__ */ import_react37.default.createElement(ChevronsDownUp, { className: "svg-icon" }),
+    verticalAlignment2 === "end" && /* @__PURE__ */ import_react37.default.createElement(ChevronsDown, { className: "svg-icon" })
   )), /* @__PURE__ */ import_react37.default.createElement(PopoverContent, { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex flex-row gap-1 p-2" }, /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       onClick: () => updateAlignment("start"),
       "aria-label": "Top",
-      "data-selected": verticalAlignment === "start",
+      "data-selected": verticalAlignment2 === "start",
       className: "clickable-icon data-[selected=true]:bg-secondary-alt"
     },
     /* @__PURE__ */ import_react37.default.createElement(ChevronsUp, { className: "svg-icon" })
@@ -64294,7 +64468,7 @@ var VerticalAlignment = () => {
     {
       onClick: () => updateAlignment("center"),
       "aria-label": "Middle",
-      "data-selected": verticalAlignment === "center",
+      "data-selected": verticalAlignment2 === "center",
       className: "clickable-icon data-[selected=true]:bg-secondary-alt"
     },
     /* @__PURE__ */ import_react37.default.createElement(ChevronsDownUp, { className: "svg-icon" })
@@ -64303,7 +64477,7 @@ var VerticalAlignment = () => {
     {
       onClick: () => updateAlignment("end"),
       "aria-label": "Bottom",
-      "data-selected": verticalAlignment === "end",
+      "data-selected": verticalAlignment2 === "end",
       className: "clickable-icon data-[selected=true]:bg-secondary-alt"
     },
     /* @__PURE__ */ import_react37.default.createElement(ChevronsDown, { className: "svg-icon" })
@@ -64324,14 +64498,14 @@ var SettingsGear = ({
   );
 };
 var Th = ({
-  propertyName,
+  propertyName: propertyName2,
   className,
   hideFileLink: hideFileLink2
 }) => {
   const { ctx: ctx2, plugin: plugin2, aliasObj: aliasObj2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
   const { showTypeIcons } = getBlockConfig2(blockId2);
-  const propName = aliasObj2[propertyName] ?? propertyName;
+  const propName = aliasObj2[propertyName2] ?? propertyName2;
   const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
   const prePropertyType = isFileProp ? FILE : getPropertyType(propName);
   const propertyType = prePropertyType ?? "inline";
@@ -64342,7 +64516,7 @@ var Th = ({
     {
       app: plugin2.app,
       filePath: ctx2.sourcePath,
-      plainText: propertyName
+      plainText: propertyName2
     }
   ), "\xA0", /* @__PURE__ */ import_react37.default.createElement(
     "div",
@@ -64354,26 +64528,26 @@ var Th = ({
   )));
 };
 var Td = (props2) => {
-  const { propertyValue, propertyName, className, hideFileLink: hideFileLink2, filePath: filePath2 } = props2;
+  const { propertyValue: propertyValue2, propertyName: propertyName2, className, hideFileLink: hideFileLink2, filePath: filePath3 } = props2;
   const { plugin: plugin2, aliasObj: aliasObj2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { verticalAlignment } = getBlockConfig2(blockId2);
-  const propName = aliasObj2[propertyName] ?? propertyName;
+  const { verticalAlignment: verticalAlignment2 } = getBlockConfig2(blockId2);
+  const propName = aliasObj2[propertyName2] ?? propertyName2;
   const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
   const prePropertyType = isFileProp ? FILE : getPropertyType(propName);
   const propertyType = checkForInlineField(
     propName,
-    filePath2,
+    filePath3,
     // @ts-ignore
     plugin2.app.plugins.plugins.dataview.api
   ).success ? "inline" : prePropertyType;
-  const propValue = tryToMarkdownLink(propertyValue);
+  const propValue = tryToMarkdownLink(propertyValue2);
   if (isFileProp && hideFileLink2)
     return;
   return /* @__PURE__ */ import_react37.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
-      className: `flex h-full w-full ${getAlignItemsClass(verticalAlignment)}`
+      className: `flex h-full w-full ${getAlignItemsClass(verticalAlignment2)}`
     },
     /* @__PURE__ */ import_react37.default.createElement(
       InputSwitch,
@@ -64748,6 +64922,22 @@ lucide-react/dist/esm/icons/lock-open.js:
    *)
 
 lucide-react/dist/esm/icons/lock.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/minus.js:
+  (**
+   * @license lucide-react v0.372.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/parentheses.js:
   (**
    * @license lucide-react v0.372.0 - ISC
    *

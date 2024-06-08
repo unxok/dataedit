@@ -63,8 +63,10 @@ export const BlockConfigSchema = z.object({
 	listVertical: z.boolean(),
 	renderMarkdown: z.boolean(),
 	showTypeIcons: z.boolean(),
+	showNumberButtons: z.boolean(),
 	showAutoComplete: z.boolean(),
 	showColAndRowLabels: z.boolean(),
+	useToggleForCheckbox: z.boolean(),
 	pageSize: z.number(),
 	currentPage: z.number(),
 	queryLinkPropertyName: z.string(),
@@ -127,8 +129,10 @@ export const defaultDefaultBlockConfig: z.infer<typeof BlockConfigSchema> = {
 	listVertical: true,
 	renderMarkdown: true,
 	showTypeIcons: true,
+	showNumberButtons: true,
 	showAutoComplete: true,
 	showColAndRowLabels: false,
+	useToggleForCheckbox: false,
 	pageSize: 0,
 	currentPage: 1,
 	queryLinkPropertyName: "",
@@ -623,7 +627,21 @@ export const BlockConfig = ({
 					}
 				/>
 				<StandardSetting
-					title={"Show type icons"}
+					title={"Number buttons"}
+					description={
+						"Show buttons below number type table cells that let you add, substract, or enter an expression."
+					}
+					control={
+						<SettingToggle
+							checked={form.showNumberButtons}
+							onCheckedChange={(b) =>
+								updateForm("showNumberButtons", b)
+							}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"Type icons"}
 					description={
 						"Show an icon next to each header representing the set type of that property. Inline and nested properties have a special symbol.\n\nTip: For custom icons, turn this off and use the Iconize plugin to set an icon in the column alias."
 					}
@@ -665,7 +683,7 @@ export const BlockConfig = ({
 					}
 				/>
 				<StandardSetting
-					title={"Show Column and Row Labels"}
+					title={"Column and Row Labels"}
 					description={
 						"Shows excel/sheets like labels for column and row numbers."
 					}
@@ -688,6 +706,20 @@ export const BlockConfig = ({
 							checked={form.lockEditing}
 							onCheckedChange={(b) =>
 								updateForm("lockEditing", b)
+							}
+						/>
+					}
+				/>
+				<StandardSetting
+					title={"Use toggle for checkbox"}
+					description={
+						"Uses toggles instead of checkboxes for checkbox type properties."
+					}
+					control={
+						<SettingToggle
+							checked={form.useToggleForCheckbox}
+							onCheckedChange={(b) =>
+								updateForm("useToggleForCheckbox", b)
 							}
 						/>
 					}

@@ -9,6 +9,8 @@ tags:
   - onemoretagg
 some-list: []
 File: "[[new file name.md|new file name]]"
+bool: false
+num: 3
 ---
 #test
 

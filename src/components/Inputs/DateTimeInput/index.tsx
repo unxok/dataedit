@@ -14,10 +14,11 @@ import { usePluginSettings } from "@/stores/global";
 export const DateTimeInput = (
 	props: InputSwitchProps<DateTime> & { hasTime: boolean },
 ) => {
-	const { propertyName, propertyValue, filePath, isLocked, hasTime } = props;
+	const { propertyName, propertyValue, filePath, hasTime } = props;
 	const { ctx, plugin, blockId } = useBlock();
 	const { getBlockConfig } = usePluginSettings();
-	const { horizontalAlignment, renderMarkdown } = getBlockConfig(blockId);
+	const { horizontalAlignment, renderMarkdown, lockEditing } =
+		getBlockConfig(blockId);
 	const [isEditing, setIsEditing] = useState(false);
 	const [{ formattedDate, inputDate }, setDateStrings] = useState({
 		formattedDate: null,
@@ -51,7 +52,7 @@ export const DateTimeInput = (
 		}
 	}, [propertyValue]);
 
-	if (!isEditing || isLocked) {
+	if (!isEditing || lockEditing) {
 		return (
 			<Markdown
 				disabled={!renderMarkdown}
@@ -63,7 +64,7 @@ export const DateTimeInput = (
 					getJustifyContentClass(horizontalAlignment)
 				}
 				onClick={() => {
-					!isLocked && setIsEditing(true);
+					!lockEditing && setIsEditing(true);
 				}}
 			/>
 		);

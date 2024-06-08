@@ -1,6 +1,7 @@
 ---
 category: cat2
 test: ""
+bool: false
 ---
 
 

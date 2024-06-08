@@ -89,6 +89,7 @@ TODO next
 - [ ] Create customizable toolbar
 - [ ] prevent duplicate ids from being used?
 
+[asdf](https://)
 
 TODO Add keydown for enter and escape for all inputs
 - [ ] string
@@ -98,9 +99,10 @@ TODO Add keydown for enter and escape for all inputs
 - [ ] boolean
 
 ```dataedit
-TABLE tags, test, test, test, test, test
-ID stylish-perception
+TABLE tags, num, bool
+ID rotating-package
 ```
+
 
 
 [[Welcomeee^]]

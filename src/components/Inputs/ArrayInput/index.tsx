@@ -12,10 +12,11 @@ import { usePluginSettings } from "@/stores/global";
 import { Suggester } from "@/components/ui/Popover";
 
 export const ArrayInput = (props: InputSwitchProps<(string | number)[]>) => {
-	const { propertyName, propertyValue, filePath, isLocked } = props;
+	const { propertyName, propertyValue, filePath } = props;
 	const { plugin, blockId } = useBlock();
 	const { getBlockConfig } = usePluginSettings();
-	const { listItemPrefix, horizontalAlignment } = getBlockConfig(blockId);
+	const { listItemPrefix, horizontalAlignment, lockEditing } =
+		getBlockConfig(blockId);
 
 	const updateProperty = async (
 		itemIndex: number,
@@ -55,10 +56,10 @@ export const ArrayInput = (props: InputSwitchProps<(string | number)[]>) => {
 					}
 				>
 					<div
-						className={`clickable-icon w-fit ${isLocked && "cursor-not-allowed opacity-50"}`}
+						className={`clickable-icon w-fit ${lockEditing && "cursor-not-allowed opacity-50"}`}
 						aria-label="New item"
 						onClick={async () => {
-							if (isLocked) return;
+							if (lockEditing) return;
 							await updateProperty(
 								propertyValue.length,
 								"",
@@ -84,18 +85,16 @@ const ArrayInputItem = (
 		) => Promise<void>;
 	},
 ) => {
-	const {
-		isLocked,
-		itemValue,
-		itemIndex,
-		propertyType,
-		propertyName,
-		updateProperty,
-	} = props;
+	const { itemValue, itemIndex, propertyType, propertyName, updateProperty } =
+		props;
 	const { plugin, ctx, blockId } = useBlock();
 	const { getBlockConfig } = usePluginSettings();
-	const { showAutoComplete, renderMarkdown, horizontalAlignment } =
-		getBlockConfig(blockId);
+	const {
+		showAutoComplete,
+		renderMarkdown,
+		horizontalAlignment,
+		lockEditing,
+	} = getBlockConfig(blockId);
 	const [isEditing, setIsEditing] = useState(false);
 	const [isSuggestShown, setIsSuggestShown] = useState(false);
 	const [selectedSuggestion, setSelectedSuggestion] = useState<string>();
@@ -127,7 +126,7 @@ const ArrayInputItem = (
 		return suggestions.filter((s) => s.includes(q));
 	};
 
-	if (!isEditing || isLocked) {
+	if (!isEditing || lockEditing) {
 		return (
 			<Markdown
 				disabled={!renderMarkdown}
@@ -141,7 +140,7 @@ const ArrayInputItem = (
 					getJustifyContentClass(horizontalAlignment)
 				}
 				onClick={() => {
-					if (!isLocked) {
+					if (!lockEditing) {
 						setIsEditing(true);
 						setIsSuggestShown(true);
 					}

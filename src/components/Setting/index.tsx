@@ -54,9 +54,11 @@ const SettingControl = ({
 const SettingToggle = ({
 	checked,
 	onCheckedChange,
+	disabled,
 }: {
 	checked: boolean;
 	onCheckedChange: (b: boolean) => void;
+	disabled?: boolean;
 }) => {
 	const [toggleClass, setToggleClass] = useState("");
 	// const [suggest, setSuggest] = useState<Suggest>();
@@ -79,12 +81,15 @@ const SettingToggle = ({
 		<div
 			className={"checkbox-container " + toggleClass}
 			onClick={() => {
-				onCheckedChange(!checked);
+				if (!disabled) {
+					onCheckedChange(!checked);
+				}
 			}}
 		>
 			<input
 				// ref={ref}
 				type="checkbox"
+				disabled={!!disabled}
 				checked={checked}
 				tabIndex={0}
 				readOnly

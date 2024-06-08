@@ -43,7 +43,8 @@ export const usePluginSettings = create<PluginSettingsStore>()((set, get) => ({
 	},
 	setBlockConfig: (id, cb) => {
 		set((prev) => {
-			const currentConfig = prev.settings.blockConfigs[id];
+			const currentConfig =
+				prev?.settings?.blockConfigs[id] ?? defaultDefaultBlockConfig;
 			const newConfig = typeof cb === "function" ? cb(currentConfig) : cb;
 			return {
 				...prev,

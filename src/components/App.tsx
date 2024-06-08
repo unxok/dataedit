@@ -521,32 +521,40 @@ export const App = (props: {
 						</tbody>
 					</table>
 					<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
-						{config.toolbarConfig.map(
-							({ componentName, enabled }, i) => {
-								if (!enabled) return;
-								return (
-									<Fragment key={i}>
-										<ToolbarSwitch
-											// key={i + "toolbar"}
-											componentName={componentName}
-											settingsGearOnClick={
-												settingsGearOnClick
-											}
-											blockId={blockId}
-											totalRows={
-												queryResults?.values?.length
-											}
-										/>
-										{i !==
-											config.toolbarConfig.length - 1 && (
-											<DividerVerticalIcon
-												// key={i + "divider"}
-												className="text-secondary-alt"
+						{blockId &&
+							config?.toolbarConfig?.map(
+								({ componentName, enabled }, i) => {
+									if (!enabled) return;
+									return (
+										<Fragment key={i}>
+											<ToolbarSwitch
+												// key={i + "toolbar"}
+												componentName={componentName}
+												settingsGearOnClick={
+													settingsGearOnClick
+												}
+												blockId={blockId}
+												totalRows={
+													queryResults?.values?.length
+												}
 											/>
-										)}
-									</Fragment>
-								);
-							},
+											{i !==
+												config.toolbarConfig.length -
+													1 && (
+												<DividerVerticalIcon
+													// key={i + "divider"}
+													className="text-secondary-alt"
+												/>
+											)}
+										</Fragment>
+									);
+								},
+							)}
+						{!blockId && (
+							<SettingsGear
+								blockId={blockId}
+								onClick={settingsGearOnClick}
+							/>
 						)}
 						{/* <PaginationNav totalRows={queryResults.values.length} />
 						<PaginationSize />

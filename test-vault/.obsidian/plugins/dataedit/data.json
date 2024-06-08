@@ -10,6 +10,11 @@
           "enabled": true
         },
         {
+          "componentName": "TotalResults",
+          "displayText": "Total results",
+          "enabled": true
+        },
+        {
           "componentName": "PaginationNav",
           "displayText": "Pagination",
           "enabled": true
@@ -18,6 +23,21 @@
           "componentName": "PageSize",
           "displayText": "Page size",
           "enabled": true
+        },
+        {
+          "componentName": "LockEditing",
+          "displayText": "Lock editing",
+          "enabled": true
+        },
+        {
+          "componentName": "HorizontalAlignment",
+          "displayText": "Horizontal alignment",
+          "enabled": true
+        },
+        {
+          "componentName": "VerticalAlignment",
+          "displayText": "Vertical alignment",
+          "enabled": true
         }
       ],
       "lockEditing": false,
@@ -25,8 +45,10 @@
       "listVertical": true,
       "renderMarkdown": true,
       "showTypeIcons": true,
+      "showNumberButtons": true,
       "showAutoComplete": true,
       "showColAndRowLabels": false,
+      "useToggleForCheckbox": false,
       "pageSize": 0,
       "currentPage": 1,
       "queryLinkPropertyName": "",
@@ -68,17 +90,17 @@
       "columnWidths": [],
       "columnPresets": []
     },
-    "stylish-perception": {
+    "rotating-package": {
       "filePath": "Welcomeee.md",
       "toolbarConfig": [
         {
-          "componentName": "TotalResults",
-          "displayText": "Total results",
+          "componentName": "SettingsGear",
+          "displayText": "Settings gear",
           "enabled": true
         },
         {
-          "componentName": "SettingsGear",
-          "displayText": "Settings gear",
+          "componentName": "TotalResults",
+          "displayText": "Total results",
           "enabled": true
         },
         {
@@ -112,10 +134,12 @@
       "listVertical": true,
       "renderMarkdown": true,
       "showTypeIcons": true,
+      "showNumberButtons": true,
       "showAutoComplete": true,
       "showColAndRowLabels": false,
-      "pageSize": 7,
-      "currentPage": 2,
+      "useToggleForCheckbox": false,
+      "pageSize": 0,
+      "currentPage": 1,
       "queryLinkPropertyName": "",
       "allowImageFullSize": false,
       "verticalAlignment": "start",
@@ -154,7 +178,7 @@
       },
       "columnWidths": [],
       "columnPresets": [],
-      "id": "stylish-perception"
+      "id": "rotating-package"
     }
   }
 }
