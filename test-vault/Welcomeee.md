@@ -26,7 +26,7 @@ embed: "![[demo.gif|demo.gif]]"
 
 ![[demo.gif]]
 
-inlineProp:: 551
+
 
 [[]]
 
@@ -91,6 +91,10 @@ TODO next
 
 [asdf](https://)
 
+inlineProp:: 22
+
+inlineProp:: dfffee
+
 TODO Add keydown for enter and escape for all inputs
 - [ ] string
 - [ ] number
@@ -99,7 +103,7 @@ TODO Add keydown for enter and escape for all inputs
 - [ ] boolean
 
 ```dataedit
-TABLE tags, num, bool
+TABLE tags, inlineProp AS inline, num, bool
 ID rotating-package
 ```
 

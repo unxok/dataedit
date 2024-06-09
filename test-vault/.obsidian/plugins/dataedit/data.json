@@ -42,6 +42,7 @@
         }
       ],
       "toolbarPosition": "bottom",
+      "tdPadding": 0,
       "lockEditing": false,
       "listItemPrefix": "disc",
       "listVertical": true,
@@ -132,6 +133,7 @@
         }
       ],
       "toolbarPosition": "bottom",
+      "tdPadding": 0,
       "lockEditing": false,
       "listItemPrefix": "disc",
       "listVertical": true,

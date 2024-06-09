@@ -21,7 +21,7 @@
 	"devDependencies": {
 		"@types/luxon": "^3.4.2",
 		"@types/node": "^20.5.8",
-		"@types/react": "^18.2.21",
+		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.2.7",
 		"autoprefixer": "^10.4.15",
 		"builtin-modules": "^3.3.0",

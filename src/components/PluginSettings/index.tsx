@@ -63,6 +63,7 @@ export const BlockConfigSchema = z.object({
 		z.literal("bottom"),
 		z.literal("disabled"),
 	]),
+	tdPadding: z.number(),
 	lockEditing: z.boolean(),
 	listItemPrefix: z.string(),
 	listVertical: z.boolean(),
@@ -130,6 +131,7 @@ export const defaultDefaultBlockConfig: z.infer<typeof BlockConfigSchema> = {
 		},
 	],
 	toolbarPosition: "bottom",
+	tdPadding: 0,
 	lockEditing: false,
 	listItemPrefix: "disc",
 	listVertical: true,
@@ -643,6 +645,10 @@ export const BlockConfig = ({
 						</select>
 					}
 				/>
+				<TdPaddingSetting
+					tdPadding={form.tdPadding}
+					updateForm={(num: number) => updateForm("tdPadding", num)}
+				/>
 				<StandardSetting
 					title={"Auto suggest"}
 					description={
@@ -995,6 +1001,68 @@ const ToolbarSetting = ({
 			{/* <SettingControl>
 				<input type="text" />
 			</SettingControl> */}
+		</SettingRoot>
+	);
+};
+
+const TdPaddingSetting = ({
+	tdPadding,
+	updateForm,
+}: {
+	tdPadding: number;
+	updateForm: (num: number) => void;
+}) => {
+	const [value, setValue] = useState(tdPadding);
+
+	const update = (
+		e:
+			| React.MouseEvent<HTMLInputElement, MouseEvent>
+			| React.FocusEvent<HTMLInputElement, Element>,
+	) => {
+		const n = Number(e.currentTarget.value);
+		const num = Number.isNaN(n) || n < 0 ? 0 : n;
+		updateForm(num);
+	};
+
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const n = Number(e.currentTarget.value);
+		const num = Number.isNaN(n) || n < 0 ? 0 : n;
+		setValue(num);
+	};
+
+	return (
+		<SettingRoot>
+			<SettingInfo>
+				<SettingName>Table cell padding</SettingName>
+				<SettingDescription className="whitespace-pre-line">
+					Override the default padding for table cells. Leave as 0 to
+					use the default padding from Obsidian or your theme.
+				</SettingDescription>
+			</SettingInfo>
+			<SettingControl>
+				<div className="flex flex-col gap-4">
+					<input
+						type="range"
+						min={0}
+						max={50}
+						value={value}
+						onChange={onChange}
+						onMouseUp={update}
+					/>
+					<div className="flex items-center gap-3">
+						<input
+							placeholder="auto"
+							type="number"
+							value={value}
+							min={0}
+							max={50}
+							onChange={onChange}
+							onBlur={update}
+						/>
+						<span>px</span>
+					</div>
+				</div>
+			</SettingControl>
 		</SettingRoot>
 	);
 };

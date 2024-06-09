@@ -26492,15 +26492,38 @@ var parseLinesForInlineFields = (lines) => {
     ];
   }, []);
 };
-var udpateInlineField = async (propertyName2, oldValue, newValue, file, plugin2) => {
+var getTrueValues = (oldValue, newValue) => {
+  console.log(oldValue, newValue);
+  const index2 = oldValue.findIndex((v, i) => v !== newValue[i]);
+  if (index2 === -1) {
+    console.log("no changes found");
+    return {
+      oldValue: oldValue[0],
+      newValue: newValue[0]
+    };
+  }
+  return {
+    oldValue: oldValue[index2],
+    newValue: newValue[index2]
+  };
+};
+var udpateInlineField = async (propertyName2, oldV, newV, file, plugin2) => {
+  const { oldValue, newValue } = Array.isArray(oldV) && Array.isArray(newV) ? getTrueValues(oldV, newV) : { oldValue: oldV, newValue: newV };
   const pageContent = await plugin2.app.vault.cachedRead(file);
   const lines = pageContent.split("\n");
   const inlineFields = parseLinesForInlineFields(lines);
+  console.log("inlines: ", inlineFields);
+  console.log("old: ", oldValue);
+  console.log("new: ", newValue);
   const foundField = inlineFields.find(({ key, value }) => {
-    if (key !== propertyName2)
+    if (key !== propertyName2) {
+      console.log("false: ", key, " ", propertyName2);
       return false;
-    if (value.toString() !== oldValue.toString())
+    }
+    if (value.toString() !== oldValue.toString()) {
+      console.log("false: ", value, " ", oldValue);
       return false;
+    }
     return true;
   });
   if (!foundField) {
@@ -33188,6 +33211,7 @@ var BlockConfigSchema2 = z.object({
     z.literal("bottom"),
     z.literal("disabled")
   ]),
+  tdPadding: z.number(),
   lockEditing: z.boolean(),
   listItemPrefix: z.string(),
   listVertical: z.boolean(),
@@ -33254,6 +33278,7 @@ var defaultDefaultBlockConfig = {
     }
   ],
   toolbarPosition: "bottom",
+  tdPadding: 0,
   lockEditing: false,
   listItemPrefix: "disc",
   listVertical: true,
@@ -33391,6 +33416,12 @@ var BlockConfig = ({
         /* @__PURE__ */ import_react22.default.createElement("option", { value: "bottom" }, "Bottom"),
         /* @__PURE__ */ import_react22.default.createElement("option", { value: "disabled" }, "disabled")
       )
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement(
+    TdPaddingSetting,
+    {
+      tdPadding: form.tdPadding,
+      updateForm: (num2) => updateForm("tdPadding", num2)
     }
   ), /* @__PURE__ */ import_react22.default.createElement(
     StandardSetting,
@@ -33672,6 +33703,44 @@ var ToolbarSetting = ({
     },
     /* @__PURE__ */ import_react22.default.createElement(ArrowDown, { className: "svg-icon" })
   ))))));
+};
+var TdPaddingSetting = ({
+  tdPadding,
+  updateForm
+}) => {
+  const [value, setValue] = (0, import_react22.useState)(tdPadding);
+  const update = (e) => {
+    const n2 = Number(e.currentTarget.value);
+    const num2 = Number.isNaN(n2) || n2 < 0 ? 0 : n2;
+    updateForm(num2);
+  };
+  const onChange = (e) => {
+    const n2 = Number(e.currentTarget.value);
+    const num2 = Number.isNaN(n2) || n2 < 0 ? 0 : n2;
+    setValue(num2);
+  };
+  return /* @__PURE__ */ import_react22.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, "Table cell padding"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Override the default padding for table cells. Leave as 0 to use the default padding from Obsidian or your theme.")), /* @__PURE__ */ import_react22.default.createElement(SettingControl, null, /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex flex-col gap-4" }, /* @__PURE__ */ import_react22.default.createElement(
+    "input",
+    {
+      type: "range",
+      min: 0,
+      max: 50,
+      value,
+      onChange,
+      onMouseUp: update
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react22.default.createElement(
+    "input",
+    {
+      placeholder: "auto",
+      type: "number",
+      value,
+      min: 0,
+      max: 50,
+      onChange,
+      onBlur: update
+    }
+  ), /* @__PURE__ */ import_react22.default.createElement("span", null, "px")))));
 };
 
 // src/components/App.tsx
@@ -42476,10 +42545,10 @@ var ArrayInput = (props2) => {
   return /* @__PURE__ */ import_react29.default.createElement(
     "ul",
     {
-      className: "m-0 flex w-full flex-col gap-1 p-0 pl-5",
+      className: "m-0 flex w-full flex-col gap-1 p-0 pl-0",
       style: { listStyleType: listItemPrefix }
     },
-    propertyValue2?.map((item, i) => /* @__PURE__ */ import_react29.default.createElement("li", { key: i }, /* @__PURE__ */ import_react29.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react29.default.createElement(
+    propertyValue2?.map((item, i) => /* @__PURE__ */ import_react29.default.createElement("li", { key: i, className: "ml-8" }, /* @__PURE__ */ import_react29.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react29.default.createElement(
       ArrayInputItem,
       {
         ...props2,
@@ -42488,7 +42557,7 @@ var ArrayInput = (props2) => {
         updateProperty
       }
     )))),
-    /* @__PURE__ */ import_react29.default.createElement("li", { className: "w-full list-none" }, /* @__PURE__ */ import_react29.default.createElement(
+    /* @__PURE__ */ import_react29.default.createElement(
       "div",
       {
         className: "flex w-full " + getJustifyContentClass(horizontalAlignment2)
@@ -42501,16 +42570,12 @@ var ArrayInput = (props2) => {
           onClick: async () => {
             if (lockEditing2)
               return;
-            await updateProperty(
-              propertyValue2.length,
-              "",
-              true
-            );
+            await updateProperty(propertyValue2.length, "", true);
           }
         },
         /* @__PURE__ */ import_react29.default.createElement(Plus, { className: "svg-icon" })
       )
-    ))
+    )
   );
 };
 var ArrayInputItem = (props2) => {
@@ -42557,7 +42622,7 @@ var ArrayInputItem = (props2) => {
         disabled: !renderMarkdown2,
         app: plugin2.app,
         filePath: ctx2.sourcePath,
-        plainText: propertyType === "tags" ? "#" + plainText : plainText,
+        plainText: propertyType === "tags" ? "#" + plainText : plainText.toString(),
         className: "flex h-fit min-h-4 w-full [&_*]:my-0 " + getJustifyContentClass(horizontalAlignment2),
         onClick: () => {
           if (!lockEditing2) {
@@ -64472,7 +64537,7 @@ var HorizontalAlignment = () => {
       horizontalAlignment: alignment
     }));
   };
-  return /* @__PURE__ */ import_react37.default.createElement(Popover, null, /* @__PURE__ */ import_react37.default.createElement(PopoverTrigger, { asChild: true }, /* @__PURE__ */ import_react37.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement(Popover, { modal: true }, /* @__PURE__ */ import_react37.default.createElement(PopoverTrigger, { asChild: true }, /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       onClick: () => console.log(),
@@ -64521,7 +64586,7 @@ var VerticalAlignment = () => {
       verticalAlignment: alignment
     }));
   };
-  return /* @__PURE__ */ import_react37.default.createElement(Popover, null, /* @__PURE__ */ import_react37.default.createElement(PopoverTrigger, { asChild: true }, /* @__PURE__ */ import_react37.default.createElement(
+  return /* @__PURE__ */ import_react37.default.createElement(Popover, { modal: true }, /* @__PURE__ */ import_react37.default.createElement(PopoverTrigger, { asChild: true }, /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
       onClick: () => console.log(),
@@ -64609,7 +64674,7 @@ var Td = (props2) => {
   const { propertyValue: propertyValue2, propertyName: propertyName2, className, hideFileLink: hideFileLink2, filePath: filePath3 } = props2;
   const { plugin: plugin2, aliasObj: aliasObj2, blockId: blockId2 } = useBlock();
   const { getBlockConfig: getBlockConfig2 } = usePluginSettings();
-  const { verticalAlignment: verticalAlignment2 } = getBlockConfig2(blockId2);
+  const { verticalAlignment: verticalAlignment2, tdPadding } = getBlockConfig2(blockId2);
   const propName = aliasObj2[propertyName2] ?? propertyName2;
   const isFileProp = propName.toLowerCase() === FILE || propName === "file.link";
   const prePropertyType = isFileProp ? FILE : getPropertyType(propName);
@@ -64622,21 +64687,30 @@ var Td = (props2) => {
   const propValue = tryToMarkdownLink(propertyValue2);
   if (isFileProp && hideFileLink2)
     return;
-  return /* @__PURE__ */ import_react37.default.createElement("td", { className: cn(className) }, /* @__PURE__ */ import_react37.default.createElement(
-    "div",
+  return /* @__PURE__ */ import_react37.default.createElement(
+    "td",
     {
-      className: `flex h-full w-full ${getAlignItemsClass(verticalAlignment2)}`
+      className: cn(className),
+      style: tdPadding > 0 ? {
+        padding: tdPadding
+      } : {}
     },
     /* @__PURE__ */ import_react37.default.createElement(
-      InputSwitch,
+      "div",
       {
-        ...props2,
-        propertyName: propName,
-        propertyValue: propValue,
-        propertyType
-      }
+        className: `flex h-full w-full ${getAlignItemsClass(verticalAlignment2)}`
+      },
+      /* @__PURE__ */ import_react37.default.createElement(
+        InputSwitch,
+        {
+          ...props2,
+          propertyName: propName,
+          propertyValue: propValue,
+          propertyType
+        }
+      )
     )
-  ));
+  );
 };
 
 // src/main.tsx

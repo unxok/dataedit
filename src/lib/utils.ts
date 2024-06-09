@@ -238,7 +238,39 @@ const parseLinesForInlineFields = (lines: string[]) => {
 	}, []);
 };
 
-type InlinePropertyValue = string | number | boolean | null | undefined;
+type InlinePropertyValue =
+	| string
+	| number
+	| boolean
+	| null
+	| (string | number)[]
+	| undefined;
+
+/**
+ * Finds the first changed value in two arrays
+ * @param oldValue The old values array
+ * @param newValue The new array of values
+ * @returns The first old and new value where they are different between the two arrays
+ */
+const getTrueValues = (
+	oldValue: (string | number)[],
+	newValue: (string | number)[],
+) => {
+	console.log(oldValue, newValue);
+	const index = oldValue.findIndex((v, i) => v !== newValue[i]);
+	if (index === -1) {
+		console.log("no changes found");
+		return {
+			oldValue: oldValue[0],
+			newValue: newValue[0],
+		};
+	}
+	return {
+		oldValue: oldValue[index],
+		newValue: newValue[index],
+	};
+};
+
 /**
  * Updates an inline field. Will throw an error if inline field is not defined in the file
  * @param propertyName Property name to update
@@ -249,17 +281,32 @@ type InlinePropertyValue = string | number | boolean | null | undefined;
  */
 const udpateInlineField = async (
 	propertyName: string,
-	oldValue: InlinePropertyValue,
-	newValue: InlinePropertyValue,
+	oldV: InlinePropertyValue,
+	newV: InlinePropertyValue,
 	file: TFile,
 	plugin: DataEdit,
 ) => {
+	const { oldValue, newValue } =
+		Array.isArray(oldV) && Array.isArray(newV)
+			? getTrueValues(oldV, newV)
+			: { oldValue: oldV, newValue: newV };
 	const pageContent = await plugin.app.vault.cachedRead(file);
 	const lines = pageContent.split("\n");
 	const inlineFields = parseLinesForInlineFields(lines);
+	console.log("inlines: ", inlineFields);
+	console.log("old: ", oldValue);
+	console.log("new: ", newValue);
 	const foundField = inlineFields.find(({ key, value }) => {
-		if (key !== propertyName) return false;
-		if (value.toString() !== oldValue.toString()) return false;
+		if (key !== propertyName) {
+			console.log("false: ", key, " ", propertyName);
+			return false;
+		}
+
+		if (value.toString() !== oldValue.toString()) {
+			console.log("false: ", value, " ", oldValue);
+
+			return false;
+		}
 		return true;
 	});
 	if (!foundField) {

@@ -978,7 +978,7 @@ const HorizontalAlignment = () => {
 	};
 
 	return (
-		<Popover>
+		<Popover modal>
 			<PopoverTrigger asChild>
 				<div
 					onClick={() => console.log()}
@@ -1041,7 +1041,7 @@ const VerticalAlignment = () => {
 	};
 
 	return (
-		<Popover>
+		<Popover modal>
 			<PopoverTrigger asChild>
 				<div
 					onClick={() => console.log()}
@@ -1168,7 +1168,7 @@ const Td = (props: TdProps<unknown>) => {
 		props;
 	const { plugin, aliasObj, blockId } = useBlock();
 	const { getBlockConfig } = usePluginSettings();
-	const { verticalAlignment } = getBlockConfig(blockId);
+	const { verticalAlignment, tdPadding } = getBlockConfig(blockId);
 	const propName = aliasObj[propertyName] ?? propertyName;
 	// TODO check for different prop name set in dataview settings?
 	const isFileProp =
@@ -1188,7 +1188,16 @@ const Td = (props: TdProps<unknown>) => {
 	if (isFileProp && hideFileLink) return;
 
 	return (
-		<td className={cn(className)}>
+		<td
+			className={cn(className)}
+			style={
+				tdPadding > 0
+					? {
+							padding: tdPadding,
+						}
+					: {}
+			}
+		>
 			<div
 				className={`flex h-full w-full ${getAlignItemsClass(verticalAlignment)}`}
 			>

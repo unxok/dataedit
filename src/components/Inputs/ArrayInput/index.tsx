@@ -33,11 +33,11 @@ export const ArrayInput = (props: InputSwitchProps<(string | number)[]>) => {
 
 	return (
 		<ul
-			className="m-0 flex w-full flex-col gap-1 p-0 pl-5"
+			className="m-0 flex w-full flex-col gap-1 p-0 pl-0"
 			style={{ listStyleType: listItemPrefix }}
 		>
 			{propertyValue?.map((item, i) => (
-				<li key={i}>
+				<li key={i} className="ml-8">
 					<div className="flex">
 						<ArrayInputItem
 							{...props}
@@ -48,29 +48,24 @@ export const ArrayInput = (props: InputSwitchProps<(string | number)[]>) => {
 					</div>
 				</li>
 			))}
-			<li className="w-full list-none">
+			{/* <li className="w-full list-none"> */}
+			<div
+				className={
+					"flex w-full " + getJustifyContentClass(horizontalAlignment)
+				}
+			>
 				<div
-					className={
-						"flex w-full " +
-						getJustifyContentClass(horizontalAlignment)
-					}
+					className={`clickable-icon w-fit ${lockEditing && "cursor-not-allowed opacity-50"}`}
+					aria-label="New item"
+					onClick={async () => {
+						if (lockEditing) return;
+						await updateProperty(propertyValue.length, "", true);
+					}}
 				>
-					<div
-						className={`clickable-icon w-fit ${lockEditing && "cursor-not-allowed opacity-50"}`}
-						aria-label="New item"
-						onClick={async () => {
-							if (lockEditing) return;
-							await updateProperty(
-								propertyValue.length,
-								"",
-								true,
-							);
-						}}
-					>
-						<Plus className="svg-icon" />
-					</div>
+					<Plus className="svg-icon" />
 				</div>
-			</li>
+			</div>
+			{/* </li> */}
 		</ul>
 	);
 };
@@ -133,7 +128,9 @@ const ArrayInputItem = (
 				app={plugin.app}
 				filePath={ctx.sourcePath}
 				plainText={
-					propertyType === "tags" ? "#" + plainText : plainText
+					propertyType === "tags"
+						? "#" + plainText
+						: plainText.toString()
 				}
 				className={
 					"flex h-fit min-h-4 w-full [&_*]:my-0 " +
