@@ -39,12 +39,14 @@ export const usePluginSettings = create<PluginSettingsStore>()((set, get) => ({
 			// );
 			return defaultDefaultBlockConfig;
 		}
-		return blockConfigs[blockId] ?? blockConfigs["default"];
+		return blockConfigs[blockId || "default"];
 	},
 	setBlockConfig: (id, cb) => {
+		const blockId = id || "default";
 		set((prev) => {
 			const currentConfig =
-				prev?.settings?.blockConfigs[id] ?? defaultDefaultBlockConfig;
+				prev?.settings?.blockConfigs[blockId] ??
+				defaultDefaultBlockConfig;
 			const newConfig = typeof cb === "function" ? cb(currentConfig) : cb;
 			return {
 				...prev,
@@ -52,7 +54,7 @@ export const usePluginSettings = create<PluginSettingsStore>()((set, get) => ({
 					...prev.settings,
 					blockConfigs: {
 						...prev.settings.blockConfigs,
-						[id]: newConfig,
+						[blockId]: newConfig,
 					},
 				},
 			};

@@ -8,10 +8,11 @@ import {
 	SettingToggle,
 } from "../Setting";
 import { Notice } from "obsidian";
-import { z } from "zod";
+import { string, z } from "zod";
 import { ArrowDown, ArrowUp, CircleCheck, LoaderCircle } from "lucide-react";
 import { addNewKeyValues, arrayMove, removeKeys } from "@/lib/utils";
 import {
+	ConfirmationDialog,
 	Dialog,
 	DialogContent,
 	DialogDescription,
@@ -30,6 +31,7 @@ import {
 	TOTAL_RESULTS,
 	VERTICAL_ALIGNMENT,
 } from "@/lib/consts/toolbarComponentNames";
+import DataEdit from "@/main";
 
 const StartCenterEnd = z.union([
 	z.literal("start"),
@@ -485,21 +487,19 @@ export const defaultPluginSettings: z.infer<typeof PluginSettingsSchema> = {
 // 	);
 // };
 
-export const BlockConfig = ({
+const BlockConfig = ({
 	id,
-	filePath,
-	open,
-	setOpen,
 	hideGhLinks,
+	plugin,
 }: {
 	id: string;
-	filePath: string;
-	open: boolean;
-	setOpen: (b: boolean) => void;
 	hideGhLinks?: boolean;
-	// onChange: (bc: z.infer<typeof PluginSettingsSchema>) => void;
+	plugin?: DataEdit;
 }) => {
-	const { plugin } = useBlock();
+	// const p = plugin ?? useBlock().plugin;
+	// console.log("p: ", p);
+	// const { updateBlockConfig } = plugin ?? useBlock().plugin;
+	const { plugin: p } = plugin ? { plugin } : useBlock();
 	// const { blockConfigs } = plugin.settings;
 	const { settings, setSettings } = usePluginSettings();
 	if (!settings)
@@ -507,18 +507,11 @@ export const BlockConfig = ({
 			"Tried opening block config when settings are undefined. This should be impossible because App initialization should have set it",
 		);
 	const { blockConfigs } = settings;
-	const existingConfig = blockConfigs[id] ?? blockConfigs["default"];
+	const existingConfig = blockConfigs[id || "default"];
 	const defaultForm = existingConfig ?? defaultDefaultBlockConfig;
-	if (defaultForm.filePath) {
-		if (defaultForm.filePath !== filePath) {
-			new Notice(
-				"Error: duplicate id found, please change it and try again",
-			);
-			return;
-		}
-	}
-	const [form, setForm] = useState({ ...defaultForm, filePath, id });
+	const [form, setForm] = useState({ ...defaultForm, id });
 	const [isSaving, setIsSaving] = useState(false);
+	const [isResetDialogOpen, setResetDialogOpen] = useState(false);
 	const updateForm = <T extends keyof typeof form>(
 		key: T,
 		value: (typeof form)[T],
@@ -532,255 +525,213 @@ export const BlockConfig = ({
 	useEffect(() => {
 		setIsSaving(true);
 		(async () => {
-			const newSettings = await plugin.updateBlockConfig(id, form);
+			const newSettings = await p.updateBlockConfig(id, form);
 			setSettings(() => newSettings);
 			// console.log("newSettings: ", newSettings);
 			setIsSaving(false);
 		})();
 	}, [form]);
 
-	// const debouncer = debounce(
-	// async (newForm: typeof form) => {
-	// 	const newSettings = await plugin.updateBlockConfig(id, newForm);
-	// 	setSettings(() => newSettings);
-	// 	console.log("newSettings: ", newSettings);
-	// 	setIsSaving(false);
-	// },
-	// 	500,
-	// 	true,
-	// );
-
-	// useEffect(() => {
-	// 	setIsSaving(true);
-	// 	debouncer(form);
-	// }, [form]);
-
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogContent className="vertical-tab-content">
-				<DialogHeader>
-					<DialogTitle>Dataedit block config</DialogTitle>
-					<DialogDescription className="flex flex-col gap-2">
-						<span className="flex flex-col">
-							<span>
-								id:&nbsp;
-								<span className="text-normal">{id}</span>
-							</span>
-							<span className="flex">
-								note:&nbsp;
-								<span className="text-normal">{filePath}</span>
-							</span>
-						</span>
-						{!hideGhLinks && (
-							<span className="flex flex-col">
-								<span>
-									Plugin repository:{" "}
-									<a href="https://github.com/unxok/dataedit">
-										github.com/unxok/dataedit
-									</a>
-								</span>
-								<span>
-									Dataview docs:{" "}
-									<a href="https://blacksmithgu.github.io/obsidian-dataview/">
-										blacksmithgu.github.io/obsidian-dataview/
-									</a>
-								</span>
-							</span>
-						)}
-					</DialogDescription>
-				</DialogHeader>
-				<SettingDescription className="py-3">
-					{isSaving && (
-						<div className="text-error">
-							Saving config{" "}
-							<LoaderCircle
-								className="animate-spin"
-								size={"1em"}
-							/>
-						</div>
-					)}
-					{!isSaving && (
-						<div className="text-success">
-							Config saved <CircleCheck size={"1em"} />
-						</div>
-					)}
-					<details>
-						<summary>Actions</summary>
+		<>
+			<SettingDescription className="py-3">
+				{isSaving && (
+					<div className="text-error">
+						Saving config{" "}
+						<LoaderCircle className="animate-spin" size={"1em"} />
+					</div>
+				)}
+				{!isSaving && (
+					<div className="text-success">
+						Config saved <CircleCheck size={"1em"} />
+					</div>
+				)}
+				<details>
+					<summary>Actions</summary>
+					<div className="flex items-center justify-start gap-2 py-3">
 						<button>Export</button>
 						<button>Import</button>
 						<button
-							onClick={() =>
-								setForm({
-									...defaultDefaultBlockConfig,
-									id: form.id,
-									filePath: form.filePath,
-								})
-							}
+							className="text-error"
+							onClick={() => setResetDialogOpen(true)}
 						>
 							Reset
 						</button>
-					</details>
-				</SettingDescription>
-				<ToolbarSetting items={form.toolbarConfig} setForm={setForm} />
-				<StandardSetting
-					title={"Toolbar position"}
-					description={
-						"Set whether the position of the toolbar or disable it entirely.\n\nNote: if disabled, the settings gear will still be present"
-					}
-					control={
-						<select
-							className="dropdown"
-							defaultValue={form.toolbarPosition}
-							onChange={(v) =>
-								updateForm(
-									"toolbarPosition",
-									v.target
-										.value as typeof form.toolbarPosition,
-								)
-							}
-						>
-							<option value="top">Top</option>
-							<option value="bottom">Bottom</option>
-							<option value="disabled">disabled</option>
-						</select>
-					}
-				/>
-				<TdPaddingSetting
-					tdPadding={form.tdPadding}
-					updateForm={(num: number) => updateForm("tdPadding", num)}
-				/>
-				<StandardSetting
-					title={"Auto suggest"}
-					description={
-						"Automatically suggest values from the existing values used for that property.\nOnly works on Text and Multitext."
-					}
-					control={
-						<SettingToggle
-							checked={form.showAutoComplete}
-							onCheckedChange={(b) =>
-								updateForm("showAutoComplete", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Number buttons"}
-					description={
-						"Show buttons below number type table cells that let you add, substract, or enter an expression."
-					}
-					control={
-						<SettingToggle
-							checked={form.showNumberButtons}
-							onCheckedChange={(b) =>
-								updateForm("showNumberButtons", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Type icons"}
-					description={
-						"Show an icon next to each header representing the set type of that property. Inline and nested properties have a special symbol.\n\nTip: For custom icons, turn this off and use the Iconize plugin to set an icon in the column alias."
-					}
-					control={
-						<SettingToggle
-							checked={form.showTypeIcons}
-							onCheckedChange={(b) =>
-								updateForm("showTypeIcons", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Render markdown"}
-					description={
-						"Render markdown as HTML.\n\nNote: this only works in text, multitext, inline, and nested property types.\n\nAnother note: This is only rendered when not currently editing the table cell."
-					}
-					control={
-						<SettingToggle
-							checked={form.renderMarkdown}
-							onCheckedChange={(b) =>
-								updateForm("renderMarkdown", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Allow full size images"}
-					description={
-						"Allows image embeds to grow to their actual size."
-					}
-					control={
-						<SettingToggle
-							checked={form.allowImageFullSize}
-							onCheckedChange={(b) =>
-								updateForm("allowImageFullSize", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Column and Row Labels"}
-					description={
-						"Shows excel/sheets like labels for column and row numbers."
-					}
-					control={
-						<SettingToggle
-							checked={form.showColAndRowLabels}
-							onCheckedChange={(b) =>
-								updateForm("showColAndRowLabels", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Lock editing"}
-					description={
-						"Lock the table from being able to be edited.\nWhen locked, links and tags are clickable."
-					}
-					control={
-						<SettingToggle
-							checked={form.lockEditing}
-							onCheckedChange={(b) =>
-								updateForm("lockEditing", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Use toggle for checkbox"}
-					description={
-						"Uses toggles instead of checkboxes for checkbox type properties."
-					}
-					control={
-						<SettingToggle
-							checked={form.useToggleForCheckbox}
-							onCheckedChange={(b) =>
-								updateForm("useToggleForCheckbox", b)
-							}
-						/>
-					}
-				/>
-				<StandardSetting
-					title={"Page size"}
-					description={"The number of results to display per page."}
-					control={
-						<input
-							defaultValue={form.pageSize}
-							placeholder="∞"
-							type="number"
-							step={1}
-							onBlur={(e) => {
-								const possibleNum = Number(e.target.value);
-								const num = Number.isNaN(possibleNum)
-									? 0
-									: possibleNum;
-								updateForm("pageSize", num);
-							}}
-						/>
-					}
-				/>
-				{/* <StandardSetting
+						{isResetDialogOpen && (
+							<ConfirmationDialog
+								title="Are you sure?"
+								description="This will reset the block config to the default settings as set by Dataedit's creator. This cannot be undone"
+								onConfirm={() => {
+									console.log(
+										"defaultDefaultBlockConfig: ",
+										defaultDefaultBlockConfig,
+									);
+									setForm({
+										...defaultDefaultBlockConfig,
+										id: form.id,
+									});
+									setResetDialogOpen(false);
+								}}
+								open={isResetDialogOpen}
+								setOpen={setResetDialogOpen}
+							/>
+						)}
+					</div>
+				</details>
+			</SettingDescription>
+			<ToolbarSetting items={form.toolbarConfig} setForm={setForm} />
+			<StandardSetting
+				title={"Toolbar position"}
+				description={
+					"Set whether the position of the toolbar or disable it entirely.\n\nNote: if disabled, the settings gear will still be present"
+				}
+				control={
+					<select
+						className="dropdown"
+						defaultValue={form.toolbarPosition}
+						onChange={(v) =>
+							updateForm(
+								"toolbarPosition",
+								v.target.value as typeof form.toolbarPosition,
+							)
+						}
+					>
+						<option value="top">Top</option>
+						<option value="bottom">Bottom</option>
+						<option value="disabled">disabled</option>
+					</select>
+				}
+			/>
+			<TdPaddingSetting
+				tdPadding={form.tdPadding}
+				updateForm={(num: number) => updateForm("tdPadding", num)}
+			/>
+			<StandardSetting
+				title={"Auto suggest"}
+				description={
+					"Automatically suggest values from the existing values used for that property.\nOnly works on Text and Multitext."
+				}
+				control={
+					<SettingToggle
+						checked={form.showAutoComplete}
+						onCheckedChange={(b) =>
+							updateForm("showAutoComplete", b)
+						}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Number buttons"}
+				description={
+					"Show buttons below number type table cells that let you add, substract, or enter an expression."
+				}
+				control={
+					<SettingToggle
+						checked={form.showNumberButtons}
+						onCheckedChange={(b) =>
+							updateForm("showNumberButtons", b)
+						}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Type icons"}
+				description={
+					"Show an icon next to each header representing the set type of that property. Inline and nested properties have a special symbol.\n\nTip: For custom icons, turn this off and use the Iconize plugin to set an icon in the column alias."
+				}
+				control={
+					<SettingToggle
+						checked={form.showTypeIcons}
+						onCheckedChange={(b) => updateForm("showTypeIcons", b)}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Render markdown"}
+				description={
+					"Render markdown as HTML.\n\nNote: this only works in text, multitext, inline, and nested property types.\n\nAnother note: This is only rendered when not currently editing the table cell."
+				}
+				control={
+					<SettingToggle
+						checked={form.renderMarkdown}
+						onCheckedChange={(b) => updateForm("renderMarkdown", b)}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Allow full size images"}
+				description={
+					"Allows image embeds to grow to their actual size."
+				}
+				control={
+					<SettingToggle
+						checked={form.allowImageFullSize}
+						onCheckedChange={(b) =>
+							updateForm("allowImageFullSize", b)
+						}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Column and Row Labels"}
+				description={
+					"Shows excel/sheets like labels for column and row numbers."
+				}
+				control={
+					<SettingToggle
+						checked={form.showColAndRowLabels}
+						onCheckedChange={(b) =>
+							updateForm("showColAndRowLabels", b)
+						}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Lock editing"}
+				description={
+					"Lock the table from being able to be edited.\nWhen locked, links and tags are clickable."
+				}
+				control={
+					<SettingToggle
+						checked={form.lockEditing}
+						onCheckedChange={(b) => updateForm("lockEditing", b)}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Use toggle for checkbox"}
+				description={
+					"Uses toggles instead of checkboxes for checkbox type properties."
+				}
+				control={
+					<SettingToggle
+						checked={form.useToggleForCheckbox}
+						onCheckedChange={(b) =>
+							updateForm("useToggleForCheckbox", b)
+						}
+					/>
+				}
+			/>
+			<StandardSetting
+				title={"Page size"}
+				description={"The number of results to display per page."}
+				control={
+					<input
+						defaultValue={form.pageSize}
+						placeholder="∞"
+						type="number"
+						step={1}
+						onBlur={(e) => {
+							const possibleNum = Number(e.target.value);
+							const num = Number.isNaN(possibleNum)
+								? 0
+								: possibleNum;
+							updateForm("pageSize", num);
+						}}
+					/>
+				}
+			/>
+			{/* <StandardSetting
 					title={"Query links property name"}
 					description={
 						"If set, will cause Dataedit blocks to update that property name with the links for the queried notes.\nThis will cause queried notes to show in graph view"
@@ -799,102 +750,144 @@ export const BlockConfig = ({
 						/>
 					}
 				/> */}
-				<StandardSetting
-					title={"List item prefix"}
-					description={
-						<>
-							<span>
-								What symbol to show prefixed to list items
-								within multitext properties.
-							</span>
-							<ul
-								style={{
-									listStyleType: form.listItemPrefix,
-								}}
-							>
-								<li>item</li>
-								<li>another item</li>
-								<li>and one more item</li>
-							</ul>
-						</>
-					}
-					control={
-						<select
-							className="dropdown"
-							defaultValue={form.listItemPrefix}
-							onChange={(e) => {
-								updateForm(
-									"listItemPrefix",
-									e.currentTarget.value,
-								);
+			<StandardSetting
+				title={"List item prefix"}
+				description={
+					<>
+						<span>
+							What symbol to show prefixed to list items within
+							multitext properties.
+						</span>
+						<ul
+							style={{
+								listStyleType: form.listItemPrefix,
 							}}
 						>
-							{LIST_STYLE_TYPES.map((v, i) => (
-								<option key={i} value={v}>
-									{v}
-								</option>
-							))}
-						</select>
-					}
-				/>
-				<StandardSetting
-					title={"Horizontal alignment"}
-					description={"Align table cells horizontally"}
-					control={
-						<select
-							className="dropdown"
-							defaultValue={form.horizontalAlignment}
-							onChange={(e) => {
-								let a = "start";
-								const { value } = e.currentTarget;
-								if (
-									["start", "center", "end"].includes(value)
-								) {
-									a = value;
-								}
-								updateForm(
-									"horizontalAlignment",
-									a as "start" | "center" | "end",
-								);
-							}}
-						>
-							<option value="start">Left</option>
-							<option value="center">Center</option>
-							<option value="end">Right</option>
-						</select>
-					}
-				/>
-				<StandardSetting
-					title={"Vertical alignment"}
-					description={"Align table cells vertically"}
-					control={
-						<select
-							className="dropdown"
-							defaultValue={form.verticalAlignment}
-							onChange={(e) => {
-								let a = "left";
-								const { value } = e.currentTarget;
-								if (
-									["start", "center", "end"].includes(value)
-								) {
-									a = value;
-								}
-								updateForm(
-									"verticalAlignment",
-									a as "start" | "center" | "end",
-								);
-							}}
-						>
-							<option value="start">Top</option>
-							<option value="center">Middle</option>
-							<option value="end">Bottom</option>
-						</select>
-					}
-				/>
-			</DialogContent>
-		</Dialog>
+							<li>item</li>
+							<li>another item</li>
+							<li>and one more item</li>
+						</ul>
+					</>
+				}
+				control={
+					<select
+						className="dropdown"
+						defaultValue={form.listItemPrefix}
+						onChange={(e) => {
+							updateForm("listItemPrefix", e.currentTarget.value);
+						}}
+					>
+						{LIST_STYLE_TYPES.map((v, i) => (
+							<option key={i} value={v}>
+								{v}
+							</option>
+						))}
+					</select>
+				}
+			/>
+			<StandardSetting
+				title={"Horizontal alignment"}
+				description={"Align table cells horizontally"}
+				control={
+					<select
+						className="dropdown"
+						defaultValue={form.horizontalAlignment}
+						onChange={(e) => {
+							let a = "start";
+							const { value } = e.currentTarget;
+							if (["start", "center", "end"].includes(value)) {
+								a = value;
+							}
+							updateForm(
+								"horizontalAlignment",
+								a as "start" | "center" | "end",
+							);
+						}}
+					>
+						<option value="start">Left</option>
+						<option value="center">Center</option>
+						<option value="end">Right</option>
+					</select>
+				}
+			/>
+			<StandardSetting
+				title={"Vertical alignment"}
+				description={"Align table cells vertically"}
+				control={
+					<select
+						className="dropdown"
+						defaultValue={form.verticalAlignment}
+						onChange={(e) => {
+							let a = "left";
+							const { value } = e.currentTarget;
+							if (["start", "center", "end"].includes(value)) {
+								a = value;
+							}
+							updateForm(
+								"verticalAlignment",
+								a as "start" | "center" | "end",
+							);
+						}}
+					>
+						<option value="start">Top</option>
+						<option value="center">Middle</option>
+						<option value="end">Bottom</option>
+					</select>
+				}
+			/>
+		</>
 	);
 };
+
+export const BlockConfigDialog = ({
+	id,
+	open,
+	setOpen,
+	hideGhLinks,
+}: {
+	id: string;
+	open: boolean;
+	setOpen: (b: boolean) => void;
+	hideGhLinks?: boolean;
+	// onChange: (bc: z.infer<typeof PluginSettingsSchema>) => void;
+}) => (
+	<Dialog open={open} onOpenChange={setOpen}>
+		<DialogContent className="vertical-tab-content">
+			<DialogHeader>
+				<DialogTitle>Dataedit block config</DialogTitle>
+				<DialogDescription className="flex flex-col gap-2">
+					<span className="flex flex-col">
+						<span>
+							id:&nbsp;
+							<span className="text-normal">{id}</span>
+						</span>
+						{/* <span className="flex">
+							note:&nbsp;
+							<span className="text-normal">{form.filePath}</span>
+						</span> */}
+					</span>
+					{!hideGhLinks && (
+						<span className="flex flex-col">
+							<span>
+								Plugin repository:{" "}
+								<a href="https://github.com/unxok/dataedit">
+									github.com/unxok/dataedit
+								</a>
+							</span>
+							<span>
+								Dataview docs:{" "}
+								<a href="https://blacksmithgu.github.io/obsidian-dataview/">
+									blacksmithgu.github.io/obsidian-dataview/
+								</a>
+							</span>
+						</span>
+					)}
+				</DialogDescription>
+			</DialogHeader>
+			<BlockConfig id={id} hideGhLinks={hideGhLinks} />
+		</DialogContent>
+	</Dialog>
+);
 
 const StandardSetting = ({
 	title,
@@ -927,8 +920,8 @@ const ToolbarSetting = ({
 }) => {
 	//
 	return (
-		<SettingRoot className="flex-col justify-start gap-4">
-			<SettingInfo className="flex w-full flex-col justify-start">
+		<SettingRoot className="flex-col items-start justify-start gap-4">
+			<SettingInfo className="flex flex-col justify-start">
 				<SettingName>Toolbar configuration</SettingName>
 				<SettingDescription className="whitespace-pre-line">
 					Select and reorder the items to show in the toolbar of the
@@ -937,7 +930,10 @@ const ToolbarSetting = ({
 			</SettingInfo>
 			<div className="flex w-full flex-col gap-3">
 				{items.map(({ componentName, displayText, enabled }, i) => (
-					<div key={i} className="flex items-center gap-1">
+					<div
+						key={i + displayText + enabled.toString()}
+						className="flex items-center gap-1"
+					>
 						<input
 							type="checkbox"
 							defaultChecked={enabled}
@@ -1064,6 +1060,55 @@ const TdPaddingSetting = ({
 				</div>
 			</SettingControl>
 		</SettingRoot>
+	);
+};
+
+export const PluginSettings = ({ plugin }: { plugin: DataEdit }) => {
+	const { settings, setSettings } = usePluginSettings();
+
+	useEffect(() => {
+		setSettings(() => plugin.settings);
+	}, []);
+
+	console.log("settings: ", settings);
+
+	if (!settings?.blockConfigs) return;
+
+	return (
+		<div className="flex flex-col gap-3">
+			<details className="rounded-md border border-solid border-secondary-alt p-2">
+				<summary>{"default"}</summary>
+				<span>
+					Default block config that applies to any Dataedit table that
+					has no ID assigned.
+				</span>
+				<BlockConfig
+					id={"default"}
+					plugin={plugin}
+					// onChange={(bc) => setBlockConfig(bc)}
+				/>
+			</details>
+			{Object.keys(settings.blockConfigs).map((id, i) => {
+				if (id === "default") return;
+				return (
+					<details className="rounded-md border border-solid border-secondary-alt p-2">
+						<summary>{id}</summary>
+						{id === "default" && (
+							<span>
+								Default block config that applies to any
+								Dataedit table that has no ID assigned.
+							</span>
+						)}
+						<BlockConfig
+							key={i}
+							id={id}
+							plugin={plugin}
+							// onChange={(bc) => setBlockConfig(bc)}
+						/>
+					</details>
+				);
+			})}
+		</div>
 	);
 };
 

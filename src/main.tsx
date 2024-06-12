@@ -6,11 +6,7 @@ import { DataEditSettingsTab } from "@/settings-tab";
 
 import { App } from "@/components/App";
 import {
-	Settings,
-	SettingsSchema,
-	defaultSettings,
 	BlockConfigSchema,
-	defaultDefaultBlockConfig,
 	PluginSettingsSchema,
 	defaultPluginSettings,
 } from "./components/PluginSettings";
@@ -36,7 +32,7 @@ export default class DataEdit extends Plugin {
 	settings: z.infer<typeof PluginSettingsSchema>;
 
 	async onExternalSettingsChange() {
-		console.log("settings were changed");
+		// console.log("settings were changed");
 		await this.loadSettings();
 	}
 
@@ -80,13 +76,16 @@ export default class DataEdit extends Plugin {
 	async updateSettings(newSettings: z.infer<typeof PluginSettingsSchema>) {
 		await this.saveData(newSettings);
 		this.settings = newSettings;
-		console.log("settings updated: ", newSettings);
+		// console.log("settings updated: ", newSettings);
 		return newSettings;
 	}
 
 	async updateBlockConfig(id: string, s: z.infer<typeof BlockConfigSchema>) {
+		if (!this?.settings) {
+			await this.loadSettings();
+		}
 		const copySettings = { ...this.settings };
-		copySettings.blockConfigs[id] = s;
+		copySettings.blockConfigs[id || "default"] = s;
 		await this.updateSettings(copySettings);
 		return copySettings;
 	}

@@ -6,18 +6,8 @@ import {
 	parseYaml,
 	stringifyYaml,
 } from "obsidian";
-import {
-	BlockConfig,
-	BlockConfigSchema,
-	PluginSettingsSchema,
-} from "./PluginSettings";
-import React, {
-	Fragment,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { BlockConfigDialog, PluginSettingsSchema } from "./PluginSettings";
+import React, { Fragment, useEffect, useState } from "react";
 import DataEdit, { loadDependencies } from "@/main";
 import {
 	checkForInlineField,
@@ -444,6 +434,7 @@ export const App = (props: {
 		showColAndRowLabels,
 		queryLinkPropertyName,
 		toolbarPosition,
+		toolbarConfig,
 	} = getBlockConfig(blockId);
 
 	const startIndex = pageSize < 1 ? 0 : (currentPage - 1) * pageSize;
@@ -453,10 +444,9 @@ export const App = (props: {
 
 	const { blockConfigs } = settings;
 	if (!blockConfigs) return;
-	const config = blockConfigs[blockId] ?? blockConfigs["default"];
 
 	const Toolbar = () => {
-		return config?.toolbarConfig?.map(({ componentName, enabled }, i) => {
+		return toolbarConfig?.map(({ componentName, enabled }, i) => {
 			if (!enabled) return;
 			return (
 				<Fragment key={i}>
@@ -467,7 +457,7 @@ export const App = (props: {
 						blockId={blockId}
 						totalRows={queryResults?.values?.length}
 					/>
-					{i !== config.toolbarConfig.length - 1 && (
+					{i !== toolbarConfig.length - 1 && (
 						<DividerVerticalIcon
 							// key={i + "divider"}
 							className="text-secondary-alt"
@@ -478,17 +468,16 @@ export const App = (props: {
 		});
 	};
 
-	const settingsGearOnClick = blockId
-		? () => setShowSettings(true)
-		: async () =>
-				await writeRandomId(
-					ctx,
-					getSectionInfo(),
-					plugin,
-					settings.blockConfigs,
-				);
-
-	console.log("config: ", config);
+	const settingsGearOnClick = {
+		showSettings: () => setShowSettings(true),
+		generateRandomId: async () =>
+			await writeRandomId(
+				ctx,
+				getSectionInfo(),
+				plugin,
+				settings.blockConfigs,
+			),
+	};
 
 	if (!queryResults || fileHeaderIndex === -1) {
 		return (
@@ -519,7 +508,12 @@ export const App = (props: {
 							{!blockId && (
 								<SettingsGear
 									blockId={blockId}
-									onClick={settingsGearOnClick}
+									showSettings={
+										settingsGearOnClick.showSettings
+									}
+									generateRandomId={
+										settingsGearOnClick.generateRandomId
+									}
 								/>
 							)}
 						</div>
@@ -593,27 +587,20 @@ export const App = (props: {
 					</table>
 					{toolbarPosition === "bottom" && (
 						<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
-							{blockId && <Toolbar />}
-							{!blockId && (
-								<SettingsGear
-									blockId={blockId}
-									onClick={settingsGearOnClick}
-								/>
-							)}
+							<Toolbar />
 						</div>
 					)}
-					{(!blockId || toolbarPosition === "disabled") && (
+					{/* {(!blockId & toolbarPosition === "disabled") && (
 						<div className="flex w-full flex-row items-center whitespace-nowrap p-2">
 							<SettingsGear
 								blockId={blockId}
 								onClick={settingsGearOnClick}
 							/>
 						</div>
-					)}
+					)} */}
 					{showSettings && (
-						<BlockConfig
-							id={blockId}
-							filePath={ctx.sourcePath}
+						<BlockConfigDialog
+							id={blockId || "default"}
 							open={showSettings}
 							setOpen={setShowSettings}
 							// onChange={(bc) => setBlockConfig(bc)}
@@ -633,13 +620,21 @@ const ToolbarSwitch = ({
 }: {
 	componentName: string;
 	blockId: string;
-	settingsGearOnClick: any;
+	settingsGearOnClick: {
+		showSettings: () => void;
+		generateRandomId: () => Promise<void>;
+	};
 	totalRows: number;
 }) => {
+	const { showSettings, generateRandomId } = settingsGearOnClick;
 	switch (componentName) {
 		case SETTINGS_GEAR:
 			return (
-				<SettingsGear blockId={blockId} onClick={settingsGearOnClick} />
+				<SettingsGear
+					blockId={blockId}
+					showSettings={showSettings}
+					generateRandomId={generateRandomId}
+				/>
 			);
 		case PAGE_SIZE:
 			return <PaginationSize />;
@@ -1093,23 +1088,73 @@ const VerticalAlignment = () => {
 
 const SettingsGear = ({
 	blockId,
-	onClick,
+	showSettings,
+	generateRandomId,
 }: {
 	blockId?: string;
-	onClick: React.MouseEventHandler<HTMLDivElement>;
+	showSettings: () => void;
+	generateRandomId: () => Promise<void>;
 }) => {
+	if (blockId) {
+		return (
+			<div
+				onClick={showSettings}
+				aria-label={`id: ` + blockId}
+				className="clickable-icon side-dock-ribbon-action"
+			>
+				<Gear className="svg-icon lucide-settings" />
+			</div>
+		);
+	}
+
+	const onMouseEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		e.currentTarget.classList.add("is-selected");
+	};
+
+	const onMouseLeave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		e.currentTarget.classList.remove("is-selected");
+	};
+
 	return (
-		<div
-			onClick={onClick}
-			aria-label={
-				blockId
-					? `id: ${blockId}`
-					: `No id found. Click to generate random id`
-			}
-			className="clickable-icon side-dock-ribbon-action"
-		>
-			<Gear className="svg-icon lucide-settings" />
-		</div>
+		<Popover modal>
+			<PopoverTrigger asChild>
+				<div
+					// onClick={onClick}
+					aria-label={`No id found. Click for options`}
+					className="clickable-icon side-dock-ribbon-action"
+				>
+					<Gear className="svg-icon lucide-settings" />
+				</div>
+			</PopoverTrigger>
+			<PopoverContent className="twcss">
+				<div className="suggestion">
+					<div
+						className="suggestion-item"
+						onMouseEnter={onMouseEnter}
+						onMouseLeave={onMouseLeave}
+						onClick={generateRandomId}
+					>
+						<div className="text-nowrap">Generate random id</div>
+					</div>
+					<div
+						className="suggestion-item"
+						onMouseEnter={onMouseEnter}
+						onMouseLeave={onMouseLeave}
+						onClick={showSettings}
+					>
+						<div className="text-nowrap">
+							Edit default block settings
+						</div>
+					</div>
+				</div>
+				<div className="prompt-instructions flex-nowrap justify-start text-nowrap">
+					<div className="prompt-instruction">
+						<span className="prompt-instruction-command">esc</span>
+						<span>to dismiss</span>
+					</div>
+				</div>
+			</PopoverContent>
+		</Popover>
 	);
 };
 

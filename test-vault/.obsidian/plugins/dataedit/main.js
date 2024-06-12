@@ -416,27 +416,27 @@ var require_react_development = __commonJS({
         {
           didWarnAboutStringRefs = {};
         }
-        function hasValidRef(config2) {
+        function hasValidRef(config) {
           {
-            if (hasOwnProperty2.call(config2, "ref")) {
-              var getter = Object.getOwnPropertyDescriptor(config2, "ref").get;
+            if (hasOwnProperty2.call(config, "ref")) {
+              var getter = Object.getOwnPropertyDescriptor(config, "ref").get;
               if (getter && getter.isReactWarning) {
                 return false;
               }
             }
           }
-          return config2.ref !== void 0;
+          return config.ref !== void 0;
         }
-        function hasValidKey(config2) {
+        function hasValidKey(config) {
           {
-            if (hasOwnProperty2.call(config2, "key")) {
-              var getter = Object.getOwnPropertyDescriptor(config2, "key").get;
+            if (hasOwnProperty2.call(config, "key")) {
+              var getter = Object.getOwnPropertyDescriptor(config, "key").get;
               if (getter && getter.isReactWarning) {
                 return false;
               }
             }
           }
-          return config2.key !== void 0;
+          return config.key !== void 0;
         }
         function defineKeyPropWarningGetter(props2, displayName) {
           var warnAboutAccessingKey = function() {
@@ -468,12 +468,12 @@ var require_react_development = __commonJS({
             configurable: true
           });
         }
-        function warnIfStringRefCannotBeAutoConverted(config2) {
+        function warnIfStringRefCannotBeAutoConverted(config) {
           {
-            if (typeof config2.ref === "string" && ReactCurrentOwner.current && config2.__self && ReactCurrentOwner.current.stateNode !== config2.__self) {
+            if (typeof config.ref === "string" && ReactCurrentOwner.current && config.__self && ReactCurrentOwner.current.stateNode !== config.__self) {
               var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
               if (!didWarnAboutStringRefs[componentName]) {
-                error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config2.ref);
+                error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', componentName, config.ref);
                 didWarnAboutStringRefs[componentName] = true;
               }
             }
@@ -518,31 +518,31 @@ var require_react_development = __commonJS({
           }
           return element;
         };
-        function createElement9(type, config2, children) {
+        function createElement9(type, config, children) {
           var propName;
           var props2 = {};
           var key = null;
           var ref = null;
           var self2 = null;
           var source = null;
-          if (config2 != null) {
-            if (hasValidRef(config2)) {
-              ref = config2.ref;
+          if (config != null) {
+            if (hasValidRef(config)) {
+              ref = config.ref;
               {
-                warnIfStringRefCannotBeAutoConverted(config2);
+                warnIfStringRefCannotBeAutoConverted(config);
               }
             }
-            if (hasValidKey(config2)) {
+            if (hasValidKey(config)) {
               {
-                checkKeyStringCoercion(config2.key);
+                checkKeyStringCoercion(config.key);
               }
-              key = "" + config2.key;
+              key = "" + config.key;
             }
-            self2 = config2.__self === void 0 ? null : config2.__self;
-            source = config2.__source === void 0 ? null : config2.__source;
-            for (propName in config2) {
-              if (hasOwnProperty2.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                props2[propName] = config2[propName];
+            self2 = config.__self === void 0 ? null : config.__self;
+            source = config.__source === void 0 ? null : config.__source;
+            for (propName in config) {
+              if (hasOwnProperty2.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                props2[propName] = config[propName];
               }
             }
           }
@@ -586,7 +586,7 @@ var require_react_development = __commonJS({
           var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
           return newElement;
         }
-        function cloneElement2(element, config2, children) {
+        function cloneElement2(element, config, children) {
           if (element === null || element === void 0) {
             throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
           }
@@ -597,27 +597,27 @@ var require_react_development = __commonJS({
           var self2 = element._self;
           var source = element._source;
           var owner = element._owner;
-          if (config2 != null) {
-            if (hasValidRef(config2)) {
-              ref = config2.ref;
+          if (config != null) {
+            if (hasValidRef(config)) {
+              ref = config.ref;
               owner = ReactCurrentOwner.current;
             }
-            if (hasValidKey(config2)) {
+            if (hasValidKey(config)) {
               {
-                checkKeyStringCoercion(config2.key);
+                checkKeyStringCoercion(config.key);
               }
-              key = "" + config2.key;
+              key = "" + config.key;
             }
             var defaultProps;
             if (element.type && element.type.defaultProps) {
               defaultProps = element.type.defaultProps;
             }
-            for (propName in config2) {
-              if (hasOwnProperty2.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-                if (config2[propName] === void 0 && defaultProps !== void 0) {
+            for (propName in config) {
+              if (hasOwnProperty2.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+                if (config[propName] === void 0 && defaultProps !== void 0) {
                   props2[propName] = defaultProps[propName];
                 } else {
-                  props2[propName] = config2[propName];
+                  props2[propName] = config[propName];
                 }
               }
             }
@@ -1092,7 +1092,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState17(initialState2) {
+        function useState18(initialState2) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState2);
         }
@@ -1100,7 +1100,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useReducer(reducer, initialArg, init);
         }
-        function useRef9(initialValue) {
+        function useRef8(initialValue) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
@@ -1116,7 +1116,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useLayoutEffect(create2, deps);
         }
-        function useCallback5(callback, deps) {
+        function useCallback4(callback, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useCallback(callback, deps);
         }
@@ -1883,7 +1883,7 @@ var require_react_development = __commonJS({
         exports.memo = memo;
         exports.startTransition = startTransition;
         exports.unstable_act = act;
-        exports.useCallback = useCallback5;
+        exports.useCallback = useCallback4;
         exports.useContext = useContext3;
         exports.useDebugValue = useDebugValue2;
         exports.useDeferredValue = useDeferredValue;
@@ -1894,8 +1894,8 @@ var require_react_development = __commonJS({
         exports.useLayoutEffect = useLayoutEffect3;
         exports.useMemo = useMemo4;
         exports.useReducer = useReducer;
-        exports.useRef = useRef9;
-        exports.useState = useState17;
+        exports.useRef = useRef8;
+        exports.useState = useState18;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -4429,8 +4429,8 @@ var require_react_dom_development = __commonJS({
           var warnedStyleValues = {};
           var warnedForNaNValue = false;
           var warnedForInfinityValue = false;
-          var camelize = function(string) {
-            return string.replace(hyphenPattern, function(_, character) {
+          var camelize = function(string2) {
+            return string2.replace(hyphenPattern, function(_, character) {
               return character.toUpperCase();
             });
           };
@@ -10252,9 +10252,9 @@ var require_react_dom_development = __commonJS({
             var hostContextDev = hostContext;
             validateDOMNesting(type, null, hostContextDev.ancestorInfo);
             if (typeof props2.children === "string" || typeof props2.children === "number") {
-              var string = "" + props2.children;
+              var string2 = "" + props2.children;
               var ownAncestorInfo = updatedAncestorInfo(hostContextDev.ancestorInfo, type);
-              validateDOMNesting(null, string, ownAncestorInfo);
+              validateDOMNesting(null, string2, ownAncestorInfo);
             }
             parentNamespace = hostContextDev.namespace;
           }
@@ -10284,9 +10284,9 @@ var require_react_dom_development = __commonJS({
           {
             var hostContextDev = hostContext;
             if (typeof newProps.children !== typeof oldProps.children && (typeof newProps.children === "string" || typeof newProps.children === "number")) {
-              var string = "" + newProps.children;
+              var string2 = "" + newProps.children;
               var ownAncestorInfo = updatedAncestorInfo(hostContextDev.ancestorInfo, type);
-              validateDOMNesting(null, string, ownAncestorInfo);
+              validateDOMNesting(null, string2, ownAncestorInfo);
             }
           }
           return diffProperties(domElement, type, oldProps, newProps);
@@ -23601,7 +23601,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
           return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y;
         }
         var objectIs = typeof Object.is === "function" ? Object.is : is;
-        var useState17 = React24.useState, useEffect15 = React24.useEffect, useLayoutEffect3 = React24.useLayoutEffect, useDebugValue2 = React24.useDebugValue;
+        var useState18 = React24.useState, useEffect15 = React24.useEffect, useLayoutEffect3 = React24.useLayoutEffect, useDebugValue2 = React24.useDebugValue;
         var didWarnOld18Alpha = false;
         var didWarnUncachedGetSnapshot = false;
         function useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot) {
@@ -23623,7 +23623,7 @@ var require_use_sync_external_store_shim_development = __commonJS({
               }
             }
           }
-          var _useState = useState17({
+          var _useState = useState18({
             inst: {
               value,
               getSnapshot
@@ -23711,9 +23711,9 @@ var require_with_selector_development = __commonJS({
         }
         var objectIs = typeof Object.is === "function" ? Object.is : is;
         var useSyncExternalStore = shim.useSyncExternalStore;
-        var useRef9 = React24.useRef, useEffect15 = React24.useEffect, useMemo4 = React24.useMemo, useDebugValue2 = React24.useDebugValue;
+        var useRef8 = React24.useRef, useEffect15 = React24.useEffect, useMemo4 = React24.useMemo, useDebugValue2 = React24.useDebugValue;
         function useSyncExternalStoreWithSelector2(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-          var instRef = useRef9(null);
+          var instRef = useRef8(null);
           var inst;
           if (instRef.current === null) {
             inst = {
@@ -23803,66 +23803,20 @@ __export(main_exports, {
   loadDependencies: () => loadDependencies
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian6 = require("obsidian");
+var import_obsidian5 = require("obsidian");
 var import_react38 = __toESM(require_react());
 var import_client2 = __toESM(require_client());
 
 // src/settings-tab.tsx
-var import_react = __toESM(require_react());
-var import_obsidian = require("obsidian");
+var import_react22 = __toESM(require_react());
+var import_obsidian2 = require("obsidian");
 var import_client = __toESM(require_client());
-var DataEditSettingsTab = class extends import_obsidian.PluginSettingTab {
-  constructor(app2, plugin2) {
-    super(app2, plugin2);
-    this.plugin = plugin2;
-    this.containerEl.empty();
-    this.root = (0, import_client.createRoot)(this.containerEl);
-  }
-  display() {
-    this.root.render(
-      /* @__PURE__ */ import_react.default.createElement("div", { className: "twcss" }, "UNDER CONSTRUCTION")
-    );
-  }
-  // display(): void {
-  // 	this.containerEl.empty();
-  // 	this.containerEl.createEl("h2", {
-  // 		text: "My Plugin Settings",
-  // 	});
-  // 	new Setting(this.containerEl)
-  // 		.setName("Demo of settings")
-  // 		.setDesc(
-  // 			createFragment((f) => {
-  // 				f.createSpan({
-  // 					text: "Description for setting goes here ",
-  // 				});
-  // 				f.createEl("a", {
-  // 					text: "Link to additional useful materials",
-  // 					href: "#",
-  // 				});
-  // 				f.createSpan({ text: " syntax." });
-  // 			}),
-  // 		)
-  // 		.addText((t) => {
-  // 			t.setValue(String(this.plugin.settings.demoSetting));
-  // 			t.onChange(async (v) => {
-  // 				this.plugin.settings.demoSetting = v.length
-  // 					? v
-  // 					: defaultSettings.demoSetting;
-  // 				await this.plugin.saveSettings();
-  // 			});
-  // 		})
-  // 		.addSearch((c) => console.log("comp: ", c));
-  // }
-};
-
-// src/components/App.tsx
-var import_obsidian5 = require("obsidian");
 
 // src/components/PluginSettings/index.tsx
-var import_react22 = __toESM(require_react());
+var import_react21 = __toESM(require_react());
 
 // src/components/Setting/index.tsx
-var import_react2 = __toESM(require_react());
+var import_react = __toESM(require_react());
 
 // node_modules/clsx/dist/clsx.mjs
 function r(e) {
@@ -23886,16 +23840,16 @@ function clsx() {
 }
 
 // src/lib/utils.ts
-var import_obsidian2 = require("obsidian");
+var import_obsidian = require("obsidian");
 
 // node_modules/tailwind-merge/dist/bundle-mjs.mjs
 var CLASS_PART_SEPARATOR = "-";
-function createClassUtils(config2) {
-  const classMap = createClassMap(config2);
+function createClassUtils(config) {
+  const classMap = createClassMap(config);
   const {
     conflictingClassGroups,
     conflictingClassGroupModifiers
-  } = config2;
+  } = config;
   function getClassGroupId(className) {
     const classParts = className.split(CLASS_PART_SEPARATOR);
     if (classParts[0] === "" && classParts.length !== 1) {
@@ -23943,16 +23897,16 @@ function getGroupIdForArbitraryProperty(className) {
     }
   }
 }
-function createClassMap(config2) {
+function createClassMap(config) {
   const {
     theme,
     prefix
-  } = config2;
+  } = config;
   const classMap = {
     nextPart: /* @__PURE__ */ new Map(),
     validators: []
   };
-  const prefixedClassGroupEntries = getPrefixedClassGroupEntries(Object.entries(config2.classGroups), prefix);
+  const prefixedClassGroupEntries = getPrefixedClassGroupEntries(Object.entries(config.classGroups), prefix);
   prefixedClassGroupEntries.forEach(([classGroupId, classGroup]) => {
     processClassesRecursively(classGroup, classMap, classGroupId, theme);
   });
@@ -24055,8 +24009,8 @@ function createLruCache(maxCacheSize) {
   };
 }
 var IMPORTANT_MODIFIER = "!";
-function createSplitModifiers(config2) {
-  const separator = config2.separator;
+function createSplitModifiers(config) {
+  const separator = config.separator;
   const isSeparatorSingleCharacter = separator.length === 1;
   const firstSeparatorCharacter = separator[0];
   const separatorLength = separator.length;
@@ -24114,11 +24068,11 @@ function sortModifiers(modifiers) {
   sortedModifiers.push(...unsortedModifiers.sort());
   return sortedModifiers;
 }
-function createConfigUtils(config2) {
+function createConfigUtils(config) {
   return {
-    cache: createLruCache(config2.cacheSize),
-    splitModifiers: createSplitModifiers(config2),
-    ...createClassUtils(config2)
+    cache: createLruCache(config.cacheSize),
+    splitModifiers: createSplitModifiers(config),
+    ...createClassUtils(config)
   };
 }
 var SPLIT_CLASSES_REGEX = /\s+/;
@@ -24185,32 +24139,32 @@ function twJoin() {
   let index2 = 0;
   let argument;
   let resolvedValue;
-  let string = "";
+  let string2 = "";
   while (index2 < arguments.length) {
     if (argument = arguments[index2++]) {
       if (resolvedValue = toValue(argument)) {
-        string && (string += " ");
-        string += resolvedValue;
+        string2 && (string2 += " ");
+        string2 += resolvedValue;
       }
     }
   }
-  return string;
+  return string2;
 }
 function toValue(mix) {
   if (typeof mix === "string") {
     return mix;
   }
   let resolvedValue;
-  let string = "";
+  let string2 = "";
   for (let k = 0; k < mix.length; k++) {
     if (mix[k]) {
       if (resolvedValue = toValue(mix[k])) {
-        string && (string += " ");
-        string += resolvedValue;
+        string2 && (string2 += " ");
+        string2 += resolvedValue;
       }
     }
   }
-  return string;
+  return string2;
 }
 function createTailwindMerge(createConfigFirst, ...createConfigRest) {
   let configUtils;
@@ -24218,8 +24172,8 @@ function createTailwindMerge(createConfigFirst, ...createConfigRest) {
   let cacheSet;
   let functionToCall = initTailwindMerge;
   function initTailwindMerge(classList) {
-    const config2 = createConfigRest.reduce((previousConfig, createConfigCurrent) => createConfigCurrent(previousConfig), createConfigFirst());
-    configUtils = createConfigUtils(config2);
+    const config = createConfigRest.reduce((previousConfig, createConfigCurrent) => createConfigCurrent(previousConfig), createConfigFirst());
+    configUtils = createConfigUtils(config);
     cacheGet = configUtils.cache.get;
     cacheSet = configUtils.cache.set;
     functionToCall = tailwindMerge;
@@ -26527,7 +26481,7 @@ var udpateInlineField = async (propertyName2, oldV, newV, file, plugin2) => {
     return true;
   });
   if (!foundField) {
-    new import_obsidian2.Notice(
+    new import_obsidian.Notice(
       "Dataedit: Failed to update property. You shouldn't ever see this unless your syntax is wrong. Most likely your aliases are specified wrong?",
       0
     );
@@ -26633,38 +26587,38 @@ var arrayMove = (arr, fromIndex, toIndex) => {
 var SettingRoot = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: cn("setting-item", className) }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: cn("setting-item", className) }, children);
 var SettingInfo = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: cn("setting-item-info", className) }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: cn("setting-item-info", className) }, children);
 var SettingName = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: cn("setting-item-name", className) }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: cn("setting-item-name", className) }, children);
 var SettingDescription = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: cn("setting-item-description", className) }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: cn("setting-item-description", className) }, children);
 var SettingControl = ({
   children,
   className
-}) => /* @__PURE__ */ import_react2.default.createElement("div", { className: cn("setting-item-control", className) }, children);
+}) => /* @__PURE__ */ import_react.default.createElement("div", { className: cn("setting-item-control", className) }, children);
 var SettingToggle = ({
   checked,
   onCheckedChange,
   disabled
 }) => {
-  const [toggleClass, setToggleClass] = (0, import_react2.useState)("");
+  const [toggleClass, setToggleClass] = (0, import_react.useState)("");
   const setEnabledClass = (newValue) => {
     const newClass = newValue ? "is-enabled" : "";
     setToggleClass(newClass);
   };
-  (0, import_react2.useEffect)(() => {
+  (0, import_react.useEffect)(() => {
     setEnabledClass(checked);
     onCheckedChange(checked);
   }, [checked]);
-  return /* @__PURE__ */ import_react2.default.createElement(
+  return /* @__PURE__ */ import_react.default.createElement(
     "div",
     {
       className: "checkbox-container " + toggleClass,
@@ -26674,7 +26628,7 @@ var SettingToggle = ({
         }
       }
     },
-    /* @__PURE__ */ import_react2.default.createElement(
+    /* @__PURE__ */ import_react.default.createElement(
       "input",
       {
         type: "checkbox",
@@ -26686,9 +26640,6 @@ var SettingToggle = ({
     )
   );
 };
-
-// src/components/PluginSettings/index.tsx
-var import_obsidian3 = require("obsidian");
 
 // node_modules/zod/lib/index.mjs
 var util;
@@ -30608,7 +30559,7 @@ var z = /* @__PURE__ */ Object.freeze({
 });
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
-var import_react3 = __toESM(require_react());
+var import_react2 = __toESM(require_react());
 
 // node_modules/lucide-react/dist/esm/defaultAttributes.js
 var defaultAttributes = {
@@ -30624,11 +30575,11 @@ var defaultAttributes = {
 };
 
 // node_modules/lucide-react/dist/esm/shared/src/utils.js
-var toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+var toKebabCase = (string2) => string2.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
 
 // node_modules/lucide-react/dist/esm/createLucideIcon.js
 var createLucideIcon = (iconName, iconNode) => {
-  const Component3 = (0, import_react3.forwardRef)(
+  const Component3 = (0, import_react2.forwardRef)(
     ({
       color: color2 = "currentColor",
       size: size3 = 24,
@@ -30638,7 +30589,7 @@ var createLucideIcon = (iconName, iconNode) => {
       children,
       ...rest
     }, ref) => {
-      return (0, import_react3.createElement)(
+      return (0, import_react2.createElement)(
         "svg",
         {
           ref,
@@ -30651,7 +30602,7 @@ var createLucideIcon = (iconName, iconNode) => {
           ...rest
         },
         [
-          ...iconNode.map(([tag, attrs]) => (0, import_react3.createElement)(tag, attrs)),
+          ...iconNode.map(([tag, attrs]) => (0, import_react2.createElement)(tag, attrs)),
           ...Array.isArray(children) ? children : [children]
         ]
       );
@@ -30897,7 +30848,7 @@ var Text = createLucideIcon("Text", [
 ]);
 
 // src/components/ui/Dialog/index.tsx
-var import_react19 = __toESM(require_react());
+var import_react18 = __toESM(require_react());
 
 // node_modules/@babel/runtime/helpers/esm/extends.js
 function _extends() {
@@ -30916,7 +30867,7 @@ function _extends() {
 }
 
 // node_modules/@radix-ui/react-dialog/dist/index.mjs
-var import_react18 = __toESM(require_react(), 1);
+var import_react17 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/primitive/dist/index.mjs
 function $e42e1063c40fb3ef$export$b9ecd428b558ff10(originalEventHandler, ourEventHandler, { checkForDefaultPrevented = true } = {}) {
@@ -30928,7 +30879,7 @@ function $e42e1063c40fb3ef$export$b9ecd428b558ff10(originalEventHandler, ourEven
 }
 
 // node_modules/@radix-ui/react-compose-refs/dist/index.mjs
-var import_react4 = __toESM(require_react(), 1);
+var import_react3 = __toESM(require_react(), 1);
 function $6ed0406888f73fc4$var$setRef(ref, value) {
   if (typeof ref === "function")
     ref(value);
@@ -30941,25 +30892,25 @@ function $6ed0406888f73fc4$export$43e446d32b3d21af(...refs) {
   );
 }
 function $6ed0406888f73fc4$export$c7b2cbe3552a0d05(...refs) {
-  return (0, import_react4.useCallback)($6ed0406888f73fc4$export$43e446d32b3d21af(...refs), refs);
+  return (0, import_react3.useCallback)($6ed0406888f73fc4$export$43e446d32b3d21af(...refs), refs);
 }
 
 // node_modules/@radix-ui/react-context/dist/index.mjs
-var import_react5 = __toESM(require_react(), 1);
+var import_react4 = __toESM(require_react(), 1);
 function $c512c27ab02ef895$export$fd42f52fd3ae1109(rootComponentName, defaultContext) {
-  const Context = /* @__PURE__ */ (0, import_react5.createContext)(defaultContext);
+  const Context = /* @__PURE__ */ (0, import_react4.createContext)(defaultContext);
   function Provider(props2) {
     const { children, ...context } = props2;
-    const value = (0, import_react5.useMemo)(
+    const value = (0, import_react4.useMemo)(
       () => context,
       Object.values(context)
     );
-    return /* @__PURE__ */ (0, import_react5.createElement)(Context.Provider, {
+    return /* @__PURE__ */ (0, import_react4.createElement)(Context.Provider, {
       value
     }, children);
   }
   function useContext3(consumerName) {
-    const context = (0, import_react5.useContext)(Context);
+    const context = (0, import_react4.useContext)(Context);
     if (context)
       return context;
     if (defaultContext !== void 0)
@@ -30975,7 +30926,7 @@ function $c512c27ab02ef895$export$fd42f52fd3ae1109(rootComponentName, defaultCon
 function $c512c27ab02ef895$export$50c7b4e9d9f19c1(scopeName, createContextScopeDeps = []) {
   let defaultContexts = [];
   function $c512c27ab02ef895$export$fd42f52fd3ae11092(rootComponentName, defaultContext) {
-    const BaseContext = /* @__PURE__ */ (0, import_react5.createContext)(defaultContext);
+    const BaseContext = /* @__PURE__ */ (0, import_react4.createContext)(defaultContext);
     const index2 = defaultContexts.length;
     defaultContexts = [
       ...defaultContexts,
@@ -30984,17 +30935,17 @@ function $c512c27ab02ef895$export$50c7b4e9d9f19c1(scopeName, createContextScopeD
     function Provider(props2) {
       const { scope, children, ...context } = props2;
       const Context = (scope === null || scope === void 0 ? void 0 : scope[scopeName][index2]) || BaseContext;
-      const value = (0, import_react5.useMemo)(
+      const value = (0, import_react4.useMemo)(
         () => context,
         Object.values(context)
       );
-      return /* @__PURE__ */ (0, import_react5.createElement)(Context.Provider, {
+      return /* @__PURE__ */ (0, import_react4.createElement)(Context.Provider, {
         value
       }, children);
     }
     function useContext3(consumerName, scope) {
       const Context = (scope === null || scope === void 0 ? void 0 : scope[scopeName][index2]) || BaseContext;
-      const context = (0, import_react5.useContext)(Context);
+      const context = (0, import_react4.useContext)(Context);
       if (context)
         return context;
       if (defaultContext !== void 0)
@@ -31009,11 +30960,11 @@ function $c512c27ab02ef895$export$50c7b4e9d9f19c1(scopeName, createContextScopeD
   }
   const createScope = () => {
     const scopeContexts = defaultContexts.map((defaultContext) => {
-      return /* @__PURE__ */ (0, import_react5.createContext)(defaultContext);
+      return /* @__PURE__ */ (0, import_react4.createContext)(defaultContext);
     });
     return function useScope(scope) {
       const contexts = (scope === null || scope === void 0 ? void 0 : scope[scopeName]) || scopeContexts;
-      return (0, import_react5.useMemo)(
+      return (0, import_react4.useMemo)(
         () => ({
           [`__scope${scopeName}`]: {
             ...scope,
@@ -31053,7 +31004,7 @@ function $c512c27ab02ef895$var$composeContextScopes(...scopes) {
           ...currentScope
         };
       }, {});
-      return (0, import_react5.useMemo)(
+      return (0, import_react4.useMemo)(
         () => ({
           [`__scope${baseScope.scopeName}`]: nextScopes1
         }),
@@ -31071,8 +31022,8 @@ function $c512c27ab02ef895$var$composeContextScopes(...scopes) {
 var $2AODx$react = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-use-layout-effect/dist/index.mjs
-var import_react6 = __toESM(require_react(), 1);
-var $9f79659886946c16$export$e5c5a5f917a5871c = Boolean(globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) ? import_react6.useLayoutEffect : () => {
+var import_react5 = __toESM(require_react(), 1);
+var $9f79659886946c16$export$e5c5a5f917a5871c = Boolean(globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) ? import_react5.useLayoutEffect : () => {
 };
 
 // node_modules/@radix-ui/react-id/dist/index.mjs
@@ -31092,16 +31043,16 @@ function $1746a345f3d73bb7$export$f680877a34711e37(deterministicId) {
 }
 
 // node_modules/@radix-ui/react-use-controllable-state/dist/index.mjs
-var import_react8 = __toESM(require_react(), 1);
+var import_react7 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
-var import_react7 = __toESM(require_react(), 1);
+var import_react6 = __toESM(require_react(), 1);
 function $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(callback) {
-  const callbackRef = (0, import_react7.useRef)(callback);
-  (0, import_react7.useEffect)(() => {
+  const callbackRef = (0, import_react6.useRef)(callback);
+  (0, import_react6.useEffect)(() => {
     callbackRef.current = callback;
   });
-  return (0, import_react7.useMemo)(
+  return (0, import_react6.useMemo)(
     () => (...args) => {
       var _callbackRef$current;
       return (_callbackRef$current = callbackRef.current) === null || _callbackRef$current === void 0 ? void 0 : _callbackRef$current.call(callbackRef, ...args);
@@ -31120,7 +31071,7 @@ function $71cd76cc60e0454e$export$6f32135080cb4c3({ prop, defaultProp, onChange 
   const isControlled = prop !== void 0;
   const value1 = isControlled ? prop : uncontrolledProp;
   const handleChange = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onChange);
-  const setValue = (0, import_react8.useCallback)((nextValue) => {
+  const setValue = (0, import_react7.useCallback)((nextValue) => {
     if (isControlled) {
       const setter = nextValue;
       const value = typeof nextValue === "function" ? setter(prop) : nextValue;
@@ -31140,11 +31091,11 @@ function $71cd76cc60e0454e$export$6f32135080cb4c3({ prop, defaultProp, onChange 
   ];
 }
 function $71cd76cc60e0454e$var$useUncontrolledState({ defaultProp, onChange }) {
-  const uncontrolledState = (0, import_react8.useState)(defaultProp);
+  const uncontrolledState = (0, import_react7.useState)(defaultProp);
   const [value] = uncontrolledState;
-  const prevValueRef = (0, import_react8.useRef)(value);
+  const prevValueRef = (0, import_react7.useRef)(value);
   const handleChange = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onChange);
-  (0, import_react8.useEffect)(() => {
+  (0, import_react7.useEffect)(() => {
     if (prevValueRef.current !== value) {
       handleChange(value);
       prevValueRef.current = value;
@@ -31158,52 +31109,52 @@ function $71cd76cc60e0454e$var$useUncontrolledState({ defaultProp, onChange }) {
 }
 
 // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
-var import_react12 = __toESM(require_react(), 1);
+var import_react11 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-primitive/dist/index.mjs
-var import_react10 = __toESM(require_react(), 1);
+var import_react9 = __toESM(require_react(), 1);
 var import_react_dom = __toESM(require_react_dom(), 1);
 
 // node_modules/@radix-ui/react-slot/dist/index.mjs
-var import_react9 = __toESM(require_react(), 1);
-var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react9.forwardRef)((props2, forwardedRef) => {
+var import_react8 = __toESM(require_react(), 1);
+var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = /* @__PURE__ */ (0, import_react8.forwardRef)((props2, forwardedRef) => {
   const { children, ...slotProps } = props2;
-  const childrenArray = import_react9.Children.toArray(children);
+  const childrenArray = import_react8.Children.toArray(children);
   const slottable = childrenArray.find($5e63c961fc1ce211$var$isSlottable);
   if (slottable) {
     const newElement = slottable.props.children;
     const newChildren = childrenArray.map((child) => {
       if (child === slottable) {
-        if (import_react9.Children.count(newElement) > 1)
-          return import_react9.Children.only(null);
-        return /* @__PURE__ */ (0, import_react9.isValidElement)(newElement) ? newElement.props.children : null;
+        if (import_react8.Children.count(newElement) > 1)
+          return import_react8.Children.only(null);
+        return /* @__PURE__ */ (0, import_react8.isValidElement)(newElement) ? newElement.props.children : null;
       } else
         return child;
     });
-    return /* @__PURE__ */ (0, import_react9.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+    return /* @__PURE__ */ (0, import_react8.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
       ref: forwardedRef
-    }), /* @__PURE__ */ (0, import_react9.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react9.cloneElement)(newElement, void 0, newChildren) : null);
+    }), /* @__PURE__ */ (0, import_react8.isValidElement)(newElement) ? /* @__PURE__ */ (0, import_react8.cloneElement)(newElement, void 0, newChildren) : null);
   }
-  return /* @__PURE__ */ (0, import_react9.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
+  return /* @__PURE__ */ (0, import_react8.createElement)($5e63c961fc1ce211$var$SlotClone, _extends({}, slotProps, {
     ref: forwardedRef
   }), children);
 });
 $5e63c961fc1ce211$export$8c6ed5c666ac1360.displayName = "Slot";
-var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react9.forwardRef)((props2, forwardedRef) => {
+var $5e63c961fc1ce211$var$SlotClone = /* @__PURE__ */ (0, import_react8.forwardRef)((props2, forwardedRef) => {
   const { children, ...slotProps } = props2;
-  if (/* @__PURE__ */ (0, import_react9.isValidElement)(children))
-    return /* @__PURE__ */ (0, import_react9.cloneElement)(children, {
+  if (/* @__PURE__ */ (0, import_react8.isValidElement)(children))
+    return /* @__PURE__ */ (0, import_react8.cloneElement)(children, {
       ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
       ref: forwardedRef ? $6ed0406888f73fc4$export$43e446d32b3d21af(forwardedRef, children.ref) : children.ref
     });
-  return import_react9.Children.count(children) > 1 ? import_react9.Children.only(null) : null;
+  return import_react8.Children.count(children) > 1 ? import_react8.Children.only(null) : null;
 });
 $5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
 var $5e63c961fc1ce211$export$d9f1ccf0bdb05d45 = ({ children }) => {
-  return /* @__PURE__ */ (0, import_react9.createElement)(import_react9.Fragment, null, children);
+  return /* @__PURE__ */ (0, import_react8.createElement)(import_react8.Fragment, null, children);
 };
 function $5e63c961fc1ce211$var$isSlottable(child) {
-  return /* @__PURE__ */ (0, import_react9.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
+  return /* @__PURE__ */ (0, import_react8.isValidElement)(child) && child.type === $5e63c961fc1ce211$export$d9f1ccf0bdb05d45;
 }
 function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
   const overrideProps = {
@@ -31258,13 +31209,13 @@ var $8927f6f2acc4f386$var$NODES = [
   "ul"
 ];
 var $8927f6f2acc4f386$export$250ffa63cdc0d034 = $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
-  const Node2 = /* @__PURE__ */ (0, import_react10.forwardRef)((props2, forwardedRef) => {
+  const Node2 = /* @__PURE__ */ (0, import_react9.forwardRef)((props2, forwardedRef) => {
     const { asChild, ...primitiveProps } = props2;
     const Comp = asChild ? $5e63c961fc1ce211$export$8c6ed5c666ac1360 : node;
-    (0, import_react10.useEffect)(() => {
+    (0, import_react9.useEffect)(() => {
       window[Symbol.for("radix-ui")] = true;
     }, []);
-    return /* @__PURE__ */ (0, import_react10.createElement)(Comp, _extends({}, primitiveProps, {
+    return /* @__PURE__ */ (0, import_react9.createElement)(Comp, _extends({}, primitiveProps, {
       ref: forwardedRef
     }));
   });
@@ -31282,10 +31233,10 @@ function $8927f6f2acc4f386$export$6d1a0317bde7de7f(target, event) {
 }
 
 // node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs
-var import_react11 = __toESM(require_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
 function $addc16e1bbe58fd0$export$3a72a57244d6e765(onEscapeKeyDownProp, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
   const onEscapeKeyDown = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onEscapeKeyDownProp);
-  (0, import_react11.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape")
         onEscapeKeyDown(event);
@@ -31303,18 +31254,18 @@ var $5cb92bef7577960e$var$CONTEXT_UPDATE = "dismissableLayer.update";
 var $5cb92bef7577960e$var$POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
 var $5cb92bef7577960e$var$FOCUS_OUTSIDE = "dismissableLayer.focusOutside";
 var $5cb92bef7577960e$var$originalBodyPointerEvents;
-var $5cb92bef7577960e$var$DismissableLayerContext = /* @__PURE__ */ (0, import_react12.createContext)({
+var $5cb92bef7577960e$var$DismissableLayerContext = /* @__PURE__ */ (0, import_react11.createContext)({
   layers: /* @__PURE__ */ new Set(),
   layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
   branches: /* @__PURE__ */ new Set()
 });
-var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react12.forwardRef)((props2, forwardedRef) => {
+var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react11.forwardRef)((props2, forwardedRef) => {
   var _node$ownerDocument;
   const { disableOutsidePointerEvents = false, onEscapeKeyDown, onPointerDownOutside, onFocusOutside, onInteractOutside, onDismiss, ...layerProps } = props2;
-  const context = (0, import_react12.useContext)($5cb92bef7577960e$var$DismissableLayerContext);
-  const [node1, setNode] = (0, import_react12.useState)(null);
+  const context = (0, import_react11.useContext)($5cb92bef7577960e$var$DismissableLayerContext);
+  const [node1, setNode] = (0, import_react11.useState)(null);
   const ownerDocument = (_node$ownerDocument = node1 === null || node1 === void 0 ? void 0 : node1.ownerDocument) !== null && _node$ownerDocument !== void 0 ? _node$ownerDocument : globalThis === null || globalThis === void 0 ? void 0 : globalThis.document;
-  const [, force] = (0, import_react12.useState)({});
+  const [, force] = (0, import_react11.useState)({});
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
     forwardedRef,
     (node) => setNode(node)
@@ -31365,7 +31316,7 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
       onDismiss();
     }
   }, ownerDocument);
-  (0, import_react12.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     if (!node1)
       return;
     if (disableOutsidePointerEvents) {
@@ -31387,7 +31338,7 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
     disableOutsidePointerEvents,
     context
   ]);
-  (0, import_react12.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     return () => {
       if (!node1)
         return;
@@ -31399,12 +31350,12 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
     node1,
     context
   ]);
-  (0, import_react12.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     const handleUpdate = () => force({});
     document.addEventListener($5cb92bef7577960e$var$CONTEXT_UPDATE, handleUpdate);
     return () => document.removeEventListener($5cb92bef7577960e$var$CONTEXT_UPDATE, handleUpdate);
   }, []);
-  return /* @__PURE__ */ (0, import_react12.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, layerProps, {
+  return /* @__PURE__ */ (0, import_react11.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, layerProps, {
     ref: composedRefs,
     style: {
       pointerEvents: isBodyPointerEventsDisabled ? isPointerEventsEnabled ? "auto" : "none" : void 0,
@@ -31417,10 +31368,10 @@ var $5cb92bef7577960e$export$177fb62ff3ec1f22 = /* @__PURE__ */ (0, import_react
 });
 function $5cb92bef7577960e$var$usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
   const handlePointerDownOutside = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onPointerDownOutside);
-  const isPointerInsideReactTreeRef = (0, import_react12.useRef)(false);
-  const handleClickRef = (0, import_react12.useRef)(() => {
+  const isPointerInsideReactTreeRef = (0, import_react11.useRef)(false);
+  const handleClickRef = (0, import_react11.useRef)(() => {
   });
-  (0, import_react12.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     const handlePointerDown = (event) => {
       if (event.target && !isPointerInsideReactTreeRef.current) {
         let handleAndDispatchPointerDownOutsideEvent = function() {
@@ -31462,8 +31413,8 @@ function $5cb92bef7577960e$var$usePointerDownOutside(onPointerDownOutside, owner
 }
 function $5cb92bef7577960e$var$useFocusOutside(onFocusOutside, ownerDocument = globalThis === null || globalThis === void 0 ? void 0 : globalThis.document) {
   const handleFocusOutside = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onFocusOutside);
-  const isFocusInsideReactTreeRef = (0, import_react12.useRef)(false);
-  (0, import_react12.useEffect)(() => {
+  const isFocusInsideReactTreeRef = (0, import_react11.useRef)(false);
+  (0, import_react11.useEffect)(() => {
     const handleFocus = (event) => {
       if (event.target && !isFocusInsideReactTreeRef.current) {
         const eventDetail = {
@@ -31507,24 +31458,24 @@ function $5cb92bef7577960e$var$handleAndDispatchCustomEvent(name2, handler, deta
 }
 
 // node_modules/@radix-ui/react-focus-scope/dist/index.mjs
-var import_react13 = __toESM(require_react(), 1);
+var import_react12 = __toESM(require_react(), 1);
 var $d3863c46a17e8a28$var$AUTOFOCUS_ON_MOUNT = "focusScope.autoFocusOnMount";
 var $d3863c46a17e8a28$var$AUTOFOCUS_ON_UNMOUNT = "focusScope.autoFocusOnUnmount";
 var $d3863c46a17e8a28$var$EVENT_OPTIONS = {
   bubbles: false,
   cancelable: true
 };
-var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react13.forwardRef)((props2, forwardedRef) => {
+var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react12.forwardRef)((props2, forwardedRef) => {
   const { loop = false, trapped = false, onMountAutoFocus: onMountAutoFocusProp, onUnmountAutoFocus: onUnmountAutoFocusProp, ...scopeProps } = props2;
-  const [container1, setContainer] = (0, import_react13.useState)(null);
+  const [container1, setContainer] = (0, import_react12.useState)(null);
   const onMountAutoFocus = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onMountAutoFocusProp);
   const onUnmountAutoFocus = $b1b2314f5f9a1d84$export$25bec8c6f54ee79a(onUnmountAutoFocusProp);
-  const lastFocusedElementRef = (0, import_react13.useRef)(null);
+  const lastFocusedElementRef = (0, import_react12.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(
     forwardedRef,
     (node) => setContainer(node)
   );
-  const focusScope = (0, import_react13.useRef)({
+  const focusScope = (0, import_react12.useRef)({
     paused: false,
     pause() {
       this.paused = true;
@@ -31533,7 +31484,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
       this.paused = false;
     }
   }).current;
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     if (trapped) {
       let handleFocusIn = function(event) {
         if (focusScope.paused || !container1)
@@ -31582,7 +31533,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
     container1,
     focusScope.paused
   ]);
-  (0, import_react13.useEffect)(() => {
+  (0, import_react12.useEffect)(() => {
     if (container1) {
       $d3863c46a17e8a28$var$focusScopesStack.add(focusScope);
       const previouslyFocusedElement = document.activeElement;
@@ -31620,7 +31571,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
     onUnmountAutoFocus,
     focusScope
   ]);
-  const handleKeyDown = (0, import_react13.useCallback)((event) => {
+  const handleKeyDown = (0, import_react12.useCallback)((event) => {
     if (!loop && !trapped)
       return;
     if (focusScope.paused)
@@ -31655,7 +31606,7 @@ var $d3863c46a17e8a28$export$20e40289641fbbb6 = /* @__PURE__ */ (0, import_react
     trapped,
     focusScope.paused
   ]);
-  return /* @__PURE__ */ (0, import_react13.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
+  return /* @__PURE__ */ (0, import_react12.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
     tabIndex: -1
   }, scopeProps, {
     ref: composedRefs,
@@ -31762,21 +31713,21 @@ function $d3863c46a17e8a28$var$removeLinks(items) {
 }
 
 // node_modules/@radix-ui/react-portal/dist/index.mjs
-var import_react14 = __toESM(require_react(), 1);
+var import_react13 = __toESM(require_react(), 1);
 var import_react_dom2 = __toESM(require_react_dom(), 1);
-var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react14.forwardRef)((props2, forwardedRef) => {
+var $f1701beae083dbae$export$602eac185826482c = /* @__PURE__ */ (0, import_react13.forwardRef)((props2, forwardedRef) => {
   var _globalThis$document;
   const { container = globalThis === null || globalThis === void 0 ? void 0 : (_globalThis$document = globalThis.document) === null || _globalThis$document === void 0 ? void 0 : _globalThis$document.body, ...portalProps } = props2;
-  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react14.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
+  return container ? /* @__PURE__ */ import_react_dom2.default.createPortal(/* @__PURE__ */ (0, import_react13.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({}, portalProps, {
     ref: forwardedRef
   })), container) : null;
 });
 
 // node_modules/@radix-ui/react-presence/dist/index.mjs
-var import_react15 = __toESM(require_react(), 1);
+var import_react14 = __toESM(require_react(), 1);
 var import_react_dom3 = __toESM(require_react_dom(), 1);
 function $fe963b355347cc68$export$3e6543de14f8614f(initialState2, machine) {
-  return (0, import_react15.useReducer)((state2, event) => {
+  return (0, import_react14.useReducer)((state2, event) => {
     const nextState = machine[state2][event];
     return nextState !== null && nextState !== void 0 ? nextState : state2;
   }, initialState2);
@@ -31786,19 +31737,19 @@ var $921a889cee6df7e8$export$99c2b779aa4e8b8b = (props2) => {
   const presence = $921a889cee6df7e8$var$usePresence(present);
   const child = typeof children === "function" ? children({
     present: presence.isPresent
-  }) : import_react15.Children.only(children);
+  }) : import_react14.Children.only(children);
   const ref = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(presence.ref, child.ref);
   const forceMount = typeof children === "function";
-  return forceMount || presence.isPresent ? /* @__PURE__ */ (0, import_react15.cloneElement)(child, {
+  return forceMount || presence.isPresent ? /* @__PURE__ */ (0, import_react14.cloneElement)(child, {
     ref
   }) : null;
 };
 $921a889cee6df7e8$export$99c2b779aa4e8b8b.displayName = "Presence";
 function $921a889cee6df7e8$var$usePresence(present) {
-  const [node1, setNode] = (0, import_react15.useState)();
-  const stylesRef = (0, import_react15.useRef)({});
-  const prevPresentRef = (0, import_react15.useRef)(present);
-  const prevAnimationNameRef = (0, import_react15.useRef)("none");
+  const [node1, setNode] = (0, import_react14.useState)();
+  const stylesRef = (0, import_react14.useRef)({});
+  const prevPresentRef = (0, import_react14.useRef)(present);
+  const prevAnimationNameRef = (0, import_react14.useRef)("none");
   const initialState2 = present ? "mounted" : "unmounted";
   const [state2, send] = $fe963b355347cc68$export$3e6543de14f8614f(initialState2, {
     mounted: {
@@ -31813,7 +31764,7 @@ function $921a889cee6df7e8$var$usePresence(present) {
       MOUNT: "mounted"
     }
   });
-  (0, import_react15.useEffect)(() => {
+  (0, import_react14.useEffect)(() => {
     const currentAnimationName = $921a889cee6df7e8$var$getAnimationName(stylesRef.current);
     prevAnimationNameRef.current = state2 === "mounted" ? currentAnimationName : "none";
   }, [
@@ -31876,7 +31827,7 @@ function $921a889cee6df7e8$var$usePresence(present) {
       "mounted",
       "unmountSuspended"
     ].includes(state2),
-    ref: (0, import_react15.useCallback)((node) => {
+    ref: (0, import_react14.useCallback)((node) => {
       if (node)
         stylesRef.current = getComputedStyle(node);
       setNode(node);
@@ -31888,10 +31839,10 @@ function $921a889cee6df7e8$var$getAnimationName(styles) {
 }
 
 // node_modules/@radix-ui/react-focus-guards/dist/index.mjs
-var import_react16 = __toESM(require_react(), 1);
+var import_react15 = __toESM(require_react(), 1);
 var $3db38b7d1fb3fe6a$var$count = 0;
 function $3db38b7d1fb3fe6a$export$b7ece24a22aeda8c() {
-  (0, import_react16.useEffect)(() => {
+  (0, import_react15.useEffect)(() => {
     var _edgeGuards$, _edgeGuards$2;
     const edgeGuards = document.querySelectorAll("[data-radix-focus-guard]");
     document.body.insertAdjacentElement("afterbegin", (_edgeGuards$ = edgeGuards[0]) !== null && _edgeGuards$ !== void 0 ? _edgeGuards$ : $3db38b7d1fb3fe6a$var$createFocusGuard());
@@ -31952,10 +31903,10 @@ function __spreadArray(to, from, pack) {
 }
 
 // node_modules/react-remove-scroll/dist/es2015/Combination.js
-var React9 = __toESM(require_react());
+var React8 = __toESM(require_react());
 
 // node_modules/react-remove-scroll/dist/es2015/UI.js
-var React5 = __toESM(require_react());
+var React4 = __toESM(require_react());
 
 // node_modules/react-remove-scroll-bar/dist/es2015/constants.js
 var zeroRightClassName = "right-scroll-bar-position";
@@ -31974,9 +31925,9 @@ function assignRef(ref, value) {
 }
 
 // node_modules/use-callback-ref/dist/es2015/useRef.js
-var import_react17 = __toESM(require_react());
+var import_react16 = __toESM(require_react());
 function useCallbackRef(initialValue, callback) {
-  var ref = (0, import_react17.useState)(function() {
+  var ref = (0, import_react16.useState)(function() {
     return {
       // value
       value: initialValue,
@@ -32002,8 +31953,8 @@ function useCallbackRef(initialValue, callback) {
 }
 
 // node_modules/use-callback-ref/dist/es2015/useMergeRef.js
-var React3 = __toESM(require_react());
-var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React3.useLayoutEffect : React3.useEffect;
+var React2 = __toESM(require_react());
+var useIsomorphicLayoutEffect = typeof window !== "undefined" ? React2.useLayoutEffect : React2.useEffect;
 var currentValues = /* @__PURE__ */ new WeakMap();
 function useMergeRefs(refs, defaultValue) {
   var callbackRef = useCallbackRef(defaultValue || null, function(newValue) {
@@ -32120,7 +32071,7 @@ function createSidecarMedium(options) {
 }
 
 // node_modules/use-sidecar/dist/es2015/exports.js
-var React4 = __toESM(require_react());
+var React3 = __toESM(require_react());
 var SideCar = function(_a) {
   var sideCar = _a.sideCar, rest = __rest(_a, ["sideCar"]);
   if (!sideCar) {
@@ -32130,7 +32081,7 @@ var SideCar = function(_a) {
   if (!Target) {
     throw new Error("Sidecar medium not found");
   }
-  return React4.createElement(Target, __assign({}, rest));
+  return React3.createElement(Target, __assign({}, rest));
 };
 SideCar.isSideCarExport = true;
 function exportSidecar(medium, exported) {
@@ -32145,9 +32096,9 @@ var effectCar = createSidecarMedium();
 var nothing = function() {
   return;
 };
-var RemoveScroll = React5.forwardRef(function(props2, parentRef) {
-  var ref = React5.useRef(null);
-  var _a = React5.useState({
+var RemoveScroll = React4.forwardRef(function(props2, parentRef) {
+  var ref = React4.useRef(null);
+  var _a = React4.useState({
     onScrollCapture: nothing,
     onWheelCapture: nothing,
     onTouchMoveCapture: nothing
@@ -32156,11 +32107,11 @@ var RemoveScroll = React5.forwardRef(function(props2, parentRef) {
   var SideCar2 = sideCar;
   var containerRef = useMergeRefs([ref, parentRef]);
   var containerProps = __assign(__assign({}, rest), callbacks);
-  return React5.createElement(
-    React5.Fragment,
+  return React4.createElement(
+    React4.Fragment,
     null,
-    enabled && React5.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref }),
-    forwardProps ? React5.cloneElement(React5.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React5.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
+    enabled && React4.createElement(SideCar2, { sideCar: effectCar, removeScrollBar, shards, noIsolation, inert, setCallbacks, allowPinchZoom: !!allowPinchZoom, lockRef: ref }),
+    forwardProps ? React4.cloneElement(React4.Children.only(children), __assign(__assign({}, containerProps), { ref: containerRef })) : React4.createElement(Container, __assign({}, containerProps, { className, ref: containerRef }), children)
   );
 });
 RemoveScroll.defaultProps = {
@@ -32174,13 +32125,13 @@ RemoveScroll.classNames = {
 };
 
 // node_modules/react-remove-scroll/dist/es2015/SideEffect.js
-var React8 = __toESM(require_react());
-
-// node_modules/react-remove-scroll-bar/dist/es2015/component.js
 var React7 = __toESM(require_react());
 
-// node_modules/react-style-singleton/dist/es2015/hook.js
+// node_modules/react-remove-scroll-bar/dist/es2015/component.js
 var React6 = __toESM(require_react());
+
+// node_modules/react-style-singleton/dist/es2015/hook.js
+var React5 = __toESM(require_react());
 
 // node_modules/get-nonce/dist/es2015/index.js
 var currentNonce;
@@ -32244,7 +32195,7 @@ var stylesheetSingleton = function() {
 var styleHookSingleton = function() {
   var sheet = stylesheetSingleton();
   return function(styles, isDynamic) {
-    React6.useEffect(function() {
+    React5.useEffect(function() {
       sheet.add(styles);
       return function() {
         sheet.remove();
@@ -32318,7 +32269,7 @@ var getCurrentUseCounter = function() {
   return isFinite(counter) ? counter : 0;
 };
 var useLockAttribute = function() {
-  React7.useEffect(function() {
+  React6.useEffect(function() {
     document.body.setAttribute(lockAttribute, (getCurrentUseCounter() + 1).toString());
     return function() {
       var newCounter = getCurrentUseCounter() - 1;
@@ -32333,10 +32284,10 @@ var useLockAttribute = function() {
 var RemoveScrollBar = function(_a) {
   var noRelative = _a.noRelative, noImportant = _a.noImportant, _b = _a.gapMode, gapMode = _b === void 0 ? "margin" : _b;
   useLockAttribute();
-  var gap = React7.useMemo(function() {
+  var gap = React6.useMemo(function() {
     return getGapWidth(gapMode);
   }, [gapMode]);
-  return React7.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
+  return React6.createElement(Style, { styles: getStyles(gap, !noRelative, gapMode, !noImportant ? "!important" : "") });
 };
 
 // node_modules/react-remove-scroll/dist/es2015/aggresiveCapture.js
@@ -32469,18 +32420,18 @@ var generateStyle = function(id) {
 var idCounter = 0;
 var lockStack = [];
 function RemoveScrollSideCar(props2) {
-  var shouldPreventQueue = React8.useRef([]);
-  var touchStartRef = React8.useRef([0, 0]);
-  var activeAxis = React8.useRef();
-  var id = React8.useState(idCounter++)[0];
-  var Style2 = React8.useState(function() {
+  var shouldPreventQueue = React7.useRef([]);
+  var touchStartRef = React7.useRef([0, 0]);
+  var activeAxis = React7.useRef();
+  var id = React7.useState(idCounter++)[0];
+  var Style2 = React7.useState(function() {
     return styleSingleton();
   })[0];
-  var lastProps = React8.useRef(props2);
-  React8.useEffect(function() {
+  var lastProps = React7.useRef(props2);
+  React7.useEffect(function() {
     lastProps.current = props2;
   }, [props2]);
-  React8.useEffect(function() {
+  React7.useEffect(function() {
     if (props2.inert) {
       document.body.classList.add("block-interactivity-".concat(id));
       var allow_1 = __spreadArray([props2.lockRef.current], (props2.shards || []).map(extractRef), true).filter(Boolean);
@@ -32496,7 +32447,7 @@ function RemoveScrollSideCar(props2) {
     }
     return;
   }, [props2.inert, props2.lockRef.current, props2.shards]);
-  var shouldCancelEvent = React8.useCallback(function(event, parent) {
+  var shouldCancelEvent = React7.useCallback(function(event, parent) {
     if ("touches" in event && event.touches.length === 2) {
       return !lastProps.current.allowPinchZoom;
     }
@@ -32532,7 +32483,7 @@ function RemoveScrollSideCar(props2) {
     var cancelingAxis = activeAxis.current || currentAxis;
     return handleScroll(cancelingAxis, parent, event, cancelingAxis === "h" ? deltaX : deltaY, true);
   }, []);
-  var shouldPrevent = React8.useCallback(function(_event) {
+  var shouldPrevent = React7.useCallback(function(_event) {
     var event = _event;
     if (!lockStack.length || lockStack[lockStack.length - 1] !== Style2) {
       return;
@@ -32559,7 +32510,7 @@ function RemoveScrollSideCar(props2) {
       }
     }
   }, []);
-  var shouldCancel = React8.useCallback(function(name2, delta, target, should) {
+  var shouldCancel = React7.useCallback(function(name2, delta, target, should) {
     var event = { name: name2, delta, target, should };
     shouldPreventQueue.current.push(event);
     setTimeout(function() {
@@ -32568,17 +32519,17 @@ function RemoveScrollSideCar(props2) {
       });
     }, 1);
   }, []);
-  var scrollTouchStart = React8.useCallback(function(event) {
+  var scrollTouchStart = React7.useCallback(function(event) {
     touchStartRef.current = getTouchXY(event);
     activeAxis.current = void 0;
   }, []);
-  var scrollWheel = React8.useCallback(function(event) {
+  var scrollWheel = React7.useCallback(function(event) {
     shouldCancel(event.type, getDeltaXY(event), event.target, shouldCancelEvent(event, props2.lockRef.current));
   }, []);
-  var scrollTouchMove = React8.useCallback(function(event) {
+  var scrollTouchMove = React7.useCallback(function(event) {
     shouldCancel(event.type, getTouchXY(event), event.target, shouldCancelEvent(event, props2.lockRef.current));
   }, []);
-  React8.useEffect(function() {
+  React7.useEffect(function() {
     lockStack.push(Style2);
     props2.setCallbacks({
       onScrollCapture: scrollWheel,
@@ -32598,11 +32549,11 @@ function RemoveScrollSideCar(props2) {
     };
   }, []);
   var removeScrollBar = props2.removeScrollBar, inert = props2.inert;
-  return React8.createElement(
-    React8.Fragment,
+  return React7.createElement(
+    React7.Fragment,
     null,
-    inert ? React8.createElement(Style2, { styles: generateStyle(id) }) : null,
-    removeScrollBar ? React8.createElement(RemoveScrollBar, { gapMode: "margin" }) : null
+    inert ? React7.createElement(Style2, { styles: generateStyle(id) }) : null,
+    removeScrollBar ? React7.createElement(RemoveScrollBar, { gapMode: "margin" }) : null
   );
 }
 
@@ -32610,8 +32561,8 @@ function RemoveScrollSideCar(props2) {
 var sidecar_default = exportSidecar(effectCar, RemoveScrollSideCar);
 
 // node_modules/react-remove-scroll/dist/es2015/Combination.js
-var ReactRemoveScroll = React9.forwardRef(function(props2, ref) {
-  return React9.createElement(RemoveScroll, __assign({}, props2, { ref, sideCar: sidecar_default }));
+var ReactRemoveScroll = React8.forwardRef(function(props2, ref) {
+  return React8.createElement(RemoveScroll, __assign({}, props2, { ref, sideCar: sidecar_default }));
 });
 ReactRemoveScroll.classNames = RemoveScroll.classNames;
 var Combination_default = ReactRemoveScroll;
@@ -32743,14 +32694,14 @@ var [$5d3850c4d0b4e6c7$var$createDialogContext, $5d3850c4d0b4e6c7$export$cc70277
 var [$5d3850c4d0b4e6c7$var$DialogProvider, $5d3850c4d0b4e6c7$var$useDialogContext] = $5d3850c4d0b4e6c7$var$createDialogContext($5d3850c4d0b4e6c7$var$DIALOG_NAME);
 var $5d3850c4d0b4e6c7$export$3ddf2d174ce01153 = (props2) => {
   const { __scopeDialog, children, open: openProp, defaultOpen, onOpenChange, modal = true } = props2;
-  const triggerRef = (0, import_react18.useRef)(null);
-  const contentRef = (0, import_react18.useRef)(null);
+  const triggerRef = (0, import_react17.useRef)(null);
+  const contentRef = (0, import_react17.useRef)(null);
   const [open = false, setOpen] = $71cd76cc60e0454e$export$6f32135080cb4c3({
     prop: openProp,
     defaultProp: defaultOpen,
     onChange: onOpenChange
   });
-  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogProvider, {
+  return /* @__PURE__ */ (0, import_react17.createElement)($5d3850c4d0b4e6c7$var$DialogProvider, {
     scope: __scopeDialog,
     triggerRef,
     contentRef,
@@ -32759,7 +32710,7 @@ var $5d3850c4d0b4e6c7$export$3ddf2d174ce01153 = (props2) => {
     descriptionId: $1746a345f3d73bb7$export$f680877a34711e37(),
     open,
     onOpenChange: setOpen,
-    onOpenToggle: (0, import_react18.useCallback)(
+    onOpenToggle: (0, import_react17.useCallback)(
       () => setOpen(
         (prevOpen) => !prevOpen
       ),
@@ -32777,43 +32728,43 @@ var [$5d3850c4d0b4e6c7$var$PortalProvider, $5d3850c4d0b4e6c7$var$usePortalContex
 var $5d3850c4d0b4e6c7$export$dad7c95542bacce0 = (props2) => {
   const { __scopeDialog, forceMount, children, container } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$PORTAL_NAME, __scopeDialog);
-  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$PortalProvider, {
+  return /* @__PURE__ */ (0, import_react17.createElement)($5d3850c4d0b4e6c7$var$PortalProvider, {
     scope: __scopeDialog,
     forceMount
-  }, import_react18.Children.map(
+  }, import_react17.Children.map(
     children,
-    (child) => /* @__PURE__ */ (0, import_react18.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+    (child) => /* @__PURE__ */ (0, import_react17.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
       present: forceMount || context.open
-    }, /* @__PURE__ */ (0, import_react18.createElement)($f1701beae083dbae$export$602eac185826482c, {
+    }, /* @__PURE__ */ (0, import_react17.createElement)($f1701beae083dbae$export$602eac185826482c, {
       asChild: true,
       container
     }, child))
   ));
 };
 var $5d3850c4d0b4e6c7$var$OVERLAY_NAME = "DialogOverlay";
-var $5d3850c4d0b4e6c7$export$bd1d06c79be19e17 = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$export$bd1d06c79be19e17 = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const portalContext = $5d3850c4d0b4e6c7$var$usePortalContext($5d3850c4d0b4e6c7$var$OVERLAY_NAME, props2.__scopeDialog);
   const { forceMount = portalContext.forceMount, ...overlayProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$OVERLAY_NAME, props2.__scopeDialog);
-  return context.modal ? /* @__PURE__ */ (0, import_react18.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+  return context.modal ? /* @__PURE__ */ (0, import_react17.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
     present: forceMount || context.open
-  }, /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogOverlayImpl, _extends({}, overlayProps, {
+  }, /* @__PURE__ */ (0, import_react17.createElement)($5d3850c4d0b4e6c7$var$DialogOverlayImpl, _extends({}, overlayProps, {
     ref: forwardedRef
   }))) : null;
 });
-var $5d3850c4d0b4e6c7$var$DialogOverlayImpl = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogOverlayImpl = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const { __scopeDialog, ...overlayProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$OVERLAY_NAME, __scopeDialog);
   return (
     // Make sure `Content` is scrollable even when it doesn't live inside `RemoveScroll`
     // ie. when `Overlay` and `Content` are siblings
-    /* @__PURE__ */ (0, import_react18.createElement)(Combination_default, {
+    /* @__PURE__ */ (0, import_react17.createElement)(Combination_default, {
       as: $5e63c961fc1ce211$export$8c6ed5c666ac1360,
       allowPinchZoom: true,
       shards: [
         context.contentRef
       ]
-    }, /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
+    }, /* @__PURE__ */ (0, import_react17.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.div, _extends({
       "data-state": $5d3850c4d0b4e6c7$var$getState(context.open)
     }, overlayProps, {
       ref: forwardedRef,
@@ -32825,28 +32776,28 @@ var $5d3850c4d0b4e6c7$var$DialogOverlayImpl = /* @__PURE__ */ (0, import_react18
   );
 });
 var $5d3850c4d0b4e6c7$var$CONTENT_NAME = "DialogContent";
-var $5d3850c4d0b4e6c7$export$b6d9565de1e068cf = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$export$b6d9565de1e068cf = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const portalContext = $5d3850c4d0b4e6c7$var$usePortalContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
   const { forceMount = portalContext.forceMount, ...contentProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
-  return /* @__PURE__ */ (0, import_react18.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
+  return /* @__PURE__ */ (0, import_react17.createElement)($921a889cee6df7e8$export$99c2b779aa4e8b8b, {
     present: forceMount || context.open
-  }, context.modal ? /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentModal, _extends({}, contentProps, {
+  }, context.modal ? /* @__PURE__ */ (0, import_react17.createElement)($5d3850c4d0b4e6c7$var$DialogContentModal, _extends({}, contentProps, {
     ref: forwardedRef
-  })) : /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentNonModal, _extends({}, contentProps, {
+  })) : /* @__PURE__ */ (0, import_react17.createElement)($5d3850c4d0b4e6c7$var$DialogContentNonModal, _extends({}, contentProps, {
     ref: forwardedRef
   })));
 });
-var $5d3850c4d0b4e6c7$var$DialogContentModal = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogContentModal = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
-  const contentRef = (0, import_react18.useRef)(null);
+  const contentRef = (0, import_react17.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, context.contentRef, contentRef);
-  (0, import_react18.useEffect)(() => {
+  (0, import_react17.useEffect)(() => {
     const content = contentRef.current;
     if (content)
       return hideOthers(content);
   }, []);
-  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
+  return /* @__PURE__ */ (0, import_react17.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
     ref: composedRefs,
     trapFocus: context.open,
     disableOutsidePointerEvents: true,
@@ -32868,11 +32819,11 @@ var $5d3850c4d0b4e6c7$var$DialogContentModal = /* @__PURE__ */ (0, import_react1
     )
   }));
 });
-var $5d3850c4d0b4e6c7$var$DialogContentNonModal = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogContentNonModal = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, props2.__scopeDialog);
-  const hasInteractedOutsideRef = (0, import_react18.useRef)(false);
-  const hasPointerDownOutsideRef = (0, import_react18.useRef)(false);
-  return /* @__PURE__ */ (0, import_react18.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
+  const hasInteractedOutsideRef = (0, import_react17.useRef)(false);
+  const hasPointerDownOutsideRef = (0, import_react17.useRef)(false);
+  return /* @__PURE__ */ (0, import_react17.createElement)($5d3850c4d0b4e6c7$var$DialogContentImpl, _extends({}, props2, {
     ref: forwardedRef,
     trapFocus: false,
     disableOutsidePointerEvents: false,
@@ -32905,19 +32856,19 @@ var $5d3850c4d0b4e6c7$var$DialogContentNonModal = /* @__PURE__ */ (0, import_rea
     }
   }));
 });
-var $5d3850c4d0b4e6c7$var$DialogContentImpl = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$var$DialogContentImpl = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const { __scopeDialog, trapFocus, onOpenAutoFocus, onCloseAutoFocus, ...contentProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CONTENT_NAME, __scopeDialog);
-  const contentRef = (0, import_react18.useRef)(null);
+  const contentRef = (0, import_react17.useRef)(null);
   const composedRefs = $6ed0406888f73fc4$export$c7b2cbe3552a0d05(forwardedRef, contentRef);
   $3db38b7d1fb3fe6a$export$b7ece24a22aeda8c();
-  return /* @__PURE__ */ (0, import_react18.createElement)(import_react18.Fragment, null, /* @__PURE__ */ (0, import_react18.createElement)($d3863c46a17e8a28$export$20e40289641fbbb6, {
+  return /* @__PURE__ */ (0, import_react17.createElement)(import_react17.Fragment, null, /* @__PURE__ */ (0, import_react17.createElement)($d3863c46a17e8a28$export$20e40289641fbbb6, {
     asChild: true,
     loop: true,
     trapped: trapFocus,
     onMountAutoFocus: onOpenAutoFocus,
     onUnmountAutoFocus: onCloseAutoFocus
-  }, /* @__PURE__ */ (0, import_react18.createElement)($5cb92bef7577960e$export$177fb62ff3ec1f22, _extends({
+  }, /* @__PURE__ */ (0, import_react17.createElement)($5cb92bef7577960e$export$177fb62ff3ec1f22, _extends({
     role: "dialog",
     id: context.contentId,
     "aria-describedby": context.descriptionId,
@@ -32929,30 +32880,30 @@ var $5d3850c4d0b4e6c7$var$DialogContentImpl = /* @__PURE__ */ (0, import_react18
   }))), false);
 });
 var $5d3850c4d0b4e6c7$var$TITLE_NAME = "DialogTitle";
-var $5d3850c4d0b4e6c7$export$16f7638e4a34b909 = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$export$16f7638e4a34b909 = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const { __scopeDialog, ...titleProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$TITLE_NAME, __scopeDialog);
-  return /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.h2, _extends({
+  return /* @__PURE__ */ (0, import_react17.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.h2, _extends({
     id: context.titleId
   }, titleProps, {
     ref: forwardedRef
   }));
 });
 var $5d3850c4d0b4e6c7$var$DESCRIPTION_NAME = "DialogDescription";
-var $5d3850c4d0b4e6c7$export$94e94c2ec2c954d5 = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$export$94e94c2ec2c954d5 = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const { __scopeDialog, ...descriptionProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$DESCRIPTION_NAME, __scopeDialog);
-  return /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.p, _extends({
+  return /* @__PURE__ */ (0, import_react17.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.p, _extends({
     id: context.descriptionId
   }, descriptionProps, {
     ref: forwardedRef
   }));
 });
 var $5d3850c4d0b4e6c7$var$CLOSE_NAME = "DialogClose";
-var $5d3850c4d0b4e6c7$export$fba2fb7cd781b7ac = /* @__PURE__ */ (0, import_react18.forwardRef)((props2, forwardedRef) => {
+var $5d3850c4d0b4e6c7$export$fba2fb7cd781b7ac = /* @__PURE__ */ (0, import_react17.forwardRef)((props2, forwardedRef) => {
   const { __scopeDialog, ...closeProps } = props2;
   const context = $5d3850c4d0b4e6c7$var$useDialogContext($5d3850c4d0b4e6c7$var$CLOSE_NAME, __scopeDialog);
-  return /* @__PURE__ */ (0, import_react18.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.button, _extends({
+  return /* @__PURE__ */ (0, import_react17.createElement)($8927f6f2acc4f386$export$250ffa63cdc0d034.button, _extends({
     type: "button"
   }, closeProps, {
     ref: forwardedRef,
@@ -32982,7 +32933,8 @@ var $5d3850c4d0b4e6c7$export$f39c2d165cd861fe = $5d3850c4d0b4e6c7$export$fba2fb7
 // src/components/ui/Dialog/index.tsx
 var Dialog = $5d3850c4d0b4e6c7$export$be92b6f5f03c0fe9;
 var DialogPortal = $5d3850c4d0b4e6c7$export$602eac185826482c;
-var DialogOverlay = import_react19.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(
+var DialogClose = $5d3850c4d0b4e6c7$export$f39c2d165cd861fe;
+var DialogOverlay = import_react18.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react18.default.createElement(
   $5d3850c4d0b4e6c7$export$c6fdb837b070b4ff,
   {
     ref,
@@ -32994,7 +32946,7 @@ var DialogOverlay = import_react19.default.forwardRef(({ className, ...props2 },
   }
 ));
 DialogOverlay.displayName = $5d3850c4d0b4e6c7$export$c6fdb837b070b4ff.displayName;
-var DialogContent = import_react19.default.forwardRef(({ className, children, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(DialogPortal, null, /* @__PURE__ */ import_react19.default.createElement("div", { className: "twcss modal-container" }, /* @__PURE__ */ import_react19.default.createElement(DialogOverlay, { className: "modal-bg" }), /* @__PURE__ */ import_react19.default.createElement(
+var DialogContent = import_react18.default.forwardRef(({ className, children, ...props2 }, ref) => /* @__PURE__ */ import_react18.default.createElement(DialogPortal, null, /* @__PURE__ */ import_react18.default.createElement("div", { className: "twcss modal-container" }, /* @__PURE__ */ import_react18.default.createElement(DialogOverlay, { className: "modal-bg" }), /* @__PURE__ */ import_react18.default.createElement(
   $5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2,
   {
     ref,
@@ -33002,13 +32954,13 @@ var DialogContent = import_react19.default.forwardRef(({ className, children, ..
     ...props2
   },
   children,
-  /* @__PURE__ */ import_react19.default.createElement($5d3850c4d0b4e6c7$export$f39c2d165cd861fe, { asChild: true }, /* @__PURE__ */ import_react19.default.createElement("div", { className: "modal-close-button" }, /* @__PURE__ */ import_react19.default.createElement("span", { className: "sr-only" }, "Close")))
+  /* @__PURE__ */ import_react18.default.createElement($5d3850c4d0b4e6c7$export$f39c2d165cd861fe, { asChild: true }, /* @__PURE__ */ import_react18.default.createElement("div", { className: "modal-close-button" }, /* @__PURE__ */ import_react18.default.createElement("span", { className: "sr-only" }, "Close")))
 ))));
 DialogContent.displayName = $5d3850c4d0b4e6c7$export$7c6e2c02157bb7d2.displayName;
 var DialogHeader = ({
   className,
   ...props2
-}) => /* @__PURE__ */ import_react19.default.createElement(
+}) => /* @__PURE__ */ import_react18.default.createElement(
   "div",
   {
     className: cn(
@@ -33022,7 +32974,7 @@ DialogHeader.displayName = "DialogHeader";
 var DialogFooter = ({
   className,
   ...props2
-}) => /* @__PURE__ */ import_react19.default.createElement(
+}) => /* @__PURE__ */ import_react18.default.createElement(
   "div",
   {
     className: cn(
@@ -33033,7 +32985,7 @@ var DialogFooter = ({
   }
 );
 DialogFooter.displayName = "DialogFooter";
-var DialogTitle = import_react19.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(
+var DialogTitle = import_react18.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react18.default.createElement(
   $5d3850c4d0b4e6c7$export$f99233281efd08a0,
   {
     ref,
@@ -33042,7 +32994,7 @@ var DialogTitle = import_react19.default.forwardRef(({ className, ...props2 }, r
   }
 ));
 DialogTitle.displayName = $5d3850c4d0b4e6c7$export$f99233281efd08a0.displayName;
-var DialogDescription = import_react19.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react19.default.createElement(
+var DialogDescription = import_react18.default.forwardRef(({ className, ...props2 }, ref) => /* @__PURE__ */ import_react18.default.createElement(
   $5d3850c4d0b4e6c7$export$393edc798c47379d,
   {
     ref,
@@ -33051,6 +33003,24 @@ var DialogDescription = import_react19.default.forwardRef(({ className, ...props
   }
 ));
 DialogDescription.displayName = $5d3850c4d0b4e6c7$export$393edc798c47379d.displayName;
+var ConfirmationDialog = ({
+  title,
+  description,
+  // onCancel,
+  onConfirm,
+  open,
+  setOpen
+}) => {
+  console.log("we out here");
+  return /* @__PURE__ */ import_react18.default.createElement(Dialog, { open, onOpenChange: (b) => setOpen(b), modal: true }, /* @__PURE__ */ import_react18.default.createElement(DialogContent, null, /* @__PURE__ */ import_react18.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react18.default.createElement(DialogTitle, null, title), description && /* @__PURE__ */ import_react18.default.createElement(DialogDescription, null, description)), /* @__PURE__ */ import_react18.default.createElement(DialogFooter, null, /* @__PURE__ */ import_react18.default.createElement(DialogClose, null, "cancel"), /* @__PURE__ */ import_react18.default.createElement(
+    DialogClose,
+    {
+      className: "mod-cta",
+      onClick: () => onConfirm()
+    },
+    "confirm"
+  ))));
+};
 
 // node_modules/zustand/esm/vanilla.mjs
 var import_meta = {};
@@ -33086,10 +33056,10 @@ var createStoreImpl = (createState) => {
 var createStore = (createState) => createState ? createStoreImpl(createState) : createStoreImpl;
 
 // node_modules/zustand/esm/index.mjs
-var import_react20 = __toESM(require_react(), 1);
+var import_react19 = __toESM(require_react(), 1);
 var import_with_selector = __toESM(require_with_selector(), 1);
 var import_meta2 = {};
-var { useDebugValue } = import_react20.default;
+var { useDebugValue } = import_react19.default;
 var { useSyncExternalStoreWithSelector } = import_with_selector.default;
 var didWarnAboutEqualityFn = false;
 var identity = (arg) => arg;
@@ -33141,11 +33111,12 @@ var usePluginSettings = create()((set, get) => ({
     if (!blockConfigs2) {
       return defaultDefaultBlockConfig;
     }
-    return blockConfigs2[blockId2] ?? blockConfigs2["default"];
+    return blockConfigs2[blockId2 || "default"];
   },
   setBlockConfig: (id, cb) => {
+    const blockId2 = id || "default";
     set((prev) => {
-      const currentConfig = prev?.settings?.blockConfigs[id] ?? defaultDefaultBlockConfig;
+      const currentConfig = prev?.settings?.blockConfigs[blockId2] ?? defaultDefaultBlockConfig;
       const newConfig = typeof cb === "function" ? cb(currentConfig) : cb;
       return {
         ...prev,
@@ -33153,7 +33124,7 @@ var usePluginSettings = create()((set, get) => ({
           ...prev.settings,
           blockConfigs: {
             ...prev.settings.blockConfigs,
-            [id]: newConfig
+            [blockId2]: newConfig
           }
         }
       };
@@ -33162,11 +33133,11 @@ var usePluginSettings = create()((set, get) => ({
 }));
 
 // src/components/BlockProvider/index.tsx
-var import_react21 = __toESM(require_react());
-var BlockProviderContext = (0, import_react21.createContext)({});
-var BlockProvider = ({ children, ...props2 }) => /* @__PURE__ */ import_react21.default.createElement(BlockProviderContext.Provider, { value: { ...props2 } }, children);
+var import_react20 = __toESM(require_react());
+var BlockProviderContext = (0, import_react20.createContext)({});
+var BlockProvider = ({ children, ...props2 }) => /* @__PURE__ */ import_react20.default.createElement(BlockProviderContext.Provider, { value: { ...props2 } }, children);
 var useBlock = () => {
-  const context = (0, import_react21.useContext)(BlockProviderContext);
+  const context = (0, import_react20.useContext)(BlockProviderContext);
   if (!context)
     throw new Error("useBlock must be used within BlockProvider");
   return context;
@@ -33343,66 +33314,67 @@ var defaultPluginSettings = {
 };
 var BlockConfig = ({
   id,
-  filePath: filePath3,
-  open,
-  setOpen,
-  hideGhLinks
+  hideGhLinks,
+  plugin: plugin2
 }) => {
-  const { plugin: plugin2 } = useBlock();
+  const { plugin: p } = plugin2 ? { plugin: plugin2 } : useBlock();
   const { settings: settings2, setSettings: setSettings2 } = usePluginSettings();
   if (!settings2)
     throw new Error(
       "Tried opening block config when settings are undefined. This should be impossible because App initialization should have set it"
     );
   const { blockConfigs: blockConfigs2 } = settings2;
-  const existingConfig = blockConfigs2[id] ?? blockConfigs2["default"];
+  const existingConfig = blockConfigs2[id || "default"];
   const defaultForm = existingConfig ?? defaultDefaultBlockConfig;
-  if (defaultForm.filePath) {
-    if (defaultForm.filePath !== filePath3) {
-      new import_obsidian3.Notice(
-        "Error: duplicate id found, please change it and try again"
-      );
-      return;
-    }
-  }
-  const [form, setForm] = (0, import_react22.useState)({ ...defaultForm, filePath: filePath3, id });
-  const [isSaving, setIsSaving] = (0, import_react22.useState)(false);
+  const [form, setForm] = (0, import_react21.useState)({ ...defaultForm, id });
+  const [isSaving, setIsSaving] = (0, import_react21.useState)(false);
+  const [isResetDialogOpen, setResetDialogOpen] = (0, import_react21.useState)(false);
   const updateForm = (key, value) => {
     setForm((prev) => ({
       ...prev,
       [key]: value
     }));
   };
-  (0, import_react22.useEffect)(() => {
+  (0, import_react21.useEffect)(() => {
     setIsSaving(true);
     (async () => {
-      const newSettings = await plugin2.updateBlockConfig(id, form);
+      const newSettings = await p.updateBlockConfig(id, form);
       setSettings2(() => newSettings);
       setIsSaving(false);
     })();
   }, [form]);
-  return /* @__PURE__ */ import_react22.default.createElement(Dialog, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react22.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react22.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react22.default.createElement(DialogTitle, null, "Dataedit block config"), /* @__PURE__ */ import_react22.default.createElement(DialogDescription, { className: "flex flex-col gap-2" }, /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "id:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, id)), /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex" }, "note:\xA0", /* @__PURE__ */ import_react22.default.createElement("span", { className: "text-normal" }, filePath3))), !hideGhLinks && /* @__PURE__ */ import_react22.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react22.default.createElement("span", null, "Plugin repository:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react22.default.createElement("span", null, "Dataview docs:", " ", /* @__PURE__ */ import_react22.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/"))))), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "py-3" }, isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react22.default.createElement(
-    LoaderCircle,
-    {
-      className: "animate-spin",
-      size: "1em"
-    }
-  )), !isSaving && /* @__PURE__ */ import_react22.default.createElement("div", { className: "text-success" }, "Config saved ", /* @__PURE__ */ import_react22.default.createElement(CircleCheck, { size: "1em" })), /* @__PURE__ */ import_react22.default.createElement("details", null, /* @__PURE__ */ import_react22.default.createElement("summary", null, "Actions"), /* @__PURE__ */ import_react22.default.createElement("button", null, "Export"), /* @__PURE__ */ import_react22.default.createElement("button", null, "Import"), /* @__PURE__ */ import_react22.default.createElement(
+  return /* @__PURE__ */ import_react21.default.createElement(import_react21.default.Fragment, null, /* @__PURE__ */ import_react21.default.createElement(SettingDescription, { className: "py-3" }, isSaving && /* @__PURE__ */ import_react21.default.createElement("div", { className: "text-error" }, "Saving config", " ", /* @__PURE__ */ import_react21.default.createElement(LoaderCircle, { className: "animate-spin", size: "1em" })), !isSaving && /* @__PURE__ */ import_react21.default.createElement("div", { className: "text-success" }, "Config saved ", /* @__PURE__ */ import_react21.default.createElement(CircleCheck, { size: "1em" })), /* @__PURE__ */ import_react21.default.createElement("details", null, /* @__PURE__ */ import_react21.default.createElement("summary", null, "Actions"), /* @__PURE__ */ import_react21.default.createElement("div", { className: "flex items-center justify-start gap-2 py-3" }, /* @__PURE__ */ import_react21.default.createElement("button", null, "Export"), /* @__PURE__ */ import_react21.default.createElement("button", null, "Import"), /* @__PURE__ */ import_react21.default.createElement(
     "button",
     {
-      onClick: () => setForm({
-        ...defaultDefaultBlockConfig,
-        id: form.id,
-        filePath: form.filePath
-      })
+      className: "text-error",
+      onClick: () => setResetDialogOpen(true)
     },
     "Reset"
-  ))), /* @__PURE__ */ import_react22.default.createElement(ToolbarSetting, { items: form.toolbarConfig, setForm }), /* @__PURE__ */ import_react22.default.createElement(
+  ), isResetDialogOpen && /* @__PURE__ */ import_react21.default.createElement(
+    ConfirmationDialog,
+    {
+      title: "Are you sure?",
+      description: "This will reset the block config to the default settings as set by Dataedit's creator. This cannot be undone",
+      onConfirm: () => {
+        console.log(
+          "defaultDefaultBlockConfig: ",
+          defaultDefaultBlockConfig
+        );
+        setForm({
+          ...defaultDefaultBlockConfig,
+          id: form.id
+        });
+        setResetDialogOpen(false);
+      },
+      open: isResetDialogOpen,
+      setOpen: setResetDialogOpen
+    }
+  )))), /* @__PURE__ */ import_react21.default.createElement(ToolbarSetting, { items: form.toolbarConfig, setForm }), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Toolbar position",
       description: "Set whether the position of the toolbar or disable it entirely.\n\nNote: if disabled, the settings gear will still be present",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         "select",
         {
           className: "dropdown",
@@ -33412,23 +33384,23 @@ var BlockConfig = ({
             v.target.value
           )
         },
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "top" }, "Top"),
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "bottom" }, "Bottom"),
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "disabled" }, "disabled")
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "top" }, "Top"),
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "bottom" }, "Bottom"),
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "disabled" }, "disabled")
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     TdPaddingSetting,
     {
       tdPadding: form.tdPadding,
       updateForm: (num2) => updateForm("tdPadding", num2)
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Auto suggest",
       description: "Automatically suggest values from the existing values used for that property.\nOnly works on Text and Multitext.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.showAutoComplete,
@@ -33436,12 +33408,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Number buttons",
       description: "Show buttons below number type table cells that let you add, substract, or enter an expression.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.showNumberButtons,
@@ -33449,12 +33421,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Type icons",
       description: "Show an icon next to each header representing the set type of that property. Inline and nested properties have a special symbol.\n\nTip: For custom icons, turn this off and use the Iconize plugin to set an icon in the column alias.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.showTypeIcons,
@@ -33462,12 +33434,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Render markdown",
       description: "Render markdown as HTML.\n\nNote: this only works in text, multitext, inline, and nested property types.\n\nAnother note: This is only rendered when not currently editing the table cell.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.renderMarkdown,
@@ -33475,12 +33447,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Allow full size images",
       description: "Allows image embeds to grow to their actual size.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.allowImageFullSize,
@@ -33488,12 +33460,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Column and Row Labels",
       description: "Shows excel/sheets like labels for column and row numbers.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.showColAndRowLabels,
@@ -33501,12 +33473,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Lock editing",
       description: "Lock the table from being able to be edited.\nWhen locked, links and tags are clickable.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.lockEditing,
@@ -33514,12 +33486,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Use toggle for checkbox",
       description: "Uses toggles instead of checkboxes for checkbox type properties.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         SettingToggle,
         {
           checked: form.useToggleForCheckbox,
@@ -33527,12 +33499,12 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Page size",
       description: "The number of results to display per page.",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         "input",
         {
           defaultValue: form.pageSize,
@@ -33547,42 +33519,39 @@ var BlockConfig = ({
         }
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "List item prefix",
-      description: /* @__PURE__ */ import_react22.default.createElement(import_react22.default.Fragment, null, /* @__PURE__ */ import_react22.default.createElement("span", null, "What symbol to show prefixed to list items within multitext properties."), /* @__PURE__ */ import_react22.default.createElement(
+      description: /* @__PURE__ */ import_react21.default.createElement(import_react21.default.Fragment, null, /* @__PURE__ */ import_react21.default.createElement("span", null, "What symbol to show prefixed to list items within multitext properties."), /* @__PURE__ */ import_react21.default.createElement(
         "ul",
         {
           style: {
             listStyleType: form.listItemPrefix
           }
         },
-        /* @__PURE__ */ import_react22.default.createElement("li", null, "item"),
-        /* @__PURE__ */ import_react22.default.createElement("li", null, "another item"),
-        /* @__PURE__ */ import_react22.default.createElement("li", null, "and one more item")
+        /* @__PURE__ */ import_react21.default.createElement("li", null, "item"),
+        /* @__PURE__ */ import_react21.default.createElement("li", null, "another item"),
+        /* @__PURE__ */ import_react21.default.createElement("li", null, "and one more item")
       )),
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         "select",
         {
           className: "dropdown",
           defaultValue: form.listItemPrefix,
           onChange: (e) => {
-            updateForm(
-              "listItemPrefix",
-              e.currentTarget.value
-            );
+            updateForm("listItemPrefix", e.currentTarget.value);
           }
         },
-        LIST_STYLE_TYPES.map((v, i) => /* @__PURE__ */ import_react22.default.createElement("option", { key: i, value: v }, v))
+        LIST_STYLE_TYPES.map((v, i) => /* @__PURE__ */ import_react21.default.createElement("option", { key: i, value: v }, v))
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Horizontal alignment",
       description: "Align table cells horizontally",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         "select",
         {
           className: "dropdown",
@@ -33599,17 +33568,17 @@ var BlockConfig = ({
             );
           }
         },
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "start" }, "Left"),
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "center" }, "Center"),
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "end" }, "Right")
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "start" }, "Left"),
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "center" }, "Center"),
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "end" }, "Right")
       )
     }
-  ), /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement(
     StandardSetting,
     {
       title: "Vertical alignment",
       description: "Align table cells vertically",
-      control: /* @__PURE__ */ import_react22.default.createElement(
+      control: /* @__PURE__ */ import_react21.default.createElement(
         "select",
         {
           className: "dropdown",
@@ -33626,89 +33595,104 @@ var BlockConfig = ({
             );
           }
         },
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "start" }, "Top"),
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "center" }, "Middle"),
-        /* @__PURE__ */ import_react22.default.createElement("option", { value: "end" }, "Bottom")
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "start" }, "Top"),
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "center" }, "Middle"),
+        /* @__PURE__ */ import_react21.default.createElement("option", { value: "end" }, "Bottom")
       )
     }
-  )));
+  ));
 };
+var BlockConfigDialog = ({
+  id,
+  open,
+  setOpen,
+  hideGhLinks
+}) => /* @__PURE__ */ import_react21.default.createElement(Dialog, { open, onOpenChange: setOpen }, /* @__PURE__ */ import_react21.default.createElement(DialogContent, { className: "vertical-tab-content" }, /* @__PURE__ */ import_react21.default.createElement(DialogHeader, null, /* @__PURE__ */ import_react21.default.createElement(DialogTitle, null, "Dataedit block config"), /* @__PURE__ */ import_react21.default.createElement(DialogDescription, { className: "flex flex-col gap-2" }, /* @__PURE__ */ import_react21.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react21.default.createElement("span", null, "id:\xA0", /* @__PURE__ */ import_react21.default.createElement("span", { className: "text-normal" }, id))), !hideGhLinks && /* @__PURE__ */ import_react21.default.createElement("span", { className: "flex flex-col" }, /* @__PURE__ */ import_react21.default.createElement("span", null, "Plugin repository:", " ", /* @__PURE__ */ import_react21.default.createElement("a", { href: "https://github.com/unxok/dataedit" }, "github.com/unxok/dataedit")), /* @__PURE__ */ import_react21.default.createElement("span", null, "Dataview docs:", " ", /* @__PURE__ */ import_react21.default.createElement("a", { href: "https://blacksmithgu.github.io/obsidian-dataview/" }, "blacksmithgu.github.io/obsidian-dataview/"))))), /* @__PURE__ */ import_react21.default.createElement(BlockConfig, { id, hideGhLinks })));
 var StandardSetting = ({
   title,
   description,
   control
-}) => /* @__PURE__ */ import_react22.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, title), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, description)), /* @__PURE__ */ import_react22.default.createElement(SettingControl, null, control));
+}) => /* @__PURE__ */ import_react21.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react21.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react21.default.createElement(SettingName, null, title), /* @__PURE__ */ import_react21.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, description)), /* @__PURE__ */ import_react21.default.createElement(SettingControl, null, control));
 var ToolbarSetting = ({
   items,
   setForm
 }) => {
-  return /* @__PURE__ */ import_react22.default.createElement(SettingRoot, { className: "flex-col justify-start gap-4" }, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, { className: "flex w-full flex-col justify-start" }, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, "Toolbar configuration"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Select and reorder the items to show in the toolbar of the table")), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex w-full flex-col gap-3" }, items.map(({ componentName, displayText, enabled }, i) => /* @__PURE__ */ import_react22.default.createElement("div", { key: i, className: "flex items-center gap-1" }, /* @__PURE__ */ import_react22.default.createElement(
-    "input",
-    {
-      type: "checkbox",
-      defaultChecked: enabled,
-      className: "disabled:opacity-50 disabled:hover:cursor-not-allowed",
-      disabled: componentName === SETTINGS_GEAR,
-      onChange: (e) => {
-        setForm((prev) => {
-          const copy = [...prev.toolbarConfig];
-          copy[i].enabled = e.target.checked;
-          return {
-            ...prev,
-            toolbarConfig: [...copy]
-          };
-        });
-      }
-    }
-  ), /* @__PURE__ */ import_react22.default.createElement("div", null, displayText), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react22.default.createElement(
+  return /* @__PURE__ */ import_react21.default.createElement(SettingRoot, { className: "flex-col items-start justify-start gap-4" }, /* @__PURE__ */ import_react21.default.createElement(SettingInfo, { className: "flex flex-col justify-start" }, /* @__PURE__ */ import_react21.default.createElement(SettingName, null, "Toolbar configuration"), /* @__PURE__ */ import_react21.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Select and reorder the items to show in the toolbar of the table")), /* @__PURE__ */ import_react21.default.createElement("div", { className: "flex w-full flex-col gap-3" }, items.map(({ componentName, displayText, enabled }, i) => /* @__PURE__ */ import_react21.default.createElement(
     "div",
     {
-      className: "clickable-icon",
-      onClick: () => {
-        if (i === 0)
-          return;
-        setForm((prev) => {
-          const copy = [...prev.toolbarConfig];
-          return {
-            ...prev,
-            toolbarConfig: arrayMove(
-              copy,
-              i,
-              i - 1
-            )
-          };
-        });
-      }
+      key: i + displayText + enabled.toString(),
+      className: "flex items-center gap-1"
     },
-    /* @__PURE__ */ import_react22.default.createElement(ArrowUp, { className: "svg-icon" })
-  ), /* @__PURE__ */ import_react22.default.createElement(
-    "div",
-    {
-      className: "clickable-icon",
-      onClick: () => {
-        setForm((prev) => {
-          const copy = [...prev.toolbarConfig];
-          if (i === copy.length - 1)
+    /* @__PURE__ */ import_react21.default.createElement(
+      "input",
+      {
+        type: "checkbox",
+        defaultChecked: enabled,
+        className: "disabled:opacity-50 disabled:hover:cursor-not-allowed",
+        disabled: componentName === SETTINGS_GEAR,
+        onChange: (e) => {
+          setForm((prev) => {
+            const copy = [...prev.toolbarConfig];
+            copy[i].enabled = e.target.checked;
+            return {
+              ...prev,
+              toolbarConfig: [...copy]
+            };
+          });
+        }
+      }
+    ),
+    /* @__PURE__ */ import_react21.default.createElement("div", null, displayText),
+    /* @__PURE__ */ import_react21.default.createElement("div", { className: "flex" }, /* @__PURE__ */ import_react21.default.createElement(
+      "div",
+      {
+        className: "clickable-icon",
+        onClick: () => {
+          if (i === 0)
             return;
-          return {
-            ...prev,
-            toolbarConfig: arrayMove(
-              copy,
-              i,
-              i + 1
-            )
-          };
-        });
-      }
-    },
-    /* @__PURE__ */ import_react22.default.createElement(ArrowDown, { className: "svg-icon" })
-  ))))));
+          setForm((prev) => {
+            const copy = [...prev.toolbarConfig];
+            return {
+              ...prev,
+              toolbarConfig: arrayMove(
+                copy,
+                i,
+                i - 1
+              )
+            };
+          });
+        }
+      },
+      /* @__PURE__ */ import_react21.default.createElement(ArrowUp, { className: "svg-icon" })
+    ), /* @__PURE__ */ import_react21.default.createElement(
+      "div",
+      {
+        className: "clickable-icon",
+        onClick: () => {
+          setForm((prev) => {
+            const copy = [...prev.toolbarConfig];
+            if (i === copy.length - 1)
+              return;
+            return {
+              ...prev,
+              toolbarConfig: arrayMove(
+                copy,
+                i,
+                i + 1
+              )
+            };
+          });
+        }
+      },
+      /* @__PURE__ */ import_react21.default.createElement(ArrowDown, { className: "svg-icon" })
+    ))
+  ))));
 };
 var TdPaddingSetting = ({
   tdPadding,
   updateForm
 }) => {
-  const [value, setValue] = (0, import_react22.useState)(tdPadding);
+  const [value, setValue] = (0, import_react21.useState)(tdPadding);
   const update = (e) => {
     const n2 = Number(e.currentTarget.value);
     const num2 = Number.isNaN(n2) || n2 < 0 ? 0 : n2;
@@ -33719,7 +33703,7 @@ var TdPaddingSetting = ({
     const num2 = Number.isNaN(n2) || n2 < 0 ? 0 : n2;
     setValue(num2);
   };
-  return /* @__PURE__ */ import_react22.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react22.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react22.default.createElement(SettingName, null, "Table cell padding"), /* @__PURE__ */ import_react22.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Override the default padding for table cells. Leave as 0 to use the default padding from Obsidian or your theme.")), /* @__PURE__ */ import_react22.default.createElement(SettingControl, null, /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex flex-col gap-4" }, /* @__PURE__ */ import_react22.default.createElement(
+  return /* @__PURE__ */ import_react21.default.createElement(SettingRoot, null, /* @__PURE__ */ import_react21.default.createElement(SettingInfo, null, /* @__PURE__ */ import_react21.default.createElement(SettingName, null, "Table cell padding"), /* @__PURE__ */ import_react21.default.createElement(SettingDescription, { className: "whitespace-pre-line" }, "Override the default padding for table cells. Leave as 0 to use the default padding from Obsidian or your theme.")), /* @__PURE__ */ import_react21.default.createElement(SettingControl, null, /* @__PURE__ */ import_react21.default.createElement("div", { className: "flex flex-col gap-4" }, /* @__PURE__ */ import_react21.default.createElement(
     "input",
     {
       type: "range",
@@ -33729,7 +33713,7 @@ var TdPaddingSetting = ({
       onChange,
       onMouseUp: update
     }
-  ), /* @__PURE__ */ import_react22.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react22.default.createElement(
+  ), /* @__PURE__ */ import_react21.default.createElement("div", { className: "flex items-center gap-3" }, /* @__PURE__ */ import_react21.default.createElement(
     "input",
     {
       placeholder: "auto",
@@ -33740,14 +33724,87 @@ var TdPaddingSetting = ({
       onChange,
       onBlur: update
     }
-  ), /* @__PURE__ */ import_react22.default.createElement("span", null, "px")))));
+  ), /* @__PURE__ */ import_react21.default.createElement("span", null, "px")))));
+};
+var PluginSettings = ({ plugin: plugin2 }) => {
+  const { settings: settings2, setSettings: setSettings2 } = usePluginSettings();
+  (0, import_react21.useEffect)(() => {
+    setSettings2(() => plugin2.settings);
+  }, []);
+  console.log("settings: ", settings2);
+  if (!settings2?.blockConfigs)
+    return;
+  return /* @__PURE__ */ import_react21.default.createElement("div", { className: "flex flex-col gap-3" }, /* @__PURE__ */ import_react21.default.createElement("details", { className: "rounded-md border border-solid border-secondary-alt p-2" }, /* @__PURE__ */ import_react21.default.createElement("summary", null, "default"), /* @__PURE__ */ import_react21.default.createElement("span", null, "Default block config that applies to any Dataedit table that has no ID assigned."), /* @__PURE__ */ import_react21.default.createElement(
+    BlockConfig,
+    {
+      id: "default",
+      plugin: plugin2
+    }
+  )), Object.keys(settings2.blockConfigs).map((id, i) => {
+    if (id === "default")
+      return;
+    return /* @__PURE__ */ import_react21.default.createElement("details", { className: "rounded-md border border-solid border-secondary-alt p-2" }, /* @__PURE__ */ import_react21.default.createElement("summary", null, id), id === "default" && /* @__PURE__ */ import_react21.default.createElement("span", null, "Default block config that applies to any Dataedit table that has no ID assigned."), /* @__PURE__ */ import_react21.default.createElement(
+      BlockConfig,
+      {
+        key: i,
+        id,
+        plugin: plugin2
+      }
+    ));
+  }));
+};
+
+// src/settings-tab.tsx
+var DataEditSettingsTab = class extends import_obsidian2.PluginSettingTab {
+  constructor(app2, plugin2) {
+    super(app2, plugin2);
+    this.plugin = plugin2;
+    this.containerEl.empty();
+    this.root = (0, import_client.createRoot)(this.containerEl);
+  }
+  display() {
+    this.root.render(
+      /* @__PURE__ */ import_react22.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react22.default.createElement(PluginSettings, { plugin: this.plugin }))
+    );
+  }
+  // display(): void {
+  // 	this.containerEl.empty();
+  // 	this.containerEl.createEl("h2", {
+  // 		text: "My Plugin Settings",
+  // 	});
+  // 	new Setting(this.containerEl)
+  // 		.setName("Demo of settings")
+  // 		.setDesc(
+  // 			createFragment((f) => {
+  // 				f.createSpan({
+  // 					text: "Description for setting goes here ",
+  // 				});
+  // 				f.createEl("a", {
+  // 					text: "Link to additional useful materials",
+  // 					href: "#",
+  // 				});
+  // 				f.createSpan({ text: " syntax." });
+  // 			}),
+  // 		)
+  // 		.addText((t) => {
+  // 			t.setValue(String(this.plugin.settings.demoSetting));
+  // 			t.onChange(async (v) => {
+  // 				this.plugin.settings.demoSetting = v.length
+  // 					? v
+  // 					: defaultSettings.demoSetting;
+  // 				await this.plugin.saveSettings();
+  // 			});
+  // 		})
+  // 		.addSearch((c) => console.log("comp: ", c));
+  // }
 };
 
 // src/components/App.tsx
+var import_obsidian4 = require("obsidian");
 var import_react37 = __toESM(require_react());
 
 // src/components/Markdown/index.tsx
-var import_obsidian4 = require("obsidian");
+var import_obsidian3 = require("obsidian");
 var import_react23 = __toESM(require_react());
 var Markdown = ({
   app: app2,
@@ -33761,13 +33818,13 @@ var Markdown = ({
   if (disabled) {
     return /* @__PURE__ */ import_react23.default.createElement("div", { ...props2 }, plainText);
   }
-  const component = new import_obsidian4.Component();
+  const component = new import_obsidian3.Component();
   const ref = (0, import_react23.useRef)(null);
   (0, import_react23.useEffect)(() => {
     if (!ref?.current)
       return;
     ref.current.textContent = "";
-    import_obsidian4.MarkdownRenderer.render(
+    import_obsidian3.MarkdownRenderer.render(
       app2,
       plainText,
       ref.current,
@@ -35219,18 +35276,18 @@ function padStart(input, n2 = 2) {
   }
   return padded;
 }
-function parseInteger(string) {
-  if (isUndefined(string) || string === null || string === "") {
+function parseInteger(string2) {
+  if (isUndefined(string2) || string2 === null || string2 === "") {
     return void 0;
   } else {
-    return parseInt(string, 10);
+    return parseInt(string2, 10);
   }
 }
-function parseFloating(string) {
-  if (isUndefined(string) || string === null || string === "") {
+function parseFloating(string2) {
+  if (isUndefined(string2) || string2 === null || string2 === "") {
     return void 0;
   } else {
-    return parseFloat(string);
+    return parseFloat(string2);
   }
 }
 function parseMillis(fraction) {
@@ -35585,12 +35642,12 @@ var Formatter = class _Formatter {
     return this.loc.numberFormatter(opts).format(n2);
   }
   formatDateTimeFromString(dt, fmt) {
-    const knownEnglish = this.loc.listingMode() === "en", useDateTimeFormatter = this.loc.outputCalendar && this.loc.outputCalendar !== "gregory", string = (opts, extract) => this.loc.extract(dt, opts, extract), formatOffset2 = (opts) => {
+    const knownEnglish = this.loc.listingMode() === "en", useDateTimeFormatter = this.loc.outputCalendar && this.loc.outputCalendar !== "gregory", string2 = (opts, extract) => this.loc.extract(dt, opts, extract), formatOffset2 = (opts) => {
       if (dt.isOffsetFixed && dt.offset === 0 && opts.allowZ) {
         return "Z";
       }
       return dt.isValid ? dt.zone.formatOffset(dt.ts, opts.format) : "";
-    }, meridiem = () => knownEnglish ? meridiemForDateTime(dt) : string({ hour: "numeric", hourCycle: "h12" }, "dayperiod"), month2 = (length, standalone) => knownEnglish ? monthForDateTime(dt, length) : string(standalone ? { month: length } : { month: length, day: "numeric" }, "month"), weekday2 = (length, standalone) => knownEnglish ? weekdayForDateTime(dt, length) : string(
+    }, meridiem = () => knownEnglish ? meridiemForDateTime(dt) : string2({ hour: "numeric", hourCycle: "h12" }, "dayperiod"), month2 = (length, standalone) => knownEnglish ? monthForDateTime(dt, length) : string2(standalone ? { month: length } : { month: length, day: "numeric" }, "month"), weekday2 = (length, standalone) => knownEnglish ? weekdayForDateTime(dt, length) : string2(
       standalone ? { weekday: length } : { weekday: length, month: "long", day: "numeric" },
       "weekday"
     ), maybeMacro = (token) => {
@@ -35600,7 +35657,7 @@ var Formatter = class _Formatter {
       } else {
         return token;
       }
-    }, era = (length) => knownEnglish ? eraForDateTime(dt, length) : string({ era: length }, "era"), tokenToString = (token) => {
+    }, era = (length) => knownEnglish ? eraForDateTime(dt, length) : string2({ era: length }, "era"), tokenToString = (token) => {
       switch (token) {
         case "S":
           return this.num(dt.millisecond);
@@ -35642,9 +35699,9 @@ var Formatter = class _Formatter {
         case "a":
           return meridiem();
         case "d":
-          return useDateTimeFormatter ? string({ day: "numeric" }, "day") : this.num(dt.day);
+          return useDateTimeFormatter ? string2({ day: "numeric" }, "day") : this.num(dt.day);
         case "dd":
-          return useDateTimeFormatter ? string({ day: "2-digit" }, "day") : this.num(dt.day, 2);
+          return useDateTimeFormatter ? string2({ day: "2-digit" }, "day") : this.num(dt.day, 2);
         case "c":
           return this.num(dt.weekday);
         case "ccc":
@@ -35662,9 +35719,9 @@ var Formatter = class _Formatter {
         case "EEEEE":
           return weekday2("narrow", false);
         case "L":
-          return useDateTimeFormatter ? string({ month: "numeric", day: "numeric" }, "month") : this.num(dt.month);
+          return useDateTimeFormatter ? string2({ month: "numeric", day: "numeric" }, "month") : this.num(dt.month);
         case "LL":
-          return useDateTimeFormatter ? string({ month: "2-digit", day: "numeric" }, "month") : this.num(dt.month, 2);
+          return useDateTimeFormatter ? string2({ month: "2-digit", day: "numeric" }, "month") : this.num(dt.month, 2);
         case "LLL":
           return month2("short", true);
         case "LLLL":
@@ -35672,9 +35729,9 @@ var Formatter = class _Formatter {
         case "LLLLL":
           return month2("narrow", true);
         case "M":
-          return useDateTimeFormatter ? string({ month: "numeric" }, "month") : this.num(dt.month);
+          return useDateTimeFormatter ? string2({ month: "numeric" }, "month") : this.num(dt.month);
         case "MM":
-          return useDateTimeFormatter ? string({ month: "2-digit" }, "month") : this.num(dt.month, 2);
+          return useDateTimeFormatter ? string2({ month: "2-digit" }, "month") : this.num(dt.month, 2);
         case "MMM":
           return month2("short", false);
         case "MMMM":
@@ -35682,13 +35739,13 @@ var Formatter = class _Formatter {
         case "MMMMM":
           return month2("narrow", false);
         case "y":
-          return useDateTimeFormatter ? string({ year: "numeric" }, "year") : this.num(dt.year);
+          return useDateTimeFormatter ? string2({ year: "numeric" }, "year") : this.num(dt.year);
         case "yy":
-          return useDateTimeFormatter ? string({ year: "2-digit" }, "year") : this.num(dt.year.toString().slice(-2), 2);
+          return useDateTimeFormatter ? string2({ year: "2-digit" }, "year") : this.num(dt.year.toString().slice(-2), 2);
         case "yyyy":
-          return useDateTimeFormatter ? string({ year: "numeric" }, "year") : this.num(dt.year, 4);
+          return useDateTimeFormatter ? string2({ year: "numeric" }, "year") : this.num(dt.year, 4);
         case "yyyyyy":
-          return useDateTimeFormatter ? string({ year: "numeric" }, "year") : this.num(dt.year, 6);
+          return useDateTimeFormatter ? string2({ year: "numeric" }, "year") : this.num(dt.year, 6);
         case "G":
           return era("short");
         case "GG":
@@ -36156,16 +36213,16 @@ var Duration = class _Duration {
   /**
    * @private
    */
-  constructor(config2) {
-    const accurate = config2.conversionAccuracy === "longterm" || false;
+  constructor(config) {
+    const accurate = config.conversionAccuracy === "longterm" || false;
     let matrix = accurate ? accurateMatrix : casualMatrix;
-    if (config2.matrix) {
-      matrix = config2.matrix;
+    if (config.matrix) {
+      matrix = config.matrix;
     }
-    this.values = config2.values;
-    this.loc = config2.loc || Locale.create();
+    this.values = config.values;
+    this.loc = config.loc || Locale.create();
     this.conversionAccuracy = accurate ? "longterm" : "casual";
-    this.invalid = config2.invalid || null;
+    this.invalid = config.invalid || null;
     this.matrix = matrix;
     this.isLuxonDuration = true;
   }
@@ -36850,10 +36907,10 @@ var Interval = class _Interval {
   /**
    * @private
    */
-  constructor(config2) {
-    this.s = config2.start;
-    this.e = config2.end;
-    this.invalid = config2.invalid || null;
+  constructor(config) {
+    this.s = config.start;
+    this.e = config.end;
+    this.invalid = config.invalid || null;
     this.isLuxonInterval = true;
   }
   /**
@@ -38367,15 +38424,15 @@ var DateTime = class _DateTime {
   /**
    * @access private
    */
-  constructor(config2) {
-    const zone = config2.zone || Settings2.defaultZone;
-    let invalid = config2.invalid || (Number.isNaN(config2.ts) ? new Invalid("invalid input") : null) || (!zone.isValid ? unsupportedZone(zone) : null);
-    this.ts = isUndefined(config2.ts) ? Settings2.now() : config2.ts;
+  constructor(config) {
+    const zone = config.zone || Settings2.defaultZone;
+    let invalid = config.invalid || (Number.isNaN(config.ts) ? new Invalid("invalid input") : null) || (!zone.isValid ? unsupportedZone(zone) : null);
+    this.ts = isUndefined(config.ts) ? Settings2.now() : config.ts;
     let c = null, o = null;
     if (!invalid) {
-      const unchanged = config2.old && config2.old.ts === this.ts && config2.old.zone.equals(zone);
+      const unchanged = config.old && config.old.ts === this.ts && config.old.zone.equals(zone);
       if (unchanged) {
-        [c, o] = [config2.old.c, config2.old.o];
+        [c, o] = [config.old.c, config.old.o];
       } else {
         const ot = zone.offset(this.ts);
         c = tsToObj(this.ts, ot);
@@ -38385,7 +38442,7 @@ var DateTime = class _DateTime {
       }
     }
     this._zone = zone;
-    this.loc = config2.loc || Locale.create();
+    this.loc = config.loc || Locale.create();
     this.invalid = invalid;
     this.weekData = null;
     this.localWeekData = null;
@@ -40225,13 +40282,13 @@ function computeCoordsFromPlacement(_ref, placement, rtl) {
   }
   return coords;
 }
-var computePosition = async (reference, floating, config2) => {
+var computePosition = async (reference, floating, config) => {
   const {
     placement = "bottom",
     strategy = "absolute",
     middleware = [],
     platform: platform2
-  } = config2;
+  } = config;
   const validMiddleware = middleware.filter(Boolean);
   const rtl = await (platform2.isRTL == null ? void 0 : platform2.isRTL(floating));
   let rects = await platform2.getElementRects({
@@ -41695,15 +41752,15 @@ function useFloating(options) {
     if (!referenceRef.current || !floatingRef.current) {
       return;
     }
-    const config2 = {
+    const config = {
       placement,
       strategy,
       middleware: latestMiddleware
     };
     if (platformRef.current) {
-      config2.platform = platformRef.current;
+      config.platform = platformRef.current;
     }
-    computePosition2(referenceRef.current, floatingRef.current, config2).then((data3) => {
+    computePosition2(referenceRef.current, floatingRef.current, config).then((data3) => {
       const fullData = {
         ...data3,
         isPositioned: true
@@ -64037,7 +64094,7 @@ var writeRandomId = async (m, s2, plugin2, pluginSettingsConfigs) => {
   div2.textContent = "Click the gear again to configure block";
   frag.appendChild(div1);
   frag.appendChild(div2);
-  new import_obsidian5.Notice(frag);
+  new import_obsidian4.Notice(frag);
 };
 var App3 = (props) => {
   const { data, plugin, ctx, getSectionInfo } = props;
@@ -64095,7 +64152,7 @@ var App3 = (props) => {
     (async () => {
       const b = await loadDependencies();
       if (!b) {
-        return new import_obsidian5.Notice(
+        return new import_obsidian4.Notice(
           "Datedit: Failed to load dependencies\n\nIs Dataview installed and enabled?"
         );
       }
@@ -64152,7 +64209,8 @@ var App3 = (props) => {
     currentPage,
     showColAndRowLabels,
     queryLinkPropertyName,
-    toolbarPosition
+    toolbarPosition,
+    toolbarConfig
   } = getBlockConfig(blockId);
   const startIndex = pageSize < 1 ? 0 : (currentPage - 1) * pageSize;
   const endIndex = pageSize < 1 ? queryResults?.values?.length : startIndex + pageSize;
@@ -64160,9 +64218,8 @@ var App3 = (props) => {
   const { blockConfigs } = settings;
   if (!blockConfigs)
     return;
-  const config = blockConfigs[blockId] ?? blockConfigs["default"];
   const Toolbar = () => {
-    return config?.toolbarConfig?.map(({ componentName, enabled }, i) => {
+    return toolbarConfig?.map(({ componentName, enabled }, i) => {
       if (!enabled)
         return;
       return /* @__PURE__ */ import_react37.default.createElement(import_react37.Fragment, { key: i }, /* @__PURE__ */ import_react37.default.createElement(
@@ -64173,7 +64230,7 @@ var App3 = (props) => {
           blockId,
           totalRows: queryResults?.values?.length
         }
-      ), i !== config.toolbarConfig.length - 1 && /* @__PURE__ */ import_react37.default.createElement(
+      ), i !== toolbarConfig.length - 1 && /* @__PURE__ */ import_react37.default.createElement(
         DividerVerticalIcon,
         {
           className: "text-secondary-alt"
@@ -64181,13 +64238,15 @@ var App3 = (props) => {
       ));
     });
   };
-  const settingsGearOnClick = blockId ? () => setShowSettings(true) : async () => await writeRandomId(
-    ctx,
-    getSectionInfo(),
-    plugin,
-    settings.blockConfigs
-  );
-  console.log("config: ", config);
+  const settingsGearOnClick = {
+    showSettings: () => setShowSettings(true),
+    generateRandomId: async () => await writeRandomId(
+      ctx,
+      getSectionInfo(),
+      plugin,
+      settings.blockConfigs
+    )
+  };
   if (!queryResults || fileHeaderIndex === -1) {
     return /* @__PURE__ */ import_react37.default.createElement("div", { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", null, "Query results undefined"), /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex flex-row items-center gap-1" }, /* @__PURE__ */ import_react37.default.createElement("div", null, "Dataview error"), /* @__PURE__ */ import_react37.default.createElement("div", { "aria-label": dvErr }, /* @__PURE__ */ import_react37.default.createElement(Info, { className: "hover:text-accent", style: iconStyle }))));
   }
@@ -64204,7 +64263,8 @@ var App3 = (props) => {
       SettingsGear,
       {
         blockId,
-        onClick: settingsGearOnClick
+        showSettings: settingsGearOnClick.showSettings,
+        generateRandomId: settingsGearOnClick.generateRandomId
       }
     )), /* @__PURE__ */ import_react37.default.createElement("table", { className: "dataedit h-[1px]" }, /* @__PURE__ */ import_react37.default.createElement("thead", null, showColAndRowLabels && /* @__PURE__ */ import_react37.default.createElement("tr", null, /* @__PURE__ */ import_react37.default.createElement("th", { className: "!bg-secondary" }), queryResults?.headers?.map((_, i) => /* @__PURE__ */ import_react37.default.createElement(
       "th",
@@ -64232,23 +64292,10 @@ var App3 = (props) => {
         hideFileLink: isFileLinkHidden,
         filePath: queryResults.values[startIndex + i][fileHeaderIndex]?.path
       }
-    )))))), toolbarPosition === "bottom" && /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, blockId && /* @__PURE__ */ import_react37.default.createElement(Toolbar, null), !blockId && /* @__PURE__ */ import_react37.default.createElement(
-      SettingsGear,
+    )))))), toolbarPosition === "bottom" && /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, /* @__PURE__ */ import_react37.default.createElement(Toolbar, null)), showSettings && /* @__PURE__ */ import_react37.default.createElement(
+      BlockConfigDialog,
       {
-        blockId,
-        onClick: settingsGearOnClick
-      }
-    )), (!blockId || toolbarPosition === "disabled") && /* @__PURE__ */ import_react37.default.createElement("div", { className: "flex w-full flex-row items-center whitespace-nowrap p-2" }, /* @__PURE__ */ import_react37.default.createElement(
-      SettingsGear,
-      {
-        blockId,
-        onClick: settingsGearOnClick
-      }
-    )), showSettings && /* @__PURE__ */ import_react37.default.createElement(
-      BlockConfig,
-      {
-        id: blockId,
-        filePath: ctx.sourcePath,
+        id: blockId || "default",
         open: showSettings,
         setOpen: setShowSettings
       }
@@ -64261,9 +64308,17 @@ var ToolbarSwitch = ({
   settingsGearOnClick: settingsGearOnClick2,
   totalRows
 }) => {
+  const { showSettings: showSettings2, generateRandomId } = settingsGearOnClick2;
   switch (componentName) {
     case SETTINGS_GEAR:
-      return /* @__PURE__ */ import_react37.default.createElement(SettingsGear, { blockId: blockId2, onClick: settingsGearOnClick2 });
+      return /* @__PURE__ */ import_react37.default.createElement(
+        SettingsGear,
+        {
+          blockId: blockId2,
+          showSettings: showSettings2,
+          generateRandomId
+        }
+      );
     case PAGE_SIZE:
       return /* @__PURE__ */ import_react37.default.createElement(PaginationSize, null);
     case PAGINATION_NAV:
@@ -64627,17 +64682,52 @@ var VerticalAlignment = () => {
 };
 var SettingsGear = ({
   blockId: blockId2,
-  onClick
+  showSettings: showSettings2,
+  generateRandomId
 }) => {
-  return /* @__PURE__ */ import_react37.default.createElement(
+  if (blockId2) {
+    return /* @__PURE__ */ import_react37.default.createElement(
+      "div",
+      {
+        onClick: showSettings2,
+        "aria-label": `id: ` + blockId2,
+        className: "clickable-icon side-dock-ribbon-action"
+      },
+      /* @__PURE__ */ import_react37.default.createElement(Settings, { className: "svg-icon lucide-settings" })
+    );
+  }
+  const onMouseEnter = (e) => {
+    e.currentTarget.classList.add("is-selected");
+  };
+  const onMouseLeave = (e) => {
+    e.currentTarget.classList.remove("is-selected");
+  };
+  return /* @__PURE__ */ import_react37.default.createElement(Popover, { modal: true }, /* @__PURE__ */ import_react37.default.createElement(PopoverTrigger, { asChild: true }, /* @__PURE__ */ import_react37.default.createElement(
     "div",
     {
-      onClick,
-      "aria-label": blockId2 ? `id: ${blockId2}` : `No id found. Click to generate random id`,
+      "aria-label": `No id found. Click for options`,
       className: "clickable-icon side-dock-ribbon-action"
     },
     /* @__PURE__ */ import_react37.default.createElement(Settings, { className: "svg-icon lucide-settings" })
-  );
+  )), /* @__PURE__ */ import_react37.default.createElement(PopoverContent, { className: "twcss" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "suggestion" }, /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      className: "suggestion-item",
+      onMouseEnter,
+      onMouseLeave,
+      onClick: generateRandomId
+    },
+    /* @__PURE__ */ import_react37.default.createElement("div", { className: "text-nowrap" }, "Generate random id")
+  ), /* @__PURE__ */ import_react37.default.createElement(
+    "div",
+    {
+      className: "suggestion-item",
+      onMouseEnter,
+      onMouseLeave,
+      onClick: showSettings2
+    },
+    /* @__PURE__ */ import_react37.default.createElement("div", { className: "text-nowrap" }, "Edit default block settings")
+  )), /* @__PURE__ */ import_react37.default.createElement("div", { className: "prompt-instructions flex-nowrap justify-start text-nowrap" }, /* @__PURE__ */ import_react37.default.createElement("div", { className: "prompt-instruction" }, /* @__PURE__ */ import_react37.default.createElement("span", { className: "prompt-instruction-command" }, "esc"), /* @__PURE__ */ import_react37.default.createElement("span", null, "to dismiss")))));
 };
 var Th = ({
   propertyName: propertyName2,
@@ -64723,7 +64813,7 @@ var loadDependencies = async () => {
   await plugins.loadPlugin(DATAVIEW);
   return true;
 };
-var DataEdit2 = class extends import_obsidian6.Plugin {
+var DataEdit2 = class extends import_obsidian5.Plugin {
   async onExternalSettingsChange() {
     console.log("settings were changed");
     await this.loadSettings();
@@ -64766,8 +64856,12 @@ var DataEdit2 = class extends import_obsidian6.Plugin {
     return newSettings;
   }
   async updateBlockConfig(id, s2) {
+    console.log("this: ", this);
+    if (!this?.settings) {
+      await this.loadSettings();
+    }
     const copySettings = { ...this.settings };
-    copySettings.blockConfigs[id] = s2;
+    copySettings.blockConfigs[id || "default"] = s2;
     await this.updateSettings(copySettings);
     return copySettings;
   }
@@ -64780,7 +64874,7 @@ var DataEdit2 = class extends import_obsidian6.Plugin {
     const parsed = PluginSettingsSchema2.safeParse(modifiedSavedSettings);
     console.log(parsed);
     if (!parsed.success) {
-      new import_obsidian6.Notice("Invalid settings detected. Reverting to default");
+      new import_obsidian5.Notice("Invalid settings detected. Reverting to default");
       return await this.updateSettings(defaultPluginSettings);
     }
     this.settings = modifiedSavedSettings;

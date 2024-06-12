@@ -1,5 +1,11 @@
 import { App, Modal } from "obsidian";
-import React, { ReactNode, useCallback, useEffect, useRef } from "react";
+import React, {
+	ReactNode,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { Root, createRoot } from "react-dom/client";
 import * as Portal from "@radix-ui/react-portal";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
@@ -180,8 +186,8 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
 	Dialog,
-	DialogPortal,
-	DialogOverlay,
+	// DialogPortal,
+	// DialogOverlay,
 	DialogClose,
 	DialogTrigger,
 	DialogContent,
@@ -189,4 +195,43 @@ export {
 	DialogFooter,
 	DialogTitle,
 	DialogDescription,
+};
+
+export const ConfirmationDialog = ({
+	title,
+	description,
+	// onCancel,
+	onConfirm,
+	open,
+	setOpen,
+}: {
+	title: string;
+	description?: string;
+	// onCancel?: () => void;
+	onConfirm?: () => void;
+	open: boolean;
+	setOpen: (b: boolean) => void;
+}) => {
+	console.log("we out here");
+	return (
+		<Dialog open={open} onOpenChange={(b) => setOpen(b)} modal>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>{title}</DialogTitle>
+					{description && (
+						<DialogDescription>{description}</DialogDescription>
+					)}
+				</DialogHeader>
+				<DialogFooter>
+					<DialogClose>cancel</DialogClose>
+					<DialogClose
+						className="mod-cta"
+						onClick={() => onConfirm()}
+					>
+						confirm
+					</DialogClose>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
+	);
 };
