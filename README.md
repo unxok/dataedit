@@ -1,3 +1,8 @@
+> [!CAUTION]
+> This plugin has been abandoned. Being so tightly coupled with Dataview restriced a lot of what I wanted to accomplish and I lost steam.
+> Also, we have the Bases core-plugin now, so you shouldn't really need this plugin anymore.
+
+
 # Obsidian Dataedit📝
 
 Transform Your Dataview queries into editable tables ✨
